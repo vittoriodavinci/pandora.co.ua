@@ -1687,7 +1687,7 @@ function pcRemoveTyping(id) {
   const el = document.getElementById(id);
   if (el) el.remove();
 }
-<\/script>
+</script>
 
 <!-- ═══════════════════════════════════════════════
      PANDORA AI — Плавающий чат-бот
@@ -1698,13 +1698,13 @@ function pcRemoveTyping(id) {
 #pandora-chat-btn {
   position: fixed; bottom: 28px; right: 28px; z-index: 9999;
   width: 54px; height: 54px; border-radius: 50%;
-  background: var(--accent); border: none; cursor: pointer;
+  background: #fff; border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 20px rgba(200,168,75,0.35);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
   transition: transform 0.2s, opacity 0.2s;
 }
 #pandora-chat-btn:hover { transform: scale(1.08); opacity: 0.92; }
-#pandora-chat-btn svg { width: 24px; height: 24px; fill: #0D0D0D; }
+#pandora-chat-btn svg { width: 44px; height: 44px; }
 
 #pandora-chat-window {
   position: fixed; bottom: 92px; right: 28px; z-index: 9998;
@@ -1775,8 +1775,13 @@ function pcRemoveTyping(id) {
 </style>
 
 <button id="pandora-chat-btn" onclick="togglePandoraChat()" aria-label="Pandora AI чат">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2C6.48 2 2 6.02 2 11c0 2.67 1.19 5.07 3.09 6.75L4 22l4.64-1.54C9.97 20.8 10.97 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2zm0 16c-.93 0-1.83-.14-2.68-.39l-.58-.18-2.55.85.55-2.38-.38-.52C5.17 14.4 4 12.77 4 11c0-4.41 3.58-8 8-8s8 3.59 8 8-3.58 8-8 8z"/>
+  <svg viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+    <!-- Outer green circle -->
+    <circle cx="27" cy="27" r="25" fill="none" stroke="#2ecc40" stroke-width="3"/>
+    <!-- Blue bubble (back, bottom-left) -->
+    <path d="M10 28 Q10 20 18 20 L26 20 Q34 20 34 28 Q34 34 28 35 L14 39 L17 34 Q10 33 10 28Z" fill="none" stroke="#1A3A7A" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- Red bubble (front, top-right) -->
+    <path d="M20 18 Q20 10 28 10 L36 10 Q44 10 44 18 Q44 24 38 25 L40 30 L26 26 Q20 24 20 18Z" fill="none" stroke="#c0392b" stroke-width="2.2" stroke-linejoin="round"/>
   </svg>
 </button>
 
