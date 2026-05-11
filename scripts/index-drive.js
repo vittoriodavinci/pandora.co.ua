@@ -46,7 +46,7 @@ async function getEmbeddings(texts, retryCount = 0) {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${VOYAGE_API_KEY}`
     },
-    body: JSON.stringify({ input: texts, model: "voyage-3-lite", output_dimension: 1024 })
+    body: JSON.stringify({ input: texts, model: "voyage-3-lite" })
   });
 
   if (res.status === 429 || res.status === 503) {
