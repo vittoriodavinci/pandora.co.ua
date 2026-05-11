@@ -1,0 +1,34 @@
+name: Index Documents from Google Drive
+
+on:
+  schedule:
+    # Запускается каждый день в 3:00 UTC
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+    # Можно запустить вручную из GitHub Actions
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd scripts
+          npm install
+
+      - name: Run indexer
+        env:
+          VOYAGE_API_KEY: ${{ secrets.VOYAGE_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          GOOGLE_DRIVE_FOLDER_ID: 1nEWv9xHaoPflOBMa7BRNU4lVntXSfsiM
+        run: |
+          cd scripts
+          node index-drive.js

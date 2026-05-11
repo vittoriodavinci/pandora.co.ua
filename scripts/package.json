@@ -1,0 +1,10 @@
+{
+  "name": "pandora-indexer",
+  "version": "1.0.0",
+  "description": "Indexes PDF books from Google Drive into Supabase",
+  "main": "index-drive.js",
+  "dependencies": {
+    "pdf-parse": "^1.1.1",
+    "node-fetch": "^2.7.0"
+  }
+}
