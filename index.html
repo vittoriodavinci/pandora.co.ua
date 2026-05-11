@@ -1429,6 +1429,13 @@ function setLang(lang) {
   updateVenn(lang);
   updateLangBtn(lang);
   localStorage.setItem('pandora-lang', lang);
+  // Update chat UI if available
+  if (typeof pcUpdateUI === 'function') pcUpdateUI(lang);
+  // Update greeting if chat hasn't been used yet
+  const greeting = document.getElementById('pcGreeting');
+  if (greeting && typeof PC_STRINGS !== 'undefined') {
+    greeting.textContent = (PC_STRINGS[lang] || PC_STRINGS.uk).greeting;
+  }
 }
 
 function toggleLangMenu() {
@@ -1554,7 +1561,7 @@ window.addEventListener('scroll', () => {
 
 
 <script>
-const PANDORA_SYSTEM = `You are the AI assistant of the USEN Pandora cooperative. IMPORTANT: Always respond in the SAME language the user writes in. If they write in Russian — answer in Russian. English — English. Spanish — Spanish. Ukrainian — Ukrainian. Never switch languages. Be friendly, specific, brief — max 3-4 sentences per answer.
+const PANDORA_SYSTEM_BASE = `You are the AI assistant of the USEN Pandora cooperative. IMPORTANT: The user's current interface language is {LANG_NAME}. Always respond in {LANG_NAME}. Never switch languages unless the user explicitly writes in a different language. Be friendly, specific, brief — max 3-4 sentences per answer.
 
 ПРОЕКТ USEN PANDORA:
 
@@ -1607,6 +1614,69 @@ const PANDORA_SYSTEM = `You are the AI assistant of the USEN Pandora cooperative
 
 let pcHistory = [];
 let pcOpen = false;
+
+// Localization for chat UI
+const PC_STRINGS = {
+  uk: {
+    greeting: "Привіт! Я — ІІ-асистент кооперативу Пандора. Запитайте мене про кооперацію, наші проекти або як стати пайщиком 🌿",
+    placeholder: "Задайте питання...",
+    suggestions: ["Що таке Пандора?", "Як вступити?", "Каса взаємодопомоги", "Ozon Effect"],
+    errorNet: "Помилка з'єднання. Спробуйте ще раз або: usenpandora@gmail.com",
+    errorOther: "Щось пішло не так. Напишіть нам: usenpandora@gmail.com",
+    langName: "Ukrainian"
+  },
+  ru: {
+    greeting: "Привет! Я — ИИ-ассистент кооператива Пандора. Спросите меня о кооперации, наших проектах или о том, как стать пайщиком 🌿",
+    placeholder: "Задайте вопрос...",
+    suggestions: ["Что такое Пандора?", "Как вступить?", "Касса взаимопомощи", "Ozon Effect"],
+    errorNet: "Ошибка соединения. Попробуйте ещё раз или: usenpandora@gmail.com",
+    errorOther: "Что-то пошло не так. Напишите нам: usenpandora@gmail.com",
+    langName: "Russian"
+  },
+  en: {
+    greeting: "Hello! I'm the AI assistant of the Pandora Cooperative. Ask me about the cooperative, our projects, or how to become a member 🌿",
+    placeholder: "Ask a question...",
+    suggestions: ["What is Pandora?", "How to join?", "Mutual Aid Fund", "Ozon Effect"],
+    errorNet: "Connection error. Please try again or: usenpandora@gmail.com",
+    errorOther: "Something went wrong. Contact us: usenpandora@gmail.com",
+    langName: "English"
+  },
+  es: {
+    greeting: "¡Hola! Soy el asistente IA de la Cooperativa Pandora. Pregúntame sobre la cooperativa, nuestros proyectos o cómo convertirte en miembro 🌿",
+    placeholder: "Haz una pregunta...",
+    suggestions: ["¿Qué es Pandora?", "¿Cómo unirse?", "Fondo de ayuda mutua", "Ozon Effect"],
+    errorNet: "Error de conexión. Inténtalo de nuevo o: usenpandora@gmail.com",
+    errorOther: "Algo salió mal. Escríbenos: usenpandora@gmail.com",
+    langName: "Spanish"
+  }
+};
+
+function getPcLang() {
+  return localStorage.getItem('pandora-lang') || 'uk';
+}
+
+function getPandoraSystem() {
+  const lang = getPcLang();
+  const langName = (PC_STRINGS[lang] || PC_STRINGS.uk).langName;
+  return PANDORA_SYSTEM_BASE.replace(/{LANG_NAME}/g, langName);
+}
+
+function pcUpdateUI(lang) {
+  const s = PC_STRINGS[lang] || PC_STRINGS.uk;
+  // Update placeholder
+  const inp = document.getElementById("pcInput");
+  if (inp) inp.placeholder = s.placeholder;
+  // Update suggestions
+  const sugBox = document.getElementById("pcSuggestions");
+  if (sugBox) {
+    sugBox.innerHTML = s.suggestions.map(t =>
+      `<button class="pc-suggestion" onclick="pcAsk(this.textContent)">${t}</button>`
+    ).join("");
+  }
+}
+
+// Hook into selectLang to update chat UI
+const _origSelectLang = typeof selectLang === "function" ? selectLang : null;
 
 function togglePandoraChat() {
   pcOpen = !pcOpen;
@@ -1675,7 +1745,7 @@ async function pcSend() {
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
         max_tokens: 500,
-        system: PANDORA_SYSTEM,
+        system: getPandoraSystem(),
         messages: pcHistory.slice(-8)
       })
     });
@@ -1686,11 +1756,11 @@ async function pcSend() {
       pcAddMsg("bot", reply);
       pcHistory.push({ role: "assistant", content: reply });
     } else {
-      pcAddMsg("bot", "Щось пішло не так. Напишіть нам: usenpandora@gmail.com");
+      pcAddMsg("bot", (PC_STRINGS[getPcLang()]||PC_STRINGS.uk).errorOther);
     }
   } catch(e) {
     pcRemoveTyping(typingId);
-    pcAddMsg("bot", "Помилка з'єднання. Спробуйте ще раз або: usenpandora@gmail.com");
+    pcAddMsg("bot", (PC_STRINGS[getPcLang()]||PC_STRINGS.uk).errorNet);
   }
   sendBtn.disabled = false;
   inp.focus();
@@ -1721,6 +1791,8 @@ function pcRemoveTyping(id) {
   const el = document.getElementById(id);
   if (el) el.remove();
 }
+
+// pcUpdateUI and greeting init called after chat widget HTML is rendered (see end of body)
 </script>
 
 <!-- ═══════════════════════════════════════════════
@@ -1863,7 +1935,7 @@ function pcRemoveTyping(id) {
     </div>
   </div>
   <div class="pc-messages" id="pcMessages">
-    <div class="pc-msg bot">Привіт! Я — ІІ-асистент кооперативу Пандора. Запитайте мене про кооперацію, наші проекти або як стати пайщиком 🌿</div>
+    <div class="pc-msg bot" id="pcGreeting">Привіт! Я — ІІ-асистент кооперативу Пандора. Запитайте мене про кооперацію, наші проекти або як стати пайщиком 🌿</div>
   </div>
   <div class="pc-suggestions" id="pcSuggestions">
     <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Що таке Пандора?</button>
@@ -1880,6 +1952,16 @@ function pcRemoveTyping(id) {
     </button>
   </div>
 </div>
+
+<script>
+// Init chat UI language — runs after chat DOM is in place
+(function() {
+  const lang = getPcLang();
+  pcUpdateUI(lang);
+  const greeting = document.getElementById('pcGreeting');
+  if (greeting) greeting.textContent = (PC_STRINGS[lang] || PC_STRINGS.uk).greeting;
+})();
+</script>
 
 </body>
 </html>
