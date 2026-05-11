@@ -8,9 +8,8 @@ const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
 const CHUNK_SIZE = 1500;
 const CHUNK_OVERLAP = 200;
-const STREAM_BLOCK = 50000; // обрабатываем по 50к символов за раз
+const STREAM_BLOCK = 50000;
 
-// --- Получить список MD файлов из папки Google Drive ---
 async function getDriveFiles(folderId) {
   const url = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${GOOGLE_API_KEY}&fields=files(id,name,modifiedTime,mimeType)`;
   const res = await fetch(url);
@@ -22,7 +21,6 @@ async function getDriveFiles(folderId) {
   return (data.files || []).filter(f => f.name.endsWith(".md"));
 }
 
-// --- Нарезать блок текста на куски ---
 function chunkBlock(text, source, startIndex) {
   const chunks = [];
   const cleaned = text.replace(/\r\n/g, "\n");
@@ -41,22 +39,28 @@ function chunkBlock(text, source, startIndex) {
   return chunks;
 }
 
-// --- Получить embeddings через Voyage AI ---
-async function getEmbeddings(texts) {
+async function getEmbeddings(texts, retryCount = 0) {
   const res = await fetch("https://api.voyageai.com/v1/embeddings", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${VOYAGE_API_KEY}`
     },
-    body: JSON.stringify({ input: texts, model: "voyage-3-lite" })
+    body: JSON.stringify({ input: texts, model: "voyage-3-lite", output_dimension: 1024 })
   });
+
+  if (res.status === 429 || res.status === 503) {
+    const waitSec = Math.pow(2, retryCount + 1) * 10;
+    console.log(`  Rate limit, жду ${waitSec}с...`);
+    await new Promise(r => setTimeout(r, waitSec * 1000));
+    if (retryCount < 5) return getEmbeddings(texts, retryCount + 1);
+  }
+
   if (!res.ok) throw new Error(`Voyage API error: ${await res.text()}`);
   const data = await res.json();
   return data.data.map(d => d.embedding);
 }
 
-// --- Проверить, индексирован ли файл ---
 async function isAlreadyIndexed(source) {
   const res = await fetch(
     `${SUPABASE_URL}/rest/v1/documents?metadata->>source=eq.${encodeURIComponent(source)}&limit=1`,
@@ -66,7 +70,6 @@ async function isAlreadyIndexed(source) {
   return Array.isArray(data) && data.length > 0;
 }
 
-// --- Сохранить батч в Supabase ---
 async function saveBatch(chunks, embeddings) {
   const rows = chunks.map((chunk, i) => ({
     content: chunk.content,
@@ -87,7 +90,6 @@ async function saveBatch(chunks, embeddings) {
   if (!res.ok) throw new Error(`Supabase insert error: ${await res.text()}`);
 }
 
-// --- Обработать один файл стримингом ---
 async function processFile(file) {
   console.log(`\nОбрабатываю: ${file.name}`);
 
@@ -103,16 +105,13 @@ async function processFile(file) {
   let buffer = "";
   let totalChunks = 0;
   let totalChars = 0;
-  const BATCH = 8;
+  const BATCH = 4;
 
-  // Читаем стримом, обрабатываем блоками
   for await (const rawChunk of res.body) {
     buffer += rawChunk.toString("utf8");
     totalChars += rawChunk.length;
 
-    // Когда накопили достаточно — обрабатываем
     while (buffer.length >= STREAM_BLOCK) {
-      // Берём блок, оставляем overlap для следующего
       const block = buffer.slice(0, STREAM_BLOCK);
       buffer = buffer.slice(STREAM_BLOCK - CHUNK_OVERLAP);
 
@@ -122,7 +121,7 @@ async function processFile(file) {
         const batch = chunks.slice(i, i + BATCH);
         const embeddings = await getEmbeddings(batch.map(c => c.content));
         await saveBatch(batch, embeddings);
-        await new Promise(r => setTimeout(r, 200));
+        await new Promise(r => setTimeout(r, 21000));
       }
 
       totalChunks += chunks.length;
@@ -130,14 +129,13 @@ async function processFile(file) {
     }
   }
 
-  // Обрабатываем остаток
   if (buffer.trim().length > 100) {
     const chunks = chunkBlock(buffer, file.name, totalChunks);
     for (let i = 0; i < chunks.length; i += BATCH) {
       const batch = chunks.slice(i, i + BATCH);
       const embeddings = await getEmbeddings(batch.map(c => c.content));
       await saveBatch(batch, embeddings);
-      await new Promise(r => setTimeout(r, 200));
+      await new Promise(r => setTimeout(r, 21000));
     }
     totalChunks += chunks.length;
   }
@@ -145,7 +143,6 @@ async function processFile(file) {
   console.log(`  ГОТОВО: ${file.name} — итого кусков: ${totalChunks}`);
 }
 
-// --- Главная функция ---
 async function main() {
   console.log("=== Pandora Indexer (MD streaming) ===");
   console.log(`Папка Google Drive: ${FOLDER_ID}`);
