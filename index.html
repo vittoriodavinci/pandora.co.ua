@@ -1611,7 +1611,41 @@ let pcOpen = false;
 function togglePandoraChat() {
   pcOpen = !pcOpen;
   document.getElementById("pandora-chat-window").classList.toggle("open", pcOpen);
+  if (!pcOpen) {
+    // also exit fullscreen when closing
+    document.getElementById("pandora-chat-window").classList.remove("fullscreen");
+    pcFullscreen = false;
+    updateExpandIcon();
+  }
   if (pcOpen) setTimeout(() => document.getElementById("pcInput").focus(), 200);
+}
+
+let pcFullscreen = false;
+function togglePandoraFullscreen() {
+  pcFullscreen = !pcFullscreen;
+  document.getElementById("pandora-chat-window").classList.toggle("fullscreen", pcFullscreen);
+  updateExpandIcon();
+}
+function updateExpandIcon() {
+  const icon = document.getElementById("pcExpandIcon");
+  if (!icon) return;
+  if (pcFullscreen) {
+    // collapse icon (inward arrows)
+    icon.innerHTML = `
+      <line x1="1" y1="5" x2="5" y2="1"/><polyline points="1,1 5,1 5,5"/>
+      <line x1="13" y1="5" x2="9" y2="1"/><polyline points="13,1 9,1 9,5"/>
+      <line x1="1" y1="9" x2="5" y2="13"/><polyline points="1,13 5,13 5,9"/>
+      <line x1="13" y1="9" x2="9" y2="13"/><polyline points="13,13 9,13 9,9"/>`;
+    document.getElementById("pcExpandBtn").title = "Згорнути";
+  } else {
+    // expand icon (outward arrows)
+    icon.innerHTML = `
+      <polyline points="1,5 1,1 5,1"/><line x1="1" y1="1" x2="5.5" y2="5.5"/>
+      <polyline points="9,1 13,1 13,5"/><line x1="13" y1="1" x2="8.5" y2="5.5"/>
+      <polyline points="1,9 1,13 5,13"/><line x1="1" y1="13" x2="5.5" y2="8.5"/>
+      <polyline points="13,9 13,13 9,13"/><line x1="13" y1="13" x2="8.5" y2="8.5"/>`;
+    document.getElementById("pcExpandBtn").title = "Розгорнути на весь екран";
+  }
 }
 
 function pcAsk(text) {
@@ -1772,6 +1806,28 @@ function pcRemoveTyping(id) {
 .pc-send:hover { opacity: 0.85; }
 .pc-send svg { width: 16px; height: 16px; fill: #fff; }
 .pc-send:disabled { opacity: 0.4; cursor: default; }
+
+/* Expand / fullscreen button */
+.pc-expand {
+  background: none; border: none;
+  color: rgba(245,242,237,0.4); cursor: pointer;
+  padding: 0; line-height: 1; transition: color 0.15s;
+  display: flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px;
+}
+.pc-expand:hover { color: #F5F2ED; }
+.pc-expand svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Fullscreen state */
+#pandora-chat-window.fullscreen {
+  bottom: 0; right: 0;
+  width: 100vw; max-height: 100vh; height: 100vh;
+  border-radius: 0;
+  border: none;
+}
+#pandora-chat-window.fullscreen .pc-messages {
+  flex: 1;
+}
 </style>
 
 <button id="pandora-chat-btn" onclick="togglePandoraChat()" aria-label="Pandora AI чат">
@@ -1794,7 +1850,17 @@ function pcRemoveTyping(id) {
         <div class="pc-sub">Асистент кооперативу</div>
       </div>
     </div>
-    <button class="pc-close" onclick="togglePandoraChat()">&#x00D7;</button>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <button class="pc-expand" id="pcExpandBtn" onclick="togglePandoraFullscreen()" title="Розгорнути на весь екран">
+        <svg id="pcExpandIcon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;">
+          <polyline points="1,5 1,1 5,1"/><line x1="1" y1="1" x2="5.5" y2="5.5"/>
+          <polyline points="9,1 13,1 13,5"/><line x1="13" y1="1" x2="8.5" y2="5.5"/>
+          <polyline points="1,9 1,13 5,13"/><line x1="1" y1="13" x2="5.5" y2="8.5"/>
+          <polyline points="13,9 13,13 9,13"/><line x1="13" y1="13" x2="8.5" y2="8.5"/>
+        </svg>
+      </button>
+      <button class="pc-close" onclick="togglePandoraChat()">&#x00D7;</button>
+    </div>
   </div>
   <div class="pc-messages" id="pcMessages">
     <div class="pc-msg bot">Привіт! Я — ІІ-асистент кооперативу Пандора. Запитайте мене про кооперацію, наші проекти або як стати пайщиком 🌿</div>
