@@ -8,6 +8,7 @@ const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
 const CHUNK_SIZE = 1500;
 const CHUNK_OVERLAP = 200;
+const STREAM_BLOCK = 50000; // обрабатываем по 50к символов за раз
 
 // --- Получить список MD файлов из папки Google Drive ---
 async function getDriveFiles(folderId) {
@@ -18,43 +19,23 @@ async function getDriveFiles(folderId) {
     return null;
   }
   const data = await res.json();
-  // Только .md файлы, PDF игнорируем
   return (data.files || []).filter(f => f.name.endsWith(".md"));
 }
 
-// --- Скачать MD файл как текст ---
-async function downloadMd(fileId) {
-  const url = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${GOOGLE_API_KEY}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Не удалось скачать файл ${fileId}: ${res.status}`);
-  return await res.text();
-}
-
-// --- Нарезать текст на куски (с уважением к заголовкам MD) ---
-function chunkText(text, source) {
+// --- Нарезать блок текста на куски ---
+function chunkBlock(text, source, startIndex) {
   const chunks = [];
-  const cleaned = text.replace(/\r\n/g, "\n").trim();
+  const cleaned = text.replace(/\r\n/g, "\n");
+  let start = 0;
 
-  // Разбиваем по заголовкам ## как естественным смысловым границам
-  const sections = cleaned.split(/(?=\n## )/);
-
-  for (const section of sections) {
-    if (section.trim().length < 50) continue;
-
-    if (section.length <= CHUNK_SIZE) {
-      chunks.push({ content: section.trim(), metadata: { source, chunk_index: chunks.length } });
-      continue;
+  while (start < cleaned.length) {
+    const end = Math.min(start + CHUNK_SIZE, cleaned.length);
+    const chunk = cleaned.slice(start, end).trim();
+    if (chunk.length > 100) {
+      chunks.push({ content: chunk, metadata: { source, chunk_index: startIndex + chunks.length } });
     }
-
-    let start = 0;
-    while (start < section.length) {
-      const end = Math.min(start + CHUNK_SIZE, section.length);
-      const chunk = section.slice(start, end).trim();
-      if (chunk.length > 100) {
-        chunks.push({ content: chunk, metadata: { source, chunk_index: chunks.length } });
-      }
-      start = end - CHUNK_OVERLAP;
-    }
+    start = end - CHUNK_OVERLAP;
+    if (end === cleaned.length) break;
   }
 
   return chunks;
@@ -106,7 +87,7 @@ async function saveBatch(chunks, embeddings) {
   if (!res.ok) throw new Error(`Supabase insert error: ${await res.text()}`);
 }
 
-// --- Обработать один файл ---
+// --- Обработать один файл стримингом ---
 async function processFile(file) {
   console.log(`\nОбрабатываю: ${file.name}`);
 
@@ -115,28 +96,58 @@ async function processFile(file) {
     return;
   }
 
-  console.log(`  Скачиваю...`);
-  const text = await downloadMd(file.id);
-  console.log(`  Текст: ${text.length} символов`);
+  const url = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${GOOGLE_API_KEY}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Не удалось скачать файл: ${res.status}`);
 
-  const chunks = chunkText(text, file.name);
-  console.log(`  Кусков: ${chunks.length}`);
+  let buffer = "";
+  let totalChunks = 0;
+  let totalChars = 0;
+  const BATCH = 8;
 
-  const BATCH = 10;
-  for (let i = 0; i < chunks.length; i += BATCH) {
-    const batch = chunks.slice(i, i + BATCH);
-    const embeddings = await getEmbeddings(batch.map(c => c.content));
-    await saveBatch(batch, embeddings);
-    console.log(`  Прогресс: ${Math.min(i + BATCH, chunks.length)}/${chunks.length}`);
-    await new Promise(r => setTimeout(r, 200));
+  // Читаем стримом, обрабатываем блоками
+  for await (const rawChunk of res.body) {
+    buffer += rawChunk.toString("utf8");
+    totalChars += rawChunk.length;
+
+    // Когда накопили достаточно — обрабатываем
+    while (buffer.length >= STREAM_BLOCK) {
+      // Берём блок, оставляем overlap для следующего
+      const block = buffer.slice(0, STREAM_BLOCK);
+      buffer = buffer.slice(STREAM_BLOCK - CHUNK_OVERLAP);
+
+      const chunks = chunkBlock(block, file.name, totalChunks);
+
+      for (let i = 0; i < chunks.length; i += BATCH) {
+        const batch = chunks.slice(i, i + BATCH);
+        const embeddings = await getEmbeddings(batch.map(c => c.content));
+        await saveBatch(batch, embeddings);
+        await new Promise(r => setTimeout(r, 200));
+      }
+
+      totalChunks += chunks.length;
+      console.log(`  Обработано: ${totalChars} символов, кусков: ${totalChunks}`);
+    }
   }
 
-  console.log(`  ГОТОВО: ${file.name}`);
+  // Обрабатываем остаток
+  if (buffer.trim().length > 100) {
+    const chunks = chunkBlock(buffer, file.name, totalChunks);
+    for (let i = 0; i < chunks.length; i += BATCH) {
+      const batch = chunks.slice(i, i + BATCH);
+      const embeddings = await getEmbeddings(batch.map(c => c.content));
+      await saveBatch(batch, embeddings);
+      await new Promise(r => setTimeout(r, 200));
+    }
+    totalChunks += chunks.length;
+  }
+
+  console.log(`  ГОТОВО: ${file.name} — итого кусков: ${totalChunks}`);
 }
 
 // --- Главная функция ---
 async function main() {
-  console.log("=== Pandora Indexer (MD) ===");
+  console.log("=== Pandora Indexer (MD streaming) ===");
   console.log(`Папка Google Drive: ${FOLDER_ID}`);
 
   const files = await getDriveFiles(FOLDER_ID);
