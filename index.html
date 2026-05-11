@@ -1038,11 +1038,24 @@ span[data-lang].active { display:inline; }
       </div>
 
       <!-- INDIVIDUAL FORM -->
-      <form class="join-form" id="formIndividual" name="join-individual" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleJoin(event)">
+      <!-- Скрытая форма для Netlify detection -->
+      <form name="join-individual" data-netlify="true" hidden>
+        <input type="text" name="lastname">
+        <input type="text" name="firstname">
+        <input type="text" name="middlename">
+        <input type="email" name="email">
+        <input type="tel" name="phone">
+        <input type="text" name="location">
+      </form>
+
+      <form class="join-form" id="formIndividual" onsubmit="handleJoin(event)">
         <input type="hidden" name="form-name" value="join-individual">
-        <input type="hidden" name="bot-field" style="display:none">
-        <div><label><span data-lang="uk" class="active">Ім'я та прізвище</span><span data-lang="ru">Имя и фамилия</span><span data-lang="en">Full name</span><span data-lang="es">Nombre completo</span></label>
-          <input type="text" name="fullname" required></div>
+        <div><label><span data-lang="uk" class="active">Прізвище</span><span data-lang="ru">Фамилия</span><span data-lang="en">Last name</span><span data-lang="es">Apellido</span></label>
+          <input type="text" name="lastname" required></div>
+        <div><label><span data-lang="uk" class="active">Ім'я</span><span data-lang="ru">Имя</span><span data-lang="en">First name</span><span data-lang="es">Nombre</span></label>
+          <input type="text" name="firstname" required></div>
+        <div><label><span data-lang="uk" class="active">По батькові</span><span data-lang="ru">Отчество</span><span data-lang="en">Middle name</span><span data-lang="es">Patronímico</span></label>
+          <input type="text" name="middlename"></div>
         <div><label>Email</label>
           <input type="email" name="email" placeholder="your@email.com" required></div>
         <div><label><span data-lang="uk" class="active">Телефон</span><span data-lang="ru">Телефон</span><span data-lang="en">Phone</span><span data-lang="es">Teléfono</span></label>
@@ -1240,16 +1253,23 @@ function handleJoin(e) {
   const orig = btn.innerHTML;
   btn.textContent = '⏳ Відправляємо...';
   btn.disabled = true;
+
+  const formData = new FormData(form);
+
   fetch('/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(new FormData(form)).toString()
+    body: new URLSearchParams(formData).toString()
   })
-  .then(() => {
-    btn.textContent = '✓ Заявку прийнято!';
-    btn.style.background = '#1A7A3C';
-    form.reset();
-    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.disabled = false; }, 4000);
+  .then(res => {
+    if (res.ok) {
+      btn.textContent = '✓ Заявку прийнято!';
+      btn.style.background = '#1A7A3C';
+      form.reset();
+      setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.disabled = false; }, 4000);
+    } else {
+      throw new Error('Network response was not ok');
+    }
   })
   .catch(() => {
     btn.textContent = '✗ Помилка. Спробуйте ще раз.';
