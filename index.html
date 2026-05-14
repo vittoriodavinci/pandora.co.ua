@@ -1517,7 +1517,10 @@ function handleJoin(e) {
     }
   }
 
-  fetch('/', {
+  params.append('access_key', 'd2629b69-5660-43e0-8b0d-f2ac60a2c452');
+  params.append('subject', 'Нова заявка — Кооператив Пандора');
+
+  fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: params.toString()
