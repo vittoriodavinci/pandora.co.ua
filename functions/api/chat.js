@@ -1,18 +1,16 @@
-exports.handler = async function(event, context) {
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
-  }
+export async function onRequestPost(context) {
+  const env = context.env;
 
-  const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-  const SUPABASE_URL = process.env.SUPABASE_URL;
-  const SUPABASE_SECRET_KEY = process.env.SUPABASE_SECRET_KEY;
-  const VOYAGE_API_KEY = process.env.VOYAGE_API_KEY;
+  const ANTHROPIC_API_KEY = env.ANTHROPIC_API_KEY;
+  const SUPABASE_URL = env.SUPABASE_URL;
+  const SUPABASE_SECRET_KEY = env.SUPABASE_SECRET_KEY;
+  const VOYAGE_API_KEY = env.VOYAGE_API_KEY;
 
   let body;
   try {
-    body = JSON.parse(event.body);
+    body = await context.request.json();
   } catch (e) {
-    return { statusCode: 400, body: "Invalid JSON" };
+    return new Response("Invalid JSON", { status: 400 });
   }
 
   const { model, max_tokens, system, messages } = body;
@@ -64,7 +62,6 @@ exports.handler = async function(event, context) {
       ragContext = `\n\nРЕЛЕВАНТНА ІНФОРМАЦІЯ З БАЗИ ЗНАНЬ:\n${chunks}\n\nВикористовуй цю інформацію для відповіді, якщо вона стосується питання.`;
     }
   } catch (e) {
-    // Если RAG не сработал — отвечаем без него, не ломаем бота
     console.log("RAG error:", e.message);
   }
 
@@ -88,12 +85,22 @@ exports.handler = async function(event, context) {
 
   const data = await anthropicRes.json();
 
-  return {
-    statusCode: 200,
+  return new Response(JSON.stringify(data), {
+    status: 200,
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*"
-    },
-    body: JSON.stringify(data)
-  };
-};
+    }
+  });
+}
+
+export async function onRequestOptions() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
+  });
+}
