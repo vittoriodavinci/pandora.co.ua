@@ -1,4 +1,99 @@
-export async function onRequestPost(context) {
+const ALLOWED_ORIGINS = new Set([
+  "https://pandora.co.ua",
+  "https://www.pandora.co.ua"
+]);
+
+const DEFAULT_MODEL = "claude-haiku-4-5-20251001";
+const MAX_TOKENS = 500;
+const MAX_MESSAGES = 8;
+const MAX_CONTENT_LENGTH = 2000;
+const MAX_TOTAL_CONTENT_LENGTH = 6000;
+const SYSTEM_PROMPT = "You are Pandora's helpful assistant. Answer briefly and safely using the provided context when relevant.";
+
+function getCorsHeaders(request) {
+  const origin = request.headers.get("Origin");
+  if (!origin) return {};
+  if (!ALLOWED_ORIGINS.has(origin)) return null;
+
+  return {
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Vary": "Origin"
+  };
+}
+
+function jsonResponse(data, status, corsHeaders = {}) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      "Content-Type": "application/json",
+      ...corsHeaders
+    }
+  });
+}
+
+function validateMessages(messages) {
+  if (!Array.isArray(messages) || messages.length === 0 || messages.length > MAX_MESSAGES) {
+    return null;
+  }
+
+  let totalLength = 0;
+  const normalized = [];
+
+  for (const message of messages) {
+    if (!message || (message.role !== "user" && message.role !== "assistant")) {
+      return null;
+    }
+    if (typeof message.content !== "string" || message.content.length > MAX_CONTENT_LENGTH) {
+      return null;
+    }
+
+    totalLength += message.content.length;
+    if (totalLength > MAX_TOTAL_CONTENT_LENGTH) {
+      return null;
+    }
+
+    normalized.push({
+      role: message.role,
+      content: message.content
+    });
+  }
+
+  const lastUserMessage = [...normalized].reverse().find(message => message.role === "user");
+  if (!lastUserMessage || lastUserMessage.content.trim().length === 0) {
+    return null;
+  }
+
+  return {
+    messages: normalized,
+    userQuestion: lastUserMessage.content.trim()
+  };
+}
+
+export async function onRequest(context) {
+  const corsHeaders = getCorsHeaders(context.request);
+  if (corsHeaders === null) {
+    return new Response("Forbidden", { status: 403 });
+  }
+
+  if (context.request.method === "OPTIONS") {
+    return new Response(null, {
+      status: 204,
+      headers: corsHeaders
+    });
+  }
+
+  if (context.request.method !== "POST") {
+    return new Response("Method Not Allowed", {
+      status: 405,
+      headers: {
+        "Allow": "POST, OPTIONS",
+        ...corsHeaders
+      }
+    });
+  }
+
   const env = context.env;
 
   const ANTHROPIC_API_KEY = env.ANTHROPIC_API_KEY;
@@ -10,13 +105,15 @@ export async function onRequestPost(context) {
   try {
     body = await context.request.json();
   } catch (e) {
-    return new Response("Invalid JSON", { status: 400 });
+    return jsonResponse({ error: "Invalid request" }, 400, corsHeaders);
   }
 
-  const { model, max_tokens, system, messages } = body;
-  const userQuestion = messages && messages.length > 0
-    ? messages[messages.length - 1].content
-    : "";
+  const validated = validateMessages(body.messages);
+  if (!validated) {
+    return jsonResponse({ error: "Invalid messages" }, 400, corsHeaders);
+  }
+
+  const { messages, userQuestion } = validated;
 
   // --- Шаг 1: Получить embedding вопроса через Voyage AI ---
   let ragContext = "";
@@ -66,41 +163,33 @@ export async function onRequestPost(context) {
   }
 
   // --- Шаг 3: Отправить в Claude с контекстом ---
-  const systemWithRag = (system || "") + ragContext;
+  const systemWithRag = (env.PANDORA_SYSTEM_PROMPT || SYSTEM_PROMPT) + ragContext;
 
-  const anthropicRes = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01"
-    },
-    body: JSON.stringify({
-      model: model || "claude-haiku-4-5-20251001",
-      max_tokens: max_tokens || 500,
-      system: systemWithRag,
-      messages: messages
-    })
-  });
+  try {
+    const anthropicRes = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01"
+      },
+      body: JSON.stringify({
+        model: DEFAULT_MODEL,
+        max_tokens: MAX_TOKENS,
+        system: systemWithRag,
+        messages: messages
+      })
+    });
 
-  const data = await anthropicRes.json();
-
-  return new Response(JSON.stringify(data), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*"
+    if (!anthropicRes.ok) {
+      return jsonResponse({ error: "Upstream request failed" }, 502, corsHeaders);
     }
-  });
-}
 
-export async function onRequestOptions() {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type"
-    }
-  });
+    const data = await anthropicRes.json();
+
+    return jsonResponse(data, 200, corsHeaders);
+  } catch (e) {
+    console.log("Anthropic error:", e.message);
+    return jsonResponse({ error: "Upstream request failed" }, 502, corsHeaders);
+  }
 }
