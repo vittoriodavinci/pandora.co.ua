@@ -1,6 +1,8 @@
 # Environment / secrets
 .env
 .env.*
+!scripts/.env.example
+scripts/.env
 *.pem
 *.key
 *.p12
