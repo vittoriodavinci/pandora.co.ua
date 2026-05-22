@@ -148,6 +148,14 @@ input:focus, select:focus, textarea:focus { border-color:var(--blue); }
 textarea { resize:vertical; min-height:80px; }
 .btn-join { padding:14px 36px; background:var(--blue); color:white; border:none; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; font-family:"DM Sans",sans-serif; font-weight:500; transition:opacity 0.2s; }
 .btn-join:hover { opacity:0.85; }
+.btn-add-phone { padding:8px 18px; background:transparent; border:1px solid rgba(26,58,122,0.3); color:var(--blue); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; font-family:"DM Sans",sans-serif; margin-bottom:14px; transition:all 0.2s; }
+.btn-add-phone:hover { background:rgba(26,58,122,0.07); }
+.messenger-checks { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:4px; }
+.check-label { display:flex; align-items:center; gap:5px; font-size:11px; letter-spacing:0.05em; text-transform:none; opacity:0.7; cursor:pointer; color:#0D0D0D; }
+.check-label input[type="checkbox"] { width:auto; margin:0; }
+.phone-entry { border-left:2px solid rgba(26,58,122,0.15); padding-left:12px; margin-bottom:14px; }
+.phone-remove { float:right; background:none; border:none; color:#D42B2B; cursor:pointer; font-size:12px; opacity:0.5; padding:0; margin-top:-2px; }
+.phone-remove:hover { opacity:1; }
 .join-steps { margin-top:8px; }
 .j-step { display:grid; grid-template-columns:36px 1fr; gap:14px; padding:16px 0; border-bottom:1px solid rgba(0,0,0,0.07); align-items:start; }
 .j-num { font-family:"Cormorant Garamond",serif; font-size:28px; color:var(--blue); opacity:0.25; line-height:1; }
@@ -600,8 +608,9 @@ span[data-lang].active { display:inline; }
     </div>
     <div class="p-card c-dim">
       <div class="p-status">Future</div>
-      <h3>USEN Pandora</h3>
+      <h3><a href="/usen.html" style="color:inherit;text-decoration:none;">USEN Pandora</a></h3>
       <p><span data-lang="uk" class="active">Соціально-економічна мережа. Карта пайщиків і проектів, дошка оголошень та інші цифрові інструменти.</span><span data-lang="ru">Социально-экономическая сеть. Карта пайщиков и проектов, доска объявлений и другие цифровые инструменты.</span><span data-lang="en">Social-economic network. Member and project map, bulletin board and other digital tools.</span><span data-lang="es">Red socioeconómica. Mapa de socios y proyectos, tablón de anuncios y otras herramientas digitales.</span></p>
+      <a href="/usen.html" class="p-link"><span data-lang="uk" class="active">Читати концепцію →</span><span data-lang="ru">Читать концепцию →</span><span data-lang="en">Read concept →</span><span data-lang="es">Leer concepto →</span></a>
     </div>
     <div class="p-card c-dim">
       <div class="p-status">Future</div>
@@ -696,7 +705,7 @@ span[data-lang].active { display:inline; }
         <span data-lang="es">EE.UU. · Una mirada al futuro</span>
       </div>
       <div>
-        <h4><a href="https://www.thevenusproject.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;"><span data-lang="uk" class="active">Проект Венера ↗</span><span data-lang="ru">Проект Венера ↗</span><span data-lang="en">The Venus Project ↗</span><span data-lang="es">El Proyecto Venus ↗</span></a></h4>
+        <div style="height:40px;display:flex;align-items:center;margin-bottom:10px;"><a href="https://www.thevenusproject.com/" target="_blank" rel="noopener"><img src="data:image/png;base64,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" alt="The Venus Project" style="height:32px;width:auto;object-fit:contain;display:block;"></a></div>
         <p><span data-lang="uk" class="active">Концепція ресурсно-орієнтованої економіки Жака Фреско. Місто майбутнього без грошей, бо в них немає потреби: всі необхідні товари та послуги виробляються власними високотехнологічними виробництвами. Це реально досяжно — якщо об'єднати ресурси і цілі.</span><span data-lang="ru">Концепция ресурсно-ориентированной экономики Жака Фреско. Город будущего без денег, ибо в них нет нужды: все необходимые товары и услуги производятся собственными высокотехнологичными производствами. Это реально достижимо — если объединить ресурсы и цели.</span><span data-lang="en">Jacques Fresco's resource-based economy. A city of the future without money, for there is no need for it: all necessary goods and services are produced by the community's own high-tech facilities. This is realistically achievable — if resources and goals are united.</span><span data-lang="es">La economía basada en recursos de Jacques Fresco. Una ciudad del futuro sin dinero, pues no hay necesidad de él: todos los bienes y servicios necesarios los producen las propias instalaciones de alta tecnología. Es realmente alcanzable — si se unen recursos y objetivos.</span></p>
       </div>
     </div>
@@ -708,7 +717,7 @@ span[data-lang].active { display:inline; }
         <span data-lang="es">Rusia · Caja de ayuda mutua</span>
       </div>
       <div>
-        <h4><a href="https://soobshestvokopit.ru/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">КопиКупи ↗</a></h4>
+        <div style="height:40px;display:flex;align-items:center;margin-bottom:10px;"><a href="https://soobshestvokopit.ru/" target="_blank" rel="noopener"><img src="data:image/png;base64,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" alt="КопиКупи" style="height:40px;width:auto;object-fit:contain;display:block;"></a></div>
         <p><span data-lang="uk" class="active">Споживчий кооператив спільних накопичень (Омськ, 2015). Пайщики накопичують разом і по черзі отримують позики на житло або авто — без банківських відсотків. Членський внесок лише 8,4% від суми позики замість ~100% банківської переплати. 14 000+ учасників, ~400 млн руб. накопичень.</span><span data-lang="ru">Потребительский кооператив совместных накоплений (Омск, 2015). Пайщики копят вместе и по очереди получают займы на жильё или автомобиль — без банковских процентов. Членский взнос всего 8,4% от суммы займа, тогда как переплата по ипотеке достигает ~100%. 14 000+ участников, ~400 млн руб. накоплений.</span><span data-lang="en">A consumer savings cooperative (Omsk, 2015). Members pool savings and take turns receiving loans for housing or a car — no bank interest. Total membership fee: just 8.4% of the loan, versus ~100% in bank mortgage interest. 14,000+ members, ~₽400M in accumulated savings.</span><span data-lang="es">Cooperativa de ahorro conjunto (Omsk, 2015). Los socios ahorran juntos y reciben préstamos por turnos para vivienda o coche, sin intereses bancarios. Cuota total: solo el 8,4% del préstamo frente al ~100% de sobrecargo hipotecario. 14 000+ socios, ~400M₽ acumulados.</span></p>
       </div>
     </div>
@@ -1046,6 +1055,7 @@ span[data-lang].active { display:inline; }
         <input type="email" name="email">
         <input type="tel" name="phone">
         <input type="text" name="location">
+        <input type="text" name="phones">
       </form>
 
       <form class="join-form" id="formIndividual" onsubmit="handleJoin(event)">
@@ -1058,10 +1068,63 @@ span[data-lang].active { display:inline; }
           <input type="text" name="middlename"></div>
         <div><label>Email</label>
           <input type="email" name="email" placeholder="your@email.com" required></div>
-        <div><label><span data-lang="uk" class="active">Телефон</span><span data-lang="ru">Телефон</span><span data-lang="en">Phone</span><span data-lang="es">Teléfono</span></label>
-          <input type="tel" name="phone" placeholder="+38 (0__) ___-__-__"></div>
-        <div><label><span data-lang="uk" class="active">Країна / Місто</span><span data-lang="ru">Страна / Город</span><span data-lang="en">Country / City</span><span data-lang="es">País / Ciudad</span></label>
-          <input type="text" name="location" placeholder="Україна, Харків"></div>
+        <div><label><span data-lang="uk" class="active">Країна</span><span data-lang="ru">Страна</span><span data-lang="en">Country</span><span data-lang="es">País</span></label>
+          <div class="country-select-wrap">
+            <select id="countrySelect" name="country" onchange="onCountryChange(this)" style="width:100%;padding:12px 14px;border:1px solid rgba(0,0,0,0.1);background:white;font-size:14px;font-family:'DM Sans',sans-serif;color:#0D0D0D;outline:none;appearance:none;">
+              <option value="" data-code="">-- Оберіть країну --</option>
+              <option value="Україна" data-code="+380">🇺🇦 Україна (+380)</option>
+              <option value="Польща" data-code="+48">🇵🇱 Польща (+48)</option>
+              <option value="Німеччина" data-code="+49">🇩🇪 Німеччина (+49)</option>
+              <option value="Чехія" data-code="+420">🇨🇿 Чехія (+420)</option>
+              <option value="Австрія" data-code="+43">🇦🇹 Австрія (+43)</option>
+              <option value="Швейцарія" data-code="+41">🇨🇭 Швейцарія (+41)</option>
+              <option value="Франція" data-code="+33">🇫🇷 Франція (+33)</option>
+              <option value="Іспанія" data-code="+34">🇪🇸 Іспанія (+34)</option>
+              <option value="Італія" data-code="+39">🇮🇹 Італія (+39)</option>
+              <option value="Нідерланди" data-code="+31">🇳🇱 Нідерланди (+31)</option>
+              <option value="Бельгія" data-code="+32">🇧🇪 Бельгія (+32)</option>
+              <option value="Велика Британія" data-code="+44">🇬🇧 Велика Британія (+44)</option>
+              <option value="США" data-code="+1">🇺🇸 США (+1)</option>
+              <option value="Канада" data-code="+1">🇨🇦 Канада (+1)</option>
+              <option value="Ізраїль" data-code="+972">🇮🇱 Ізраїль (+972)</option>
+              <option value="ОАЕ" data-code="+971">🇦🇪 ОАЕ (+971)</option>
+              <option value="Туреччина" data-code="+90">🇹🇷 Туреччина (+90)</option>
+              <option value="Грузія" data-code="+995">🇬🇪 Грузія (+995)</option>
+              <option value="Росія" data-code="+7">🇷🇺 Росія (+7)</option>
+              <option value="Молдова" data-code="+373">🇲🇩 Молдова (+373)</option>
+              <option value="Румунія" data-code="+40">🇷🇴 Румунія (+40)</option>
+              <option value="Угорщина" data-code="+36">🇭🇺 Угорщина (+36)</option>
+              <option value="Словаччина" data-code="+421">🇸🇰 Словаччина (+421)</option>
+              <option value="Литва" data-code="+370">🇱🇹 Литва (+370)</option>
+              <option value="Латвія" data-code="+371">🇱🇻 Латвія (+371)</option>
+              <option value="Естонія" data-code="+372">🇪🇪 Естонія (+372)</option>
+            </select>
+          </div>
+        </div>
+        <div><label><span data-lang="uk" class="active">Місто</span><span data-lang="ru">Город</span><span data-lang="en">City</span><span data-lang="es">Ciudad</span></label>
+          <input type="text" name="city" placeholder="Харків"></div>
+        <div id="phoneList">
+          <div class="phone-entry" style="margin-bottom:10px;">
+            <label><span data-lang="uk" class="active">Телефон</span><span data-lang="ru">Телефон</span><span data-lang="en">Phone</span><span data-lang="es">Teléfono</span></label>
+            <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center;">
+              <span id="phoneCode" style="padding:12px 10px;background:#f0f0f0;border:1px solid rgba(0,0,0,0.1);font-size:13px;white-space:nowrap;min-width:54px;text-align:center;">+?</span>
+              <input type="tel" name="phone[]" id="phoneInput" placeholder="(0__) ___-__-__" style="flex:1;">
+            </div>
+            <div class="messenger-checks">
+              <label class="check-label"><input type="checkbox" name="messengers[]" value="Telegram"> Telegram</label>
+              <label class="check-label"><input type="checkbox" name="messengers[]" value="Viber"> Viber</label>
+              <label class="check-label"><input type="checkbox" name="messengers[]" value="WhatsApp"> WhatsApp</label>
+              <label class="check-label"><input type="checkbox" name="messengers[]" value="Signal"> Signal</label>
+            </div>
+          </div>
+        </div>
+        <button type="button" onclick="addPhone()" class="btn-add-phone">
+          <span data-lang="uk" class="active">+ Додати телефон</span>
+          <span data-lang="ru">+ Добавить телефон</span>
+          <span data-lang="en">+ Add phone</span>
+          <span data-lang="es">+ Añadir teléfono</span>
+        </button>
+
         <button type="submit" class="btn-join">
           <span data-lang="uk" class="active">Подати заявку</span>
           <span data-lang="ru">Подать заявку</span>
@@ -1198,6 +1261,155 @@ function updateLangBtn(lang) {
     o.classList.toggle('active', o.getAttribute('data-lang-opt') === lang));
 }
 
+// Данные о форматах телефонов по странам
+const PHONE_FORMATS = {
+  '+380': { len: 9, placeholder: '(0XX) XXX-XX-XX', label: 'UA' },
+  '+48':  { len: 9, placeholder: 'XXX XXX XXX', label: 'PL' },
+  '+49':  { len: 10, placeholder: 'XXXXXXXXXX', label: 'DE' },
+  '+420': { len: 9, placeholder: 'XXX XXX XXX', label: 'CZ' },
+  '+43':  { len: 10, placeholder: 'XXXXXXXXXX', label: 'AT' },
+  '+41':  { len: 9, placeholder: 'XX XXX XX XX', label: 'CH' },
+  '+33':  { len: 9, placeholder: 'X XX XX XX XX', label: 'FR' },
+  '+34':  { len: 9, placeholder: 'XXX XXX XXX', label: 'ES' },
+  '+39':  { len: 10, placeholder: 'XXX XXX XXXX', label: 'IT' },
+  '+31':  { len: 9, placeholder: 'X XXXXXXXX', label: 'NL' },
+  '+32':  { len: 9, placeholder: 'XXX XX XX XX', label: 'BE' },
+  '+44':  { len: 10, placeholder: 'XXXX XXXXXX', label: 'GB' },
+  '+1':   { len: 10, placeholder: '(XXX) XXX-XXXX', label: 'US/CA' },
+  '+972': { len: 9, placeholder: 'XX XXX XXXX', label: 'IL' },
+  '+971': { len: 9, placeholder: 'XX XXX XXXX', label: 'AE' },
+  '+90':  { len: 10, placeholder: 'XXX XXX XXXX', label: 'TR' },
+  '+995': { len: 9, placeholder: 'XXX XX XX XX', label: 'GE' },
+  '+373': { len: 8, placeholder: 'XX XXX XXX', label: 'MD' },
+  '+40':  { len: 9, placeholder: 'XXX XXX XXX', label: 'RO' },
+  '+36':  { len: 9, placeholder: 'XX XXX XXXX', label: 'HU' },
+  '+421': { len: 9, placeholder: 'XXX XXX XXX', label: 'SK' },
+  '+370': { len: 8, placeholder: 'XXX XXXXX', label: 'LT' },
+  '+371': { len: 8, placeholder: 'XXXX XXXX', label: 'LV' },
+  '+372': { len: 8, placeholder: 'XXXX XXXX', label: 'EE' },
+  '+7':   { len: 10, placeholder: 'XXX XXX-XX-XX', label: 'RU' },
+};
+
+function validatePhone(input, code) {
+  const fmt = PHONE_FORMATS[code];
+  if (!fmt) return true;
+  const digits = input.value.replace(/\D/g, '');
+  const ok = digits.length === fmt.len;
+  input.style.borderColor = input.value && !ok ? '#D42B2B' : '';
+  // Показываем подсказку
+  let hint = input.nextElementSibling;
+  if (!hint || !hint.classList.contains('phone-hint')) {
+    hint = document.createElement('div');
+    hint.className = 'phone-hint';
+    hint.style.cssText = 'font-size:10px;color:#D42B2B;margin-top:3px;display:none;';
+    input.insertAdjacentElement('afterend', hint);
+  }
+  if (input.value && !ok) {
+    hint.textContent = 'Потрібно ' + fmt.len + ' цифр. Формат: ' + fmt.placeholder;
+    hint.style.display = 'block';
+  } else {
+    hint.style.display = 'none';
+  }
+  return ok;
+}
+
+function onCountryChange(sel) {
+  const code = sel.options[sel.selectedIndex].getAttribute('data-code') || '+?';
+  const span = document.getElementById('phoneCode');
+  if (span) span.textContent = code;
+  // Оновлюємо лише перший телефон — решта мають власний вибір країни
+  const firstEntry = document.querySelector('#phoneList .phone-entry:first-child');
+  if (firstEntry) {
+    const inp = firstEntry.querySelector('input[type="tel"]');
+    const fmt = PHONE_FORMATS[code];
+    if (inp) {
+      inp.placeholder = fmt ? fmt.placeholder : 'XXXXXXXXXX';
+      inp.oninput = fmt ? () => validatePhone(inp, code) : null;
+    }
+  }
+}
+
+// Список країн для вибору коду у додаткових телефонах
+const COUNTRY_OPTIONS = [
+  ['','+?','-- Оберіть країну --'],
+  ['Україна','+380','🇺🇦 Україна (+380)'],
+  ['Польща','+48','🇵🇱 Польща (+48)'],
+  ['Німеччина','+49','🇩🇪 Німеччина (+49)'],
+  ['Чехія','+420','🇨🇿 Чехія (+420)'],
+  ['Австрія','+43','🇦🇹 Австрія (+43)'],
+  ['Швейцарія','+41','🇨🇭 Швейцарія (+41)'],
+  ['Франція','+33','🇫🇷 Франція (+33)'],
+  ['Іспанія','+34','🇪🇸 Іспанія (+34)'],
+  ['Італія','+39','🇮🇹 Італія (+39)'],
+  ['Нідерланди','+31','🇳🇱 Нідерланди (+31)'],
+  ['Бельгія','+32','🇧🇪 Бельгія (+32)'],
+  ['Велика Британія','+44','🇬🇧 Велика Британія (+44)'],
+  ['США','+1','🇺🇸 США (+1)'],
+  ['Канада','+1','🇨🇦 Канада (+1)'],
+  ['Ізраїль','+972','🇮🇱 Ізраїль (+972)'],
+  ['ОАЕ','+971','🇦🇪 ОАЕ (+971)'],
+  ['Туреччина','+90','🇹🇷 Туреччина (+90)'],
+  ['Грузія','+995','🇬🇪 Грузія (+995)'],
+  ['Росія','+7','🇷🇺 Росія (+7)'],
+  ['Молдова','+373','🇲🇩 Молдова (+373)'],
+  ['Румунія','+40','🇷🇴 Румунія (+40)'],
+  ['Угорщина','+36','🇭🇺 Угорщина (+36)'],
+  ['Словаччина','+421','🇸🇰 Словаччина (+421)'],
+  ['Литва','+370','🇱🇹 Литва (+370)'],
+  ['Латвія','+371','🇱🇻 Латвія (+371)'],
+  ['Естонія','+372','🇪🇪 Естонія (+372)'],
+];
+
+function buildCountryOptions() {
+  return COUNTRY_OPTIONS.map(([val, code, label]) =>
+    `<option value="${val}" data-code="${code}">${label}</option>`
+  ).join('');
+}
+
+function onPhoneCountryChange(sel) {
+  const entry = sel.closest('.phone-entry');
+  const code = sel.options[sel.selectedIndex].getAttribute('data-code') || '+?';
+  const codeSpan = entry.querySelector('.phone-code-span');
+  if (codeSpan) codeSpan.textContent = code;
+  const inp = entry.querySelector('input[type="tel"]');
+  if (!inp) return;
+  const fmt = PHONE_FORMATS[code];
+  if (fmt) {
+    inp.placeholder = fmt.placeholder;
+    inp.oninput = () => validatePhone(inp, code);
+  } else {
+    inp.placeholder = 'XXXXXXXXXX';
+    inp.oninput = null;
+  }
+}
+
+function addPhone() {
+  const list = document.getElementById("phoneList");
+  const idx = list.querySelectorAll(".phone-entry").length + 1;
+  const div = document.createElement("div");
+  div.className = "phone-entry";
+  div.innerHTML = `
+    <label>Телефон ${idx} <button type="button" class="phone-remove" onclick="this.closest('.phone-entry').remove()">✕</button></label>
+    <div style="margin-bottom:8px;">
+      <select onchange="onPhoneCountryChange(this)" style="width:100%;padding:10px 12px;border:1px solid rgba(0,0,0,0.1);background:#f8f8f8;font-size:13px;font-family:'DM Sans',sans-serif;color:#0D0D0D;outline:none;appearance:none;margin-bottom:6px;cursor:pointer;">
+        ${buildCountryOptions()}
+      </select>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center;">
+      <span class="phone-code-span" style="padding:12px 10px;background:#f0f0f0;border:1px solid rgba(0,0,0,0.1);font-size:13px;white-space:nowrap;min-width:54px;text-align:center;">+?</span>
+      <input type="tel" name="phone[]" placeholder="XXXXXXXXXX" style="flex:1;">
+    </div>
+    <div class="messenger-checks">
+      <label class="check-label"><input type="checkbox" name="messengers[]" value="Telegram"> Telegram</label>
+      <label class="check-label"><input type="checkbox" name="messengers[]" value="Viber"> Viber</label>
+      <label class="check-label"><input type="checkbox" name="messengers[]" value="WhatsApp"> WhatsApp</label>
+      <label class="check-label"><input type="checkbox" name="messengers[]" value="Signal"> Signal</label>
+    </div>`;
+  list.appendChild(div);
+  // Scroll into view smoothly
+  div.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
 function switchEntity(type) {
   const fi = document.getElementById('formIndividual');
   const fl = document.getElementById('formLegal');
@@ -1218,6 +1430,13 @@ function setLang(lang) {
   updateVenn(lang);
   updateLangBtn(lang);
   localStorage.setItem('pandora-lang', lang);
+  // Update chat UI if available
+  if (typeof pcUpdateUI === 'function') pcUpdateUI(lang);
+  // Update greeting if chat hasn't been used yet
+  const greeting = document.getElementById('pcGreeting');
+  if (greeting && typeof PC_STRINGS !== 'undefined') {
+    greeting.textContent = (PC_STRINGS[lang] || PC_STRINGS.uk).greeting;
+  }
 }
 
 function toggleLangMenu() {
@@ -1254,18 +1473,71 @@ function handleJoin(e) {
   btn.textContent = '⏳ Відправляємо...';
   btn.disabled = true;
 
-  const formData = new FormData(form);
+  // Валідація телефонів (кожен entry має свій код країни)
+  let phoneValid = true;
+  form.querySelectorAll('.phone-entry').forEach(entry => {
+    const inp = entry.querySelector('input[type="tel"]');
+    if (!inp || !inp.value) return;
+    // Перший запис — код із глобального #phoneCode; нові — із свого .phone-code-span
+    const spanEl = entry.querySelector('.phone-code-span');
+    const globalCode = document.getElementById('phoneCode');
+    const code = (spanEl ? spanEl.textContent : (globalCode ? globalCode.textContent : '')).trim();
+    if (!validatePhone(inp, code)) phoneValid = false;
+  });
+  if (!phoneValid) {
+    btn.textContent = '✗ Перевірте номер телефону';
+    btn.style.background = '#D42B2B';
+    btn.disabled = false;
+    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 3000);
+    return;
+  }
 
-  fetch('/', {
+  // Збираємо всі телефони з кодом країни + месенджерами
+  const phoneEntries = form.querySelectorAll('.phone-entry');
+  const phonesData = [];
+  phoneEntries.forEach((entry) => {
+    const inp = entry.querySelector('input[type="tel"]');
+    const phone = inp ? inp.value : '';
+    if (!phone) return;
+    const spanEl = entry.querySelector('.phone-code-span');
+    const globalCode = document.getElementById('phoneCode');
+    const code = (spanEl ? spanEl.textContent : (globalCode ? globalCode.textContent : '')).trim();
+    const fullPhone = (code && code !== '+?') ? code + ' ' + phone : phone;
+    const messengers = [...entry.querySelectorAll('input[type="checkbox"]:checked')].map(c => c.value);
+    phonesData.push(fullPhone + (messengers.length ? ' (' + messengers.join(', ') + ')' : ''));
+  });
+
+  const formData = new FormData(form);
+  formData.set('phones', phonesData.join(' | '));
+
+  const params = new URLSearchParams();
+  for (const [key, val] of formData.entries()) {
+    if (key !== 'phone[]' && key !== 'messengers[]') {
+      params.append(key, val);
+    }
+  }
+
+  params.append('access_key', 'd2629b69-5660-43e0-8b0d-f2ac60a2c452');
+  params.append('subject', 'Нова заявка — Кооператив Пандора');
+
+  fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(formData).toString()
+    body: params.toString()
   })
   .then(res => {
     if (res.ok) {
       btn.textContent = '✓ Заявку прийнято!';
       btn.style.background = '#1A7A3C';
       form.reset();
+      // Видаляємо додаткові телефони
+      const list = document.getElementById('phoneList');
+      if (list) {
+        const extras = list.querySelectorAll('.phone-entry:not(:first-child)');
+        extras.forEach(el => el.remove());
+        list.querySelector('input[type="tel"]').value = '';
+        list.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+      }
       setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.disabled = false; }, 4000);
     } else {
       throw new Error('Network response was not ok');
@@ -1290,5 +1562,418 @@ window.addEventListener('scroll', () => {
   });
 });
 </script>
+
+
+<script>
+const PANDORA_SYSTEM_BASE = `You are the AI assistant of the Pandora Cooperative (Кооператив Пандора / Кооператив Пандора). 
+
+CRITICAL LANGUAGE RULE: The user's interface language is {LANG_NAME}. You MUST respond ENTIRELY in {LANG_NAME}. Do NOT mix languages. Do NOT use words, terms, or phrases from any other language — not even single words. If the knowledge base below uses Ukrainian terms, translate them fully into {LANG_NAME} before responding. Every single word in your reply must be in {LANG_NAME}.
+
+CRITICAL HONESTY RULE: Only state facts that are explicitly listed below. NEVER invent, guess, or extrapolate details, features, locations, statistics, names, or capabilities not in this document — even if the question implies they exist. If you are not 100% sure — say "I don't have that information" and suggest contacting usenpandora@gmail.com. Do NOT fill gaps with assumptions.
+
+Style: friendly, specific, max 3-4 sentences.
+
+=== COOPERATIVE FACTS ===
+
+CONCEPT:
+- Next-generation cooperative with digital tech and AI agents
+- Two structures: Pandora Cooperative (pandora.co.ua, Kharkiv, Ukraine) and USEN Network (pandora.coop, international)
+- Motto: "Economy for people" — rejecting chrematistics (not for profit, but for well-being)
+- Three roles in one person: Owner / Employee / Consumer (symbol — Venn diagram of three RGB circles)
+- Founder: Витторио Да Винчи (also written as Vittorio Da Vinci in Latin script; born 1979, Kharkiv). Developing the project since 2010.
+
+PRINCIPLES:
+- One member — one vote. No shareholders
+- Goods and services at cost price; the difference from market price is a shared investment
+- Closed marketplace without intermediaries
+- Decentralization, privacy, mutual aid
+
+ACTIVE PROJECTS:
+1. Mutual Aid Fund (Каса взаємодопомоги) — Raiffeisen model in crypto: loans ~1% on stablecoins, independent of banks, smart contracts
+2. Ozon Effect — ozonated oils and health equipment; already operational and generating income; members get it at cost price
+3. Pandora ID — hybrid cooperative membership card + payment instrument
+4. Voting Platform — ZK-SNARKs + NFC, Liquid Democracy (vote delegation)
+
+HOW TO JOIN:
+1. Online: fill in the form at pandora.co.ua
+2. Or offline: send paper documents by mail
+3. Identity verification
+4. Receive Pandora ID and access to the closed marketplace
+5. Pay the share contribution — your stake in the cooperative
+
+FINANCIAL MODEL:
+- Member pays entry and share contributions → shared capital
+- Fund issues loans at ~1% → AI agents minimize costs
+- Difference between market price and cost price → cooperative dividend
+- Distributed at year end proportionally to participation
+
+TECHNOLOGY:
+- Multi-Agent System: Strategist, DAO-Lawyer, Verifier, Treasurer, Communicator
+- Local AI models (Ollama) for independence
+- ZK-SNARKs for anonymous verification
+- Decentralized servers, Solidity smart contracts
+
+INSPIRATION (philosophy):
+- Mondragon (Spain) — 80,000+ members, €12B turnover
+- Raiffeisen — 500M clients in 100+ countries
+- Elinor Ostrom — Nobel Prize 2009 for principles of sustainable communities
+- Jacques Fresco / Venus Project — resource-based economy
+- KopiKupy (Ukraine) — a Ukrainian savings cooperative; 4,500 members, saved 100M+ UAH on bank interest
+
+KNOWLEDGE BASE RULE: If the question is about cooperative theory, economics, history of cooperatives, or any topic found in the knowledge base context provided below — answer it fully and helpfully. The knowledge base contains books and materials relevant to the cooperative movement. Use this information freely.
+
+If the question is completely unrelated to cooperatives, economics, or mutual aid — politely explain you specialize in Pandora and cooperative topics. If you don't know the exact answer — suggest writing to usenpandora@gmail.com`;
+
+let pcHistory = [];
+let pcOpen = false;
+
+// Localization for chat UI
+const PC_STRINGS = {
+  uk: {
+    greeting: "Привіт! Я — ІІ-асистент кооперативу Пандора. Запитайте мене про кооперацію, наші проекти або як стати пайщиком 🌿",
+    placeholder: "Задайте питання...",
+    suggestions: ["Що таке Пандора?", "Як вступити?", "Каса взаємодопомоги", "Ozon Effect"],
+    errorNet: "Помилка з'єднання. Спробуйте ще раз або: usenpandora@gmail.com",
+    errorOther: "Щось пішло не так. Напишіть нам: usenpandora@gmail.com",
+    langName: "Ukrainian"
+  },
+  ru: {
+    greeting: "Привет! Я — ИИ-ассистент кооператива Пандора. Спросите меня о кооперации, наших проектах или о том, как стать пайщиком 🌿",
+    placeholder: "Задайте вопрос...",
+    suggestions: ["Что такое Пандора?", "Как вступить?", "Касса взаимопомощи", "Ozon Effect"],
+    errorNet: "Ошибка соединения. Попробуйте ещё раз или: usenpandora@gmail.com",
+    errorOther: "Что-то пошло не так. Напишите нам: usenpandora@gmail.com",
+    langName: "Russian"
+  },
+  en: {
+    greeting: "Hello! I'm the AI assistant of the Pandora Cooperative. Ask me about the cooperative, our projects, or how to become a member 🌿",
+    placeholder: "Ask a question...",
+    suggestions: ["What is Pandora?", "How to join?", "Mutual Aid Fund", "Ozon Effect"],
+    errorNet: "Connection error. Please try again or: usenpandora@gmail.com",
+    errorOther: "Something went wrong. Contact us: usenpandora@gmail.com",
+    langName: "English"
+  },
+  es: {
+    greeting: "¡Hola! Soy el asistente IA de la Cooperativa Pandora. Pregúntame sobre la cooperativa, nuestros proyectos o cómo convertirte en miembro 🌿",
+    placeholder: "Haz una pregunta...",
+    suggestions: ["¿Qué es Pandora?", "¿Cómo unirse?", "Fondo de ayuda mutua", "Ozon Effect"],
+    errorNet: "Error de conexión. Inténtalo de nuevo o: usenpandora@gmail.com",
+    errorOther: "Algo salió mal. Escríbenos: usenpandora@gmail.com",
+    langName: "Spanish"
+  }
+};
+
+function getPcLang() {
+  return localStorage.getItem('pandora-lang') || 'uk';
+}
+
+function getPandoraSystem() {
+  const lang = getPcLang();
+  const langName = (PC_STRINGS[lang] || PC_STRINGS.uk).langName;
+  return PANDORA_SYSTEM_BASE.replace(/{LANG_NAME}/g, langName);
+}
+
+function pcUpdateUI(lang) {
+  const s = PC_STRINGS[lang] || PC_STRINGS.uk;
+  // Update placeholder
+  const inp = document.getElementById("pcInput");
+  if (inp) inp.placeholder = s.placeholder;
+  // Update suggestions
+  const sugBox = document.getElementById("pcSuggestions");
+  if (sugBox) {
+    sugBox.innerHTML = s.suggestions.map(t =>
+      `<button class="pc-suggestion" onclick="pcAsk(this.textContent)">${t}</button>`
+    ).join("");
+  }
+}
+
+// Hook into selectLang to update chat UI
+const _origSelectLang = typeof selectLang === "function" ? selectLang : null;
+
+function togglePandoraChat() {
+  pcOpen = !pcOpen;
+  document.getElementById("pandora-chat-window").classList.toggle("open", pcOpen);
+  if (!pcOpen) {
+    // also exit fullscreen when closing
+    document.getElementById("pandora-chat-window").classList.remove("fullscreen");
+    pcFullscreen = false;
+    updateExpandIcon();
+  }
+  if (pcOpen) setTimeout(() => document.getElementById("pcInput").focus(), 200);
+}
+
+let pcFullscreen = false;
+function togglePandoraFullscreen() {
+  pcFullscreen = !pcFullscreen;
+  document.getElementById("pandora-chat-window").classList.toggle("fullscreen", pcFullscreen);
+  updateExpandIcon();
+}
+function updateExpandIcon() {
+  const icon = document.getElementById("pcExpandIcon");
+  if (!icon) return;
+  if (pcFullscreen) {
+    // collapse icon (inward arrows)
+    icon.innerHTML = `
+      <line x1="1" y1="5" x2="5" y2="1"/><polyline points="1,1 5,1 5,5"/>
+      <line x1="13" y1="5" x2="9" y2="1"/><polyline points="13,1 9,1 9,5"/>
+      <line x1="1" y1="9" x2="5" y2="13"/><polyline points="1,13 5,13 5,9"/>
+      <line x1="13" y1="9" x2="9" y2="13"/><polyline points="13,13 9,13 9,9"/>`;
+    document.getElementById("pcExpandBtn").title = "Згорнути";
+  } else {
+    // expand icon (outward arrows)
+    icon.innerHTML = `
+      <polyline points="1,5 1,1 5,1"/><line x1="1" y1="1" x2="5.5" y2="5.5"/>
+      <polyline points="9,1 13,1 13,5"/><line x1="13" y1="1" x2="8.5" y2="5.5"/>
+      <polyline points="1,9 1,13 5,13"/><line x1="1" y1="13" x2="5.5" y2="8.5"/>
+      <polyline points="13,9 13,13 9,13"/><line x1="13" y1="13" x2="8.5" y2="8.5"/>`;
+    document.getElementById("pcExpandBtn").title = "Розгорнути на весь екран";
+  }
+}
+
+function pcAsk(text) {
+  document.getElementById("pcSuggestions").style.display = "none";
+  document.getElementById("pcInput").value = text;
+  pcSend();
+}
+
+async function pcSend() {
+  const inp = document.getElementById("pcInput");
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = "";
+  inp.style.height = "auto";
+  document.getElementById("pcSuggestions").style.display = "none";
+  pcAddMsg("user", text);
+  pcHistory.push({ role: "user", content: text });
+  const sendBtn = document.getElementById("pcSendBtn");
+  sendBtn.disabled = true;
+  const typingId = pcAddTyping();
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 500,
+        system: getPandoraSystem(),
+        messages: pcHistory.slice(-8)
+      })
+    });
+    const data = await res.json();
+    pcRemoveTyping(typingId);
+    if (data.content && data.content[0]) {
+      const reply = data.content[0].text;
+      pcAddMsg("bot", reply);
+      pcHistory.push({ role: "assistant", content: reply });
+    } else {
+      pcAddMsg("bot", (PC_STRINGS[getPcLang()]||PC_STRINGS.uk).errorOther);
+    }
+  } catch(e) {
+    pcRemoveTyping(typingId);
+    pcAddMsg("bot", (PC_STRINGS[getPcLang()]||PC_STRINGS.uk).errorNet);
+  }
+  sendBtn.disabled = false;
+  inp.focus();
+}
+
+function pcAddMsg(role, text) {
+  const msgs = document.getElementById("pcMessages");
+  const div = document.createElement("div");
+  div.className = "pc-msg " + role;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function pcAddTyping() {
+  const msgs = document.getElementById("pcMessages");
+  const id = "typing-" + Date.now();
+  const div = document.createElement("div");
+  div.className = "pc-msg typing";
+  div.id = id;
+  div.innerHTML = "<div class=\"pc-typing-dots\"><span></span><span></span><span></span></div>";
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return id;
+}
+
+function pcRemoveTyping(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+// pcUpdateUI and greeting init called after chat widget HTML is rendered (see end of body)
+</script>
+
+<!-- ═══════════════════════════════════════════════
+     PANDORA AI — Плавающий чат-бот
+     Замените PANDORA_API_KEY на реальный ключ Anthropic
+     Или вынесите в Netlify Function для безопасности
+════════════════════════════════════════════════ -->
+<style>
+#pandora-chat-btn {
+  position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+  width: 54px; height: 54px; border-radius: 50%;
+  background: #fff; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  transition: transform 0.2s, opacity 0.2s;
+}
+#pandora-chat-btn:hover { transform: scale(1.08); opacity: 0.92; }
+#pandora-chat-btn svg { width: 44px; height: 44px; }
+
+#pandora-chat-window {
+  position: fixed; bottom: 92px; right: 28px; z-index: 9998;
+  width: 340px; max-height: 500px;
+  background: #fff; border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 4px; display: flex; flex-direction: column;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+  transform: scale(0.95) translateY(10px); opacity: 0;
+  pointer-events: none; transition: all 0.2s ease;
+}
+#pandora-chat-window.open {
+  transform: scale(1) translateY(0); opacity: 1; pointer-events: all;
+}
+.pc-header {
+  background: #0D0D0D; padding: 13px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-radius: 4px 4px 0 0;
+}
+.pc-header-left { display: flex; align-items: center; gap: 10px; }
+.pc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+.pc-title { font-size: 13px; font-weight: 500; color: #F5F2ED; letter-spacing: 0.05em; }
+.pc-sub { font-size: 10px; color: rgba(245,242,237,0.4); letter-spacing: 0.08em; text-transform: uppercase; }
+.pc-close { background: none; border: none; color: rgba(245,242,237,0.4); cursor: pointer; font-size: 18px; line-height: 1; padding: 0; transition: color 0.15s; }
+.pc-close:hover { color: #F5F2ED; }
+.pc-messages {
+  flex: 1; overflow-y: auto; padding: 14px;
+  display: flex; flex-direction: column; gap: 10px;
+  scroll-behavior: smooth; min-height: 0;
+}
+.pc-messages::-webkit-scrollbar { width: 3px; }
+.pc-messages::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 2px; }
+.pc-msg { max-width: 88%; font-size: 13px; line-height: 1.55; padding: 9px 12px; }
+.pc-msg.bot { background: #f4f2ee; color: #0D0D0D; align-self: flex-start; border-radius: 4px 4px 4px 0; }
+.pc-msg.user { background: #1A3A7A; color: #fff; align-self: flex-end; border-radius: 4px 4px 0 4px; }
+.pc-msg.typing { background: #f4f2ee; align-self: flex-start; padding: 12px 16px; }
+.pc-typing-dots { display: flex; gap: 4px; }
+.pc-typing-dots span { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.25); animation: pcDot 1.2s infinite; }
+.pc-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.pc-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes pcDot { 0%,80%,100%{transform:scale(0.7);opacity:0.4} 40%{transform:scale(1);opacity:1} }
+.pc-suggestions { padding: 0 14px 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+.pc-suggestion {
+  font-size: 11px; padding: 5px 10px; border: 1px solid rgba(26,58,122,0.2);
+  color: #1A3A7A; background: rgba(26,58,122,0.04); cursor: pointer;
+  border-radius: 2px; transition: all 0.15s; letter-spacing: 0.03em;
+  font-family: "DM Sans", sans-serif;
+}
+.pc-suggestion:hover { background: rgba(26,58,122,0.1); }
+.pc-input-row {
+  padding: 10px 12px; border-top: 1px solid rgba(0,0,0,0.07);
+  display: flex; gap: 8px; align-items: flex-end;
+}
+.pc-input {
+  flex: 1; border: 1px solid rgba(0,0,0,0.1); background: #fafafa;
+  padding: 9px 11px; font-size: 13px; font-family: "DM Sans", sans-serif;
+  color: #0D0D0D; outline: none; resize: none; border-radius: 3px;
+  max-height: 90px; line-height: 1.45; transition: border-color 0.2s;
+}
+.pc-input:focus { border-color: #1A3A7A; background: #fff; }
+.pc-send {
+  width: 36px; height: 36px; background: #1A3A7A; border: none;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  border-radius: 3px; flex-shrink: 0; transition: opacity 0.2s;
+}
+.pc-send:hover { opacity: 0.85; }
+.pc-send svg { width: 16px; height: 16px; fill: #fff; }
+.pc-send:disabled { opacity: 0.4; cursor: default; }
+
+/* Expand / fullscreen button */
+.pc-expand {
+  background: none; border: none;
+  color: rgba(245,242,237,0.4); cursor: pointer;
+  padding: 0; line-height: 1; transition: color 0.15s;
+  display: flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px;
+}
+.pc-expand:hover { color: #F5F2ED; }
+.pc-expand svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Fullscreen state */
+#pandora-chat-window.fullscreen {
+  bottom: 0; right: 0;
+  width: 100vw; max-height: 100vh; height: 100vh;
+  border-radius: 0;
+  border: none;
+}
+#pandora-chat-window.fullscreen .pc-messages {
+  flex: 1;
+}
+</style>
+
+<button id="pandora-chat-btn" onclick="togglePandoraChat()" aria-label="Pandora AI чат">
+  <svg viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+    <!-- Outer green circle -->
+    <circle cx="27" cy="27" r="25" fill="none" stroke="#2ecc40" stroke-width="3"/>
+    <!-- Blue bubble (back, bottom-left) -->
+    <path d="M10 28 Q10 20 18 20 L26 20 Q34 20 34 28 Q34 34 28 35 L14 39 L17 34 Q10 33 10 28Z" fill="none" stroke="#1A3A7A" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- Red bubble (front, top-right) -->
+    <path d="M20 18 Q20 10 28 10 L36 10 Q44 10 44 18 Q44 24 38 25 L40 30 L26 26 Q20 24 20 18Z" fill="none" stroke="#c0392b" stroke-width="2.2" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<div id="pandora-chat-window">
+  <div class="pc-header">
+    <div class="pc-header-left">
+      <div class="pc-dot"></div>
+      <div>
+        <div class="pc-title">Pandora AI</div>
+        <div class="pc-sub">Асистент кооперативу</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <button class="pc-expand" id="pcExpandBtn" onclick="togglePandoraFullscreen()" title="Розгорнути на весь екран">
+        <svg id="pcExpandIcon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;">
+          <polyline points="1,5 1,1 5,1"/><line x1="1" y1="1" x2="5.5" y2="5.5"/>
+          <polyline points="9,1 13,1 13,5"/><line x1="13" y1="1" x2="8.5" y2="5.5"/>
+          <polyline points="1,9 1,13 5,13"/><line x1="1" y1="13" x2="5.5" y2="8.5"/>
+          <polyline points="13,9 13,13 9,13"/><line x1="13" y1="13" x2="8.5" y2="8.5"/>
+        </svg>
+      </button>
+      <button class="pc-close" onclick="togglePandoraChat()">&#x00D7;</button>
+    </div>
+  </div>
+  <div class="pc-messages" id="pcMessages">
+    <div class="pc-msg bot" id="pcGreeting">Привіт! Я — ІІ-асистент кооперативу Пандора. Запитайте мене про кооперацію, наші проекти або як стати пайщиком 🌿</div>
+  </div>
+  <div class="pc-suggestions" id="pcSuggestions">
+    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Що таке Пандора?</button>
+    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Як вступити?</button>
+    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Каса взаємодопомоги</button>
+    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Ozon Effect</button>
+  </div>
+  <div class="pc-input-row">
+    <textarea class="pc-input" id="pcInput" placeholder="Задайте питання..." rows="1"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();pcSend()}"
+      oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px'"></textarea>
+    <button class="pc-send" id="pcSendBtn" onclick="pcSend()">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// Init chat UI language — runs after chat DOM is in place
+(function() {
+  const lang = getPcLang();
+  pcUpdateUI(lang);
+  const greeting = document.getElementById('pcGreeting');
+  if (greeting) greeting.textContent = (PC_STRINGS[lang] || PC_STRINGS.uk).greeting;
+})();
+</script>
+
 </body>
 </html>
