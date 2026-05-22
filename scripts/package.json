@@ -1,0 +1,13 @@
+{
+  "name": "pandora-indexer",
+  "version": "1.0.0",
+  "description": "Indexes Markdown knowledge files from Google Drive into Supabase",
+  "main": "index-drive.js",
+  "scripts": {
+    "index": "node index-drive.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "node-fetch": "^2.7.0"
+  }
+}
