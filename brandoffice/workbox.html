@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BRAND OFFICE UA Workbox | Кабінет співробітника</title>
+    <meta name="description" content="Внутрішній демо-кабінет BRAND OFFICE UA для заявок, об'єктів, прозвонів і генерації оголошень." />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body data-page="workbox">
+    <header class="topbar">
+      <a class="brand-mark" href="./index.html" aria-label="BRAND OFFICE UA">
+        <span class="brand-symbol">BO</span>
+        <span>
+          <strong>BRAND OFFICE UA</strong>
+          <small>Workbox співробітника</small>
+        </span>
+      </a>
+      <nav class="main-nav" aria-label="Навігація кабінету">
+        <a href="./index.html">Публічний сайт</a>
+        <a href="#submissions">Заявки</a>
+        <a href="#objects">Об'єкти</a>
+        <a href="#calls">Прозвони</a>
+        <a href="#generator">Генератор</a>
+      </nav>
+      <div class="lang-switch" aria-label="Language switcher">
+        <button type="button" class="lang-btn active" data-lang="ua">UA</button>
+        <button type="button" class="lang-btn" data-lang="ru">RU</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <a class="phone-link" href="tel:+380665656560">066 56 56 560</a>
+    </header>
+
+    <main>
+      <section class="workbox-hero">
+        <div>
+          <p class="eyebrow">Внутрішній кабінет</p>
+          <h1>BRAND OFFICE UA Workbox</h1>
+          <p class="hero-copy">
+            Жодних блокнотів, загублених переписок і хаосу в телефоні.
+            Заявки, прозвони, фото, голосові нотатки, огляди та публікації зберігаються в одному кабінеті.
+          </p>
+        </div>
+        <div class="dashboard-grid">
+          <article><strong id="dashNewSubmissions">0</strong><span>Нові заявки власників</span></article>
+          <article><strong id="dashReviewObjects">0</strong><span>Об'єкти на перевірці</span></article>
+          <article><strong id="dashScheduledViews">0</strong><span>Огляди заплановано</span></article>
+        </div>
+      </section>
+
+      <section class="section office" id="office">
+        <div class="tabs" role="tablist" aria-label="Розділи кабінету">
+          <button class="tab active" type="button" data-tab="submissions">Заявки власників</button>
+          <button class="tab" type="button" data-tab="objects">Об'єкти</button>
+          <button class="tab" type="button" data-tab="add-object">Додати об'єкт</button>
+          <button class="tab" type="button" data-tab="calls">База прозвонів</button>
+          <button class="tab" type="button" data-tab="generator">Генератор оголошень</button>
+          <button class="tab" type="button" data-tab="archive">Архів</button>
+        </div>
+
+        <section class="workspace-panel active" id="submissions" data-panel="submissions">
+          <div class="panel-heading">
+            <h3>Заявки власників</h3>
+            <span id="submissionsCount">0 заявок</span>
+          </div>
+          <div class="submission-list" id="ownerSubmissionsList"></div>
+        </section>
+
+        <section class="workspace-panel" id="objects" data-panel="objects">
+          <div class="panel-heading">
+            <h3>Об'єкти в роботі</h3>
+            <span id="objectsCount">0 записів</span>
+          </div>
+          <div class="object-list" id="officeObjects"></div>
+        </section>
+
+        <section class="workspace-panel" id="add-object" data-panel="add-object">
+          <div class="panel-heading">
+            <h3>Додати об'єкт</h3>
+            <span>localStorage demo</span>
+          </div>
+          <form class="form-grid" id="objectForm">
+            <label>Тип операції
+              <select name="operation" required>
+                <option>Продаж</option>
+                <option>Оренда</option>
+              </select>
+            </label>
+            <label>Тип об'єкта
+              <select name="type" required>
+                <option>Квартира</option>
+                <option>Будинок</option>
+                <option>Комерція</option>
+                <option>Земля</option>
+              </select>
+            </label>
+            <label>Район <input name="district" required placeholder="Центр" /></label>
+            <label>Адреса <input name="address" required placeholder="вул. Корзо" /></label>
+            <label>Ціна <input name="price" required type="number" min="0" placeholder="85000" /></label>
+            <label>Валюта
+              <select name="currency">
+                <option>$</option>
+                <option>€</option>
+                <option>грн</option>
+              </select>
+            </label>
+            <label>Кімнат <input name="rooms" type="number" min="0" placeholder="2" /></label>
+            <label>Площа <input name="area" type="number" min="0" placeholder="64" /></label>
+            <label>Поверх <input name="floor" placeholder="3/5" /></label>
+            <label>Опалення <input name="heating" placeholder="Індивідуальне газове" /></label>
+            <label>Стан <input name="condition" placeholder="Після ремонту" /></label>
+            <label>Lat <input name="lat" placeholder="48.6208" /></label>
+            <label>Lng <input name="lng" placeholder="22.2879" /></label>
+            <p class="form-note span-2">Координати можна додати вручну або вибрати точку на мапі у наступній версії.</p>
+            <label>Контакт власника <input name="owner" placeholder="Олена" /></label>
+            <label>Телефон власника <input name="ownerPhone" placeholder="+380..." /></label>
+            <label class="span-2">Внутрішній коментар
+              <textarea name="privateComment" rows="3" placeholder="Не публікується на сайті"></textarea>
+            </label>
+            <label class="span-2">Публічний опис
+              <textarea name="publicDescription" rows="4" placeholder="Короткий опис для клієнтів"></textarea>
+            </label>
+            <label class="span-2 upload-label">Фото
+              <input id="photoInput" name="photos" type="file" accept="image/*" multiple />
+            </label>
+            <div class="photo-preview span-2" id="photoPreview"></div>
+            <button class="btn gold span-2" type="submit">Зберегти об'єкт</button>
+          </form>
+        </section>
+
+        <section class="workspace-panel" id="calls" data-panel="calls">
+          <div class="panel-heading">
+            <h3>База прозвонів</h3>
+            <span id="callsCount">0 записів</span>
+          </div>
+          <form class="form-grid compact" id="callForm">
+            <label>Ім'я <input name="name" required placeholder="Іван" /></label>
+            <label>Телефон <input name="phone" required placeholder="+380..." /></label>
+            <label>Джерело <input name="source" placeholder="OLX, Facebook, DIM.RIA" /></label>
+            <label>Посилання / адреса <input name="link" placeholder="https:// або адреса" /></label>
+            <label>Статус
+              <select name="status">
+                <option>Власник</option>
+                <option>Посередник</option>
+                <option>Не дозвонились</option>
+                <option>Передзвонити</option>
+                <option>Неактуально</option>
+                <option>Фейк</option>
+              </select>
+            </label>
+            <label>Дата наступного контакту <input name="nextDate" type="date" /></label>
+            <label class="span-2">Коментар <textarea name="comment" rows="3"></textarea></label>
+            <button class="btn gold span-2" type="submit">Додати запис</button>
+          </form>
+          <div class="filter-row" id="callFilters"></div>
+          <div class="call-list" id="callList"></div>
+        </section>
+
+        <section class="workspace-panel" id="generator" data-panel="generator">
+          <div class="panel-heading">
+            <h3>Генератор оголошень</h3>
+            <span>5 форматів</span>
+          </div>
+          <form class="form-grid compact" id="generatorForm">
+            <label>Операція <input name="operation" placeholder="Продаж" /></label>
+            <label>Тип об'єкта <input name="type" placeholder="2-кімнатна квартира" /></label>
+            <label>Район <input name="district" placeholder="Новий район" /></label>
+            <label>Площа <input name="area" placeholder="64 м2" /></label>
+            <label>Кімнати <input name="rooms" placeholder="2" /></label>
+            <label>Ціна <input name="price" placeholder="85 000 $" /></label>
+            <label>Стан <input name="condition" placeholder="сучасний ремонт" /></label>
+            <label>Контакт <input name="contact" placeholder="066 56 56 560" /></label>
+            <label class="span-2">Переваги
+              <textarea name="benefits" rows="3" placeholder="паркінг, балкон, автономне опалення"></textarea>
+            </label>
+            <button class="btn gold span-2" type="submit">Згенерувати</button>
+          </form>
+          <div class="generated-list" id="generatedList"></div>
+        </section>
+
+        <section class="workspace-panel" id="archive" data-panel="archive">
+          <div class="panel-heading">
+            <h3>Архів</h3>
+            <span>демо-стан</span>
+          </div>
+          <div class="archive-empty">
+            <strong>Архів готовий до підключення</strong>
+            <p>Тут можна зберігати продані, здані, відхилені та дубльовані об'єкти після підключення бази даних.</p>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <strong>BRAND OFFICE UA</strong>
+      <span>Внутрішній демо-кабінет</span>
+      <a href="./index.html">Публічна сторінка</a>
+    </footer>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
