@@ -20,30 +20,8 @@ const SYSTEM_PROMPT = [
   "Do not add generic support endings like 'Any other questions?', 'Є ще питання?', or similar unless the user directly asks for follow-up options.",
   "Keep answers direct, practical, and concise. Avoid decorative marketing tone."
 ].join(" ");
-const KNOWLEDGE_UNAVAILABLE_MESSAGE = "База знаний Pandora временно недоступна. Существуют разные бренды и образы Pandora, но этот сайт относится к кооперативному проекту Pandora / USEN Pandora. Я не буду выдумывать детали без базы знаний.";
-const PROJECT_SPECIFIC_PATTERNS = [
-  "pandora id",
-  "usen",
-  "usen pandora",
-  "pandora.co.ua",
-  "кооператив",
-  "пайщик",
-  "совладелец",
-  "членский взнос",
-  "паевой взнос",
-  "вступить в пандору",
-  "вступить в pandora",
-  "кооперативная социально-экономическая сеть"
-];
-const GENERAL_PANDORA_PATTERNS = [
-  "pandora",
-  "пандора",
-  "pandora music",
-  "pandora jewelry",
-  "pandora alarm",
-  "avatar",
-  "мифологическая пандора"
-];
+const RAG_UNAVAILABLE_MESSAGE = "База знаний Pandora сейчас недоступна. Я не могу отвечать как проектный ассистент без документов.";
+const RAG_EMPTY_MESSAGE = "В базе Pandora не найдено достаточно данных по этому вопросу.";
 
 function getCorsHeaders(request) {
   const origin = request.headers.get("Origin");
@@ -66,16 +44,6 @@ function jsonResponse(data, status, corsHeaders = {}) {
       ...corsHeaders
     }
   });
-}
-
-function isProjectSpecificQuestion(text) {
-  const normalized = text.toLowerCase();
-  return PROJECT_SPECIFIC_PATTERNS.some(pattern => normalized.includes(pattern));
-}
-
-function isGeneralPandoraQuestion(text) {
-  const normalized = text.toLowerCase();
-  return GENERAL_PANDORA_PATTERNS.some(pattern => normalized.includes(pattern));
 }
 
 function getPublicMatches(matches) {
@@ -152,25 +120,8 @@ function buildRagContext(matches) {
   ].join("\n");
 }
 
-function createDebug(debugEnabled, debug) {
-  if (!debugEnabled) return null;
-
+function assistantTextResponse(text) {
   return {
-    core_direct_ok: debug.core_direct_ok,
-    core_direct_count: debug.core_direct_count,
-    voyage_ok: debug.voyage_ok,
-    vector_raw_count: debug.vector_raw_count,
-    vector_public_count: debug.vector_public_count,
-    rag_context_length: debug.rag_context_length,
-    sources_used: debug.sources_used,
-    upstream_stage: debug.upstream_stage,
-    upstream_status: debug.upstream_status,
-    upstream_error_type: debug.upstream_error_type
-  };
-}
-
-function anthropicTextResponse(text, debugEnabled, debug) {
-  const response = {
     content: [
       {
         type: "text",
@@ -178,11 +129,6 @@ function anthropicTextResponse(text, debugEnabled, debug) {
       }
     ]
   };
-
-  const safeDebug = createDebug(debugEnabled, debug);
-  if (safeDebug) response.debug = safeDebug;
-
-  return response;
 }
 
 async function fetchDirectCoreChunks(env) {
@@ -293,36 +239,12 @@ export async function onRequest(context) {
   }
 
   const { messages, userQuestion } = validated;
-  const debugEnabled = body.debug === true;
-  const debug = {
-    core_direct_ok: false,
-    core_direct_count: 0,
-    voyage_ok: false,
-    vector_raw_count: 0,
-    vector_public_count: 0,
-    rag_context_length: 0,
-    sources_used: [],
-    upstream_stage: null,
-    upstream_status: null,
-    upstream_error_type: null
-  };
-  const requiresPandoraContext = isProjectSpecificQuestion(userQuestion);
-  const isPandoraQuestion = requiresPandoraContext || isGeneralPandoraQuestion(userQuestion);
+  let ragContext;
 
-  let directCoreChunks = [];
-  if (isPandoraQuestion) {
-    try {
-      directCoreChunks = await fetchDirectCoreChunks(env);
-      debug.core_direct_count = directCoreChunks.length;
-      debug.core_direct_ok = directCoreChunks.length > 0;
-    } catch (e) {
-      console.log("Direct core error:", e.message);
-    }
-  }
-
-  let ragContext = "";
-  let vectorPublicMatches = [];
+  console.log("RAG_START");
   try {
+    const directCoreChunks = await fetchDirectCoreChunks(env);
+
     const voyageRes = await fetch("https://api.voyageai.com/v1/embeddings", {
       method: "POST",
       headers: {
@@ -341,7 +263,6 @@ export async function onRequest(context) {
 
     const voyageData = await voyageRes.json();
     const queryEmbedding = voyageData.data[0].embedding;
-    debug.voyage_ok = true;
 
     const matchRes = await fetch(`${SUPABASE_URL}/rest/v1/rpc/match_documents`, {
       method: "POST",
@@ -362,38 +283,28 @@ export async function onRequest(context) {
     }
 
     const matches = await matchRes.json();
-    debug.vector_raw_count = Array.isArray(matches) ? matches.length : 0;
-    vectorPublicMatches = getPublicMatches(matches);
-    debug.vector_public_count = vectorPublicMatches.length;
+    const vectorPublicMatches = getPublicMatches(matches);
+    const contextChunks = mergeContextChunks(directCoreChunks, vectorPublicMatches);
+
+    if (!contextChunks.length) {
+      console.log("RAG_EMPTY");
+      return jsonResponse(assistantTextResponse(RAG_EMPTY_MESSAGE), 200, corsHeaders);
+    }
+
+    console.log("RAG_CHUNKS_FOUND", {
+      count: contextChunks.length,
+      sources: [...new Set(contextChunks.map(chunk => chunk.metadata && chunk.metadata.source).filter(Boolean))]
+    });
+    ragContext = buildRagContext(contextChunks);
   } catch (e) {
-    console.log("RAG error:", e.message);
-  }
-
-  const contextChunks = mergeContextChunks(directCoreChunks, vectorPublicMatches);
-  debug.sources_used = [...new Set(contextChunks.map(match => match.metadata && match.metadata.source).filter(Boolean))];
-  ragContext = buildRagContext(contextChunks);
-  debug.rag_context_length = ragContext.length;
-
-  if (isPandoraQuestion && !directCoreChunks.length && !ragContext) {
-    const response = anthropicTextResponse(
-      "Pandora Music, Pandora Jewelry, Pandora Alarm, Avatar and the mythological Pandora are different brands or images with the same name. This site is about another project: Pandora / USEN Pandora, a cooperative socio-economic network. The Pandora knowledge base is temporarily unavailable, so I will not invent project details.",
-      debugEnabled,
-      debug
-    );
-    return jsonResponse(response, 200, corsHeaders);
-  }
-
-  if (requiresPandoraContext && !directCoreChunks.length) {
-    const response = { error: KNOWLEDGE_UNAVAILABLE_MESSAGE };
-    const safeDebug = createDebug(debugEnabled, debug);
-    if (safeDebug) response.debug = safeDebug;
-    return jsonResponse(response, 503, corsHeaders);
+    console.error("RAG_ERROR", e instanceof Error ? e.message : String(e));
+    return jsonResponse(assistantTextResponse(RAG_UNAVAILABLE_MESSAGE), 200, corsHeaders);
   }
 
   const systemWithRag = (env.PANDORA_SYSTEM_PROMPT || SYSTEM_PROMPT) + ragContext;
 
   try {
-    debug.upstream_stage = "anthropic";
+    console.log("ANTHROPIC_START");
     const anthropicRes = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -410,26 +321,14 @@ export async function onRequest(context) {
     });
 
     if (!anthropicRes.ok) {
-      debug.upstream_status = anthropicRes.status;
-      debug.upstream_error_type = "http_error";
-      const response = { error: "Upstream request failed" };
-      const safeDebug = createDebug(debugEnabled, debug);
-      if (safeDebug) response.debug = safeDebug;
-      return jsonResponse(response, 502, corsHeaders);
+      console.error("ANTHROPIC_ERROR", `HTTP ${anthropicRes.status}`);
+      return jsonResponse({ error: "Upstream request failed" }, 502, corsHeaders);
     }
 
     const data = await anthropicRes.json();
-    const safeDebug = createDebug(debugEnabled, debug);
-    if (safeDebug) data.debug = safeDebug;
-
     return jsonResponse(data, 200, corsHeaders);
   } catch (e) {
-    console.log("Anthropic error:", e.message);
-    debug.upstream_stage = "anthropic";
-    debug.upstream_error_type = "fetch_error";
-    const response = { error: "Upstream request failed" };
-    const safeDebug = createDebug(debugEnabled, debug);
-    if (safeDebug) response.debug = safeDebug;
-    return jsonResponse(response, 502, corsHeaders);
+    console.error("ANTHROPIC_ERROR", e instanceof Error ? e.message : String(e));
+    return jsonResponse({ error: "Upstream request failed" }, 502, corsHeaders);
   }
 }
