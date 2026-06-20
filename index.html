@@ -1573,55 +1573,59 @@ let pcConversationId = sessionStorage.getItem("pandora-ai-conversation-id") || "
 // Localization for chat UI
 const PC_STRINGS = {
   uk: {
-    greeting: "Привіт! Я — ІІ-асистент кооперативу Пандора. Запитайте мене про кооперацію, наші проекти або як стати пайщиком 🌿",
+    greeting: "Поставте запитання про Pandora, пайовиків, вступ, внески або кооперативну модель.",
     placeholder: "Задайте питання...",
-    suggestions: ["Що таке Пандора?", "Як вступити?", "Каса взаємодопомоги", "Ozon Effect"],
+    suggestions: ["Що таке Pandora?", "Як вступити?", "Що таке пайовик?", "Чи можна заробити?"],
     errorNet: "Помилка з'єднання. Спробуйте ще раз або: usenpandora@gmail.com",
     errorOther: "Щось пішло не так. Напишіть нам: usenpandora@gmail.com",
-    aiMode: "AI-асистент",
-    qaMode: "QA-асистент",
+    subtitle: "Кооперативний AI-помічник",
+    aiMode: "AI-помічник",
+    qaMode: "Повідомити про баг / ідею",
     qaIntro: "Допоможіть команді Pandora покращити сайт.",
-    qaBug: "Знайшов баг",
-    qaSuggestion: "Є порада / пропозиція",
+    qaBug: "🐞 Знайшов баг",
+    qaSuggestion: "💡 Є пропозиція",
     qaNotice: "Дякуємо. Надсилання QA-звернень буде підключено на наступному етапі."
   },
   ru: {
-    greeting: "Привет! Я — ИИ-ассистент кооператива Пандора. Спросите меня о кооперации, наших проектах или о том, как стать пайщиком 🌿",
+    greeting: "Задайте вопрос о Pandora, пайщиках, вступлении, взносах или кооперативной модели.",
     placeholder: "Задайте вопрос...",
-    suggestions: ["Что такое Пандора?", "Как вступить?", "Касса взаимопомощи", "Ozon Effect"],
+    suggestions: ["Что такое Pandora?", "Как вступить?", "Что такое пайщик?", "Можно ли заработать?"],
     errorNet: "Ошибка соединения. Попробуйте ещё раз или: usenpandora@gmail.com",
     errorOther: "Что-то пошло не так. Напишите нам: usenpandora@gmail.com",
-    aiMode: "AI-ассистент",
-    qaMode: "QA-ассистент",
+    subtitle: "Кооперативный AI-помощник",
+    aiMode: "AI-помощник",
+    qaMode: "Сообщить баг / идею",
     qaIntro: "Помогите команде Pandora улучшить сайт.",
-    qaBug: "Нашёл баг",
-    qaSuggestion: "Есть совет / предложение",
+    qaBug: "🐞 Нашёл баг",
+    qaSuggestion: "💡 Есть предложение",
     qaNotice: "Спасибо. Отправка QA-обращений будет подключена на следующем этапе."
   },
   en: {
-    greeting: "Hello! I'm the AI assistant of the Pandora Cooperative. Ask me about the cooperative, our projects, or how to become a member 🌿",
+    greeting: "Ask about Pandora, cooperative members, joining, contributions, or the cooperative model.",
     placeholder: "Ask a question...",
-    suggestions: ["What is Pandora?", "How to join?", "Mutual Aid Fund", "Ozon Effect"],
+    suggestions: ["What is Pandora?", "How do I join?", "What is a member?", "Can I earn money?"],
     errorNet: "Connection error. Please try again or: usenpandora@gmail.com",
     errorOther: "Something went wrong. Contact us: usenpandora@gmail.com",
+    subtitle: "Cooperative AI assistant",
     aiMode: "AI assistant",
-    qaMode: "QA assistant",
+    qaMode: "Report a bug / idea",
     qaIntro: "Help the Pandora team improve the website.",
-    qaBug: "I found a bug",
-    qaSuggestion: "I have a suggestion",
+    qaBug: "🐞 I found a bug",
+    qaSuggestion: "💡 I have a suggestion",
     qaNotice: "Thank you. QA submissions will be enabled in the next stage."
   },
   es: {
-    greeting: "¡Hola! Soy el asistente IA de la Cooperativa Pandora. Pregúntame sobre la cooperativa, nuestros proyectos o cómo convertirte en miembro 🌿",
+    greeting: "Pregunta sobre Pandora, los socios, la incorporación, las aportaciones o el modelo cooperativo.",
     placeholder: "Haz una pregunta...",
-    suggestions: ["¿Qué es Pandora?", "¿Cómo unirse?", "Fondo de ayuda mutua", "Ozon Effect"],
+    suggestions: ["¿Qué es Pandora?", "¿Cómo unirse?", "¿Qué es un socio?", "¿Se puede ganar dinero?"],
     errorNet: "Error de conexión. Inténtalo de nuevo o: usenpandora@gmail.com",
     errorOther: "Algo salió mal. Escríbenos: usenpandora@gmail.com",
+    subtitle: "Asistente IA cooperativo",
     aiMode: "Asistente IA",
-    qaMode: "Asistente QA",
+    qaMode: "Informar error / idea",
     qaIntro: "Ayuda al equipo de Pandora a mejorar el sitio.",
-    qaBug: "Encontré un error",
-    qaSuggestion: "Tengo una sugerencia",
+    qaBug: "🐞 Encontré un error",
+    qaSuggestion: "💡 Tengo una sugerencia",
     qaNotice: "Gracias. El envío de mensajes QA se habilitará en la siguiente etapa."
   }
 };
@@ -1647,11 +1651,13 @@ function pcUpdateUI(lang) {
   const qaIntro = document.getElementById("pcQaIntro");
   const qaBug = document.getElementById("pcQaBug");
   const qaSuggestion = document.getElementById("pcQaSuggestion");
+  const subtitle = document.getElementById("pcSubtitle");
   if (aiMode) aiMode.textContent = s.aiMode;
   if (qaMode) qaMode.textContent = s.qaMode;
   if (qaIntro) qaIntro.textContent = s.qaIntro;
   if (qaBug) qaBug.textContent = s.qaBug;
   if (qaSuggestion) qaSuggestion.textContent = s.qaSuggestion;
+  if (subtitle) subtitle.textContent = s.subtitle;
 }
 
 // Hook into selectLang to update chat UI
@@ -1798,14 +1804,18 @@ function pcRemoveTyping(id) {
 <style>
 #pandora-chat-btn {
   position: fixed; bottom: 28px; right: 28px; z-index: 9999;
-  width: 54px; height: 54px; border-radius: 50%;
-  background: #fff; border: none; cursor: pointer;
+  min-width: 172px; height: 54px; border-radius: 28px;
+  padding: 0 16px 0 6px;
+  background: #fff; border: 1px solid rgba(26,58,122,0.16); cursor: pointer;
   display: flex; align-items: center; justify-content: center;
+  gap: 8px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
   transition: transform 0.2s, opacity 0.2s;
 }
 #pandora-chat-btn:hover { transform: scale(1.08); opacity: 0.92; }
 #pandora-chat-btn svg { width: 44px; height: 44px; }
+.pc-launcher-text { display:flex; align-items:center; gap:7px; color:#0D0D0D; font-size:13px; font-weight:600; letter-spacing:0.02em; white-space:nowrap; }
+.pc-beta { display:inline-flex; align-items:center; padding:2px 6px; border-radius:10px; background:rgba(200,168,75,0.15); color:#8b6b16; font-size:8px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; }
 
 #pandora-chat-window {
   position: fixed; bottom: 92px; right: 28px; z-index: 9998;
@@ -1827,6 +1837,8 @@ function pcRemoveTyping(id) {
 .pc-header-left { display: flex; align-items: center; gap: 10px; }
 .pc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
 .pc-title { font-size: 13px; font-weight: 500; color: #F5F2ED; letter-spacing: 0.05em; }
+.pc-title-row { display:flex; align-items:center; gap:7px; }
+.pc-header-beta { color:#C8A84B; border:1px solid rgba(200,168,75,0.45); padding:1px 5px; border-radius:8px; font-size:7px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; }
 .pc-sub { font-size: 10px; color: rgba(245,242,237,0.4); letter-spacing: 0.08em; text-transform: uppercase; }
 .pc-close { background: none; border: none; color: rgba(245,242,237,0.4); cursor: pointer; font-size: 18px; line-height: 1; padding: 0; transition: color 0.15s; }
 .pc-close:hover { color: #F5F2ED; }
@@ -1920,6 +1932,11 @@ function pcRemoveTyping(id) {
 #pandora-chat-window.fullscreen .pc-messages {
   flex: 1;
 }
+@media(max-width:600px){
+  #pandora-chat-btn { right:16px; bottom:18px; min-width:154px; height:50px; }
+  #pandora-chat-btn svg { width:40px; height:40px; }
+  #pandora-chat-window { right:12px; bottom:80px; width:calc(100vw - 24px); max-height:72vh; }
+}
 </style>
 
 <button id="pandora-chat-btn" onclick="togglePandoraChat()" aria-label="Pandora AI чат">
@@ -1931,6 +1948,7 @@ function pcRemoveTyping(id) {
     <!-- Red bubble (front, top-right) -->
     <path d="M20 18 Q20 10 28 10 L36 10 Q44 10 44 18 Q44 24 38 25 L40 30 L26 26 Q20 24 20 18Z" fill="none" stroke="#c0392b" stroke-width="2.2" stroke-linejoin="round"/>
   </svg>
+  <span class="pc-launcher-text">Pandora AI <span class="pc-beta">beta</span></span>
 </button>
 
 <div id="pandora-chat-window">
@@ -1938,8 +1956,8 @@ function pcRemoveTyping(id) {
     <div class="pc-header-left">
       <div class="pc-dot"></div>
       <div>
-        <div class="pc-title">Pandora AI</div>
-        <div class="pc-sub">Асистент кооперативу</div>
+        <div class="pc-title-row"><div class="pc-title">Pandora AI</div><span class="pc-header-beta">beta</span></div>
+        <div class="pc-sub" id="pcSubtitle">Кооперативний AI-помічник</div>
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:6px;">
@@ -1955,17 +1973,17 @@ function pcRemoveTyping(id) {
     </div>
   </div>
   <div class="pc-modes" role="tablist" aria-label="Режим асистента">
-    <button class="pc-mode active" id="pcModeAi" type="button" onclick="pcSetMode('ai')">AI-асистент</button>
-    <button class="pc-mode" id="pcModeQa" type="button" onclick="pcSetMode('qa')">QA-асистент</button>
+    <button class="pc-mode active" id="pcModeAi" type="button" onclick="pcSetMode('ai')">AI-помічник</button>
+    <button class="pc-mode" id="pcModeQa" type="button" onclick="pcSetMode('qa')">Повідомити про баг / ідею</button>
   </div>
   <div class="pc-messages" id="pcMessages">
-    <div class="pc-msg bot" id="pcGreeting">Привіт! Я — ІІ-асистент кооперативу Пандора. Запитайте мене про кооперацію, наші проекти або як стати пайщиком 🌿</div>
+    <div class="pc-msg bot" id="pcGreeting">Поставте запитання про Pandora, пайовиків, вступ, внески або кооперативну модель.</div>
   </div>
   <div class="pc-suggestions" id="pcSuggestions">
-    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Що таке Пандора?</button>
+    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Що таке Pandora?</button>
     <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Як вступити?</button>
-    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Каса взаємодопомоги</button>
-    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Ozon Effect</button>
+    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Що таке пайовик?</button>
+    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Чи можна заробити?</button>
   </div>
   <div class="pc-input-row" id="pcInputRow">
     <textarea class="pc-input" id="pcInput" placeholder="Задайте питання..." rows="1"
@@ -1977,8 +1995,8 @@ function pcRemoveTyping(id) {
   </div>
   <div class="pc-qa-panel" id="pcQaPanel">
     <p id="pcQaIntro">Допоможіть команді Pandora покращити сайт.</p>
-    <button class="pc-qa-action" id="pcQaBug" type="button" onclick="pcQaPlaceholder()">Знайшов баг</button>
-    <button class="pc-qa-action" id="pcQaSuggestion" type="button" onclick="pcQaPlaceholder()">Є порада / пропозиція</button>
+    <button class="pc-qa-action" id="pcQaBug" type="button" onclick="pcQaPlaceholder()">🐞 Знайшов баг</button>
+    <button class="pc-qa-action" id="pcQaSuggestion" type="button" onclick="pcQaPlaceholder()">💡 Є пропозиція</button>
     <div class="pc-qa-notice" id="pcQaNotice" aria-live="polite"></div>
   </div>
 </div>
