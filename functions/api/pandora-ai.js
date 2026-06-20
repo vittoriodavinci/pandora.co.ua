@@ -92,6 +92,11 @@ async function requestOpenAi(apiKey, requestBody) {
     }
 
     const error = await readOpenAiError(response);
+    console.error("PANDORA_AI_OPENAI_ERROR", {
+      status: response.status,
+      type: error && error.type,
+      code: error && error.code
+    });
     const retryDelay = OPENAI_RETRY_DELAYS_MS[attempt];
     if (retryDelay === undefined || !shouldRetryOpenAi(response, error)) {
       return null;
@@ -237,6 +242,11 @@ export async function onRequest(context) {
   const model = context.env.PANDORA_AI_MODEL || DEFAULT_MODEL;
 
   if (!apiKey || !vectorStoreId) {
+    console.error("PANDORA_AI_BINDINGS", {
+      hasOpenAiKey: Boolean(apiKey),
+      hasVectorStoreId: Boolean(vectorStoreId),
+      hasModel: Boolean(context.env.PANDORA_AI_MODEL)
+    });
     requestLog(role, mode, false, true);
     return jsonResponse({
       ok: false,
