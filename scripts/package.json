@@ -4,7 +4,8 @@
   "description": "Indexes Markdown knowledge files from Google Drive into Supabase",
   "main": "index-drive.js",
   "scripts": {
-    "index": "node index-drive.js"
+    "index": "node index-drive.js",
+    "ai:create-vector-store": "node create-pandora-vector-store.js"
   },
   "dependencies": {
     "dotenv": "^16.4.7",

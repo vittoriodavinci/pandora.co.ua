@@ -1565,67 +1565,10 @@ window.addEventListener('scroll', () => {
 
 
 <script>
-const PANDORA_SYSTEM_BASE = `You are the AI assistant of the Pandora Cooperative (Кооператив Пандора / Кооператив Пандора). 
-
-CRITICAL LANGUAGE RULE: The user's interface language is {LANG_NAME}. You MUST respond ENTIRELY in {LANG_NAME}. Do NOT mix languages. Do NOT use words, terms, or phrases from any other language — not even single words. If the knowledge base below uses Ukrainian terms, translate them fully into {LANG_NAME} before responding. Every single word in your reply must be in {LANG_NAME}.
-
-CRITICAL HONESTY RULE: Only state facts that are explicitly listed below. NEVER invent, guess, or extrapolate details, features, locations, statistics, names, or capabilities not in this document — even if the question implies they exist. If you are not 100% sure — say "I don't have that information" and suggest contacting usenpandora@gmail.com. Do NOT fill gaps with assumptions.
-
-Style: friendly, specific, max 3-4 sentences.
-
-=== COOPERATIVE FACTS ===
-
-CONCEPT:
-- Next-generation cooperative with digital tech and AI agents
-- Two structures: Pandora Cooperative (pandora.co.ua, Kharkiv, Ukraine) and USEN Network (pandora.coop, international)
-- Motto: "Economy for people" — rejecting chrematistics (not for profit, but for well-being)
-- Three roles in one person: Owner / Employee / Consumer (symbol — Venn diagram of three RGB circles)
-- Founder: Витторио Да Винчи (also written as Vittorio Da Vinci in Latin script; born 1979, Kharkiv). Developing the project since 2010.
-
-PRINCIPLES:
-- One member — one vote. No shareholders
-- Goods and services at cost price; the difference from market price is a shared investment
-- Closed marketplace without intermediaries
-- Decentralization, privacy, mutual aid
-
-ACTIVE PROJECTS:
-1. Mutual Aid Fund (Каса взаємодопомоги) — Raiffeisen model in crypto: loans ~1% on stablecoins, independent of banks, smart contracts
-2. Ozon Effect — ozonated oils and health equipment; already operational and generating income; members get it at cost price
-3. Pandora ID — hybrid cooperative membership card + payment instrument
-4. Voting Platform — ZK-SNARKs + NFC, Liquid Democracy (vote delegation)
-
-HOW TO JOIN:
-1. Online: fill in the form at pandora.co.ua
-2. Or offline: send paper documents by mail
-3. Identity verification
-4. Receive Pandora ID and access to the closed marketplace
-5. Pay the share contribution — your stake in the cooperative
-
-FINANCIAL MODEL:
-- Member pays entry and share contributions → shared capital
-- Fund issues loans at ~1% → AI agents minimize costs
-- Difference between market price and cost price → cooperative dividend
-- Distributed at year end proportionally to participation
-
-TECHNOLOGY:
-- Multi-Agent System: Strategist, DAO-Lawyer, Verifier, Treasurer, Communicator
-- Local AI models (Ollama) for independence
-- ZK-SNARKs for anonymous verification
-- Decentralized servers, Solidity smart contracts
-
-INSPIRATION (philosophy):
-- Mondragon (Spain) — 80,000+ members, €12B turnover
-- Raiffeisen — 500M clients in 100+ countries
-- Elinor Ostrom — Nobel Prize 2009 for principles of sustainable communities
-- Jacques Fresco / Venus Project — resource-based economy
-- KopiKupy (Ukraine) — a Ukrainian savings cooperative; 4,500 members, saved 100M+ UAH on bank interest
-
-KNOWLEDGE BASE RULE: If the question is about cooperative theory, economics, history of cooperatives, or any topic found in the knowledge base context provided below — answer it fully and helpfully. The knowledge base contains books and materials relevant to the cooperative movement. Use this information freely.
-
-If the question is completely unrelated to cooperatives, economics, or mutual aid — politely explain you specialize in Pandora and cooperative topics. If you don't know the exact answer — suggest writing to usenpandora@gmail.com`;
-
 let pcHistory = [];
 let pcOpen = false;
+let pcMode = "ai";
+let pcConversationId = sessionStorage.getItem("pandora-ai-conversation-id") || "";
 
 // Localization for chat UI
 const PC_STRINGS = {
@@ -1635,7 +1578,12 @@ const PC_STRINGS = {
     suggestions: ["Що таке Пандора?", "Як вступити?", "Каса взаємодопомоги", "Ozon Effect"],
     errorNet: "Помилка з'єднання. Спробуйте ще раз або: usenpandora@gmail.com",
     errorOther: "Щось пішло не так. Напишіть нам: usenpandora@gmail.com",
-    langName: "Ukrainian"
+    aiMode: "AI-асистент",
+    qaMode: "QA-асистент",
+    qaIntro: "Допоможіть команді Pandora покращити сайт.",
+    qaBug: "Знайшов баг",
+    qaSuggestion: "Є порада / пропозиція",
+    qaNotice: "Дякуємо. Надсилання QA-звернень буде підключено на наступному етапі."
   },
   ru: {
     greeting: "Привет! Я — ИИ-ассистент кооператива Пандора. Спросите меня о кооперации, наших проектах или о том, как стать пайщиком 🌿",
@@ -1643,7 +1591,12 @@ const PC_STRINGS = {
     suggestions: ["Что такое Пандора?", "Как вступить?", "Касса взаимопомощи", "Ozon Effect"],
     errorNet: "Ошибка соединения. Попробуйте ещё раз или: usenpandora@gmail.com",
     errorOther: "Что-то пошло не так. Напишите нам: usenpandora@gmail.com",
-    langName: "Russian"
+    aiMode: "AI-ассистент",
+    qaMode: "QA-ассистент",
+    qaIntro: "Помогите команде Pandora улучшить сайт.",
+    qaBug: "Нашёл баг",
+    qaSuggestion: "Есть совет / предложение",
+    qaNotice: "Спасибо. Отправка QA-обращений будет подключена на следующем этапе."
   },
   en: {
     greeting: "Hello! I'm the AI assistant of the Pandora Cooperative. Ask me about the cooperative, our projects, or how to become a member 🌿",
@@ -1651,7 +1604,12 @@ const PC_STRINGS = {
     suggestions: ["What is Pandora?", "How to join?", "Mutual Aid Fund", "Ozon Effect"],
     errorNet: "Connection error. Please try again or: usenpandora@gmail.com",
     errorOther: "Something went wrong. Contact us: usenpandora@gmail.com",
-    langName: "English"
+    aiMode: "AI assistant",
+    qaMode: "QA assistant",
+    qaIntro: "Help the Pandora team improve the website.",
+    qaBug: "I found a bug",
+    qaSuggestion: "I have a suggestion",
+    qaNotice: "Thank you. QA submissions will be enabled in the next stage."
   },
   es: {
     greeting: "¡Hola! Soy el asistente IA de la Cooperativa Pandora. Pregúntame sobre la cooperativa, nuestros proyectos o cómo convertirte en miembro 🌿",
@@ -1659,18 +1617,17 @@ const PC_STRINGS = {
     suggestions: ["¿Qué es Pandora?", "¿Cómo unirse?", "Fondo de ayuda mutua", "Ozon Effect"],
     errorNet: "Error de conexión. Inténtalo de nuevo o: usenpandora@gmail.com",
     errorOther: "Algo salió mal. Escríbenos: usenpandora@gmail.com",
-    langName: "Spanish"
+    aiMode: "Asistente IA",
+    qaMode: "Asistente QA",
+    qaIntro: "Ayuda al equipo de Pandora a mejorar el sitio.",
+    qaBug: "Encontré un error",
+    qaSuggestion: "Tengo una sugerencia",
+    qaNotice: "Gracias. El envío de mensajes QA se habilitará en la siguiente etapa."
   }
 };
 
 function getPcLang() {
   return localStorage.getItem('pandora-lang') || 'uk';
-}
-
-function getPandoraSystem() {
-  const lang = getPcLang();
-  const langName = (PC_STRINGS[lang] || PC_STRINGS.uk).langName;
-  return PANDORA_SYSTEM_BASE.replace(/{LANG_NAME}/g, langName);
 }
 
 function pcUpdateUI(lang) {
@@ -1685,6 +1642,16 @@ function pcUpdateUI(lang) {
       `<button class="pc-suggestion" onclick="pcAsk(this.textContent)">${t}</button>`
     ).join("");
   }
+  const aiMode = document.getElementById("pcModeAi");
+  const qaMode = document.getElementById("pcModeQa");
+  const qaIntro = document.getElementById("pcQaIntro");
+  const qaBug = document.getElementById("pcQaBug");
+  const qaSuggestion = document.getElementById("pcQaSuggestion");
+  if (aiMode) aiMode.textContent = s.aiMode;
+  if (qaMode) qaMode.textContent = s.qaMode;
+  if (qaIntro) qaIntro.textContent = s.qaIntro;
+  if (qaBug) qaBug.textContent = s.qaBug;
+  if (qaSuggestion) qaSuggestion.textContent = s.qaSuggestion;
 }
 
 // Hook into selectLang to update chat UI
@@ -1736,6 +1703,22 @@ function pcAsk(text) {
   pcSend();
 }
 
+function pcSetMode(mode) {
+  pcMode = mode === "qa" ? "qa" : "ai";
+  document.getElementById("pcModeAi").classList.toggle("active", pcMode === "ai");
+  document.getElementById("pcModeQa").classList.toggle("active", pcMode === "qa");
+  document.getElementById("pcMessages").style.display = pcMode === "ai" ? "flex" : "none";
+  document.getElementById("pcSuggestions").style.display =
+    pcMode === "ai" && pcHistory.length === 0 ? "flex" : "none";
+  document.getElementById("pcInputRow").style.display = pcMode === "ai" ? "flex" : "none";
+  document.getElementById("pcQaPanel").style.display = pcMode === "qa" ? "flex" : "none";
+}
+
+function pcQaPlaceholder() {
+  const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
+  document.getElementById("pcQaNotice").textContent = s.qaNotice;
+}
+
 async function pcSend() {
   const inp = document.getElementById("pcInput");
   const text = inp.value.trim();
@@ -1749,24 +1732,28 @@ async function pcSend() {
   sendBtn.disabled = true;
   const typingId = pcAddTyping();
   try {
-    const res = await fetch("/api/chat", {
+    const res = await fetch("/api/pandora-ai", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 500,
-        system: getPandoraSystem(),
-        messages: pcHistory.slice(-8)
+        message: text,
+        mode: "ai",
+        role: "guest",
+        conversation_id: pcConversationId || undefined
       })
     });
     const data = await res.json();
     pcRemoveTyping(typingId);
-    if (data.content && data.content[0]) {
-      const reply = data.content[0].text;
+    if (data && data.answer) {
+      const reply = data.answer;
       pcAddMsg("bot", reply);
       pcHistory.push({ role: "assistant", content: reply });
+      if (data.conversation_id) {
+        pcConversationId = data.conversation_id;
+        sessionStorage.setItem("pandora-ai-conversation-id", pcConversationId);
+      }
     } else {
       pcAddMsg("bot", (PC_STRINGS[getPcLang()]||PC_STRINGS.uk).errorOther);
     }
@@ -1807,11 +1794,7 @@ function pcRemoveTyping(id) {
 // pcUpdateUI and greeting init called after chat widget HTML is rendered (see end of body)
 </script>
 
-<!-- ═══════════════════════════════════════════════
-     PANDORA AI — Плавающий чат-бот
-     Замените PANDORA_API_KEY на реальный ключ Anthropic
-     Или вынесите в Netlify Function для безопасности
-════════════════════════════════════════════════ -->
+<!-- Pandora AI Cooperative Assistant -->
 <style>
 #pandora-chat-btn {
   position: fixed; bottom: 28px; right: 28px; z-index: 9999;
@@ -1847,6 +1830,19 @@ function pcRemoveTyping(id) {
 .pc-sub { font-size: 10px; color: rgba(245,242,237,0.4); letter-spacing: 0.08em; text-transform: uppercase; }
 .pc-close { background: none; border: none; color: rgba(245,242,237,0.4); cursor: pointer; font-size: 18px; line-height: 1; padding: 0; transition: color 0.15s; }
 .pc-close:hover { color: #F5F2ED; }
+.pc-modes {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  background: #fafafa;
+}
+.pc-mode {
+  padding: 9px 8px; border: 0; border-right: 1px solid rgba(0,0,0,0.07);
+  background: transparent; color: rgba(13,13,13,0.48); cursor: pointer;
+  font: 500 10px/1.2 "DM Sans", sans-serif; letter-spacing: 0.06em;
+  text-transform: uppercase; transition: all 0.15s;
+}
+.pc-mode:last-child { border-right: 0; }
+.pc-mode.active { color: #1A3A7A; background: rgba(26,58,122,0.07); }
 .pc-messages {
   flex: 1; overflow-y: auto; padding: 14px;
   display: flex; flex-direction: column; gap: 10px;
@@ -1890,6 +1886,18 @@ function pcRemoveTyping(id) {
 .pc-send:hover { opacity: 0.85; }
 .pc-send svg { width: 16px; height: 16px; fill: #fff; }
 .pc-send:disabled { opacity: 0.4; cursor: default; }
+.pc-qa-panel {
+  display: none; flex: 1; flex-direction: column; justify-content: center;
+  gap: 10px; padding: 22px 16px; text-align: center; color: #0D0D0D;
+}
+.pc-qa-panel p { margin: 0 0 4px; font-size: 13px; line-height: 1.5; opacity: 0.6; }
+.pc-qa-action {
+  width: 100%; padding: 10px 12px; border: 1px solid rgba(26,58,122,0.2);
+  background: rgba(26,58,122,0.04); color: #1A3A7A; cursor: pointer;
+  font: 500 12px/1.3 "DM Sans", sans-serif; transition: background 0.15s;
+}
+.pc-qa-action:hover { background: rgba(26,58,122,0.1); }
+.pc-qa-notice { min-height: 32px; font-size: 11px; line-height: 1.45; color: rgba(13,13,13,0.5); }
 
 /* Expand / fullscreen button */
 .pc-expand {
@@ -1946,6 +1954,10 @@ function pcRemoveTyping(id) {
       <button class="pc-close" onclick="togglePandoraChat()">&#x00D7;</button>
     </div>
   </div>
+  <div class="pc-modes" role="tablist" aria-label="Режим асистента">
+    <button class="pc-mode active" id="pcModeAi" type="button" onclick="pcSetMode('ai')">AI-асистент</button>
+    <button class="pc-mode" id="pcModeQa" type="button" onclick="pcSetMode('qa')">QA-асистент</button>
+  </div>
   <div class="pc-messages" id="pcMessages">
     <div class="pc-msg bot" id="pcGreeting">Привіт! Я — ІІ-асистент кооперативу Пандора. Запитайте мене про кооперацію, наші проекти або як стати пайщиком 🌿</div>
   </div>
@@ -1955,13 +1967,19 @@ function pcRemoveTyping(id) {
     <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Каса взаємодопомоги</button>
     <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Ozon Effect</button>
   </div>
-  <div class="pc-input-row">
+  <div class="pc-input-row" id="pcInputRow">
     <textarea class="pc-input" id="pcInput" placeholder="Задайте питання..." rows="1"
       onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();pcSend()}"
       oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px'"></textarea>
     <button class="pc-send" id="pcSendBtn" onclick="pcSend()">
       <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
     </button>
+  </div>
+  <div class="pc-qa-panel" id="pcQaPanel">
+    <p id="pcQaIntro">Допоможіть команді Pandora покращити сайт.</p>
+    <button class="pc-qa-action" id="pcQaBug" type="button" onclick="pcQaPlaceholder()">Знайшов баг</button>
+    <button class="pc-qa-action" id="pcQaSuggestion" type="button" onclick="pcQaPlaceholder()">Є порада / пропозиція</button>
+    <div class="pc-qa-notice" id="pcQaNotice" aria-live="polite"></div>
   </div>
 </div>
 
