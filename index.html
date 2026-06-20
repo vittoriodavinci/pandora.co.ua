@@ -1581,10 +1581,15 @@ const PC_STRINGS = {
     subtitle: "Кооперативний AI-помічник",
     aiMode: "AI-помічник",
     qaMode: "Повідомити про баг / ідею",
-    qaIntro: "Допоможіть команді Pandora покращити сайт.",
+    qaTitle: "Допоможіть покращити Pandora",
+    qaIntro: "Тестування — це внесок співробітника. Пропозиції — це внесок співвласника.",
     qaBug: "🐞 Знайшов баг",
+    qaBugDescription: "Повідомити, що працює не так",
     qaSuggestion: "💡 Є пропозиція",
-    qaNotice: "Дякуємо. Надсилання QA-звернень буде підключено на наступному етапі."
+    qaSuggestionDescription: "Запропонувати, як зробити краще",
+    qaBack: "← Назад",
+    qaBugFields: ["Що ви очікували?", "Що сталося насправді?", "Де це сталося?", "Як повторити?", "Контакт, необов'язково"],
+    qaSuggestionFields: ["Що ви пропонуєте?", "Яку проблему це вирішує?", "Кому це допоможе?", "Чому це важливо?", "Контакт, необов'язково"]
   },
   ru: {
     greeting: "Задайте вопрос о Pandora, пайщиках, вступлении, взносах или кооперативной модели.",
@@ -1595,10 +1600,15 @@ const PC_STRINGS = {
     subtitle: "Кооперативный AI-помощник",
     aiMode: "AI-помощник",
     qaMode: "Сообщить баг / идею",
-    qaIntro: "Помогите команде Pandora улучшить сайт.",
+    qaTitle: "Помогите улучшить Pandora",
+    qaIntro: "Тестирование — это вклад сотрудника. Предложения — это вклад совладельца.",
     qaBug: "🐞 Нашёл баг",
+    qaBugDescription: "Сообщить, что работает не так",
     qaSuggestion: "💡 Есть предложение",
-    qaNotice: "Спасибо. Отправка QA-обращений будет подключена на следующем этапе."
+    qaSuggestionDescription: "Предложить, как сделать лучше",
+    qaBack: "← Назад",
+    qaBugFields: ["Что вы ожидали?", "Что произошло на самом деле?", "Где это произошло?", "Как повторить?", "Контакт, необязательно"],
+    qaSuggestionFields: ["Что вы предлагаете?", "Какую проблему это решает?", "Кому это поможет?", "Почему это важно?", "Контакт, необязательно"]
   },
   en: {
     greeting: "Ask about Pandora, cooperative members, joining, contributions, or the cooperative model.",
@@ -1609,10 +1619,15 @@ const PC_STRINGS = {
     subtitle: "Cooperative AI assistant",
     aiMode: "AI assistant",
     qaMode: "Report a bug / idea",
-    qaIntro: "Help the Pandora team improve the website.",
+    qaTitle: "Help improve Pandora",
+    qaIntro: "Testing is a contributor's input. Suggestions are a co-owner's input.",
     qaBug: "🐞 I found a bug",
+    qaBugDescription: "Report something that does not work",
     qaSuggestion: "💡 I have a suggestion",
-    qaNotice: "Thank you. QA submissions will be enabled in the next stage."
+    qaSuggestionDescription: "Suggest how to make it better",
+    qaBack: "← Back",
+    qaBugFields: ["What did you expect?", "What actually happened?", "Where did it happen?", "How can we reproduce it?", "Contact, optional"],
+    qaSuggestionFields: ["What do you suggest?", "What problem does it solve?", "Who will it help?", "Why is it important?", "Contact, optional"]
   },
   es: {
     greeting: "Pregunta sobre Pandora, los socios, la incorporación, las aportaciones o el modelo cooperativo.",
@@ -1623,10 +1638,15 @@ const PC_STRINGS = {
     subtitle: "Asistente IA cooperativo",
     aiMode: "Asistente IA",
     qaMode: "Informar error / idea",
-    qaIntro: "Ayuda al equipo de Pandora a mejorar el sitio.",
+    qaTitle: "Ayuda a mejorar Pandora",
+    qaIntro: "Probar es una aportación de colaborador. Proponer es una aportación de copropietario.",
     qaBug: "🐞 Encontré un error",
+    qaBugDescription: "Informar de algo que no funciona",
     qaSuggestion: "💡 Tengo una sugerencia",
-    qaNotice: "Gracias. El envío de mensajes QA se habilitará en la siguiente etapa."
+    qaSuggestionDescription: "Proponer cómo hacerlo mejor",
+    qaBack: "← Volver",
+    qaBugFields: ["¿Qué esperabas?", "¿Qué ocurrió realmente?", "¿Dónde ocurrió?", "¿Cómo se puede repetir?", "Contacto, opcional"],
+    qaSuggestionFields: ["¿Qué propones?", "¿Qué problema resuelve?", "¿A quién ayudará?", "¿Por qué es importante?", "Contacto, opcional"]
   }
 };
 
@@ -1648,16 +1668,26 @@ function pcUpdateUI(lang) {
   }
   const aiMode = document.getElementById("pcModeAi");
   const qaMode = document.getElementById("pcModeQa");
+  const qaTitle = document.getElementById("pcQaTitle");
   const qaIntro = document.getElementById("pcQaIntro");
   const qaBug = document.getElementById("pcQaBug");
+  const qaBugDescription = document.getElementById("pcQaBugDescription");
   const qaSuggestion = document.getElementById("pcQaSuggestion");
+  const qaSuggestionDescription = document.getElementById("pcQaSuggestionDescription");
   const subtitle = document.getElementById("pcSubtitle");
   if (aiMode) aiMode.textContent = s.aiMode;
   if (qaMode) qaMode.textContent = s.qaMode;
+  if (qaTitle) qaTitle.textContent = s.qaTitle;
   if (qaIntro) qaIntro.textContent = s.qaIntro;
   if (qaBug) qaBug.textContent = s.qaBug;
+  if (qaBugDescription) qaBugDescription.textContent = s.qaBugDescription;
   if (qaSuggestion) qaSuggestion.textContent = s.qaSuggestion;
+  if (qaSuggestionDescription) qaSuggestionDescription.textContent = s.qaSuggestionDescription;
   if (subtitle) subtitle.textContent = s.subtitle;
+  const activeFeedbackForm = document.getElementById("pcQaForm");
+  if (activeFeedbackForm && activeFeedbackForm.dataset.type) {
+    pcOpenFeedback(activeFeedbackForm.dataset.type);
+  }
 }
 
 // Hook into selectLang to update chat UI
@@ -1720,9 +1750,38 @@ function pcSetMode(mode) {
   document.getElementById("pcQaPanel").style.display = pcMode === "qa" ? "flex" : "none";
 }
 
-function pcQaPlaceholder() {
+function pcOpenFeedback(type) {
   const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
-  document.getElementById("pcQaNotice").textContent = s.qaNotice;
+  const isBug = type === "bug";
+  const fields = isBug ? s.qaBugFields : s.qaSuggestionFields;
+  const title = isBug ? s.qaBug : s.qaSuggestion;
+  const form = document.getElementById("pcQaForm");
+  const choices = document.getElementById("pcQaChoices");
+  form.dataset.type = isBug ? "bug" : "suggestion";
+  form.innerHTML = `
+    <button class="pc-qa-back" type="button" onclick="pcCloseFeedback()">${s.qaBack}</button>
+    <h4>${title}</h4>
+    ${fields.map((label, index) => `
+      <label class="pc-qa-field">
+        <span>${label}</span>
+        ${index === fields.length - 1
+          ? `<input type="text" autocomplete="email">`
+          : `<textarea rows="2"></textarea>`}
+      </label>
+    `).join("")}
+  `;
+  choices.style.display = "none";
+  form.style.display = "flex";
+  const firstField = form.querySelector("textarea, input");
+  if (firstField) firstField.focus();
+}
+
+function pcCloseFeedback() {
+  const form = document.getElementById("pcQaForm");
+  form.style.display = "none";
+  form.innerHTML = "";
+  form.dataset.type = "";
+  document.getElementById("pcQaChoices").style.display = "grid";
 }
 
 async function pcSend() {
@@ -1855,6 +1914,8 @@ function pcRemoveTyping(id) {
 }
 .pc-mode:last-child { border-right: 0; }
 .pc-mode.active { color: #1A3A7A; background: rgba(26,58,122,0.07); }
+.pc-mode-feedback { color: #7a5a00; background: rgba(200,168,75,0.08); }
+.pc-mode-feedback.active { color: #5e4500; background: rgba(200,168,75,0.2); }
 .pc-messages {
   flex: 1; overflow-y: auto; padding: 14px;
   display: flex; flex-direction: column; gap: 10px;
@@ -1899,17 +1960,35 @@ function pcRemoveTyping(id) {
 .pc-send svg { width: 16px; height: 16px; fill: #fff; }
 .pc-send:disabled { opacity: 0.4; cursor: default; }
 .pc-qa-panel {
-  display: none; flex: 1; flex-direction: column; justify-content: center;
-  gap: 10px; padding: 22px 16px; text-align: center; color: #0D0D0D;
+  display: none; flex: 1; flex-direction: column; justify-content: flex-start;
+  gap: 10px; padding: 18px 16px; color: #0D0D0D; overflow-y: auto;
 }
-.pc-qa-panel p { margin: 0 0 4px; font-size: 13px; line-height: 1.5; opacity: 0.6; }
+.pc-qa-heading { padding: 12px 13px; background: linear-gradient(135deg, rgba(200,168,75,0.18), rgba(26,58,122,0.06)); border-left: 3px solid #C8A84B; }
+.pc-qa-heading h3 { margin: 0 0 6px; font: 600 17px/1.25 "DM Sans", sans-serif; color: #0D0D0D; }
+.pc-qa-heading p { margin: 0; font-size: 12px; line-height: 1.5; color: rgba(13,13,13,0.68); }
+.pc-qa-choices { display: grid; gap: 10px; }
 .pc-qa-action {
-  width: 100%; padding: 10px 12px; border: 1px solid rgba(26,58,122,0.2);
-  background: rgba(26,58,122,0.04); color: #1A3A7A; cursor: pointer;
-  font: 500 12px/1.3 "DM Sans", sans-serif; transition: background 0.15s;
+  width: 100%; padding: 14px; border: 1px solid rgba(26,58,122,0.18);
+  background: #fff; color: #1A3A7A; cursor: pointer; text-align: left;
+  font-family: "DM Sans", sans-serif; transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  display: flex; flex-direction: column; gap: 4px;
 }
-.pc-qa-action:hover { background: rgba(26,58,122,0.1); }
-.pc-qa-notice { min-height: 32px; font-size: 11px; line-height: 1.45; color: rgba(13,13,13,0.5); }
+.pc-qa-action:hover { transform: translateY(-1px); border-color: rgba(26,58,122,0.42); box-shadow: 0 5px 14px rgba(26,58,122,0.08); }
+.pc-qa-action-title { font-size: 14px; font-weight: 600; }
+.pc-qa-action-description { font-size: 11px; line-height: 1.4; color: rgba(13,13,13,0.58); }
+.pc-qa-form { display: none; flex-direction: column; gap: 10px; }
+.pc-qa-form h4 { margin: 0; font: 600 15px/1.3 "DM Sans", sans-serif; color: #1A3A7A; }
+.pc-qa-back { align-self: flex-start; padding: 0; border: 0; background: none; color: rgba(26,58,122,0.72); cursor: pointer; font: 500 11px/1.3 "DM Sans", sans-serif; }
+.pc-qa-field { display: flex; flex-direction: column; gap: 5px; text-align: left; }
+.pc-qa-field span { font-size: 11px; font-weight: 500; color: rgba(13,13,13,0.72); }
+.pc-qa-field textarea,
+.pc-qa-field input {
+  width: 100%; box-sizing: border-box; border: 1px solid rgba(0,0,0,0.13);
+  background: #fafafa; color: #0D0D0D; border-radius: 3px; outline: none;
+  padding: 8px 9px; resize: vertical; font: 12px/1.4 "DM Sans", sans-serif;
+}
+.pc-qa-field textarea:focus,
+.pc-qa-field input:focus { border-color: #1A3A7A; background: #fff; }
 
 /* Expand / fullscreen button */
 .pc-expand {
@@ -1974,7 +2053,7 @@ function pcRemoveTyping(id) {
   </div>
   <div class="pc-modes" role="tablist" aria-label="Режим асистента">
     <button class="pc-mode active" id="pcModeAi" type="button" onclick="pcSetMode('ai')">AI-помічник</button>
-    <button class="pc-mode" id="pcModeQa" type="button" onclick="pcSetMode('qa')">Повідомити про баг / ідею</button>
+    <button class="pc-mode pc-mode-feedback" id="pcModeQa" type="button" onclick="pcSetMode('qa')">Повідомити про баг / ідею</button>
   </div>
   <div class="pc-messages" id="pcMessages">
     <div class="pc-msg bot" id="pcGreeting">Поставте запитання про Pandora, пайовиків, вступ, внески або кооперативну модель.</div>
@@ -1994,10 +2073,21 @@ function pcRemoveTyping(id) {
     </button>
   </div>
   <div class="pc-qa-panel" id="pcQaPanel">
-    <p id="pcQaIntro">Допоможіть команді Pandora покращити сайт.</p>
-    <button class="pc-qa-action" id="pcQaBug" type="button" onclick="pcQaPlaceholder()">🐞 Знайшов баг</button>
-    <button class="pc-qa-action" id="pcQaSuggestion" type="button" onclick="pcQaPlaceholder()">💡 Є пропозиція</button>
-    <div class="pc-qa-notice" id="pcQaNotice" aria-live="polite"></div>
+    <div class="pc-qa-heading">
+      <h3 id="pcQaTitle">Допоможіть покращити Pandora</h3>
+      <p id="pcQaIntro">Тестування — це внесок співробітника. Пропозиції — це внесок співвласника.</p>
+    </div>
+    <div class="pc-qa-choices" id="pcQaChoices">
+      <button class="pc-qa-action" type="button" onclick="pcOpenFeedback('bug')">
+        <span class="pc-qa-action-title" id="pcQaBug">🐞 Знайшов баг</span>
+        <span class="pc-qa-action-description" id="pcQaBugDescription">Повідомити, що працює не так</span>
+      </button>
+      <button class="pc-qa-action" type="button" onclick="pcOpenFeedback('suggestion')">
+        <span class="pc-qa-action-title" id="pcQaSuggestion">💡 Є пропозиція</span>
+        <span class="pc-qa-action-description" id="pcQaSuggestionDescription">Запропонувати, як зробити краще</span>
+      </button>
+    </div>
+    <div class="pc-qa-form" id="pcQaForm" data-type=""></div>
   </div>
 </div>
 
