@@ -1569,6 +1569,13 @@ let pcHistory = [];
 let pcOpen = false;
 let pcMode = "ai";
 let pcConversationId = sessionStorage.getItem("pandora-ai-conversation-id") || "";
+let pcFixationActive = false;
+let pcAudioRecorder = null;
+let pcAudioStream = null;
+let pcAudioChunks = [];
+let pcAudioTimer = null;
+let pcAudioStartedAt = 0;
+let pcFixationObjectUrl = "";
 
 // Localization for chat UI
 const PC_STRINGS = {
@@ -1587,9 +1594,30 @@ const PC_STRINGS = {
     qaBugDescription: "Повідомити, що працює не так",
     qaSuggestion: "💡 Є пропозиція",
     qaSuggestionDescription: "Запропонувати, як зробити краще",
+    qaFixation: "🎯 Режим фіксації",
+    qaFixationDescription: "Швидко зафіксувати фото, відео або голос",
     qaBack: "← Назад",
     qaBugFields: ["Що ви очікували?", "Що сталося насправді?", "Де це сталося?", "Як повторити?", "Контакт, необов'язково"],
-    qaSuggestionFields: ["Що ви пропонуєте?", "Яку проблему це вирішує?", "Кому це допоможе?", "Чому це важливо?", "Контакт, необов'язково"]
+    qaSuggestionFields: ["Що ви пропонуєте?", "Яку проблему це вирішує?", "Кому це допоможе?", "Чому це важливо?", "Контакт, необов'язково"],
+    attachments: "Додати матеріали",
+    attachmentsHint: "Файл, фото, документ, зображення, відео або аудіо",
+    uploadPending: "Файли буде додано до звіту після ввімкнення серверного завантаження. Зараз вони залишаються лише у вашому браузері.",
+    selectedFiles: "Вибрані файли",
+    fixationTitle: "Пульт фіксації",
+    fixationExit: "Повернутися до Pandora AI",
+    photoFixation: "Фотофіксація",
+    chooseImage: "Вибрати фото",
+    videoFixation: "Відеофіксація",
+    chooseVideo: "Вибрати відео",
+    voiceFixation: "Голосова фіксація",
+    stopRecording: "Зупинити",
+    recording: "Запис",
+    voiceNext: "Автоматичне розшифрування голосу буде підключено наступним етапом.",
+    mediaLocal: "Матеріал не надсилається автоматично. Перевірте його перед подальшою дією.",
+    microphoneUnavailable: "Запис голосу не підтримується цим браузером.",
+    microphoneDenied: "Не вдалося отримати доступ до мікрофона. Перевірте дозвіл браузера.",
+    screenRecordingSoon: "Запис екрана поки не ввімкнено. Виберіть готовий відеофайл.",
+    removePreview: "Прибрати матеріал"
   },
   ru: {
     greeting: "Задайте вопрос о Pandora, пайщиках, вступлении, взносах или кооперативной модели.",
@@ -1606,9 +1634,30 @@ const PC_STRINGS = {
     qaBugDescription: "Сообщить, что работает не так",
     qaSuggestion: "💡 Есть предложение",
     qaSuggestionDescription: "Предложить, как сделать лучше",
+    qaFixation: "🎯 Режим фиксации",
+    qaFixationDescription: "Быстро зафиксировать фото, видео или голос",
     qaBack: "← Назад",
     qaBugFields: ["Что вы ожидали?", "Что произошло на самом деле?", "Где это произошло?", "Как повторить?", "Контакт, необязательно"],
-    qaSuggestionFields: ["Что вы предлагаете?", "Какую проблему это решает?", "Кому это поможет?", "Почему это важно?", "Контакт, необязательно"]
+    qaSuggestionFields: ["Что вы предлагаете?", "Какую проблему это решает?", "Кому это поможет?", "Почему это важно?", "Контакт, необязательно"],
+    attachments: "Добавить материалы",
+    attachmentsHint: "Файл, фото, документ, изображение, видео или аудио",
+    uploadPending: "Файлы будут добавлены к отчёту после включения серверной загрузки. Сейчас они остаются только в вашем браузере.",
+    selectedFiles: "Выбранные файлы",
+    fixationTitle: "Пульт фиксации",
+    fixationExit: "Вернуться в Pandora AI",
+    photoFixation: "Фотофиксация",
+    chooseImage: "Выбрать фото",
+    videoFixation: "Видеофиксация",
+    chooseVideo: "Выбрать видео",
+    voiceFixation: "Голосовая фиксация",
+    stopRecording: "Остановить",
+    recording: "Запись",
+    voiceNext: "Автоматическая расшифровка голоса будет подключена следующим этапом.",
+    mediaLocal: "Материал не отправляется автоматически. Проверьте его перед дальнейшим действием.",
+    microphoneUnavailable: "Запись голоса не поддерживается этим браузером.",
+    microphoneDenied: "Не удалось получить доступ к микрофону. Проверьте разрешение браузера.",
+    screenRecordingSoon: "Запись экрана пока не включена. Выберите готовый видеофайл.",
+    removePreview: "Убрать материал"
   },
   en: {
     greeting: "Ask about Pandora, cooperative members, joining, contributions, or the cooperative model.",
@@ -1625,9 +1674,30 @@ const PC_STRINGS = {
     qaBugDescription: "Report something that does not work",
     qaSuggestion: "💡 I have a suggestion",
     qaSuggestionDescription: "Suggest how to make it better",
+    qaFixation: "🎯 Fixation mode",
+    qaFixationDescription: "Quickly capture a photo, video, or voice note",
     qaBack: "← Back",
     qaBugFields: ["What did you expect?", "What actually happened?", "Where did it happen?", "How can we reproduce it?", "Contact, optional"],
-    qaSuggestionFields: ["What do you suggest?", "What problem does it solve?", "Who will it help?", "Why is it important?", "Contact, optional"]
+    qaSuggestionFields: ["What do you suggest?", "What problem does it solve?", "Who will it help?", "Why is it important?", "Contact, optional"],
+    attachments: "Add materials",
+    attachmentsHint: "File, photo, document, image, video, or audio",
+    uploadPending: "Files will be added to the report after server upload is enabled. For now they remain only in your browser.",
+    selectedFiles: "Selected files",
+    fixationTitle: "Fixation controls",
+    fixationExit: "Return to Pandora AI",
+    photoFixation: "Photo capture",
+    chooseImage: "Choose image",
+    videoFixation: "Video capture",
+    chooseVideo: "Choose video",
+    voiceFixation: "Voice capture",
+    stopRecording: "Stop",
+    recording: "Recording",
+    voiceNext: "Automatic voice transcription will be added in the next stage.",
+    mediaLocal: "Media is not sent automatically. Review it before any next action.",
+    microphoneUnavailable: "Voice recording is not supported by this browser.",
+    microphoneDenied: "Microphone access failed. Check the browser permission.",
+    screenRecordingSoon: "Screen recording is not enabled yet. Choose an existing video file.",
+    removePreview: "Remove media"
   },
   es: {
     greeting: "Pregunta sobre Pandora, los socios, la incorporación, las aportaciones o el modelo cooperativo.",
@@ -1644,9 +1714,30 @@ const PC_STRINGS = {
     qaBugDescription: "Informar de algo que no funciona",
     qaSuggestion: "💡 Tengo una sugerencia",
     qaSuggestionDescription: "Proponer cómo hacerlo mejor",
+    qaFixation: "🎯 Modo de captura",
+    qaFixationDescription: "Capturar rápidamente una foto, vídeo o nota de voz",
     qaBack: "← Volver",
     qaBugFields: ["¿Qué esperabas?", "¿Qué ocurrió realmente?", "¿Dónde ocurrió?", "¿Cómo se puede repetir?", "Contacto, opcional"],
-    qaSuggestionFields: ["¿Qué propones?", "¿Qué problema resuelve?", "¿A quién ayudará?", "¿Por qué es importante?", "Contacto, opcional"]
+    qaSuggestionFields: ["¿Qué propones?", "¿Qué problema resuelve?", "¿A quién ayudará?", "¿Por qué es importante?", "Contacto, opcional"],
+    attachments: "Añadir materiales",
+    attachmentsHint: "Archivo, foto, documento, imagen, vídeo o audio",
+    uploadPending: "Los archivos se añadirán al informe cuando se active la carga al servidor. Por ahora permanecen solo en tu navegador.",
+    selectedFiles: "Archivos seleccionados",
+    fixationTitle: "Controles de captura",
+    fixationExit: "Volver a Pandora AI",
+    photoFixation: "Captura de foto",
+    chooseImage: "Elegir imagen",
+    videoFixation: "Captura de vídeo",
+    chooseVideo: "Elegir vídeo",
+    voiceFixation: "Captura de voz",
+    stopRecording: "Detener",
+    recording: "Grabando",
+    voiceNext: "La transcripción automática de voz se añadirá en la siguiente etapa.",
+    mediaLocal: "El material no se envía automáticamente. Revísalo antes de continuar.",
+    microphoneUnavailable: "Este navegador no admite la grabación de voz.",
+    microphoneDenied: "No se pudo acceder al micrófono. Revisa el permiso del navegador.",
+    screenRecordingSoon: "La grabación de pantalla aún no está activada. Elige un archivo de vídeo existente.",
+    removePreview: "Quitar material"
   }
 };
 
@@ -1674,6 +1765,8 @@ function pcUpdateUI(lang) {
   const qaBugDescription = document.getElementById("pcQaBugDescription");
   const qaSuggestion = document.getElementById("pcQaSuggestion");
   const qaSuggestionDescription = document.getElementById("pcQaSuggestionDescription");
+  const qaFixation = document.getElementById("pcQaFixation");
+  const qaFixationDescription = document.getElementById("pcQaFixationDescription");
   const subtitle = document.getElementById("pcSubtitle");
   if (aiMode) aiMode.textContent = s.aiMode;
   if (qaMode) qaMode.textContent = s.qaMode;
@@ -1683,7 +1776,10 @@ function pcUpdateUI(lang) {
   if (qaBugDescription) qaBugDescription.textContent = s.qaBugDescription;
   if (qaSuggestion) qaSuggestion.textContent = s.qaSuggestion;
   if (qaSuggestionDescription) qaSuggestionDescription.textContent = s.qaSuggestionDescription;
+  if (qaFixation) qaFixation.textContent = s.qaFixation;
+  if (qaFixationDescription) qaFixationDescription.textContent = s.qaFixationDescription;
   if (subtitle) subtitle.textContent = s.subtitle;
+  pcUpdateFixationUI(s);
   const activeFeedbackForm = document.getElementById("pcQaForm");
   if (activeFeedbackForm && activeFeedbackForm.dataset.type) {
     pcOpenFeedback(activeFeedbackForm.dataset.type);
@@ -1694,6 +1790,10 @@ function pcUpdateUI(lang) {
 const _origSelectLang = typeof selectLang === "function" ? selectLang : null;
 
 function togglePandoraChat() {
+  if (pcFixationActive) {
+    pcExitFixationMode();
+    return;
+  }
   pcOpen = !pcOpen;
   document.getElementById("pandora-chat-window").classList.toggle("open", pcOpen);
   if (!pcOpen) {
@@ -1769,7 +1869,16 @@ function pcOpenFeedback(type) {
           : `<textarea rows="2"></textarea>`}
       </label>
     `).join("")}
+    <label class="pc-attachment-picker">
+      <span class="pc-attachment-title">${s.attachments}</span>
+      <span class="pc-attachment-hint">${s.attachmentsHint}</span>
+      <input type="file" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.odt,.txt">
+    </label>
+    <div class="pc-file-list" aria-live="polite"></div>
+    <div class="pc-upload-status">${s.uploadPending}</div>
   `;
+  const fileInput = form.querySelector('input[type="file"]');
+  fileInput.addEventListener("change", () => pcRenderSelectedFiles(fileInput));
   choices.style.display = "none";
   form.style.display = "flex";
   const firstField = form.querySelector("textarea, input");
@@ -1782,6 +1891,218 @@ function pcCloseFeedback() {
   form.innerHTML = "";
   form.dataset.type = "";
   document.getElementById("pcQaChoices").style.display = "grid";
+}
+
+function pcRenderSelectedFiles(input) {
+  const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
+  const list = input.closest(".pc-qa-form").querySelector(".pc-file-list");
+  const files = Array.from(input.files || []);
+  list.innerHTML = files.length
+    ? `<strong>${s.selectedFiles}:</strong><ul>${files.map(file =>
+        `<li>${pcEscapeHtml(file.name)} · ${pcFormatBytes(file.size)}</li>`
+      ).join("")}</ul>`
+    : "";
+}
+
+function pcEscapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
+}
+
+function pcFormatBytes(bytes) {
+  if (!Number.isFinite(bytes) || bytes <= 0) return "0 KB";
+  const units = ["B", "KB", "MB", "GB"];
+  const unit = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+  const amount = bytes / Math.pow(1024, unit);
+  return `${amount >= 10 || unit === 0 ? amount.toFixed(0) : amount.toFixed(1)} ${units[unit]}`;
+}
+
+function pcEnterFixationMode() {
+  pcFixationActive = true;
+  pcOpen = false;
+  document.getElementById("pandora-chat-window").classList.remove("open", "fullscreen");
+  document.getElementById("pandora-chat-btn").hidden = true;
+  document.getElementById("pc-fixation-dock").classList.add("active");
+  pcFullscreen = false;
+  updateExpandIcon();
+}
+
+function pcExitFixationMode() {
+  pcFixationActive = false;
+  pcStopAudioRecording(true);
+  pcClearFixationPreview();
+  document.getElementById("pc-fixation-dock").classList.remove("active", "recording");
+  document.getElementById("pandora-chat-btn").hidden = false;
+  pcOpen = true;
+  document.getElementById("pandora-chat-window").classList.add("open");
+  pcSetMode("qa");
+}
+
+function pcUpdateFixationUI(s) {
+  const mappings = {
+    pcFixationTitle: s.fixationTitle,
+    pcFixationExit: s.fixationExit,
+    pcPhotoLabel: s.photoFixation,
+    pcPhotoChoose: s.chooseImage,
+    pcVideoLabel: s.videoFixation,
+    pcVideoChoose: s.chooseVideo,
+    pcVoiceLabel: s.voiceFixation,
+    pcVoiceNext: s.voiceNext
+  };
+  Object.entries(mappings).forEach(([id, text]) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = text;
+  });
+  const photoAction = document.getElementById("pcPhotoAction");
+  const videoAction = document.getElementById("pcVideoAction");
+  const voiceAction = document.getElementById("pcVoiceAction");
+  if (photoAction) photoAction.title = s.photoFixation;
+  if (videoAction) videoAction.title = `${s.videoFixation}. ${s.screenRecordingSoon}`;
+  if (voiceAction) voiceAction.title = s.voiceFixation;
+  const voiceLabel = document.getElementById("pcVoiceLabel");
+  if (voiceLabel && pcAudioRecorder && pcAudioRecorder.state === "recording") {
+    voiceLabel.textContent = s.stopRecording;
+  }
+}
+
+function pcOpenPhotoCapture() {
+  if (pcAudioRecorder && pcAudioRecorder.state === "recording") pcStopAudioRecording(true);
+  document.getElementById("pcPhotoCapture").click();
+}
+
+function pcOpenPhotoLibrary(event) {
+  event.stopPropagation();
+  if (pcAudioRecorder && pcAudioRecorder.state === "recording") pcStopAudioRecording(true);
+  document.getElementById("pcPhotoLibrary").click();
+}
+
+function pcOpenVideoLibrary() {
+  if (pcAudioRecorder && pcAudioRecorder.state === "recording") pcStopAudioRecording(true);
+  document.getElementById("pcVideoLibrary").click();
+}
+
+function pcHandleFixationFile(input, kind) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  pcClearFixationPreview();
+  pcFixationObjectUrl = URL.createObjectURL(file);
+  const preview = document.getElementById("pcFixationPreview");
+  const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
+  const media = kind === "video"
+    ? `<video controls src="${pcFixationObjectUrl}"></video>`
+    : `<img src="${pcFixationObjectUrl}" alt="${pcEscapeHtml(s.photoFixation)}">`;
+  preview.innerHTML = `
+    ${media}
+    <div class="pc-fixation-file">${pcEscapeHtml(file.name)} · ${pcFormatBytes(file.size)}</div>
+    <div class="pc-fixation-note">${s.mediaLocal}</div>
+    <button type="button" class="pc-preview-remove" onclick="pcClearFixationPreview()">${s.removePreview}</button>
+  `;
+  preview.hidden = false;
+}
+
+async function pcToggleAudioRecording() {
+  if (pcAudioRecorder && pcAudioRecorder.state === "recording") {
+    pcStopAudioRecording();
+    return;
+  }
+  const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) {
+    pcShowFixationStatus(s.microphoneUnavailable, true);
+    return;
+  }
+  try {
+    pcClearFixationPreview();
+    pcAudioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    pcAudioChunks = [];
+    pcAudioRecorder = new MediaRecorder(pcAudioStream);
+    pcAudioRecorder.addEventListener("dataavailable", event => {
+      if (event.data && event.data.size) pcAudioChunks.push(event.data);
+    });
+    pcAudioRecorder.addEventListener("stop", pcBuildAudioPreview, { once: true });
+    pcAudioRecorder.start();
+    pcAudioStartedAt = Date.now();
+    document.getElementById("pc-fixation-dock").classList.add("recording");
+    document.getElementById("pcVoiceLabel").textContent = s.stopRecording;
+    pcUpdateAudioTimer();
+    pcAudioTimer = setInterval(pcUpdateAudioTimer, 1000);
+  } catch (error) {
+    pcReleaseAudioStream();
+    pcShowFixationStatus(s.microphoneDenied, true);
+  }
+}
+
+function pcStopAudioRecording(silent = false) {
+  if (pcAudioTimer) clearInterval(pcAudioTimer);
+  pcAudioTimer = null;
+  if (pcAudioRecorder && pcAudioRecorder.state === "recording") {
+    if (silent) {
+      pcAudioRecorder.removeEventListener("stop", pcBuildAudioPreview);
+    }
+    pcAudioRecorder.stop();
+  }
+  document.getElementById("pc-fixation-dock").classList.remove("recording");
+  const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
+  document.getElementById("pcVoiceLabel").textContent = s.voiceFixation;
+  pcReleaseAudioStream();
+  if (silent) {
+    pcAudioRecorder = null;
+    pcAudioChunks = [];
+    document.getElementById("pcVoiceTimer").textContent = "00:00";
+  }
+}
+
+function pcReleaseAudioStream() {
+  if (pcAudioStream) pcAudioStream.getTracks().forEach(track => track.stop());
+  pcAudioStream = null;
+}
+
+function pcUpdateAudioTimer() {
+  const seconds = Math.max(0, Math.floor((Date.now() - pcAudioStartedAt) / 1000));
+  const minutes = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const remainder = String(seconds % 60).padStart(2, "0");
+  document.getElementById("pcVoiceTimer").textContent = `${minutes}:${remainder}`;
+}
+
+function pcBuildAudioPreview() {
+  const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
+  const blob = new Blob(pcAudioChunks, { type: pcAudioRecorder && pcAudioRecorder.mimeType || "audio/webm" });
+  pcClearFixationPreview();
+  pcFixationObjectUrl = URL.createObjectURL(blob);
+  const preview = document.getElementById("pcFixationPreview");
+  preview.innerHTML = `
+    <audio controls src="${pcFixationObjectUrl}"></audio>
+    <div class="pc-fixation-note">${s.mediaLocal}</div>
+    <div class="pc-fixation-note">${s.voiceNext}</div>
+    <button type="button" class="pc-preview-remove" onclick="pcClearFixationPreview()">${s.removePreview}</button>
+  `;
+  preview.hidden = false;
+  pcAudioRecorder = null;
+  pcAudioChunks = [];
+}
+
+function pcClearFixationPreview() {
+  if (pcFixationObjectUrl) URL.revokeObjectURL(pcFixationObjectUrl);
+  pcFixationObjectUrl = "";
+  const preview = document.getElementById("pcFixationPreview");
+  if (preview) {
+    preview.hidden = true;
+    preview.innerHTML = "";
+  }
+  ["pcPhotoCapture", "pcPhotoLibrary", "pcVideoLibrary"].forEach(id => {
+    const input = document.getElementById(id);
+    if (input) input.value = "";
+  });
+}
+
+function pcShowFixationStatus(message, isError = false) {
+  const preview = document.getElementById("pcFixationPreview");
+  preview.innerHTML = `<div class="pc-fixation-note${isError ? " error" : ""}">${pcEscapeHtml(message)}</div>`;
+  preview.hidden = false;
 }
 
 async function pcSend() {
@@ -1863,18 +2184,15 @@ function pcRemoveTyping(id) {
 <style>
 #pandora-chat-btn {
   position: fixed; bottom: 28px; right: 28px; z-index: 9999;
-  min-width: 172px; height: 54px; border-radius: 28px;
-  padding: 0 16px 0 6px;
-  background: #fff; border: 1px solid rgba(26,58,122,0.16); cursor: pointer;
+  width: 58px; height: 58px; border-radius: 50%;
+  padding: 3px;
+  background: #fff; border: 2px solid #C0392B; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  gap: 8px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
   transition: transform 0.2s, opacity 0.2s;
 }
 #pandora-chat-btn:hover { transform: scale(1.08); opacity: 0.92; }
-#pandora-chat-btn svg { width: 44px; height: 44px; }
-.pc-launcher-text { display:flex; align-items:center; gap:7px; color:#0D0D0D; font-size:13px; font-weight:600; letter-spacing:0.02em; white-space:nowrap; }
-.pc-beta { display:inline-flex; align-items:center; padding:2px 6px; border-radius:10px; background:rgba(200,168,75,0.15); color:#8b6b16; font-size:8px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; }
+#pandora-chat-btn svg { width: 46px; height: 46px; }
 
 #pandora-chat-window {
   position: fixed; bottom: 92px; right: 28px; z-index: 9998;
@@ -1974,21 +2292,70 @@ function pcRemoveTyping(id) {
   display: flex; flex-direction: column; gap: 4px;
 }
 .pc-qa-action:hover { transform: translateY(-1px); border-color: rgba(26,58,122,0.42); box-shadow: 0 5px 14px rgba(26,58,122,0.08); }
-.pc-qa-action-title { font-size: 14px; font-weight: 600; }
-.pc-qa-action-description { font-size: 11px; line-height: 1.4; color: rgba(13,13,13,0.58); }
+.pc-qa-action-title { font-size: 16px; font-weight: 650; color: #102B5D; }
+.pc-qa-action-description { font-size: 14px; line-height: 1.45; color: #30343B; }
+.pc-qa-action-fixation { border-color: rgba(192,57,43,0.28); background: linear-gradient(135deg, rgba(192,57,43,0.05), rgba(46,204,64,0.05), rgba(26,58,122,0.05)); }
 .pc-qa-form { display: none; flex-direction: column; gap: 10px; }
-.pc-qa-form h4 { margin: 0; font: 600 15px/1.3 "DM Sans", sans-serif; color: #1A3A7A; }
-.pc-qa-back { align-self: flex-start; padding: 0; border: 0; background: none; color: rgba(26,58,122,0.72); cursor: pointer; font: 500 11px/1.3 "DM Sans", sans-serif; }
-.pc-qa-field { display: flex; flex-direction: column; gap: 5px; text-align: left; }
-.pc-qa-field span { font-size: 11px; font-weight: 500; color: rgba(13,13,13,0.72); }
+.pc-qa-form h4 { margin: 0; font: 650 18px/1.3 "DM Sans", sans-serif; color: #102B5D; }
+.pc-qa-back { align-self: flex-start; padding: 5px 0; border: 0; background: none; color: #1A3A7A; cursor: pointer; font: 600 14px/1.3 "DM Sans", sans-serif; }
+.pc-qa-field { display: flex; flex-direction: column; gap: 7px; text-align: left; }
+.pc-qa-field span { font-size: 16px; line-height: 1.35; font-weight: 600; color: #171A1F; }
 .pc-qa-field textarea,
-.pc-qa-field input {
+.pc-qa-field input:not([type="file"]) {
   width: 100%; box-sizing: border-box; border: 1px solid rgba(0,0,0,0.13);
   background: #fafafa; color: #0D0D0D; border-radius: 3px; outline: none;
-  padding: 8px 9px; resize: vertical; font: 12px/1.4 "DM Sans", sans-serif;
+  padding: 11px 12px; resize: vertical; font: 16px/1.45 "DM Sans", sans-serif;
 }
 .pc-qa-field textarea:focus,
-.pc-qa-field input:focus { border-color: #1A3A7A; background: #fff; }
+.pc-qa-field input:focus,
+.pc-attachment-picker:focus-within { border-color: #1A3A7A; background: #fff; box-shadow: 0 0 0 3px rgba(26,58,122,0.16); }
+.pc-attachment-picker {
+  display: flex; flex-direction: column; gap: 5px; padding: 12px;
+  border: 1px dashed rgba(26,58,122,0.4); background: rgba(26,58,122,0.04);
+  cursor: pointer; border-radius: 4px;
+}
+.pc-attachment-title { font-size: 16px; font-weight: 650; color: #102B5D; }
+.pc-attachment-hint { font-size: 14px; line-height: 1.4; color: #30343B; }
+.pc-attachment-picker input { width: 100%; font-size: 14px; color: #171A1F; }
+.pc-file-list { font-size: 14px; line-height: 1.45; color: #171A1F; overflow-wrap: anywhere; }
+.pc-file-list ul { margin: 5px 0 0; padding-left: 20px; }
+.pc-upload-status { padding: 10px 11px; background: #FFF8E5; border-left: 3px solid #C8A84B; color: #4E3D0B; font-size: 14px; line-height: 1.45; }
+
+#pc-fixation-dock {
+  position: fixed; right: 20px; bottom: 20px; z-index: 10000;
+  width: min(360px, calc(100vw - 32px)); display: none;
+  background: #fff; border: 1px solid rgba(0,0,0,0.12); border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2); overflow: hidden;
+}
+#pc-fixation-dock.active { display: block; }
+.pc-fixation-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; background: #101114; color: #fff; }
+.pc-fixation-head strong { font-size: 14px; }
+.pc-fixation-exit { border: 0; background: transparent; color: #fff; text-decoration: underline; cursor: pointer; font: 500 12px/1.3 "DM Sans", sans-serif; }
+.pc-fixation-controls { display: grid; grid-template-columns: 1fr 1fr 72px; min-height: 82px; }
+.pc-fixation-action {
+  position: relative; border: 0; border-right: 1px solid rgba(0,0,0,0.08);
+  background: #fff; cursor: pointer; padding: 12px 8px 9px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  font-family: "DM Sans", sans-serif; color: #171A1F;
+}
+.pc-fixation-action::before { content: ""; position: absolute; inset: 0 0 auto; height: 5px; background: #1A3A7A; }
+.pc-fixation-action.video::before { background: #2E9B45; }
+.pc-fixation-action.voice::before { background: #C0392B; }
+.pc-fixation-action:hover, .pc-fixation-action:focus-visible { background: #F5F7FA; outline: 3px solid rgba(26,58,122,0.18); outline-offset: -3px; }
+.pc-fixation-icon { font-size: 24px; line-height: 1; }
+.pc-fixation-label { font-size: 12px; font-weight: 650; text-align: center; }
+.pc-fixation-secondary { border: 0; padding: 0; background: none; color: #1A3A7A; cursor: pointer; font: 500 11px/1.3 "DM Sans", sans-serif; text-decoration: underline; }
+.pc-voice-timer { display: none; font: 700 12px/1 monospace; color: #C0392B; }
+#pc-fixation-dock.recording .pc-voice-timer { display: block; }
+#pc-fixation-dock.recording .pc-fixation-action.voice { background: #FFF0EE; animation: pcRecordPulse 1.4s infinite; }
+@keyframes pcRecordPulse { 0%,100%{box-shadow:inset 0 0 0 0 rgba(192,57,43,0)} 50%{box-shadow:inset 0 0 0 4px rgba(192,57,43,0.22)} }
+.pc-fixation-preview { padding: 12px; border-top: 1px solid rgba(0,0,0,0.08); background: #FAFAFA; }
+.pc-fixation-preview img, .pc-fixation-preview video { display: block; width: 100%; max-height: 230px; object-fit: contain; background: #111; border-radius: 6px; }
+.pc-fixation-preview audio { width: 100%; }
+.pc-fixation-file, .pc-fixation-note { margin-top: 8px; color: #30343B; font-size: 13px; line-height: 1.45; overflow-wrap: anywhere; }
+.pc-fixation-note.error { color: #9E2A1F; }
+.pc-preview-remove { margin-top: 9px; padding: 7px 10px; border: 1px solid rgba(192,57,43,0.3); background: #fff; color: #8D2A21; cursor: pointer; font: 600 12px/1.2 "DM Sans", sans-serif; }
+.pc-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
 
 /* Expand / fullscreen button */
 .pc-expand {
@@ -2012,22 +2379,19 @@ function pcRemoveTyping(id) {
   flex: 1;
 }
 @media(max-width:600px){
-  #pandora-chat-btn { right:16px; bottom:18px; min-width:154px; height:50px; }
-  #pandora-chat-btn svg { width:40px; height:40px; }
+  #pandora-chat-btn { right:16px; bottom:18px; width:54px; height:54px; }
+  #pandora-chat-btn svg { width:42px; height:42px; }
   #pandora-chat-window { right:12px; bottom:80px; width:calc(100vw - 24px); max-height:72vh; }
+  #pc-fixation-dock { right: 12px; bottom: 12px; width: calc(100vw - 24px); }
 }
 </style>
 
 <button id="pandora-chat-btn" onclick="togglePandoraChat()" aria-label="Pandora AI чат">
   <svg viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
-    <!-- Outer green circle -->
-    <circle cx="27" cy="27" r="25" fill="none" stroke="#2ecc40" stroke-width="3"/>
-    <!-- Blue bubble (back, bottom-left) -->
-    <path d="M10 28 Q10 20 18 20 L26 20 Q34 20 34 28 Q34 34 28 35 L14 39 L17 34 Q10 33 10 28Z" fill="none" stroke="#1A3A7A" stroke-width="2.2" stroke-linejoin="round"/>
-    <!-- Red bubble (front, top-right) -->
-    <path d="M20 18 Q20 10 28 10 L36 10 Q44 10 44 18 Q44 24 38 25 L40 30 L26 26 Q20 24 20 18Z" fill="none" stroke="#c0392b" stroke-width="2.2" stroke-linejoin="round"/>
+    <circle cx="27" cy="27" r="23" fill="#fff" stroke="#C0392B" stroke-width="3"/>
+    <path d="M11 29 Q11 21 19 21 H27 Q35 21 35 29 Q35 35 29 36 L15 40 L18 35 Q11 34 11 29Z" fill="none" stroke="#1A3A7A" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M21 18 Q21 11 29 11 H36 Q43 11 43 18 Q43 24 37 25 L39 30 L27 26 Q21 24 21 18Z" fill="none" stroke="#2E9B45" stroke-width="2.5" stroke-linejoin="round"/>
   </svg>
-  <span class="pc-launcher-text">Pandora AI <span class="pc-beta">beta</span></span>
 </button>
 
 <div id="pandora-chat-window">
@@ -2086,9 +2450,42 @@ function pcRemoveTyping(id) {
         <span class="pc-qa-action-title" id="pcQaSuggestion">💡 Є пропозиція</span>
         <span class="pc-qa-action-description" id="pcQaSuggestionDescription">Запропонувати, як зробити краще</span>
       </button>
+      <button class="pc-qa-action pc-qa-action-fixation" type="button" onclick="pcEnterFixationMode()">
+        <span class="pc-qa-action-title" id="pcQaFixation">🎯 Режим фіксації</span>
+        <span class="pc-qa-action-description" id="pcQaFixationDescription">Швидко зафіксувати фото, відео або голос</span>
+      </button>
     </div>
     <div class="pc-qa-form" id="pcQaForm" data-type=""></div>
   </div>
+</div>
+
+<div id="pc-fixation-dock" role="region" aria-label="Пульт фіксації">
+  <div class="pc-fixation-head">
+    <strong id="pcFixationTitle">Пульт фіксації</strong>
+    <button class="pc-fixation-exit" id="pcFixationExit" type="button" onclick="pcExitFixationMode()">Повернутися до Pandora AI</button>
+  </div>
+  <div class="pc-fixation-controls">
+    <button class="pc-fixation-action photo" id="pcPhotoAction" type="button" onclick="pcOpenPhotoCapture()" title="Фотофіксація">
+      <span class="pc-fixation-icon" aria-hidden="true">📷</span>
+      <span class="pc-fixation-label" id="pcPhotoLabel">Фотофіксація</span>
+      <span class="pc-fixation-secondary" id="pcPhotoChoose" role="button" tabindex="0" onclick="pcOpenPhotoLibrary(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();pcOpenPhotoLibrary(event)}">Вибрати фото</span>
+    </button>
+    <button class="pc-fixation-action video" id="pcVideoAction" type="button" onclick="pcOpenVideoLibrary()" title="Відеофіксація">
+      <span class="pc-fixation-icon" aria-hidden="true">🎥</span>
+      <span class="pc-fixation-label" id="pcVideoLabel">Відеофіксація</span>
+      <span class="pc-fixation-secondary" id="pcVideoChoose">Вибрати відео</span>
+    </button>
+    <button class="pc-fixation-action voice" id="pcVoiceAction" type="button" onclick="pcToggleAudioRecording()" title="Голосова фіксація">
+      <span class="pc-fixation-icon" aria-hidden="true">🎙</span>
+      <span class="pc-fixation-label" id="pcVoiceLabel">Голос</span>
+      <span class="pc-voice-timer" id="pcVoiceTimer">00:00</span>
+    </button>
+  </div>
+  <div class="pc-fixation-preview" id="pcFixationPreview" hidden></div>
+  <p class="pc-visually-hidden" id="pcVoiceNext">Автоматичне розшифрування голосу буде підключено наступним етапом.</p>
+  <input class="pc-visually-hidden" id="pcPhotoCapture" type="file" accept="image/*" capture="environment" onchange="pcHandleFixationFile(this,'image')">
+  <input class="pc-visually-hidden" id="pcPhotoLibrary" type="file" accept="image/*" onchange="pcHandleFixationFile(this,'image')">
+  <input class="pc-visually-hidden" id="pcVideoLibrary" type="file" accept="video/*" onchange="pcHandleFixationFile(this,'video')">
 </div>
 
 <script>
