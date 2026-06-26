@@ -80,19 +80,26 @@ function shouldRetry(response, error) {
 }
 
 async function searchVectorStore(apiKey, vectorStoreId, query) {
-  const url = `https://api.openai.com/v1/vector_stores/${encodeURIComponent(vectorStoreId)}/search`;
+  // Use Responses API with file_search for retrieval (proven to work)
+  const url = "https://api.openai.com/v1/responses";
 
   for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt++) {
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        "OpenAI-Beta": "assistants=v2"
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        query,
-        max_num_results: 5
+        model: "gpt-4o-mini",
+        input: query,
+        instructions: "Only retrieve relevant information from the file search. Do NOT answer the question. Do NOT generate any response. Only output '##RETRIEVED:' followed by the raw file content.",
+        tools: [{
+          type: "file_search",
+          vector_store_ids: [vectorStoreId],
+          max_num_results: 5
+        }],
+        max_output_tokens: 50
       })
     });
 
@@ -112,17 +119,16 @@ async function searchVectorStore(apiKey, vectorStoreId, query) {
   return null;
 }
 
-function extractChunks(searchData) {
-  if (!searchData || !Array.isArray(searchData.data)) return [];
+function extractChunks(responseData) {
+  if (!responseData || !Array.isArray(responseData.output)) return [];
 
   const chunks = [];
-  for (const match of searchData.data) {
-    if (match && match.content && Array.isArray(match.content)) {
-      for (const item of match.content) {
-        if (item && item.type === "text" && typeof item.text === "string") {
-          const text = item.text.trim();
-          if (text) chunks.push(text);
-        }
+  for (const item of responseData.output) {
+    if (!item || item.type !== "message" || !Array.isArray(item.content)) continue;
+    for (const content of item.content) {
+      if (content && content.type === "output_text" && typeof content.text === "string") {
+        const text = content.text.trim();
+        if (text && !text.startsWith("##RETRIEVED")) chunks.push(text);
       }
     }
   }
@@ -130,24 +136,27 @@ function extractChunks(searchData) {
   return chunks;
 }
 
-function extractSourcesFromSearch(searchData) {
-  if (!searchData || !Array.isArray(searchData.data)) return [];
+function extractSourcesFromSearch(responseData) {
+  if (!responseData || !Array.isArray(responseData.output)) return [];
 
   const seen = new Set();
   const sources = [];
 
-  for (const match of searchData.data) {
-    const filename = match && match.file && typeof match.filename === "string"
-      ? match.filename.trim()
-      : "";
-    const normalized = filename.toLowerCase();
-    const looksInternal = filename.startsWith(".")
-      || filename.startsWith("_")
-      || /(internal|service|system|prompt|config)/i.test(normalized);
-
-    if (filename && !looksInternal && !seen.has(filename)) {
-      seen.add(filename);
-      sources.push({ title: filename });
+  for (const item of responseData.output) {
+    if (!item || item.type !== "message" || !Array.isArray(item.content)) continue;
+    for (const content of item.content) {
+      const annotations = Array.isArray(content && content.annotations) ? content.annotations : [];
+      for (const annotation of annotations) {
+        if (!annotation || annotation.type !== "file_citation") continue;
+        const title = typeof annotation.filename === "string" ? annotation.filename.trim() : "";
+        const normalized = title.toLowerCase();
+        const looksInternal = title.startsWith(".") || title.startsWith("_")
+          || /(internal|service|system|prompt|config)/i.test(normalized);
+        if (title && !looksInternal && !seen.has(title)) {
+          seen.add(title);
+          sources.push({ title });
+        }
+      }
     }
   }
 
