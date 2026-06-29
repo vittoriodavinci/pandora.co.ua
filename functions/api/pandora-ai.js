@@ -1,6 +1,7 @@
 const ALLOWED_ORIGINS = new Set([
   "https://pandora.co.ua",
-  "https://www.pandora.co.ua"
+  "https://www.pandora.co.ua",
+  "https://content-usen-reframe-cabinet.pandora-f2d.pages.dev"
 ]);
 
 const DEFAULT_MODEL = "gpt-5.5";
@@ -93,13 +94,13 @@ async function searchVectorStore(apiKey, vectorStoreId, query) {
       body: JSON.stringify({
         model: "gpt-4o-mini",
         input: query,
-        instructions: "Only retrieve relevant information from the file search. Do NOT answer the question. Do NOT generate any response. Only output '##RETRIEVED:' followed by the raw file content.",
+        instructions: "Search the knowledge base and provide the relevant information about Pandora concisely.",
         tools: [{
           type: "file_search",
           vector_store_ids: [vectorStoreId],
           max_num_results: 5
         }],
-        max_output_tokens: 50
+        max_output_tokens: 300
       })
     });
 
@@ -128,7 +129,7 @@ function extractChunks(responseData) {
     for (const content of item.content) {
       if (content && content.type === "output_text" && typeof content.text === "string") {
         const text = content.text.trim();
-        if (text && !text.startsWith("##RETRIEVED")) chunks.push(text);
+        if (text) chunks.push(text);
       }
     }
   }
@@ -166,7 +167,7 @@ function extractSourcesFromSearch(responseData) {
 // ---- FreeModel generation (stage 2) ----
 
 async function requestFreeModel(apiKey, model, messages) {
-  const url = "https://freemodel.dev/v1/chat/completions";
+  const url = "https://api.freemodel.dev/v1/chat/completions";
 
   for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt++) {
     const response = await fetch(url, {
@@ -400,10 +401,11 @@ export async function onRequest(context) {
   const answer = extractFreeModelAnswer(fmData);
 
   if (!answer) {
+    const errMsg = fmData && fmData.error ? JSON.stringify(fmData.error) : "пустой ответ";
     requestLog(role, mode, "generate", false, true);
     return jsonResponse({
       ok: false,
-      answer: FALLBACK_MESSAGE,
+      answer: "FreeModel ошибка: " + errMsg,
       conversation_id: conversationId || null,
       sources
     }, 503, corsHeaders);
