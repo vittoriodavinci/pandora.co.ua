@@ -1,0 +1,1803 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Кабинет Pandora</title>
+<meta name="description" content="Личный кабинет Pandora: профиль участника сайта, новости, Signal, документы и заявка в кооператив.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<style>
+:root {
+  --red: #D42B2B; --green: #1A7A3C; --blue: #1A3A7A;
+  --dark: #0D0D0D; --light: #F5F2ED; --accent: #C8A84B;
+  --border: rgba(255,255,255,0.07); --dim: rgba(245,242,237,0.45);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; scroll-snap-type:y mandatory; }
+body { font-family:'DM Sans',sans-serif; background:var(--dark); color:var(--light); overflow-x:hidden; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 60px;
+  background:rgba(13,13,13,0.9); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo { display:flex; align-items:center; gap:14px; text-decoration:none; }
+.nav-logo-venn { position:relative; width:38px; height:38px; flex-shrink:0; }
+.nav-logo-venn svg { width:38px; height:38px; }
+.nav-logo-text { display:flex; flex-direction:column; }
+.nav-logo-title { font-size:14px; font-weight:500; color:var(--light); letter-spacing:0.05em; display:block; }
+.nav-links { display:flex; align-items:center; gap:18px; }
+.nav-links a { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:400; letter-spacing:0.1em; text-transform:uppercase; color:var(--light); opacity:0.45; text-decoration:none; transition:opacity 0.2s; }
+.nav-links a:hover { opacity:1; }
+.nav-lang { position:relative; }
+.nav-lang-btn { display:flex; align-items:center; gap:6px; background:none; border:1px solid var(--border); color:var(--light); font-size:10px; letter-spacing:0.12em; padding:5px 11px; cursor:pointer; opacity:0.7; transition:all 0.2s; font-family:'DM Sans',sans-serif; text-transform:uppercase; }
+.nav-lang-btn:hover, .nav-lang-btn.open { opacity:1; border-color:var(--accent); color:var(--accent); }
+.nav-lang-btn .lang-flag { font-size:13px; }
+.nav-lang-btn .lang-arrow { font-size:8px; transition:transform 0.2s; margin-left:2px; }
+.nav-lang-btn.open .lang-arrow { transform:rotate(180deg); }
+.nav-lang-dropdown { display:none; position:absolute; top:calc(100% + 6px); right:0; background:rgba(13,13,13,0.97); border:1px solid var(--border); backdrop-filter:blur(16px); min-width:160px; z-index:200; }
+.nav-lang-dropdown.open { display:block; }
+.lang-option { display:flex; align-items:center; gap:10px; padding:9px 14px; cursor:pointer; font-size:11px; letter-spacing:0.1em; color:var(--light); opacity:0.5; transition:all 0.15s; white-space:nowrap; border:none; background:none; width:100%; font-family:'DM Sans',sans-serif; text-align:left; }
+.lang-option:hover { opacity:1; background:rgba(200,168,75,0.07); }
+.lang-option.active { opacity:1; color:var(--accent); }
+.lang-option .lf { font-size:15px; }
+.lang-option .ln { flex:1; }
+.lang-option .lc { font-size:9px; opacity:0.4; letter-spacing:0.08em; }
+/* NAV RIGHT */
+.nav-right { display:flex; align-items:center; gap:8px; }
+.nav-icon-btn { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; border:none; background:transparent; color:var(--light); opacity:0.7; cursor:pointer; transition:all 0.2s; padding:0; }
+.nav-icon-btn:hover, .nav-icon-btn.open { opacity:1; background:rgba(255,255,255,0.08); }
+.nav-hamburger { color:var(--accent); opacity:0.85; }
+.nav-hamburger:hover, .nav-hamburger.open { opacity:1; background:rgba(200,168,75,0.12); }
+.nav-user-menu { position:relative; }
+.nav-user-dropdown { display:none; position:absolute; top:calc(100% + 6px); right:0; background:rgba(13,13,13,0.97); border:1px solid var(--border); backdrop-filter:blur(16px); min-width:240px; z-index:200; border-radius:8px; overflow:hidden; }
+.nav-user-dropdown.open { display:block; }
+.user-menu-link { display:block; width:100%; padding:14px 18px; border:none; background:none; color:var(--light); font-size:13px; font-family:'DM Sans',sans-serif; text-align:left; cursor:pointer; text-decoration:none; transition:background 0.15s; }
+.user-menu-link:hover { background:rgba(255,255,255,0.04); }
+.user-menu-cta { color:var(--accent); font-weight:500; border-top:1px solid var(--border); }
+
+/* VENN LOGO SVG (reusable) */
+.venn-logo { display:inline-block; position:relative; }
+
+/* HERO */
+#hero {
+  min-height:100vh; display:flex; align-items:center;
+  padding:120px 60px 80px; position:relative; overflow:hidden;
+  scroll-snap-align:start;
+}
+.hero-bg {
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at 65% 45%, rgba(26,58,122,0.12) 0%, transparent 55%),
+              radial-gradient(ellipse at 25% 75%, rgba(26,122,60,0.07) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 80%, rgba(212,43,43,0.05) 0%, transparent 40%);
+}
+.hero-inner { position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; width:100%; }
+.hero-left {}
+.hero-tag { display:inline-flex; align-items:center; gap:10px; margin-bottom:40px; }
+.hero-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero-tag span { font-size:11px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.4; }
+h1.hero-title { font-family:"Cormorant Garamond",serif; font-size:clamp(52px,7vw,96px); font-weight:300; line-height:0.95; letter-spacing:-0.02em; margin-bottom:32px; }
+h1.hero-title em { font-style:italic; color:var(--accent); }
+.hero-mission { padding:18px 24px; border-left:2px solid var(--accent); background:rgba(200,168,75,0.05); margin-bottom:20px; max-width:480px; }
+.hero-mission-label { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
+.hero-mission p { font-family:"Cormorant Garamond",serif; font-size:20px; font-weight:300; font-style:italic; line-height:1.5; }
+.hero-actions { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:48px; }
+.btn-primary { padding:13px 32px; background:var(--accent); color:var(--dark); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-weight:500; text-decoration:none; transition:opacity 0.2s; display:inline-block; }
+.btn-primary:hover { opacity:0.85; }
+.btn-outline { padding:13px 32px; border:1px solid rgba(255,255,255,0.18); color:var(--light); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; transition:all 0.2s; display:inline-block; }
+.btn-outline:hover { border-color:var(--accent); color:var(--accent); }
+.hero-credo { font-size:14px; font-style:italic; opacity:0.3; line-height:1.7; max-width:460px; padding-top:24px; border-top:1px solid var(--border); }
+
+/* VENN RIGHT */
+.hero-venn { display:flex; flex-direction:column; align-items:center; gap:24px; }
+.venn-large { position:relative; width:340px; height:300px; }
+.venn-large svg { width:340px; height:300px; }
+.venn-caption { font-size:12px; letter-spacing:0.1em; text-transform:uppercase; opacity:0.35; text-align:center; }
+
+/* SECTIONS */
+section { padding:90px 60px; min-height:100vh; scroll-snap-align:start; }
+.section-label { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.35; margin-bottom:16px; }
+.section-title { font-family:"Cormorant Garamond",serif; font-size:clamp(32px,4.5vw,58px); font-weight:300; line-height:1.1; margin-bottom:40px; }
+.divider { width:40px; height:1px; background:var(--accent); margin:24px 0; }
+
+/* ABOUT */
+#about { background:#080808; }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:start; }
+.about-text p { font-size:16px; line-height:1.8; opacity:0.6; margin-bottom:20px; }
+.principles { display:flex; flex-direction:column; }
+.principle-item { display:grid; grid-template-columns:14px 1fr; gap:20px; padding:24px 0; border-bottom:1px solid var(--border); align-items:start; }
+.p-dot { width:14px; height:14px; border-radius:50%; margin-top:5px; flex-shrink:0; }
+.principle-item h4 { font-family:"Cormorant Garamond",serif; font-size:24px; margin-bottom:6px; }
+.principle-item p { font-size:13px; opacity:0.45; line-height:1.6; }
+
+/* PROJECTS */
+#projects { background:var(--dark); }
+.projects-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:40px; }
+.p-card { padding:36px 28px; background:#0f0f0f; border-top:2px solid transparent; transition:background 0.3s; }
+.p-card:hover { background:#141414; }
+.p-card.c-red { border-top-color:var(--red); }
+.p-card.c-green { border-top-color:var(--green); }
+.p-card.c-blue { border-top-color:var(--blue); }
+.p-card.c-gold { border-top-color:var(--accent); }
+.p-card.c-dim { border-top-color:rgba(255,255,255,0.15); opacity:0.55; }
+.p-status { font-size:9px; letter-spacing:0.16em; text-transform:uppercase; padding:3px 9px; border:1px solid var(--border); display:inline-block; margin-bottom:16px; opacity:0.45; }
+.p-card h3 { font-family:"Cormorant Garamond",serif; font-size:26px; font-weight:400; margin-bottom:10px; }
+.p-card p { font-size:12px; opacity:0.45; line-height:1.6; margin-bottom:20px; }
+.p-link { font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); text-decoration:none; opacity:0.6; }
+.p-link:hover { opacity:1; }
+
+/* ALIVE */
+#active { background:#060806; }
+.active-badge { display:inline-flex; align-items:center; gap:8px; padding:5px 14px; background:rgba(26,122,60,0.12); border:1px solid rgba(26,122,60,0.25); color:#4CAF50; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; margin-left:16px; vertical-align:middle; }
+.active-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:40px; }
+.a-card { padding:32px; border:1px solid var(--border); display:grid; grid-template-columns:70px 1fr; gap:20px; transition:border-color 0.3s; align-items:center; }
+.a-card:hover { border-color:rgba(255,255,255,0.12); }
+.a-icon { border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.a-card h4 { font-family:"Cormorant Garamond",serif; font-size:22px; margin-bottom:6px; }
+.a-card p { font-size:12px; opacity:0.45; line-height:1.6; }
+
+/* JOIN */
+#join { background:var(--light); color:#0D0D0D; }
+#join .section-label { color:#0D0D0D; opacity:0.35; }
+#join .section-title { color:#0D0D0D; }
+#join .divider { background:var(--blue); }
+.join-outer { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
+.join-modes { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:32px; }
+.join-mode { padding:20px; border:1px solid rgba(0,0,0,0.1); background:white; }
+.join-mode h5 { font-size:13px; font-weight:500; color:#0D0D0D; margin-bottom:6px; }
+.join-mode p { font-size:12px; color:#0D0D0D; opacity:0.5; line-height:1.5; }
+.join-mode-icon { font-size:20px; margin-bottom:10px; }
+.join-form { display:flex; flex-direction:column; gap:14px; }
+label { font-size:10px; letter-spacing:0.14em; text-transform:uppercase; opacity:0.45; color:#0D0D0D; display:block; margin-bottom:4px; }
+input, select, textarea { width:100%; padding:12px 14px; border:1px solid rgba(0,0,0,0.1); background:white; font-size:14px; font-family:"DM Sans",sans-serif; color:#0D0D0D; outline:none; transition:border-color 0.2s; }
+input:focus, select:focus, textarea:focus { border-color:var(--blue); }
+textarea { resize:vertical; min-height:80px; }
+.btn-join { padding:14px 36px; background:var(--blue); color:white; border:none; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; font-family:"DM Sans",sans-serif; font-weight:500; transition:opacity 0.2s; }
+.btn-join:hover { opacity:0.85; }
+.btn-add-phone { padding:8px 18px; background:transparent; border:1px solid rgba(26,58,122,0.3); color:var(--blue); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; font-family:"DM Sans",sans-serif; margin-bottom:14px; transition:all 0.2s; }
+.btn-add-phone:hover { background:rgba(26,58,122,0.07); }
+.messenger-checks { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:4px; }
+.check-label { display:flex; align-items:center; gap:5px; font-size:11px; letter-spacing:0.05em; text-transform:none; opacity:0.7; cursor:pointer; color:#0D0D0D; }
+.check-label input[type="checkbox"] { width:auto; margin:0; }
+.phone-entry { border-left:2px solid rgba(26,58,122,0.15); padding-left:12px; margin-bottom:14px; }
+.phone-remove { float:right; background:none; border:none; color:#D42B2B; cursor:pointer; font-size:12px; opacity:0.5; padding:0; margin-top:-2px; }
+.phone-remove:hover { opacity:1; }
+.join-steps { margin-top:8px; }
+.j-step { display:grid; grid-template-columns:36px 1fr; gap:14px; padding:16px 0; border-bottom:1px solid rgba(0,0,0,0.07); align-items:start; }
+.j-num { font-family:"Cormorant Garamond",serif; font-size:28px; color:var(--blue); opacity:0.25; line-height:1; }
+.j-step h5 { font-size:13px; font-weight:500; color:#0D0D0D; margin-bottom:3px; }
+.j-step p { font-size:12px; color:#0D0D0D; opacity:0.45; line-height:1.5; }
+
+/* VOTE placeholder */
+#vote { background:#080a10; }
+.vote-soon { border:1px dashed rgba(255,255,255,0.08); padding:48px; text-align:center; margin-top:40px; }
+.vote-soon h3 { font-family:"Cormorant Garamond",serif; font-size:28px; opacity:0.3; margin-bottom:10px; }
+.vote-soon p { font-size:13px; opacity:0.25; line-height:1.6; max-width:380px; margin:0 auto 24px; }
+.vote-features { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:40px; }
+.v-feat { padding:24px; border:1px solid var(--border); text-align:center; }
+.v-feat h4 { font-family:"Cormorant Garamond",serif; font-size:18px; margin-bottom:6px; opacity:0.5; }
+.v-feat p { font-size:11px; opacity:0.25; line-height:1.5; }
+
+/* DOCUMENTS */
+#docs {
+  background:#07090f;
+  display:flex;
+  flex-direction:column;
+}
+#docs .section-label { margin-bottom:10px; }
+#docs .section-title { margin-bottom:12px; }
+#docs .divider { margin:10px 0 16px; }
+.docs-grid {
+  flex:1;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;
+  min-height:0;
+}
+.doc-group {
+  background:#0d0f18;
+  padding:24px 22px;
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(200,168,75,0.25) transparent;
+}
+.doc-group::-webkit-scrollbar { width:3px; }
+.doc-group::-webkit-scrollbar-track { background:transparent; }
+.doc-group::-webkit-scrollbar-thumb { background:rgba(200,168,75,0.3); border-radius:2px; }
+.doc-group::-webkit-scrollbar-thumb:hover { background:rgba(200,168,75,0.6); }
+.doc-group-label { font-size:9px; letter-spacing:0.22em; text-transform:uppercase; opacity:0.3; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+.doc-group-label span { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:8px; vertical-align:middle; }
+.doc-item { display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); text-decoration:none; color:var(--light); transition:all 0.2s; }
+.doc-item:last-child { border-bottom:none; }
+.doc-item:hover { color:var(--accent); }
+.doc-item:hover .doc-icon { opacity:1; color:var(--accent); }
+.doc-icon { font-size:16px; opacity:0.3; flex-shrink:0; margin-top:1px; transition:opacity 0.2s; }
+.doc-body { flex:1; }
+.doc-title { font-size:13px; font-weight:400; line-height:1.4; margin-bottom:3px; }
+.doc-meta { font-size:10px; opacity:0.3; letter-spacing:0.05em; }
+.doc-badge { display:inline-block; font-size:8px; letter-spacing:0.12em; text-transform:uppercase; padding:2px 7px; border:1px solid var(--border); opacity:0.4; margin-left:8px; vertical-align:middle; }
+.doc-badge.new { border-color:rgba(200,168,75,0.4); color:var(--accent); opacity:1; }
+@media(max-width:900px){
+  .docs-grid { grid-template-columns:1fr; }
+  .doc-group { overflow-y:visible; max-height:none; }
+}
+
+/* INSPIRING PROJECTS OVERRIDE */
+.inspiring-grid .a-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px 36px;
+  gap: 0;
+}
+.inspiring-grid .a-card > div:first-child {
+  width: 100%;
+  margin-bottom: 14px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* FOOTER */
+footer { padding:48px 60px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; }
+.footer-logo { display:flex; align-items:center; gap:14px; }
+.footer-info { font-size:12px; opacity:0.3; }
+.footer-email { font-size:12px; opacity:0.4; color:var(--light); text-decoration:none; letter-spacing:0.05em; transition:opacity 0.2s; }
+.footer-email:hover { opacity:1; color:var(--accent); }
+.footer-coop img { height:18px; opacity:0.2; }
+
+/* ENTITY TOGGLE & FORM EXTRAS */
+.entity-toggle { display:grid; grid-template-columns:1fr 1fr; gap:0; margin-bottom:24px; border:1px solid rgba(0,0,0,0.1); overflow:hidden; }
+.entity-btn { display:flex; align-items:center; justify-content:center; gap:8px; padding:13px 16px; background:white; border:none; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; color:#0D0D0D; opacity:0.45; transition:all 0.2s; font-family:'DM Sans',sans-serif; font-weight:500; border-right:1px solid rgba(0,0,0,0.08); }
+.entity-btn:last-child { border-right:none; }
+.entity-btn.active { opacity:1; background:var(--blue); color:white; }
+.entity-btn .entity-icon { font-size:14px; }
+.form-section-title { font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--blue); opacity:0.7; padding-bottom:6px; border-bottom:1px solid rgba(26,58,122,0.12); margin-bottom:4px; font-weight:500; }
+.form-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+/* ── 19" MONITORS (≤1280px) ────────────────────────────────────── */
+@media(max-width:1280px){
+  nav { padding:16px 36px; }
+  section { padding:80px 36px; }
+  #hero { padding:100px 36px 70px; }
+  .hero-inner { gap:52px; }
+  .about-grid { gap:48px; }
+  .projects-grid { grid-template-columns:repeat(2,1fr); }
+  .vote-features { grid-template-columns:repeat(3,1fr); }
+  .join-outer { gap:40px; }
+  .venn-large, .venn-large svg { width:280px; height:250px; }
+}
+
+/* ── TABLET (≤1024px) ──────────────────────────────────────────── */
+@media(max-width:1024px){
+  nav { padding:14px 24px; }
+  section { padding:70px 24px; }
+  #hero { padding:90px 24px 60px; }
+  .hero-inner { grid-template-columns:1fr; gap:36px; }
+  .hero-venn { display:none; }
+  .about-grid { grid-template-columns:1fr; gap:36px; }
+  .projects-grid { grid-template-columns:repeat(2,1fr); }
+  .active-grid { grid-template-columns:1fr; }
+  .vote-features { grid-template-columns:repeat(2,1fr); }
+  .join-outer { grid-template-columns:1fr; gap:32px; }
+  .join-modes { grid-template-columns:1fr 1fr; }
+  .roles-grid { grid-template-columns:repeat(2,1fr); }
+  .fin-steps { grid-template-columns:1fr 1fr; }
+  .fin-arrow-h { display:none; }
+}
+
+/* ── MOBILE (≤900px) ───────────────────────────────────────────── */
+@media(max-width:900px){
+  nav { padding:14px 20px; }
+  .nav-links { display:none; }
+  section { padding:56px 20px; min-height:auto; scroll-snap-align:none; }
+  #hero { padding:90px 20px 56px; min-height:auto; scroll-snap-align:none; }
+  .hero-inner, .about-grid, .join-outer { grid-template-columns:1fr; gap:40px; }
+  .hero-venn { display:none; }
+  .projects-grid { grid-template-columns:1fr; }
+  .active-grid, .join-modes, .vote-features { grid-template-columns:1fr; }
+  .roles-grid { grid-template-columns:1fr; }
+  footer { flex-direction:column; padding:32px 20px; }
+  .form-row-2 { grid-template-columns:1fr; }
+  .entity-btn { font-size:9px; padding:11px 8px; gap:5px; }
+  html { scroll-snap-type:none; }
+}
+
+/* TRIALECT */
+.hero-trialect { margin-top:28px; border-left:2px solid var(--accent); padding-left:20px; }
+.trialect-label { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); opacity:0.7; margin-bottom:6px; }
+.trialect-title { font-family:'Cormorant Garamond',serif; font-size:20px; font-style:italic; color:var(--light); margin-bottom:10px; }
+.trialect-body { font-size:13px; line-height:1.8; opacity:0.5; }
+
+/* FINANCIAL MODEL — horizontal flow */
+.fin-model { margin-top:48px; padding-top:40px; border-top:1px solid var(--border); }
+.fin-model-title { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.4; margin-bottom:28px; }
+.fin-steps { display:grid; grid-template-columns:1fr auto 1fr auto 1fr auto 1fr; gap:0; align-items:center; }
+.fin-step { padding:24px 20px; background:rgba(255,255,255,0.02); border:1px solid var(--border); }
+.fin-arrow-h { display:flex; align-items:center; justify-content:center; padding:0 8px; color:var(--accent); opacity:0.4; font-size:18px; flex-shrink:0; }
+.fin-arrow-icon { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; margin-bottom:12px; }
+.fin-step-body h5 { font-size:12px; font-weight:500; letter-spacing:0.05em; margin-bottom:6px; }
+.fin-step-body p { font-size:11px; opacity:0.4; line-height:1.6; }
+@media(max-width:900px){
+  .fin-steps { grid-template-columns:1fr; }
+  .fin-arrow-h { transform:rotate(90deg); padding:4px 0; display:flex; }
+}
+
+/* ACTIVE SECTION SUB-GRIDS */
+.active-section-label { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.35; margin:36px 0 16px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+.active-section-label:first-child { margin-top:0; }
+
+/* ROLE CARDS */
+.roles-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-bottom:36px; }
+.role-card { background:rgba(255,255,255,0.03); padding:28px 24px; border-top:2px solid var(--border); transition:border-color 0.2s; }
+.role-card:nth-child(1) { border-top-color:var(--accent); }
+.role-card:nth-child(2) { border-top-color:var(--green); }
+.role-card:nth-child(3) { border-top-color:var(--blue); }
+.role-icon { font-size:24px; margin-bottom:14px; }
+.role-name { font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:10px; }
+.role-desc { font-size:13px; line-height:1.75; opacity:0.5; }
+@media(max-width:900px){ .roles-grid { grid-template-columns:1fr; } }
+
+[data-lang] { display:none; }
+[data-lang].active { display:block; }
+span[data-lang] { display:none; }
+span[data-lang].active { display:inline; }
+
+
+/* CONTENT REFRAME: keep visual language, reduce chaos */
+h1.hero-title { grid-column:1 / -1; text-align:center; white-space:nowrap; font-size:clamp(56px,6vw,92px); margin-bottom:18px; }
+.hero-inner { grid-template-columns:minmax(0,1fr) minmax(360px,0.85fr); align-items:center; gap:56px 78px; }
+.hero-story { border-left:2px solid var(--accent); background:rgba(200,168,75,0.045); padding:24px 28px; }
+.hero-story p { font-size:14px; line-height:1.72; color:rgba(245,242,237,0.72); margin-bottom:12px; }
+.hero-credo { grid-column:1 / -1; text-align:center; border-top:1px solid rgba(200,168,75,0.26); padding-top:22px; color:var(--accent); font-size:clamp(22px,2.2vw,31px); }
+.about-reframe-grid { grid-template-columns:minmax(0,1.12fr) minmax(360px,0.88fr); align-items:center; gap:72px; }
+.about-reframe-title { font-size:clamp(30px,3.2vw,46px); margin-bottom:28px; }
+.accent-copy-block { border-left:2px solid var(--accent); background:rgba(200,168,75,0.045); padding:24px 28px; }
+.accent-copy-block h3 { font-family:"Cormorant Garamond",serif; font-size:clamp(28px,2.8vw,40px); font-weight:300; line-height:1.15; color:var(--accent); margin:0 0 18px; }
+.accent-copy-block p { font-size:15px; line-height:1.78; color:rgba(245,242,237,0.64); margin:0 0 14px; }
+.inline-next { display:inline-flex; align-items:center; gap:16px; color:rgba(245,242,237,0.45); text-decoration:none; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; font-weight:500; margin-top:26px; }
+.inline-next::before { content:""; width:58px; height:1px; background:var(--accent); }
+.inline-next:hover { color:var(--accent); }
+.project-intro-landing, .project-landing-section, .examples-landing, .final-call-landing { min-height:100vh; padding:96px 60px 58px; scroll-snap-align:start; background:#080808; position:relative; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
+.project-intro-landing::before, .project-landing-section::before, .examples-landing::before, .final-call-landing::before { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px); background-size:80px 80px; opacity:0.26; }
+.project-intro-grid { position:relative; z-index:1; width:min(1180px,100%); margin:0 auto; display:grid; grid-template-columns:minmax(0,0.95fr) minmax(380px,1.05fr); gap:72px; align-items:center; }
+.project-brand { font-family:"Cormorant Garamond",serif; font-size:clamp(72px,7.5vw,124px); line-height:0.82; font-weight:300; letter-spacing:-0.04em; margin:0 0 30px; }
+.project-brand em { color:var(--accent); font-style:italic; }
+.usen-expansion { display:flex; flex-direction:column; gap:8px; font-size:15px; line-height:1.4; letter-spacing:0.08em; text-transform:uppercase; color:rgba(245,242,237,0.75); }
+.usen-expansion strong { color:var(--light); font-weight:500; }
+.project-logo-copy { display:grid; grid-template-columns:170px 1fr; gap:28px; align-items:start; }
+.project-logo-copy img { width:170px; height:auto; display:block; }
+.accent-copy-block.compact { padding:18px 22px; }
+.accent-copy-block.compact p { font-size:14px; line-height:1.6; }
+.project-landing-section { display:grid; grid-template-columns:minmax(240px,0.7fr) minmax(0,1.4fr); gap:62px; align-items:center; }
+.project-landing-section > div { position:relative; z-index:1; }
+.project-landing-section .ms-num { display:none !important; }
+.project-landing-section .ms-title { font-family:"Cormorant Garamond",serif; font-size:clamp(38px,4.2vw,64px); line-height:1.05; font-weight:300; }
+.project-landing-section .ms-divider { width:42px; height:1px; background:var(--accent); margin-top:24px; }
+.project-landing-section .ms-body { display:grid; grid-template-columns:minmax(0,1fr) minmax(280px,0.82fr); gap:34px; align-items:start; max-width:none; }
+.project-landing-section .ms-body > p { grid-column:1; border-left:2px solid var(--accent); background:rgba(200,168,75,0.045); padding:0 0 0 24px; margin:0 0 14px; font-size:16px; line-height:1.75; color:rgba(245,242,237,0.66); }
+.project-landing-section .ms-list, .project-landing-section .principle-cards { grid-column:2; grid-row:1 / span 3; margin:0; }
+.project-landing-section .ms-list-item, .project-landing-section .pc-card { border:1px solid var(--border); background:rgba(255,255,255,0.018); padding:14px 16px; margin-bottom:10px; color:rgba(245,242,237,0.68); }
+.project-landing-section .ms-dot { width:7px; height:7px; border-radius:50%; background:var(--accent); display:inline-block; margin-right:10px; }
+.project-landing-section .chapter-next { grid-column:1 / -1; }
+.examples-landing { justify-content:center; }
+.centered-title { position:relative; z-index:1; text-align:center; margin-bottom:18px; }
+.examples-combined { position:relative; z-index:1; width:min(1180px,100%); margin:0 auto; }
+.reference-simple-title { font-family:"Cormorant Garamond",serif; font-size:clamp(24px,2.6vw,36px); text-align:center; font-weight:300; margin:12px 0 12px; }
+.compact-reference-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; }
+.compact-inspiring-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.examples-landing .reference-card, .examples-landing .a-card { padding:16px 18px; border:1px solid var(--border); background:rgba(255,255,255,0.018); }
+.examples-landing .reference-card h4, .examples-landing .a-card h3 { font-family:"Cormorant Garamond",serif; font-size:21px; font-weight:300; margin-bottom:6px; }
+.examples-landing .reference-card p, .examples-landing .a-card p { font-size:12px; line-height:1.48; color:rgba(245,242,237,0.54); }
+.examples-landing .reference-meta { font-size:9px; letter-spacing:0.14em; color:var(--accent); margin-bottom:8px; }
+.examples-landing a { color:var(--light); text-decoration:none; }
+.examples-landing a:hover { color:var(--accent); }
+.compact-inspiring-grid img { max-height:30px; max-width:190px; object-fit:contain; }
+.final-call-landing { text-align:center; }
+.final-title { position:relative; z-index:1; font-family:"Cormorant Garamond",serif; font-size:clamp(46px,5vw,82px); line-height:1.08; font-weight:300; margin:0 auto 40px; max-width:1080px; }
+.final-call-landing .btn-primary { position:relative; z-index:1; align-self:center; }
+#join.join-clean { background:#080808; color:var(--light); }
+#join.join-clean .section-title, #join.join-clean .section-label { color:var(--light); }
+#join.join-clean label { color:rgba(245,242,237,0.72); opacity:1; }
+#join.join-clean input, #join.join-clean select, #join.join-clean textarea { background:#101010 !important; border-color:rgba(255,255,255,0.12) !important; color:var(--light) !important; }
+#join.join-clean .entity-btn { background:#101010; color:var(--light); border-color:rgba(255,255,255,0.1); opacity:0.68; }
+#join.join-clean .entity-btn.active { background:var(--accent); color:#080808; opacity:1; }
+#join.join-clean .j-step h5 { color:var(--light); }
+#join.join-clean .j-step p { color:rgba(245,242,237,0.58); opacity:1; }
+@media(max-width:1100px){
+  h1.hero-title { white-space:normal; }
+  .about-reframe-grid, .project-intro-grid, .project-landing-section, .project-landing-section .ms-body, .project-logo-copy { grid-template-columns:1fr; gap:30px; }
+  .project-landing-section .ms-list, .project-landing-section .principle-cards { grid-column:1; grid-row:auto; }
+  .compact-reference-grid, .compact-inspiring-grid { grid-template-columns:1fr; }
+}
+
+
+
+/* ONE-SCREEN COMPRESSION WITHOUT TEXT CHANGES */
+#hero { min-height:100vh; height:100vh; padding:86px 60px 34px; align-items:center; }
+#hero .hero-inner { height:100%; grid-template-columns:minmax(0,1fr) minmax(320px,0.82fr); grid-template-rows:auto 1fr auto; gap:22px 72px; align-items:center; }
+#hero h1.hero-title { margin:0; font-size:clamp(50px,5.2vw,82px); line-height:0.94; }
+#hero .hero-story { padding:20px 24px; }
+#hero .hero-story p { font-size:13px; line-height:1.58; margin-bottom:9px; }
+#hero .hero-venn svg { width:320px; height:320px; }
+#hero .venn-caption { margin-top:4px; }
+#hero .hero-credo { padding-top:16px; font-size:clamp(20px,2vw,28px); }
+#about.about-landing { min-height:100vh; height:100vh; padding:84px 60px 34px; display:flex; align-items:center; }
+#about .about-reframe-grid { width:100%; grid-template-columns:minmax(0,1.08fr) minmax(350px,0.92fr); gap:58px; align-items:center; }
+#about .about-reframe-title { font-size:clamp(28px,2.75vw,40px); line-height:1.08; margin-bottom:20px; }
+#about .accent-copy-block { padding:20px 24px; }
+#about .accent-copy-block h3 { font-size:clamp(25px,2.45vw,34px); margin-bottom:13px; }
+#about .accent-copy-block p { font-size:13.5px; line-height:1.58; margin-bottom:10px; }
+#about .principles { height:auto; justify-content:center; gap:16px; padding-left:4%; }
+#about .principle-item { padding:18px 0; flex:0 0 auto; }
+#about .principle-item h4 { font-size:22px; margin-bottom:5px; }
+#about .principle-item p { font-size:12.5px; line-height:1.48; }
+.examples-landing { min-height:100vh; height:100vh; padding:78px 60px 28px; }
+.examples-landing .section-title { margin-bottom:10px; }
+.examples-landing .reference-simple-title { font-size:clamp(22px,2.2vw,32px); margin:8px 0 8px; }
+.examples-landing .reference-card, .examples-landing .a-card { padding:13px 15px; }
+.examples-landing .reference-card h4, .examples-landing .a-card h3 { font-size:19px; margin-bottom:5px; }
+.examples-landing .reference-card p, .examples-landing .a-card p { font-size:11.5px; line-height:1.42; }
+.examples-landing .reference-meta { font-size:8.5px; margin-bottom:6px; }
+.examples-landing .inline-next { margin-top:12px; }
+@media(max-width:1100px){
+  #hero, #about.about-landing, .examples-landing { height:auto; min-height:auto; }
+}
+
+
+
+/* HERO GRID STRETCH FIX */
+#hero .hero-credo { align-self:start; height:auto; min-height:0; line-height:1.25; }
+#hero .hero-inner { grid-template-rows:auto minmax(0,1fr) auto; }
+
+
+
+/* FINAL TEMPLATE ALIGNMENT PASS */
+#hero {
+  min-height:100vh;
+  height:100vh;
+  padding:86px 60px 40px;
+  align-items:center;
+}
+#hero .hero-inner {
+  width:min(1180px,100%);
+  height:100%;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(320px,0.86fr);
+  grid-template-rows:auto minmax(0,1fr) auto;
+  gap:28px 78px;
+  align-items:center;
+}
+#hero h1.hero-title {
+  grid-column:1 / -1;
+  justify-self:center;
+  text-align:center;
+  margin:0;
+  font-size:clamp(56px,5.6vw,92px);
+  line-height:0.95;
+  white-space:nowrap;
+}
+#hero .hero-left { align-self:center; }
+#hero .hero-story {
+  width:100%;
+  border-left:2px solid var(--accent);
+  background:rgba(200,168,75,0.045);
+  padding:22px 26px;
+}
+#hero .hero-story p {
+  font-size:clamp(13px,1.05vw,15px);
+  line-height:1.62;
+  margin:0 0 10px;
+  color:rgba(245,242,237,0.72);
+}
+#hero .hero-story p:last-child { margin-bottom:0; }
+#hero .hero-venn { justify-self:center; align-self:center; }
+#hero .hero-venn svg { width:min(340px,28vw); height:auto; display:block; }
+#hero .venn-caption { margin-top:12px; text-align:center; }
+#hero .hero-credo {
+  grid-column:1 / -1;
+  justify-self:center;
+  width:min(900px,100%);
+  align-self:end;
+  text-align:center;
+  border-top:1px solid rgba(200,168,75,0.32);
+  padding:18px 20px 0;
+  margin:0;
+  color:var(--accent);
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(23px,2.25vw,34px);
+  line-height:1.22;
+  font-style:italic;
+  min-height:0;
+  height:auto;
+}
+
+#about.about-landing,
+.project-intro-landing,
+.project-landing-section,
+.examples-landing,
+.final-call-landing {
+  min-height:100vh;
+  height:100vh;
+  padding:86px 60px 44px;
+  scroll-snap-align:start;
+  background:#080808;
+  position:relative;
+  overflow:hidden;
+}
+#about.about-landing::before,
+.project-intro-landing::before,
+.project-landing-section::before,
+.examples-landing::before,
+.final-call-landing::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size:80px 80px;
+  opacity:0.22;
+}
+
+#about .about-reframe-grid {
+  position:relative;
+  z-index:1;
+  width:min(1180px,100%);
+  height:100%;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(0,1.08fr) minmax(360px,0.92fr);
+  grid-template-rows:auto auto minmax(0,1fr) auto;
+  grid-template-areas:
+    "label label"
+    "title title"
+    "copy principles"
+    "next next";
+  column-gap:72px;
+  row-gap:18px;
+  align-items:center;
+}
+#about .about-reframe-copy { display:contents; }
+#about .section-label { grid-area:label; text-align:center; margin:0; }
+#about .about-reframe-title {
+  grid-area:title;
+  justify-self:center;
+  max-width:980px;
+  text-align:center;
+  margin:0 0 8px;
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(38px,4.1vw,66px);
+  line-height:1.04;
+  font-weight:300;
+}
+#about .accent-copy-block {
+  grid-area:copy;
+  align-self:center;
+  border-left:2px solid var(--accent);
+  background:rgba(200,168,75,0.045);
+  padding:24px 28px;
+}
+#about .accent-copy-block h3 {
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(30px,3vw,44px);
+  line-height:1.08;
+  font-weight:300;
+  color:var(--accent);
+  margin:0 0 14px;
+}
+#about .accent-copy-block p {
+  font-size:clamp(13px,1.05vw,15px);
+  line-height:1.58;
+  color:rgba(245,242,237,0.68);
+  margin:0 0 11px;
+}
+#about .accent-copy-block p:last-child { margin-bottom:0; }
+#about .principles {
+  grid-area:principles;
+  align-self:center;
+  height:auto;
+  padding-left:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:18px;
+}
+#about .principle-item {
+  display:grid;
+  grid-template-columns:14px 1fr;
+  gap:20px;
+  align-items:start;
+  padding:0 0 18px;
+  border-bottom:1px solid var(--border);
+  flex:none;
+}
+#about .principle-item h4 {
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(24px,2.25vw,34px);
+  line-height:1.08;
+  margin:0 0 6px;
+}
+#about .principle-item p {
+  font-size:clamp(12px,0.95vw,14px);
+  line-height:1.52;
+  color:rgba(245,242,237,0.5);
+  opacity:1;
+}
+#about .inline-next { grid-area:next; justify-self:center; margin-top:0; }
+
+.project-intro-landing {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.project-intro-grid {
+  position:relative;
+  z-index:1;
+  width:min(1180px,100%);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(0,0.9fr) minmax(420px,1.1fr);
+  gap:72px;
+  align-items:center;
+}
+.project-intro-grid .section-label { text-align:center; margin-bottom:16px; }
+.project-brand {
+  text-align:center;
+  font-size:clamp(76px,7.8vw,128px);
+  line-height:0.82;
+}
+.project-logo-copy {
+  display:grid;
+  grid-template-columns:170px 1fr;
+  gap:28px;
+  align-items:start;
+}
+.project-logo-copy img { width:170px; height:auto; }
+.project-intro-landing .inline-next { position:relative; z-index:1; align-self:center; }
+
+.project-landing-section {
+  z-index:0;
+  display:grid;
+  grid-template-columns:1fr;
+  grid-template-rows:auto minmax(0,1fr) auto;
+  row-gap:26px;
+  align-items:center;
+}
+.project-landing-section > div:first-child {
+  position:relative;
+  z-index:1;
+  justify-self:center;
+  text-align:center;
+  width:min(980px,100%);
+  align-self:end;
+}
+.project-landing-section .ms-num { display:none !important; }
+.project-landing-section .ms-title {
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(44px,4.7vw,74px);
+  line-height:1.04;
+  font-weight:300;
+  margin:0;
+}
+.project-landing-section .ms-divider {
+  width:64px;
+  height:1px;
+  background:var(--accent);
+  margin:22px auto 0;
+}
+.project-landing-section .ms-body {
+  position:relative;
+  z-index:1;
+  width:min(1120px,100%);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(330px,0.9fr);
+  grid-template-rows:auto auto auto;
+  column-gap:72px;
+  align-items:center;
+  align-self:center;
+}
+.project-landing-section .ms-body::before {
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  transform:translateY(-50%);
+  width:2px;
+  height:min(330px,72%);
+  background:var(--accent);
+  z-index:0;
+}
+.project-landing-section .ms-body > p {
+  grid-column:1;
+  position:relative;
+  z-index:1;
+  margin:0 0 14px;
+  padding-left:28px;
+  border-left:0 !important;
+  background:transparent !important;
+  font-size:clamp(16px,1.32vw,20px);
+  line-height:1.7;
+  color:rgba(245,242,237,0.68);
+}
+.project-landing-section .ms-body > p:last-of-type { margin-bottom:0; }
+.project-landing-section .ms-list,
+.project-landing-section .principle-cards {
+  grid-column:2;
+  grid-row:1 / span 3;
+  align-self:center;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.project-landing-section .ms-list-item,
+.project-landing-section .pc-card {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.018);
+  padding:16px 18px;
+  margin:0;
+  min-height:54px;
+  font-size:clamp(14px,1.15vw,18px);
+  line-height:1.35;
+  color:rgba(245,242,237,0.72);
+}
+.project-landing-section .ms-dot,
+.project-landing-section .pc-card-accent {
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--accent);
+  flex:0 0 auto;
+}
+.project-landing-section .chapter-next {
+  position:relative;
+  z-index:1;
+  justify-self:center;
+  align-self:start;
+  color:rgba(245,242,237,0.48) !important;
+  text-decoration:none !important;
+  display:inline-flex;
+  align-items:center;
+  gap:16px;
+  font-size:10px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  font-weight:500;
+}
+.project-landing-section .chapter-next::before {
+  content:"";
+  width:58px;
+  height:1px;
+  background:var(--accent);
+}
+.examples-landing {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.examples-landing .centered-title,
+.examples-landing .examples-combined,
+.examples-landing .inline-next {
+  position:relative;
+  z-index:1;
+}
+.examples-landing .centered-title { text-align:center; margin-bottom:14px; }
+.examples-combined { width:min(1180px,100%); margin:0 auto; }
+.examples-landing .reference-simple-title {
+  text-align:center;
+  font-size:clamp(24px,2.35vw,38px);
+  margin:10px 0 10px;
+}
+.examples-landing .compact-reference-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.examples-landing .compact-inspiring-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.examples-landing .reference-card,
+.examples-landing .a-card { padding:15px 17px; }
+.examples-landing .inline-next { align-self:center; }
+
+@media(max-width:1100px){
+  #hero,
+  #about.about-landing,
+  .project-intro-landing,
+  .project-landing-section,
+  .examples-landing,
+  .final-call-landing {
+    height:auto;
+    min-height:auto;
+    padding:92px 22px 54px;
+    overflow:visible;
+  }
+  #hero .hero-inner,
+  #about .about-reframe-grid,
+  .project-intro-grid,
+  .project-landing-section .ms-body {
+    display:grid;
+    grid-template-columns:1fr;
+    grid-template-rows:auto;
+    grid-template-areas:none;
+    gap:30px;
+  }
+  #hero h1.hero-title,
+  #about .about-reframe-title,
+  .project-landing-section .ms-title,
+  .project-brand { white-space:normal; font-size:clamp(42px,12vw,64px); }
+  #about .about-reframe-copy { display:block; }
+  #about .section-label,
+  #about .about-reframe-title,
+  #about .accent-copy-block,
+  #about .principles,
+  #about .inline-next { grid-area:auto; }
+  #hero .hero-venn svg { width:min(320px,80vw); }
+  #hero .hero-credo { font-size:24px; }
+  .project-logo-copy { grid-template-columns:1fr; justify-items:center; }
+  .project-landing-section .ms-body::before { height:calc(100% - 20px); top:10px; transform:none; }
+  .project-landing-section .ms-list,
+  .project-landing-section .principle-cards { grid-column:1; grid-row:auto; }
+  .examples-landing .compact-reference-grid,
+  .examples-landing .compact-inspiring-grid { grid-template-columns:1fr; }
+}
+
+
+
+/* FINAL MICRO-FIXES */
+#hero .hero-credo {
+  width:min(980px, calc(100vw - 120px)) !important;
+  max-width:980px !important;
+  min-width:0 !important;
+  justify-self:center !important;
+  color:var(--accent) !important;
+  opacity:1 !important;
+}
+.project-landing-section .chapter-next,
+.project-landing-section .chapter-next:visited,
+.examples-landing .inline-next,
+.examples-landing .inline-next:visited,
+#about .inline-next,
+#about .inline-next:visited,
+.project-intro-landing .inline-next,
+.project-intro-landing .inline-next:visited {
+  color:rgba(245,242,237,0.52) !important;
+  text-decoration:none !important;
+}
+.project-landing-section .chapter-next:hover,
+.examples-landing .inline-next:hover,
+#about .inline-next:hover,
+@media(max-width:720px){
+  nav { padding:12px 16px; }
+  .nav-links { display:none; }
+  #hero h1.hero-title { font-size:clamp(40px,14vw,58px); }
+  #hero .hero-story p,
+  #about .accent-copy-block p,
+  .project-landing-section .ms-body > p { font-size:15px; line-height:1.62; }
+  #hero .hero-credo { width:100% !important; font-size:22px; }
+  .project-landing-section .ms-title,
+  #about .about-reframe-title { font-size:clamp(36px,11vw,52px); }
+  .project-landing-section .ms-list-item,
+  .project-landing-section .pc-card { font-size:15px; padding:14px 15px; }
+}
+
+
+
+/* FINAL STRUCTURE POLISH 2026-06-24 */
+#hero .hero-story { max-width: 620px; }
+#hero .hero-story p { font-size: clamp(14px, 1.05vw, 16.5px); line-height: 1.72; }
+#hero .hero-credo { width:min(1180px, calc(100vw - 110px)); justify-self:center; white-space:nowrap; color:var(--accent) !important; font-size:clamp(19px,1.58vw,28px); }
+#about .section-label { display:none !important; }
+#about .about-reframe-copy { display:flex; flex-direction:column; align-items:center; }
+#about .about-reframe-title { text-align:center; max-width:980px; margin:0 auto 44px; font-size:clamp(34px,3.35vw,54px); line-height:1.12; }
+#about .accent-copy-block { width:100%; }
+.project-intro-landing .project-intro-frame { position:relative; z-index:1; width:min(1180px,100%); margin:0 auto; display:grid; grid-template-rows:auto minmax(0,1fr); gap:42px; }
+.project-intro-title { text-align:center; }
+.project-intro-title .project-brand { margin:0 0 16px; font-size:clamp(52px,5.2vw,82px); line-height:0.95; letter-spacing:0.02em; }
+.project-intro-title .usen-expansion { align-items:center; text-align:center; gap:6px; font-size:clamp(13px,1.04vw,16px); }
+.project-intro-content { display:grid; grid-template-columns:minmax(360px,0.95fr) minmax(300px,0.8fr); gap:76px; align-items:center; }
+.project-logo-text { max-width:520px; justify-self:end; }
+.project-logo-visual { justify-self:start; display:flex; align-items:center; justify-content:center; }
+.project-logo-visual img { width:clamp(220px,24vw,360px); height:auto; display:block; }
+.project-landing-section .section-label, .project-intro-landing .section-label, .examples-landing .section-label { display:none !important; }
+.project-landing-section .ms-divider, .examples-landing .ms-divider, .final-call-landing .ms-divider { display:none !important; }
+.project-landing-section .ms-grid { grid-template-rows:auto minmax(0,1fr); align-content:center; row-gap:34px; }
+.project-landing-section .ms-title, .examples-landing .centered-title, .contact-title { text-align:center; justify-self:center; margin:0 auto 34px; }
+.project-landing-section .ms-body { display:grid; grid-template-columns:minmax(360px,0.92fr) minmax(380px,1fr); gap:74px; align-items:center; }
+.project-landing-section .ms-body::before { display:none !important; }
+.chapter-main-copy { border-left:2px solid var(--accent); background:rgba(200,168,75,0.035); padding:0 0 0 26px; align-self:center; }
+.chapter-main-copy p { background:transparent !important; padding:0 !important; margin:0 0 20px !important; font-size:clamp(14px,1.08vw,16.5px) !important; line-height:1.75 !important; color:rgba(245,242,237,0.72) !important; }
+.chapter-main-copy p:last-child { margin-bottom:0 !important; }
+.project-landing-section .ms-list, .project-landing-section .principle-cards { align-self:center; }
+.project-landing-section .ms-list li, .project-landing-section .principle-cards li { font-size:clamp(13px,1vw,15.5px); line-height:1.45; }
+.project-landing-section .chapter-next, .project-intro-landing .fixed-next, .examples-landing .fixed-next, .about-landing .inline-next { position:absolute; left:50%; bottom:42px; transform:translateX(-50%); margin:0; z-index:2; }
+.examples-landing .centered-title { display:none !important; }
+.examples-landing { justify-content:center; }
+.examples-landing .examples-frame { position:relative; z-index:1; width:min(1180px,100%); margin:0 auto; display:grid; gap:28px; }
+.examples-landing .reference-grid { gap:0; }
+.examples-landing .reference-card, .examples-landing .inspiration-card { padding:22px 26px; }
+.examples-landing .reference-card h4, .examples-landing .inspiration-card h4 { font-size:clamp(20px,1.55vw,25px); }
+.examples-landing .reference-card p, .examples-landing .inspiration-card p { font-size:clamp(12.8px,0.98vw,14.5px); line-height:1.58; color:rgba(245,242,237,0.62); }
+.examples-landing .inspiration-logo { max-height:36px; width:auto; }
+.contact-landing { min-height:100vh; padding:110px 60px 72px; background:#080808; display:flex; align-items:center; scroll-snap-align:start; position:relative; overflow:hidden; }
+.contact-landing::before { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px); background-size:80px 80px; opacity:0.22; }
+.contact-frame { position:relative; z-index:1; width:min(1120px,100%); margin:0 auto; }
+.contact-grid { display:grid; grid-template-columns:minmax(340px,0.9fr) minmax(360px,1fr); gap:70px; align-items:center; }
+.contact-socials { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
+.contact-socials a { color:var(--accent); border:1px solid rgba(200,168,75,0.24); padding:10px 14px; text-decoration:none; font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
+.contact-form { border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.025); padding:26px; display:grid; gap:16px; }
+.contact-form label { display:grid; gap:8px; color:rgba(245,242,237,0.78); font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
+.contact-form input, .contact-form textarea { width:100%; box-sizing:border-box; background:#0d0d0d; border:1px solid rgba(255,255,255,0.12); color:var(--light); padding:13px 14px; font:14px/1.45 'DM Sans',sans-serif; outline:none; }
+.contact-form input:focus, .contact-form textarea:focus { border-color:rgba(200,168,75,0.62); }
+.contact-submit { justify-self:start; border:0; background:var(--accent); color:#0d0d0d; padding:13px 22px; font-size:12px; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; }
+@media (max-width: 900px) {
+  #hero .hero-credo { white-space:normal; width:calc(100vw - 40px); }
+  #about .about-reframe-title { font-size:clamp(29px,8vw,42px); }
+  .project-intro-landing .project-intro-frame, .project-landing-section .ms-grid { display:flex; flex-direction:column; justify-content:center; min-height:calc(100vh - 130px); }
+  .project-intro-content, .project-landing-section .ms-body, .contact-grid { grid-template-columns:1fr; gap:28px; }
+  .project-logo-text { justify-self:stretch; max-width:none; }
+  .project-logo-visual { justify-self:center; }
+  .project-landing-section .chapter-next, .project-intro-landing .fixed-next, .examples-landing .fixed-next, .about-landing .inline-next { position:static; transform:none; align-self:center; margin-top:24px; }
+  .contact-landing { padding:92px 22px 56px; }
+}
+
+
+
+/* FINAL ALIGNMENT CORRECTION 2026-06-24 */
+#about .about-reframe-grid { grid-template-rows:auto minmax(0,1fr); align-content:center; }
+#about .about-reframe-copy { display:contents; }
+#about .about-reframe-title { grid-column:1 / -1; align-self:start; justify-self:center; width:min(980px,100%); margin:0 auto 34px; }
+#about .accent-copy-block { grid-column:1; align-self:center; }
+#about .about-role-list { grid-column:2; align-self:center; }
+.section-title::after, .project-landing-section .ms-title::after, .contact-title::after { display:none !important; }
+.examples-landing .reference-card p, .examples-landing .inspiration-card p { font-size:clamp(14px,1.08vw,15.5px) !important; line-height:1.6 !important; color:rgba(245,242,237,0.68) !important; }
+.examples-landing .reference-meta, .examples-landing .inspiration-card .reference-meta { font-size:11px !important; }
+@media (max-width: 900px) {
+  #about .about-reframe-copy { display:flex; }
+  #about .about-reframe-title, #about .accent-copy-block, #about .about-role-list { grid-column:auto; }
+}
+
+
+
+/* USER POLISH FIX 2026-06-24: rhythm, next buttons, footer, contact */
+footer {
+  position: static;
+  min-height: 34px;
+  padding: 8px 50px;
+  background: rgba(8,8,8,0.88);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.footer-info { opacity: .46 !important; }
+.footer-email { opacity: .64 !important; color: var(--accent) !important; }
+#hero, #about.about-landing, .project-intro-landing, .project-landing-section, .examples-landing, .final-call-landing, #docs, #contact.contact-landing, #join {
+  padding-bottom: 92px !important;
+}
+.project-landing-section {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  grid-template-rows: auto minmax(0, 1fr) !important;
+  align-items: stretch !important;
+  align-content: stretch !important;
+}
+.project-landing-section > div:first-child {
+  align-self: start !important;
+  justify-self: center !important;
+  width: min(1180px, 100%) !important;
+}
+.project-landing-section .ms-title {
+  text-align: center !important;
+  margin: 0 auto !important;
+}
+.project-landing-section .ms-body {
+  width: min(1180px, 100%) !important;
+  margin: 0 auto !important;
+  align-self: center !important;
+  padding-bottom: 52px !important;
+}
+.project-landing-section .chapter-next,
+.project-intro-landing .fixed-next,
+.examples-landing .fixed-next,
+.about-landing .inline-next,
+.final-call-landing .inline-next {
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 54px !important;
+  transform: translateX(-50%) !important;
+  margin: 0 !important;
+  z-index: 4 !important;
+}
+#chapter-05 .ms-body.wide-body {
+  display: block !important;
+  width: min(1040px, calc(100vw - 180px)) !important;
+  margin: 0 auto !important;
+  padding-bottom: 58px !important;
+}
+#chapter-05 .chapter-main-copy.wide-copy {
+  width: 100% !important;
+  max-width: none !important;
+  border-left: 2px solid var(--accent) !important;
+  padding-left: 30px !important;
+  background: rgba(200,168,75,0.03) !important;
+}
+#chapter-05 .chapter-main-copy.wide-copy p {
+  max-width: none !important;
+  width: 100% !important;
+  font-size: clamp(16px, 1.22vw, 19px) !important;
+  line-height: 1.82 !important;
+}
+.project-landing-section .ms-list,
+.project-landing-section .principle-cards {
+  max-height: calc(100vh - 310px);
+  overflow: hidden;
+}
+.project-landing-section .ms-list-item,
+.project-landing-section .pc-card {
+  padding-top: 13px !important;
+  padding-bottom: 13px !important;
+}
+.contact-socials a[href^="mailto:"] { display: none !important; }
+.contact-socials { gap: 14px !important; }
+@media (max-width: 900px) {
+  footer { position: static !important; padding: 18px 22px !important; }
+  #hero, #about.about-landing, .project-intro-landing, .project-landing-section, .examples-landing, .final-call-landing, #docs, #contact.contact-landing, #join { padding-bottom: 56px !important; }
+  .project-landing-section .chapter-next,
+  .project-intro-landing .fixed-next,
+  .examples-landing .fixed-next,
+  .about-landing .inline-next,
+#chapter-05 .ms-body.wide-body { width: 100% !important; }
+  .project-landing-section .ms-list, .project-landing-section .principle-cards { max-height: none; overflow: visible; }
+}
+
+
+
+/* CABINET / SIGNAL / SEO TASK 2026-06-24 */
+.final-actions, .signal-actions { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; position:relative; z-index:2; }
+.final-actions .btn-outline, .signal-actions .btn-outline { background:transparent; cursor:pointer; }
+.signal-landing { min-height:100vh; padding:110px 60px 92px; background:#080808; scroll-snap-align:start; position:relative; overflow:hidden; display:flex; align-items:center; }
+.signal-landing::before { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px); background-size:80px 80px; opacity:.22; }
+.signal-frame { position:relative; z-index:1; width:min(1180px,100%); margin:0 auto; }
+.signal-title { text-align:center; margin-bottom:8px; }
+.signal-subtitle { text-align:center; color:var(--accent); font-family:"Cormorant Garamond",serif; font-size:clamp(24px,2.4vw,36px); margin:0 0 34px; }
+.signal-grid { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(360px,.85fr); gap:54px; align-items:center; }
+.signal-copy p { font-size:clamp(14px,1.05vw,16px); line-height:1.7; }
+.signal-guard { border:1px solid rgba(200,168,75,.22); background:rgba(200,168,75,.035); padding:28px; }
+.signal-guard h3 { font-family:"Cormorant Garamond",serif; color:var(--accent); font-size:32px; font-weight:300; margin:0 0 18px; }
+.signal-guard ul { list-style:none; padding:0; margin:0; display:grid; gap:12px; }
+.signal-guard li { color:rgba(245,242,237,.72); font-size:14px; line-height:1.55; padding-left:20px; position:relative; }
+.signal-guard li::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--accent); position:absolute; left:0; top:.7em; }
+.signal-actions { margin-top:30px; }
+.signal-ref-note { text-align:center; color:rgba(245,242,237,.5); font-size:12px; margin-top:14px; }
+.public-join-grid { grid-template-columns:minmax(360px,.9fr) minmax(420px,1fr); }
+.auth-mock-list { display:grid; gap:10px; margin:22px 0; }
+.auth-mock-list button { background:#101010; color:var(--light); border:1px solid rgba(255,255,255,.12); padding:13px 16px; text-align:left; cursor:default; }
+.mock-note { color:rgba(245,242,237,.42) !important; font-size:12px !important; }
+.public-profile-form .check-row { grid-column:1/-1; display:flex !important; gap:10px; align-items:flex-start; color:rgba(245,242,237,.7) !important; text-transform:none !important; letter-spacing:0 !important; }
+.public-profile-form .check-row input { width:auto !important; margin-top:2px; }
+@media(max-width:900px){ .signal-grid, .public-join-grid { grid-template-columns:1fr; } .signal-landing { padding:92px 22px 56px; } }
+
+.join-status-message { grid-column:1 / -1; margin-top:14px; padding:12px 14px; border:1px solid rgba(200,168,75,.28); background:rgba(200,168,75,.08); color:#6a5315; font-size:13px; line-height:1.45; }
+</style>
+<style id="pandora-clean-visual-layer-v0-5">
+  :root {
+    --clean-footer-h: 38px;
+    --clean-border: rgba(210, 177, 74, 0.17);
+    --clean-muted: rgba(245, 241, 229, 0.66);
+  }
+
+  #documents {
+    display: grid;
+    align-content: start;
+    min-height: 100svh;
+    padding-top: clamp(96px, 13vh, 132px);
+    padding-bottom: clamp(72px, 8vh, 104px);
+  }
+
+  #documents .docs-grid {
+    align-items: start;
+  }
+
+  #documents .doc-group {
+    min-height: 0;
+    height: auto;
+    align-self: start;
+    padding-bottom: clamp(22px, 2.6vw, 34px);
+  }
+
+  #documents .doc-item:last-child {
+    border-bottom: 0;
+  }
+
+  #cooperative-application {
+    min-height: 100svh;
+    height: auto;
+    overflow: visible;
+    padding: clamp(84px, 10vh, 110px) clamp(28px, 6vw, 96px) clamp(72px, 8vh, 104px);
+  }
+
+  #cooperative-application .application-shell,
+  #cooperative-application .cabinet-grid {
+    gap: clamp(22px, 3vw, 42px);
+    align-items: start;
+  }
+
+  #cooperative-application .application-card,
+  #cooperative-application .join-form,
+  #cooperative-application .step-card,
+  #cooperative-application .application-steps {
+    padding: clamp(18px, 2.2vw, 28px);
+    border-color: var(--clean-border);
+  }
+
+  #cooperative-application .form-grid,
+  #cooperative-application .application-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 14px;
+  }
+
+  #cooperative-application label,
+  #cooperative-application .field-label {
+    margin-bottom: 6px;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: rgba(245, 241, 229, 0.72);
+  }
+
+  #cooperative-application input,
+  #cooperative-application select,
+  #cooperative-application textarea {
+    min-height: 38px;
+    padding: 10px 12px;
+    font-size: 0.88rem;
+  }
+
+  #cooperative-application textarea {
+    min-height: 84px;
+    resize: vertical;
+  }
+
+  #cooperative-application .phone-entry {
+    padding: 10px 12px;
+    min-height: 42px;
+  }
+
+  #cooperative-application .phone-entry input {
+    min-height: 34px;
+  }
+
+  #cooperative-application .messenger-checks,
+  #cooperative-application .checkbox-grid,
+  #cooperative-application .type-toggle {
+    gap: 8px;
+  }
+
+  #cooperative-application .step-card,
+  #cooperative-application .application-step {
+    display: grid;
+    gap: 8px;
+    padding: 14px 16px;
+  }
+
+  #cooperative-application .step-card h3,
+  #cooperative-application .application-step h3 {
+    margin: 0;
+    font-size: clamp(1rem, 1.35vw, 1.18rem);
+  }
+
+  #cooperative-application .step-card p,
+  #cooperative-application .application-step p {
+    margin: 0;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    color: var(--clean-muted);
+  }
+
+  footer {
+    min-height: 34px;
+    height: auto;
+    padding: 8px clamp(18px, 4vw, 54px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-size: 0.72rem;
+    line-height: 1.25;
+  }
+
+  @media (max-width: 900px) {
+    #cooperative-application .form-grid,
+    #cooperative-application .application-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<style>
+body { scroll-snap-type:y proximity; }
+.cabinet-hero, .cabinet-section { min-height:100vh; padding:110px 60px 92px; background:#080808; position:relative; display:flex; align-items:center; scroll-snap-align:start; }
+.cabinet-frame { width:min(1180px,100%); margin:0 auto; position:relative; z-index:1; }
+.cabinet-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:34px; }
+.cabinet-card { border:1px solid rgba(255,255,255,.09); background:rgba(255,255,255,.025); padding:24px; }
+.cabinet-card h3 { font-family:"Cormorant Garamond",serif; font-size:28px; font-weight:300; margin:0 0 10px; color:var(--accent); }
+.cabinet-card p { color:rgba(245,242,237,.66); font-size:14px; line-height:1.6; }
+.cabinet-note { max-width:720px; color:rgba(245,242,237,.62); font-size:14px; line-height:1.7; margin:0 auto 26px; text-align:center; }
+#documents, #cooperative-application { min-height:100vh; padding:110px 60px 92px; }
+@media(max-width:900px){ .cabinet-hero,.cabinet-section,#documents,#cooperative-application{padding:92px 22px 56px}.cabinet-grid{grid-template-columns:1fr} }
+.join-status-message { grid-column:1 / -1; margin-top:14px; padding:12px 14px; border:1px solid rgba(200,168,75,.28); background:rgba(200,168,75,.08); color:#6a5315; font-size:13px; line-height:1.45; }
+</style>
+
+<style id="pandora-modernization-cleanup-v0-6">
+html, body { scroll-snap-type: none; }
+section, .cabinet-hero, .cabinet-section, #documents, #cooperative-application { scroll-snap-align: none; }
+.cabinet-hero, .cabinet-section { min-height: auto; padding-top: clamp(88px, 10vh, 110px); padding-bottom: clamp(58px, 7vh, 84px); }
+#documents { min-height: auto; padding: clamp(82px, 9vh, 104px) clamp(24px, 5vw, 60px) clamp(62px, 7vh, 84px); }
+#documents .docs-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+#documents .doc-group { padding: 18px; overflow: visible; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.022); }
+#documents .doc-group-label { display: none; }
+#documents .doc-item { padding: 10px 0; gap: 10px; }
+#documents .doc-title { font-size: 13px; line-height: 1.35; }
+#documents .doc-meta { font-size: 11px; line-height: 1.4; color: rgba(245,242,237,.52); }
+#cooperative-application { min-height: auto; padding: clamp(74px, 8vh, 96px) clamp(24px, 5vw, 60px) clamp(58px, 7vh, 78px); }
+#cooperative-application .join-outer { grid-template-columns: minmax(0, 1.12fr) minmax(280px, .78fr); gap: clamp(22px, 3vw, 36px); }
+#cooperative-application .section-title { margin-bottom: 12px; }
+#cooperative-application .cabinet-note { margin-bottom: 16px; }
+#cooperative-application .divider { margin: 10px 0 18px; }
+#cooperative-application .entity-toggle { margin-bottom: 14px; }
+#cooperative-application .entity-btn { padding: 10px 12px; }
+#cooperative-application .join-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 12px; }
+#cooperative-application .form-section-title, #cooperative-application #phoneList, #cooperative-application .btn-add-phone, #cooperative-application .btn-join, #cooperative-application .join-status-message { grid-column: 1 / -1; }
+#cooperative-application label { margin-bottom: 4px; color: rgba(245,242,237,.74); opacity: 1; }
+#cooperative-application input, #cooperative-application select, #cooperative-application textarea { min-height: 36px; padding: 9px 11px; font-size: 13px; }
+#cooperative-application .phone-entry { padding: 8px 10px; margin-bottom: 8px; border-left-color: rgba(200,168,75,.32); }
+#cooperative-application .messenger-checks { gap: 7px; }
+#cooperative-application .check-label { font-size: 10.5px; color: rgba(245,242,237,.72); opacity: 1; }
+#cooperative-application .btn-add-phone { margin-bottom: 4px; padding: 8px 14px; color: var(--accent); border-color: rgba(200,168,75,.32); }
+#cooperative-application .btn-join { padding: 12px 22px; background: var(--accent); color: #0d0d0d; }
+#cooperative-application .join-steps { margin-top: 0; display: grid; gap: 10px; }
+#cooperative-application .j-step { grid-template-columns: 30px 1fr; gap: 12px; padding: 14px; border: 1px solid rgba(200,168,75,.18); background: rgba(200,168,75,.045); }
+#cooperative-application .j-num { color: var(--accent); opacity: 1; font-size: 26px; }
+#cooperative-application .j-step h5 { color: var(--accent); font-size: 13px; margin-bottom: 4px; }
+#cooperative-application .j-step p { color: rgba(245,242,237,.78); opacity: 1; font-size: 12px; line-height: 1.45; }
+footer { position: static; min-height: 34px; padding: 10px clamp(20px, 4vw, 54px); }
+@media (max-width: 900px) { #documents .docs-grid, #cooperative-application .join-outer, #cooperative-application .join-form { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html#hero" class="nav-logo">
+    <div class="nav-logo-venn">
+      <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="14" r="12" fill="#D42B2B" opacity="0.75"/>
+        <circle cx="24" cy="14" r="12" fill="#1A7A3C" opacity="0.75"/>
+        <circle cx="19" cy="23" r="12" fill="#1A3A7A" opacity="0.75"/>
+      </svg>
+    </div>
+    <div class="nav-logo-text">
+      <span class="nav-logo-title"><span data-lang="uk">Кооператив Пандора</span><span data-lang="ru" class="active">Кооператив Пандора</span><span data-lang="en">Pandora Cooperative</span><span data-lang="es">Cooperativa Pandora</span></span>
+    </div>
+  </a>
+  <div class="nav-links"><a href="#profile">Профиль</a><a href="#cooperative-application">Заявка</a><a href="index.html#hero">Вернуться на сайт</a></div>
+  <div class="nav-right">
+    <div class="nav-lang" id="langSwitcher">
+      <button class="nav-icon-btn" id="langBtn" onclick="toggleLangMenu()" aria-label="Выбор языка">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      </button>
+      <div class="nav-lang-dropdown" id="langDropdown">
+        <button class="lang-option" data-lang-opt="uk" onclick="selectLang('uk')"><span class="lf">🇺🇦</span><span class="ln">Українська</span><span class="lc">UA</span></button>
+        <button class="lang-option active" data-lang-opt="ru" onclick="selectLang('ru')"><span class="lf">🇷🇺</span><span class="ln">Русский</span><span class="lc">RU</span></button>
+        <button class="lang-option" data-lang-opt="en" onclick="selectLang('en')"><span class="lf">🇬🇧</span><span class="ln">English</span><span class="lc">EN</span></button>
+        <button class="lang-option" data-lang-opt="es" onclick="selectLang('es')"><span class="lf">🇪🇸</span><span class="ln">Español</span><span class="lc">ES</span></button>
+      </div>
+    </div>
+    <div class="nav-user-menu" id="userMenuSwitcher">
+      <button class="nav-icon-btn nav-hamburger" id="userMenuBtn" onclick="toggleUserMenu()" aria-label="Меню">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+      </button>
+      <div class="nav-user-dropdown" id="userMenuDropdown">
+        <a href="index.html" class="user-menu-link"><span data-lang="uk">На сайт</span><span data-lang="ru" class="active">На сайт</span><span data-lang="en">Home</span><span data-lang="es">Inicio</span></a>
+        <span class="user-menu-link" style="cursor:default;opacity:0.45;font-size:11px;letter-spacing:0.1em;text-transform:uppercase">Личный кабинет</span>
+        <button class="user-menu-link" onclick="alert('Вход — в разработке')"><span data-lang="uk">Увійти</span><span data-lang="ru" class="active">Войти</span><span data-lang="en">Log in</span><span data-lang="es">Iniciar sesión</span></button>
+        <button class="user-menu-link user-menu-cta" onclick="alert('Регистрация — в разработке')"><span data-lang="uk">Зареєструватися</span><span data-lang="ru" class="active">Зарегистрироваться</span><span data-lang="en">Sign up</span><span data-lang="es">Registrarse</span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+<section class="cabinet-hero" id="profile">
+  <div class="cabinet-frame">
+    <div class="section-label">Личный кабинет · прототип</div>
+    <h1 class="section-title">Кабинет Pandora</h1>
+    <p class="cabinet-note">Статический прототип без реальной авторизации. Здесь будет профиль участника сайта, новости, Signal, документы и отдельная заявка в кооператив.</p>
+    <div class="cabinet-grid">
+      <div class="cabinet-card"><h3>Мой профиль</h3><p>Статус: пользователь сайта. Имя / псевдоним, контактные каналы, город / страна, кто пригласил / Signal-код.</p></div>
+      <div class="cabinet-card"><h3>Новости</h3><p>Здесь будут новости Pandora, обновления по кооперации и приглашения к участию.</p></div>
+      <div class="cabinet-card"><h3>Signal</h3><p>Мой Signal-код, моя ссылка, QR-код, приглашения, подтверждённые участники, подарки / бонусы. Пока mock.</p></div>
+    </div>
+  </div>
+</section>
+<section class="cabinet-section" id="signal-cabinet">
+  <div class="cabinet-frame">
+    <h2 class="section-title">Signal</h2>
+    <div class="cabinet-grid">
+      <div class="cabinet-card"><h3>Мой Signal-код</h3><p>PANDORA-DEMO-001</p></div>
+      <div class="cabinet-card"><h3>Моя ссылка</h3><p>https://pandora.co.ua/?ref=PANDORA-DEMO-001</p></div>
+      <div class="cabinet-card"><h3>Мой QR-код</h3><p>Mock-зона для будущего QR-кода.</p></div>
+      <div class="cabinet-card"><h3>Мои приглашения</h3><p>Пока прототип без базы.</p></div>
+      <div class="cabinet-card"><h3>Подтверждённые участники</h3><p>Появятся после подключения учёта.</p></div>
+      <div class="cabinet-card"><h3>Подарки / бонусы</h3><p>Пока mock. Без обещаний дохода.</p></div>
+    </div>
+  </div>
+</section>
+<section id="documents">
+<h2 class="section-title">
+    <span data-lang="uk">Документи</span>
+    <span data-lang="ru" class="active">Документы</span>
+    <span data-lang="en">Documents</span>
+    <span data-lang="es">Documentos</span>
+  </h2>
+  <div class="divider"></div>
+  <div class="docs-grid">
+
+    <!-- LEGISLATION -->
+    <div class="doc-group">
+<a class="doc-item" href="https://zakon.rada.gov.ua/laws/show/1087-14" target="_blank" rel="noopener">
+        <div class="doc-icon">⚖️</div>
+        <div class="doc-body">
+          <div class="doc-title">
+            <span data-lang="uk">Закон України «Про кооперацію»</span>
+            <span data-lang="ru" class="active">Закон Украины «О кооперации»</span>
+            <span data-lang="en">Law of Ukraine "On Cooperation"</span>
+            <span data-lang="es">Ley de Ucrania «Sobre la cooperación»</span>
+          </div>
+          <div class="doc-meta">Верховна Рада України · 2003</div>
+        </div>
+      </a>
+
+      <a class="doc-item" href="https://zakon.rada.gov.ua/laws/show/469-14" target="_blank" rel="noopener">
+        <div class="doc-icon">⚖️</div>
+        <div class="doc-body">
+          <div class="doc-title">
+            <span data-lang="uk">Закон «Про споживчу кооперацію»</span>
+            <span data-lang="ru" class="active">Закон «О потребительской кооперации»</span>
+            <span data-lang="en">Law "On Consumer Cooperation"</span>
+            <span data-lang="es">Ley «Sobre la cooperación de consumidores»</span>
+          </div>
+          <div class="doc-meta">Верховна Рада України · 1992</div>
+        </div>
+      </a>
+
+      <a class="doc-item" href="http://www.coop.ua/uk/" target="_blank" rel="noopener">
+        <div class="doc-icon">🌐</div>
+        <div class="doc-body">
+          <div class="doc-title">
+            <span data-lang="uk">Укркоопспілка</span>
+            <span data-lang="ru" class="active">Укркоопсоюз</span>
+            <span data-lang="en">Ukrkoopspilka</span>
+            <span data-lang="es">Ukrkoopspilka</span>
+          </div>
+          <div class="doc-meta">coop.ua · Центральна спілка споживчих товариств України</div>
+        </div>
+      </a>
+
+      <a class="doc-item" href="https://www.ilo.org/dyn/normlex/en/f?p=NORMLEXPUB:12100:0::NO::P12100_ILO_CODE:R193" target="_blank" rel="noopener">
+        <div class="doc-icon">🌐</div>
+        <div class="doc-body">
+          <div class="doc-title">
+            <span data-lang="uk">Рекомендація МОП №193 про кооперативи</span>
+            <span data-lang="ru" class="active">Рекомендация МОТ №193 о кооперативах</span>
+            <span data-lang="en">ILO Recommendation №193 on Cooperatives</span>
+            <span data-lang="es">Recomendación OIT №193 sobre cooperativas</span>
+          </div>
+          <div class="doc-meta">ILO · 2002</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- INTERNAL DOCS -->
+    <div class="doc-group">
+<a class="doc-item" href="#" onclick="return false;" style="cursor:default;">
+        <div class="doc-icon">📄</div>
+        <div class="doc-body">
+          <div class="doc-title">
+            <span data-lang="uk">Статут Кооперативу Пандора<span class="doc-badge new">Скоро</span></span>
+            <span data-lang="ru" class="active">Устав Кооператива Пандора<span class="doc-badge new">Скоро</span></span>
+            <span data-lang="en">Pandora Cooperative Charter<span class="doc-badge new">Soon</span></span>
+            <span data-lang="es">Estatutos de la Cooperativa Pandora<span class="doc-badge new">Pronto</span></span>
+          </div>
+          <div class="doc-meta">
+            <span data-lang="uk">Публікується після реєстрації</span>
+            <span data-lang="ru" class="active">Публикуется после регистрации</span>
+            <span data-lang="en">Published upon registration</span>
+            <span data-lang="es">Se publica tras el registro</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="doc-item" href="#" onclick="return false;" style="cursor:default;">
+        <div class="doc-icon">📋</div>
+        <div class="doc-body">
+          <div class="doc-title">
+            <span data-lang="uk">Положення про пайові внески<span class="doc-badge new">Скоро</span></span>
+            <span data-lang="ru" class="active">Положение о паевых взносах<span class="doc-badge new">Скоро</span></span>
+            <span data-lang="en">Share Contribution Regulations<span class="doc-badge new">Soon</span></span>
+            <span data-lang="es">Reglamento de aportaciones<span class="doc-badge new">Pronto</span></span>
+          </div>
+          <div class="doc-meta">
+            <span data-lang="uk">Розміри, порядок внесення та повернення</span>
+            <span data-lang="ru" class="active">Размеры, порядок внесения и возврата</span>
+            <span data-lang="en">Amounts, contributions and refund procedures</span>
+            <span data-lang="es">Importes, aportaciones y procedimientos de devolución</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="doc-item" href="#" onclick="return false;" style="cursor:default;">
+        <div class="doc-icon">🗳️</div>
+        <div class="doc-body">
+          <div class="doc-title">
+            <span data-lang="uk">Регламент загальних зборів<span class="doc-badge new">Скоро</span></span>
+            <span data-lang="ru" class="active">Регламент общих собраний<span class="doc-badge new">Скоро</span></span>
+            <span data-lang="en">General Assembly Rules<span class="doc-badge new">Soon</span></span>
+            <span data-lang="es">Reglamento de asambleas<span class="doc-badge new">Pronto</span></span>
+          </div>
+          <div class="doc-meta">
+            <span data-lang="uk">Порядок голосування та прийняття рішень</span>
+            <span data-lang="ru" class="active">Порядок голосования и принятия решений</span>
+            <span data-lang="en">Voting and decision-making procedures</span>
+            <span data-lang="es">Procedimientos de votación y toma de decisiones</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="doc-item" href="#" onclick="return false;" style="cursor:default;">
+        <div class="doc-icon">🤝</div>
+        <div class="doc-body">
+          <div class="doc-title">
+            <span data-lang="uk">Кодекс етики пайщика<span class="doc-badge new">Скоро</span></span>
+            <span data-lang="ru" class="active">Кодекс этики пайщика<span class="doc-badge new">Скоро</span></span>
+            <span data-lang="en">Member Code of Ethics<span class="doc-badge new">Soon</span></span>
+            <span data-lang="es">Código de ética del socio<span class="doc-badge new">Pronto</span></span>
+          </div>
+          <div class="doc-meta">
+            <span data-lang="uk">Принципи та цінності спільноти</span>
+            <span data-lang="ru" class="active">Принципы и ценности сообщества</span>
+            <span data-lang="en">Community principles and values</span>
+            <span data-lang="es">Principios y valores de la comunidad</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- LIBRARY -->
+    <div class="doc-group">
+<a class="doc-item" href="https://www.ica.coop/en/cooperatives/cooperative-identity" target="_blank" rel="noopener">
+        <div class="doc-icon">📖</div>
+        <div class="doc-body">
+          <div class="doc-title">
+            <span data-lang="uk">Кооперативні принципи МКА</span>
+            <span data-lang="ru" class="active">Кооперативные принципы МКА</span>
+            <span data-lang="en">ICA Cooperative Principles</span>
+            <span data-lang="es">Principios cooperativos ACI</span>
+          </div>
+          <div class="doc-meta">International Cooperative Alliance</div>
+        </div>
+      </a>
+
+      <a class="doc-item" href="https://www.ica.coop/en/cooperatives/history-cooperative-movement" target="_blank" rel="noopener">
+        <div class="doc-icon">📗</div>
+        <div class="doc-body">
+          <div class="doc-title">
+            <span data-lang="uk">Історія кооперативного руху</span>
+            <span data-lang="ru" class="active">История кооперативного движения</span>
+            <span data-lang="en">History of the Cooperative Movement</span>
+            <span data-lang="es">Historia del movimiento cooperativo</span>
+          </div>
+          <div class="doc-meta">International Cooperative Alliance</div>
+        </div>
+      </a>
+
+      <a class="doc-item" href="https://drive.google.com/file/d/184dJI5f7iMCXFlvoOIEPKwUUT-cShZrP/view?usp=sharing" target="_blank" rel="noopener">
+        <div class="doc-icon">📘</div>
+        <div class="doc-body">
+          <div class="doc-title">
+            <span data-lang="uk">М.І. Туган-Барановський — «Соціальні основи кооперації»</span>
+            <span data-lang="ru" class="active">М.И. Туган-Барановский — «Социальные основы кооперации»</span>
+            <span data-lang="en">M.I. Tugan-Baranovsky — "The Social Basis of Cooperation"</span>
+            <span data-lang="es">M.I. Tugan-Baranovsky — «Las bases sociales de la cooperación»</span>
+          </div>
+          <div class="doc-meta">Google Drive · PDF</div>
+        </div>
+      </a>
+
+      <a class="doc-item" href="https://participedia.net/method/4825" target="_blank" rel="noopener">
+        <div class="doc-icon">📙</div>
+        <div class="doc-body">
+          <div class="doc-title">
+            <span data-lang="uk">Liquid Democracy: теорія і практика</span>
+            <span data-lang="ru" class="active">Liquid Democracy: теория и практика</span>
+            <span data-lang="en">Liquid Democracy: Theory & Practice</span>
+            <span data-lang="es">Democracia líquida: teoría y práctica</span>
+          </div>
+          <div class="doc-meta">Participedia</div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</section>
+<section id="cooperative-application" class="join-clean cabinet-application">
+  <div class="section-label">Заявка в кооператив</div>
+  <h2 class="section-title">Подать заявку</h2>
+  <p class="cabinet-note">Это отдельный шаг после регистрации на сайте. Заявка не означает автоматическое принятие в пайщики.</p>
+  <div class="divider"></div>
+  <div class="join-outer">
+    <div>
+      <!-- Entity type toggle -->
+      <div class="entity-toggle" id="entityToggle">
+        <button class="entity-btn active" id="btnIndividual" onclick="switchEntity('individual')">
+          <span class="entity-icon">👤</span>
+          <span data-lang="uk">Фізична особа</span>
+          <span data-lang="ru" class="active">Физическое лицо</span>
+          <span data-lang="en">Individual</span>
+          <span data-lang="es">Persona física</span>
+        </button>
+        <button class="entity-btn" id="btnLegal" onclick="switchEntity('legal')">
+          <span class="entity-icon">🏢</span>
+          <span data-lang="uk">Юридична особа</span>
+          <span data-lang="ru" class="active">Юридическое лицо</span>
+          <span data-lang="en">Legal entity</span>
+          <span data-lang="es">Persona jurídica</span>
+        </button>
+      </div>
+
+      <!-- INDIVIDUAL FORM -->
+      <!-- Скрытая форма для Netlify detection -->
+      <form name="join-individual" data-netlify="true" hidden>
+        <input type="text" name="lastname">
+        <input type="text" name="firstname">
+        <input type="text" name="middlename">
+        <input type="email" name="email">
+        <input type="tel" name="phone">
+        <input type="text" name="location">
+        <input type="text" name="phones">
+      </form>
+
+      <form class="join-form" id="formIndividual" onsubmit="handleJoin(event)">
+        <input type="hidden" name="form-name" value="join-individual">
+        <div><label><span data-lang="uk">Прізвище</span><span data-lang="ru" class="active">Фамилия</span><span data-lang="en">Last name</span><span data-lang="es">Apellido</span></label>
+          <input type="text" name="lastname" required></div>
+        <div><label><span data-lang="uk">Ім'я</span><span data-lang="ru" class="active">Имя</span><span data-lang="en">First name</span><span data-lang="es">Nombre</span></label>
+          <input type="text" name="firstname" required></div>
+        <div><label><span data-lang="uk">По батькові</span><span data-lang="ru" class="active">Отчество</span><span data-lang="en">Middle name</span><span data-lang="es">Patronímico</span></label>
+          <input type="text" name="middlename"></div>
+        <div><label>Email</label>
+          <input type="email" name="email" placeholder="your@email.com" required></div>
+        <div><label><span data-lang="uk">Країна</span><span data-lang="ru" class="active">Страна</span><span data-lang="en">Country</span><span data-lang="es">País</span></label>
+          <div class="country-select-wrap">
+            <select id="countrySelect" name="country" onchange="onCountryChange(this)" style="width:100%;padding:12px 14px;border:1px solid rgba(0,0,0,0.1);background:white;font-size:14px;font-family:'DM Sans',sans-serif;color:#0D0D0D;outline:none;appearance:none;">
+              <option value="" data-code="">-- Оберіть країну --</option>
+              <option value="Україна" data-code="+380">🇺🇦 Україна (+380)</option>
+              <option value="Польща" data-code="+48">🇵🇱 Польща (+48)</option>
+              <option value="Німеччина" data-code="+49">🇩🇪 Німеччина (+49)</option>
+              <option value="Чехія" data-code="+420">🇨🇿 Чехія (+420)</option>
+              <option value="Австрія" data-code="+43">🇦🇹 Австрія (+43)</option>
+              <option value="Швейцарія" data-code="+41">🇨🇭 Швейцарія (+41)</option>
+              <option value="Франція" data-code="+33">🇫🇷 Франція (+33)</option>
+              <option value="Іспанія" data-code="+34">🇪🇸 Іспанія (+34)</option>
+              <option value="Італія" data-code="+39">🇮🇹 Італія (+39)</option>
+              <option value="Нідерланди" data-code="+31">🇳🇱 Нідерланди (+31)</option>
+              <option value="Бельгія" data-code="+32">🇧🇪 Бельгія (+32)</option>
+              <option value="Велика Британія" data-code="+44">🇬🇧 Велика Британія (+44)</option>
+              <option value="США" data-code="+1">🇺🇸 США (+1)</option>
+              <option value="Канада" data-code="+1">🇨🇦 Канада (+1)</option>
+              <option value="Ізраїль" data-code="+972">🇮🇱 Ізраїль (+972)</option>
+              <option value="ОАЕ" data-code="+971">🇦🇪 ОАЕ (+971)</option>
+              <option value="Туреччина" data-code="+90">🇹🇷 Туреччина (+90)</option>
+              <option value="Грузія" data-code="+995">🇬🇪 Грузія (+995)</option>
+              <option value="Росія" data-code="+7">🇷🇺 Росія (+7)</option>
+              <option value="Молдова" data-code="+373">🇲🇩 Молдова (+373)</option>
+              <option value="Румунія" data-code="+40">🇷🇴 Румунія (+40)</option>
+              <option value="Угорщина" data-code="+36">🇭🇺 Угорщина (+36)</option>
+              <option value="Словаччина" data-code="+421">🇸🇰 Словаччина (+421)</option>
+              <option value="Литва" data-code="+370">🇱🇹 Литва (+370)</option>
+              <option value="Латвія" data-code="+371">🇱🇻 Латвія (+371)</option>
+              <option value="Естонія" data-code="+372">🇪🇪 Естонія (+372)</option>
+            </select>
+          </div>
+        </div>
+        <div><label><span data-lang="uk">Місто</span><span data-lang="ru" class="active">Город</span><span data-lang="en">City</span><span data-lang="es">Ciudad</span></label>
+          <input type="text" name="city" placeholder="Харків"></div>
+        <div id="phoneList">
+          <div class="phone-entry" style="margin-bottom:10px;">
+            <label><span data-lang="uk">Телефон</span><span data-lang="ru" class="active">Телефон</span><span data-lang="en">Phone</span><span data-lang="es">Teléfono</span></label>
+            <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center;">
+              <span id="phoneCode" style="padding:12px 10px;background:#f0f0f0;border:1px solid rgba(0,0,0,0.1);font-size:13px;white-space:nowrap;min-width:54px;text-align:center;">+?</span>
+              <input type="tel" name="phone[]" id="phoneInput" placeholder="(0__) ___-__-__" style="flex:1;">
+            </div>
+            <div class="messenger-checks">
+              <label class="check-label"><input type="checkbox" name="messengers[]" value="Telegram"> Telegram</label>
+              <label class="check-label"><input type="checkbox" name="messengers[]" value="Viber"> Viber</label>
+              <label class="check-label"><input type="checkbox" name="messengers[]" value="WhatsApp"> WhatsApp</label>
+              <label class="check-label"><input type="checkbox" name="messengers[]" value="Signal"> Signal</label>
+            </div>
+          </div>
+        </div>
+        <button type="button" onclick="addPhone()" class="btn-add-phone">
+          <span data-lang="uk">+ Додати телефон</span>
+          <span data-lang="ru" class="active">+ Добавить телефон</span>
+          <span data-lang="en">+ Add phone</span>
+          <span data-lang="es">+ Añadir teléfono</span>
+        </button>
+
+        <button type="submit" class="btn-join">
+          <span data-lang="uk">Подати заявку</span>
+          <span data-lang="ru" class="active">Подать заявку</span>
+          <span data-lang="en">Apply</span>
+          <span data-lang="es">Solicitar</span>
+        </button>
+      </form>
+
+      <!-- LEGAL ENTITY FORM -->
+      <form class="join-form" id="formLegal" style="display:none;" name="join-legal" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleJoin(event)">
+        <input type="hidden" name="form-name" value="join-legal">
+        <input type="hidden" name="bot-field" style="display:none">
+        <div class="form-section-title">
+          <span data-lang="uk">Дані організації</span>
+          <span data-lang="ru" class="active">Данные организации</span>
+          <span data-lang="en">Organisation details</span>
+          <span data-lang="es">Datos de la organización</span>
+        </div>
+        <div><label><span data-lang="uk">Повна назва організації</span><span data-lang="ru" class="active">Полное наименование организации</span><span data-lang="en">Full organisation name</span><span data-lang="es">Nombre completo de la organización</span></label>
+          <input type="text" required></div>
+        <div><label><span data-lang="uk">Організаційно-правова форма</span><span data-lang="ru" class="active">Организационно-правовая форма</span><span data-lang="en">Legal form</span><span data-lang="es">Forma jurídica</span></label>
+          <select>
+            <option>ТОВ / ООО / LLC</option>
+            <option>ПП / ИП / FOP</option>
+            <option>АТ / АО / JSC</option>
+            <option>ГО / НКО / NGO</option>
+            <option><span data-lang="uk">Кооператив</span><span data-lang="ru" class="active">Кооператив</span><span data-lang="en">Cooperative</span><span data-lang="es">Cooperativa</span></option>
+            <option><span data-lang="uk">Інше</span><span data-lang="ru" class="active">Другое</span><span data-lang="en">Other</span><span data-lang="es">Otro</span></option>
+          </select></div>
+        <div class="form-row-2">
+          <div><label><span data-lang="uk">ЄДРПОУ / ІПН / Рег. №</span><span data-lang="ru" class="active">ЕГРЮЛ / ИНН / Рег. №</span><span data-lang="en">Tax / Reg. number</span><span data-lang="es">NIF / Nº registro</span></label>
+            <input type="text" required></div>
+          <div><label><span data-lang="uk">Країна реєстрації</span><span data-lang="ru" class="active">Страна регистрации</span><span data-lang="en">Country of registration</span><span data-lang="es">País de registro</span></label>
+            <input type="text" placeholder="Україна"></div>
+        </div>
+        <div><label><span data-lang="uk">Юридична адреса</span><span data-lang="ru" class="active">Юридический адрес</span><span data-lang="en">Registered address</span><span data-lang="es">Domicilio fiscal</span></label>
+          <input type="text" required></div>
+
+        <div class="form-section-title" style="margin-top:8px;">
+          <span data-lang="uk">Уповноважена особа</span>
+          <span data-lang="ru" class="active">Уполномоченное лицо</span>
+          <span data-lang="en">Authorised representative</span>
+          <span data-lang="es">Representante autorizado</span>
+        </div>
+        <div><label><span data-lang="uk">ПІБ представника</span><span data-lang="ru" class="active">ФИО представителя</span><span data-lang="en">Representative full name</span><span data-lang="es">Nombre del representante</span></label>
+          <input type="text" required></div>
+        <div><label><span data-lang="uk">Посада</span><span data-lang="ru" class="active">Должность</span><span data-lang="en">Position / Title</span><span data-lang="es">Cargo</span></label>
+          <input type="text" placeholder="Директор / CEO"></div>
+        <div class="form-row-2">
+          <div><label>Email</label>
+            <input type="email" placeholder="ceo@company.com" required></div>
+          <div><label><span data-lang="uk">Телефон</span><span data-lang="ru" class="active">Телефон</span><span data-lang="en">Phone</span><span data-lang="es">Teléfono</span></label>
+            <input type="tel" placeholder="+38 (0__) ___-__-__"></div>
+        </div>
+        <div><label><span data-lang="uk">Діє на підставі</span><span data-lang="ru" class="active">Действует на основании</span><span data-lang="en">Acts under</span><span data-lang="es">Actúa en base a</span></label>
+          <select>
+            <option><span data-lang="uk">Статуту</span><span data-lang="ru" class="active">Устава</span><span data-lang="en">Articles of association</span><span data-lang="es">Estatutos</span></option>
+            <option><span data-lang="uk">Довіреності</span><span data-lang="ru" class="active">Доверенности</span><span data-lang="en">Power of attorney</span><span data-lang="es">Poder notarial</span></option>
+            <option><span data-lang="uk">Договору</span><span data-lang="ru" class="active">Договора</span><span data-lang="en">Contract</span><span data-lang="es">Contrato</span></option>
+          </select></div>
+        <button type="submit" class="btn-join">
+          <span data-lang="uk">Подати заявку організації</span>
+          <span data-lang="ru" class="active">Подать заявку организации</span>
+          <span data-lang="en">Apply as organisation</span>
+          <span data-lang="es">Solicitar como organización</span>
+        </button>
+      </form>
+    </div>
+
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;color:#0D0D0D;margin-bottom:24px;">
+        <span data-lang="uk">Як це працює</span>
+        <span data-lang="ru" class="active">Как это работает</span>
+        <span data-lang="en">How it works</span>
+        <span data-lang="es">Cómo funciona</span>
+      </h3>
+      <div class="join-steps">
+        <div class="j-step"><div class="j-num">1</div><div><h5><span data-lang="uk">Подаєш заявку</span><span data-lang="ru" class="active">Подаёшь заявку</span><span data-lang="en">Apply</span><span data-lang="es">Solicita</span></h5><p><span data-lang="uk">Онлайн або поштою. Один акаунт — одна реальна особа або організація.</span><span data-lang="ru" class="active">Онлайн или почтой. Один аккаунт — одно реальное лицо или организация.</span><span data-lang="en">Online or by mail. One account per real person or organisation.</span><span data-lang="es">Online o por correo. Una cuenta por persona u organización.</span></p></div></div>
+        <div class="j-step"><div class="j-num">2</div><div><h5><span data-lang="uk">Верифікація</span><span data-lang="ru" class="active">Верификация</span><span data-lang="en">Verification</span><span data-lang="es">Verificación</span></h5><p><span data-lang="uk">Підтверджуєш особу або реєстраційні дані організації.</span><span data-lang="ru" class="active">Подтверждаешь личность или регистрационные данные организации.</span><span data-lang="en">Confirm your identity or organisation registration data.</span><span data-lang="es">Confirma tu identidad o los datos de registro de la organización.</span></p></div></div>
+        <div class="j-step"><div class="j-num">3</div><div><h5>Pandora ID</h5><p><span data-lang="uk">Отримуєш унікальний ID пайщика і доступ до кооперативної мережі USEN PANDORA.</span><span data-lang="ru" class="active">Получаешь уникальный ID пайщика и доступ к кооперативной сети USEN PANDORA.</span><span data-lang="en">Receive your unique member ID and access to the USEN PANDORA cooperative network.</span><span data-lang="es">Recibes tu ID único de socio y acceso a la red cooperativa USEN PANDORA.</span></p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-info">© 2026 Кооператив Пандора</div>
+  <a href="mailto:usenpandora@gmail.com" class="footer-email">usenpandora@gmail.com</a>
+</footer>
+<script>
+const CABINET_LANGS = ['uk', 'ru', 'en', 'es'];
+function applyCabinetLang(lang) {
+  const safeLang = CABINET_LANGS.includes(lang) ? lang : 'ru';
+  document.documentElement.lang = safeLang;
+  document.querySelectorAll('[data-lang]').forEach((el) => {
+    el.classList.toggle('active', el.getAttribute('data-lang') === safeLang);
+  });
+  document.querySelectorAll('.lang-option').forEach((btn) => {
+    btn.classList.toggle('active', btn.getAttribute('data-lang-opt') === safeLang);
+  });
+  try { localStorage.setItem('pandora-cabinet-lang', safeLang); } catch (e) {}
+}
+function selectLang(lang) {
+  applyCabinetLang(lang);
+  const dropdown = document.getElementById('langDropdown');
+  if (dropdown) dropdown.classList.remove('open');
+  const btn = document.getElementById('langBtn');
+  if (btn) btn.classList.remove('open');
+}
+function toggleLangMenu() {
+  const dropdown = document.getElementById('langDropdown');
+  if (dropdown) {
+    const open = dropdown.classList.toggle('open');
+    const btn = document.getElementById('langBtn');
+    if (btn) btn.classList.toggle('open', open);
+  }
+}
+function toggleUserMenu() {
+  const dd = document.getElementById('userMenuDropdown');
+  const btn = document.getElementById('userMenuBtn');
+  const open = dd.classList.toggle('open');
+  btn.classList.toggle('open', open);
+}
+function closeUserMenu() {
+  document.getElementById('userMenuBtn').classList.remove('open');
+  document.getElementById('userMenuDropdown').classList.remove('open');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  let saved = 'ru';
+  try { saved = localStorage.getItem('pandora-cabinet-lang') || 'ru'; } catch (e) {}
+  applyCabinetLang(saved);
+});
+document.addEventListener('click', (event) => {
+  const switcher = document.getElementById('langSwitcher');
+  const dropdown = document.getElementById('langDropdown');
+  if (switcher && dropdown && !switcher.contains(event.target)) { dropdown.classList.remove('open'); const btn = document.getElementById('langBtn'); if (btn) btn.classList.remove('open'); }
+  const um = document.getElementById('userMenuSwitcher');
+  if (um && !um.contains(event.target)) closeUserMenu();
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    const dropdown = document.getElementById('langDropdown');
+    if (dropdown) dropdown.classList.remove('open');
+    const btn = document.getElementById('langBtn'); if (btn) btn.classList.remove('open');
+  }
+});
+function switchEntity(type){
+  const ind=document.getElementById('formIndividual'), leg=document.getElementById('formLegal');
+  const bi=document.getElementById('btnIndividual'), bl=document.getElementById('btnLegal');
+  if(ind&&leg){ ind.style.display=type==='individual'?'grid':'none'; leg.style.display=type==='legal'?'grid':'none'; }
+  if(bi&&bl){ bi.classList.toggle('active',type==='individual'); bl.classList.toggle('active',type==='legal'); }
+}
+function handleJoin(event){
+  event.preventDefault();
+  const form = event.currentTarget;
+  let status = form.querySelector('.join-status-message');
+  if (!status) {
+    status = document.createElement('div');
+    status.className = 'join-status-message';
+    status.setAttribute('role', 'status');
+    form.appendChild(status);
+  }
+  status.textContent = 'Заявка пока не отправляется автоматически. Скопируйте данные и отправьте их команде Pandora через контакты на сайте.';
+}
+</script>
+</body>
+</html>
+
