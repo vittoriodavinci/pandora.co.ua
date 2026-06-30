@@ -1043,7 +1043,15 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 .signal-note li:first-child { padding-top:16px; }
 .signal-note li:last-child { padding-bottom:16px; }
 .signal-note .p-dot { width:7px; height:7px; }
-.final-actions { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:clamp(28px,4vh,44px); }
+.final-actions { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:clamp(28px,4vh,44px); align-items:flex-start; }
+.share-btn-wrap { position:relative; }
+.share-menu { display:none; position:absolute; top:calc(100% + 8px); right:0; background:#141414; border:1px solid var(--border); backdrop-filter:blur(16px); min-width:220px; z-index:200; border-radius:8px; overflow:hidden; }
+.share-menu.open { display:block; }
+.share-menu button { display:flex; align-items:center; gap:12px; width:100%; padding:12px 16px; border:none; background:none; color:var(--light); font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer; text-align:left; transition:background 0.15s; }
+.share-menu button:hover { background:rgba(200,168,75,0.1); color:var(--accent); }
+.share-menu hr { border:none; border-top:1px solid var(--border); margin:4px 0; }
+.share-menu button svg { flex-shrink:0; opacity:0.6; }
+.share-menu button:hover svg { opacity:1; }
 .final-actions .btn-primary, .final-actions .btn-outline { min-height:44px; padding:13px 26px; display:inline-flex; align-items:center; justify-content:center; border:1px solid rgba(200,168,75,.42); background:var(--accent); color:var(--dark); line-height:1.2; cursor:pointer; text-decoration:none; }
 .final-actions .btn-outline { background:rgba(200,168,75,.08); color:var(--accent); }
 .signal-lead-bottom { text-align:center; margin:clamp(28px,4vh,44px) auto 0; color:var(--accent); font-family:"Cormorant Garamond",serif; font-size:clamp(22px,2.2vw,30px); font-weight:300; }
@@ -1402,7 +1410,21 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
       </ul>
     </div>
   </div>
-  <div class="final-actions"><a href="cabinet.html#cooperative-application" class="btn-primary"><span data-lang="uk">Приєднатися</span><span data-lang="ru" class="active">Присоединиться</span><span data-lang="en">Join Pandora</span><span data-lang="es">Unirse</span></a><a href="#signal" class="btn-outline" onclick="copyPandoraInvite()"><span data-lang="uk">Розповісти другу</span><span data-lang="ru" class="active">Рассказать другу</span><span data-lang="en">Tell a friend</span><span data-lang="es">Contarle a un amigo</span></a></div>
+  <div class="final-actions">
+    <a href="cabinet.html" class="btn-primary"><span data-lang="uk">Приєднатися</span><span data-lang="ru" class="active">Присоединиться</span><span data-lang="en">Join Pandora</span><span data-lang="es">Unirse</span></a>
+    <div class="share-btn-wrap">
+      <a href="#signal" class="btn-outline" onclick="toggleShareMenu(event)"><span data-lang="uk">Розповісти другу</span><span data-lang="ru" class="active">Рассказать другу</span><span data-lang="en">Tell a friend</span><span data-lang="es">Contarle a un amigo</span></a>
+      <div class="share-menu" id="shareMenu">
+        <button onclick="shareTo('telegram')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M21.5 3.5L2.5 10.5l6 3 4-5 5 7 4-12z"/></svg> Telegram</button>
+        <button onclick="shareTo('facebook')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> Facebook</button>
+        <button onclick="shareTo('twitter')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 4l7.7 10.3L4 20h1.7l6.3-6.8L17 20h5.3L14 9l6.8-8h-1.7L13.4 7.6 8 4H4z"/></svg> X / Twitter</button>
+        <button onclick="shareTo('whatsapp')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.5 14.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.4-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.1-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.2-.6.2-.2.3-.4.5-.6.2-.2.2-.4.1-.6-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5H7c-.2 0-.5 0-.7.3-.2.3-1 .9-1 2.3 0 1.4 1 2.7 1.2 2.9.2.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.3-.7.3-1.3.5-1.4.2-.1.4-.1.6 0 .3.1 1.7.8 2 .9.3.2.5.2.6.3.1.1.1.7-.2 1.3z"/></svg> WhatsApp</button>
+        <button onclick="shareTo('viber')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm3.5 13.5c-.3.3-.7.5-1 .3-1.5-.6-3-1.8-4-3-.8-1-1.5-2.2-1.5-3.5 0-.8.3-1.5.8-2 .3-.3.7-.3 1-.1.4.3.7.8 1 1.2.2.3.2.6 0 .8-.2.2-.4.4-.5.7-.1.2 0 .5.3.7.5.5 1.2 1 1.9 1.3.3.1.6.1.8-.2.2-.3.5-.6.8-.8.3-.2.7-.1.9.2.5.7.9 1.3 1.3 2 .2.4.2.8-.3 1.3z"/></svg> Viber</button>
+        <hr>
+        <button onclick="shareTo('copy')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Скопировать ссылку</button>
+      </div>
+    </div>
+  </div>
   <div class="signal-status" id="signalCopyStatus" aria-live="polite"></div>
   <h3 class="signal-lead-bottom"><span data-lang="uk">Pandora зростає від людини до людини!</span><span data-lang="ru" class="active">Pandora растёт от человека к человеку!</span><span data-lang="en">Pandora grows from person to person!</span><span data-lang="es">¡Pandora crece de persona a persona!</span></h3>
 </section>
@@ -3169,28 +3191,41 @@ function handlePandoraContact(event) {
 </script>
 
 <script id="pandora-refactor-behavior-v0-1">
-function copyPandoraInvite() {
-  const text = 'Я слежу за Pandora — кооперативом нового поколения, который создаёт U.S.E.N., универсальную социально-экономическую сеть. Посмотри идею здесь: https://pandora.co.ua';
-  const status = document.getElementById('signalCopyStatus');
-  const ok = () => { if (status) status.textContent = 'Приглашение скопировано'; };
-  const fallback = () => {
-    const box = document.createElement('textarea');
-    box.value = text;
-    box.setAttribute('readonly', '');
-    box.style.position = 'fixed';
-    box.style.left = '-9999px';
-    document.body.appendChild(box);
-    box.select();
-    try { document.execCommand('copy'); ok(); }
-    catch (e) { if (status) status.textContent = 'Скопируйте вручную: ' + text; }
-    document.body.removeChild(box);
-  };
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(text).then(ok).catch(fallback);
-  } else {
-    fallback();
-  }
+const SHARE_TEXT = encodeURIComponent('Pandora — кооператив нового поколения. Универсальная социально-экономическая сеть U.S.E.N. Присоединяйся:');
+const SHARE_URL = encodeURIComponent('https://pandora.co.ua');
+
+function toggleShareMenu(event) {
+  event.preventDefault();
+  const menu = document.getElementById('shareMenu');
+  menu.classList.toggle('open');
 }
+
+function shareTo(network) {
+  const url = 'https://pandora.co.ua';
+  const text = 'Pandora — кооператив нового поколения. Универсальная социально-экономическая сеть U.S.E.N. Присоединяйся: ' + url;
+  let link;
+  switch (network) {
+    case 'telegram': link = 'https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text); break;
+    case 'facebook': link = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url); break;
+    case 'twitter': link = 'https://x.com/intent/post?text=' + encodeURIComponent(text); break;
+    case 'whatsapp': link = 'https://wa.me/?text=' + encodeURIComponent(text); break;
+    case 'viber': link = 'viber://forward?text=' + encodeURIComponent(text); break;
+    case 'copy':
+      navigator.clipboard.writeText(text).then(() => {
+        const status = document.getElementById('signalCopyStatus');
+        if (status) { status.textContent = 'Ссылка скопирована'; setTimeout(() => status.textContent = '', 3000); }
+      });
+      break;
+  }
+  if (link) window.open(link, '_blank', 'noopener');
+  document.getElementById('shareMenu').classList.remove('open');
+}
+
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('shareMenu');
+  const wrap = document.querySelector('.share-btn-wrap');
+  if (menu && wrap && !wrap.contains(e.target)) menu.classList.remove('open');
+});
 </script>
 
 
