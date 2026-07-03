@@ -7,8 +7,10 @@ const ALLOWED_ORIGINS = new Set([
 const DEFAULT_MODEL = "gpt-5.5";
 const MAX_MESSAGE_LENGTH = 4000;
 const MAX_CONVERSATION_ID_LENGTH = 100;
-const RETRY_DELAYS_MS = [1500, 3000];
-const FALLBACK_MESSAGE = "Сейчас AI-помощник временно перегружен. Попробуйте ещё раз через минуту.";
+const OPENAI_RETRY_DELAYS_MS = [1500, 3000];
+const FREEMODEL_RETRY_DELAYS_MS = [1200];
+const FREEMODEL_TIMEOUT_MS = 25000;
+const FALLBACK_MESSAGE = "AI-помощник временно не смог ответить. Повторите запрос через несколько секунд.";
 
 const FREE_MODEL_INSTRUCTIONS = `You are Pandora AI Cooperative Assistant.
 You are a thoughtful cooperative assistant, not a narrow FAQ bot.
@@ -23,6 +25,16 @@ Do not automatically accept, register, verify, or represent anyone as a cooperat
 Do not claim to change the website, delete documents, modify records, or perform actions outside this conversation.
 Do not make legal assertions without verification. Clearly distinguish general information from verified legal conclusions.
 Keep answers clear, practical, respectful, and reasonably concise.
+
+Behavioral style layer:
+- You may answer broad life questions, but do not leave them as neutral generic advice.
+- First give a short, human, practical answer to the user's actual question.
+- Then, when honest and relevant, connect the answer to Pandora as a practical life environment: cooperation, trust, family, mutual help, lower costs, non-political participation, shared infrastructure, and member agency.
+- Do not promise guaranteed income, relationships, family, happiness, health, legal outcomes, or personal success.
+- Do not provide manipulative, harmful, coercive, sexual-pressure, exploitative, illegal, or unsafe instructions.
+- For relationship questions, answer through consent, respect, trust, dignity, and healthy social environments — never through seduction at any cost.
+- For money questions, answer through cooperative saving, participation, shared infrastructure, and realistic contribution — never through guaranteed profit or investment promises.
+- Pandora should appear as a grounded practical context, not as propaganda, magic, ideology, or a solution to every personal problem.
 
 Below is the relevant context from the Pandora knowledge base. Use it to answer the user's question.
 If no context is provided, say that you could not find relevant information and invite the user to rephrase.
@@ -84,7 +96,7 @@ async function searchVectorStore(apiKey, vectorStoreId, query) {
   // Use Responses API with file_search for retrieval (proven to work)
   const url = "https://api.openai.com/v1/responses";
 
-  for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt++) {
+  for (let attempt = 0; attempt <= OPENAI_RETRY_DELAYS_MS.length; attempt++) {
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -105,19 +117,24 @@ async function searchVectorStore(apiKey, vectorStoreId, query) {
     });
 
     if (response.ok) {
-      return response;
+      return { response, status: response.status, attempts: attempt + 1 };
     }
 
     const error = await readOpenAiError(response);
-    const retryDelay = RETRY_DELAYS_MS[attempt];
+    const retryDelay = OPENAI_RETRY_DELAYS_MS[attempt];
     if (retryDelay === undefined || !shouldRetry(response, error)) {
-      return null;
+      return {
+        response: null,
+        status: response.status,
+        attempts: attempt + 1,
+        error_type: "openai_file_search_error"
+      };
     }
 
     await sleep(retryDelay);
   }
 
-  return null;
+  return { response: null, status: 0, attempts: OPENAI_RETRY_DELAYS_MS.length + 1, error_type: "openai_file_search_error" };
 }
 
 function extractChunks(responseData) {
@@ -166,37 +183,69 @@ function extractSourcesFromSearch(responseData) {
 
 // ---- FreeModel generation (stage 2) ----
 
+async function fetchWithTimeout(url, options, timeoutMs) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function requestFreeModel(apiKey, model, messages) {
   const url = "https://api.freemodel.dev/v1/chat/completions";
 
-  for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt++) {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model,
-        messages,
-        max_tokens: 500
-      })
-    });
-
-    if (response.ok) {
-      return response;
+  for (let attempt = 0; attempt <= FREEMODEL_RETRY_DELAYS_MS.length; attempt++) {
+    let response;
+    try {
+      response = await fetchWithTimeout(url, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          max_tokens: 500
+        })
+      }, FREEMODEL_TIMEOUT_MS);
+    } catch (error) {
+      const isTimeout = error && error.name === "AbortError";
+      const retryDelay = FREEMODEL_RETRY_DELAYS_MS[attempt];
+      if (!isTimeout || retryDelay === undefined) {
+        return {
+          response: null,
+          status: 0,
+          attempts: attempt + 1,
+          error_type: isTimeout ? "freemodel_timeout" : "freemodel_fetch_error"
+        };
+      }
+      await sleep(retryDelay);
+      continue;
     }
 
-    const error = await readOpenAiError(response);
-    const retryDelay = RETRY_DELAYS_MS[attempt];
-    if (retryDelay === undefined || !shouldRetry(response, error)) {
-      return null;
+    if (response.ok) {
+      return { response, status: response.status, attempts: attempt + 1 };
+    }
+
+    const retryDelay = FREEMODEL_RETRY_DELAYS_MS[attempt];
+    const shouldRetryFreeModel = response.status === 503;
+    if (!shouldRetryFreeModel || retryDelay === undefined) {
+      return {
+        response: null,
+        status: response.status,
+        attempts: attempt + 1,
+        error_type: response.status === 503 ? "freemodel_503" : "freemodel_error"
+      };
     }
 
     await sleep(retryDelay);
   }
 
-  return null;
+  return { response: null, status: 0, attempts: FREEMODEL_RETRY_DELAYS_MS.length + 1, error_type: "freemodel_error" };
 }
 
 function extractFreeModelAnswer(responseData) {
@@ -208,23 +257,72 @@ function extractFreeModelAnswer(responseData) {
   return choice.message.content.trim();
 }
 
+function getDirectBehavioralAnswer(message) {
+  const normalized = String(message || "").toLowerCase();
+  const looksLikeManipulativeRelationshipRequest = /(соблазн|соблазнить|соблазню|пикап|развести\s+на|продавить\s+девуш|уговорить\s+девуш)/i.test(normalized);
+  if (looksLikeManipulativeRelationshipRequest) {
+    return "Лучше думать не о манипуляции, а о взаимном интересе, уважении и доверии. Если человек не хочет общения или близости — это нужно принять.\n\nЗдоровый путь — нормально познакомиться, быть честным, слушать границы другого человека и не давить. Близкие отношения строятся не на приёмах, а на согласии, достоинстве и взаимности.\n\nВ логике Pandora семья, дружба и близкие связи важны как часть устойчивой жизни: меньше одиночества, меньше хаоса, больше круга людей, совместных проектов и взаимопомощи. Pandora не гарантирует отношения или личное счастье, но стремится создавать среду, где людям проще строить человеческие связи без давления и манипуляций.";
+  }
+
+  const looksLikeFriendshipRequest = /(найти\s+друз|найти\s+друга|друзей|дружб|одинок|одиночеств)/i.test(normalized);
+  if (looksLikeFriendshipRequest) {
+    return "Друзей проще находить не через разовый разговор, а через регулярную среду: общие дела, интересы, помощь, встречи, обучение, спорт, волонтёрство или совместные проекты.\n\nНачните с малого: выберите место или сообщество, куда можно приходить регулярно, общайтесь без давления, предлагайте помощь и смотрите на взаимность. Настоящая дружба строится на уважении, доверии и повторяющемся контакте.\n\nВ этом смысле Pandora важна не как гарантия дружбы, а как практичная среда: кооперация, общие задачи, взаимопомощь, совместные проекты и круг людей, которые не просто потребляют, а участвуют. В такой среде людям легче знакомиться естественно — через дело, доверие и общую пользу.";
+  }
+
+  const looksLikePandoraDefinitionRequest = /(что\s+такое\s+pandora|что\s+такое\s+пандора|расскажи\s+про\s+pandora|расскажи\s+про\s+пандор)/i.test(normalized);
+  if (looksLikePandoraDefinitionRequest) {
+    return "Pandora — это кооперативная социально-экономическая среда, где человек должен быть не только клиентом, а участником, пайщиком и со-владельцем общей инфраструктуры.\n\nПрактический смысл Pandora — кооперация, доверие, взаимопомощь, снижение расходов, участие людей в общих проектах и создание сервисов, которые работают на своих участников. Это не политическая партия, не финансовая пирамида и не обещание гарантированного дохода.\n\nЕсли коротко: Pandora — это попытка строить более устойчивую среду для жизни через кооператив, общую инфраструктуру и участие людей, а не через пассивное ожидание помощи сверху или одиночную борьбу каждого за себя.";
+  }
+
+  return "";
+}
+
 // ---- Request logging ----
 
-function requestLog(role, mode, phase, success, error = false) {
-  const entry = {
-    timestamp: new Date().toISOString(),
-    role,
-    mode,
-    phase,
-    success,
-    status: success ? "success" : "error"
-  };
-
-  if (error) {
-    console.error("PANDORA_AI_REQUEST", entry);
-  } else {
-    console.log("PANDORA_AI_REQUEST", entry);
+function createRequestId() {
+  try {
+    return crypto.randomUUID();
+  } catch {
+    return `req_${Date.now()}_${Math.random().toString(36).slice(2)}`;
   }
+}
+
+function createTelemetry(requestId, startedAt, questionLength) {
+  return {
+    request_id: requestId,
+    status: "started",
+    latency_ms: 0,
+    question_length: questionLength,
+    sources_count: 0,
+    file_search_used: false,
+    freemodel_called: false,
+    error_type: "none"
+  };
+}
+
+function finalizeTelemetry(telemetry, status, errorType = "none") {
+  telemetry.status = status;
+  telemetry.error_type = errorType;
+  telemetry.latency_ms = Date.now() - telemetry.started_at;
+  delete telemetry.started_at;
+  const isError = errorType !== "none" && errorType !== "empty_context";
+  if (isError) {
+    console.error("PANDORA_AI_REQUEST", telemetry);
+  } else {
+    console.log("PANDORA_AI_REQUEST", telemetry);
+  }
+}
+
+function jsonError(answer, status, corsHeaders, telemetry, errorType, conversationId, sources = []) {
+  telemetry.sources_count = sources.length;
+  finalizeTelemetry(telemetry, status, errorType);
+  return jsonResponse({
+    ok: false,
+    answer,
+    conversation_id: conversationId || null,
+    sources,
+    request_id: telemetry.request_id
+  }, status, corsHeaders);
 }
 
 // ---- Request validation ----
@@ -238,18 +336,27 @@ function normalizeRequest(body) {
   const conversationId = typeof body.conversation_id === "string"
     ? body.conversation_id.trim()
     : "";
+  const requestId = typeof body.request_id === "string"
+    ? body.request_id.trim()
+    : "";
 
   if (!message || message.length > MAX_MESSAGE_LENGTH) return null;
   if (mode !== "ai" || role !== "guest") return null;
   if (conversationId.length > MAX_CONVERSATION_ID_LENGTH) return null;
   if (conversationId && !/^resp_[A-Za-z0-9_-]+$/.test(conversationId)) return null;
+  if (requestId && !/^[A-Za-z0-9_-]{8,80}$/.test(requestId)) return null;
 
-  return { message, mode, role, conversationId };
+  return { message, mode, role, conversationId, requestId };
 }
 
 // ---- Main handler ----
 
 export async function onRequest(context) {
+  let requestId = createRequestId();
+  const startedAt = Date.now();
+  let telemetry = createTelemetry(requestId, startedAt, 0);
+  telemetry.started_at = startedAt;
+
   const corsHeaders = getCorsHeaders(context.request);
   if (corsHeaders === null) {
     return new Response("Forbidden", { status: 403 });
@@ -270,15 +377,34 @@ export async function onRequest(context) {
   try {
     body = await context.request.json();
   } catch {
-    return jsonResponse({ ok: false, error: "Invalid request" }, 400, corsHeaders);
+    finalizeTelemetry(telemetry, 400, "json_parse_error");
+    return jsonResponse({ ok: false, error: "Invalid request", request_id: requestId }, 400, corsHeaders);
   }
 
   const requestData = normalizeRequest(body);
   if (!requestData) {
-    return jsonResponse({ ok: false, error: "Invalid request" }, 400, corsHeaders);
+    finalizeTelemetry(telemetry, 400, "invalid_request");
+    return jsonResponse({ ok: false, error: "Invalid request", request_id: requestId }, 400, corsHeaders);
   }
 
-  const { message, mode, role, conversationId } = requestData;
+  const { message, mode, role, conversationId, requestId: incomingRequestId } = requestData;
+  if (incomingRequestId) {
+    requestId = incomingRequestId;
+    telemetry.request_id = incomingRequestId;
+  }
+  telemetry.question_length = message.length;
+
+  const directBehavioralAnswer = getDirectBehavioralAnswer(message);
+  if (directBehavioralAnswer) {
+    finalizeTelemetry(telemetry, 200, "none");
+    return jsonResponse({
+      ok: true,
+      answer: directBehavioralAnswer,
+      conversation_id: conversationId || null,
+      sources: [],
+      request_id: requestId
+    }, 200, corsHeaders);
+  }
 
   // ---- Env check ----
 
@@ -288,71 +414,43 @@ export async function onRequest(context) {
   const freeModelName = context.env.FREEMODEL_MODEL || DEFAULT_MODEL;
 
   if (!openAiApiKey || !vectorStoreId || !freeModelApiKey) {
-    requestLog(role, mode, "env", false, true);
-    return jsonResponse({
-      ok: false,
-      answer: FALLBACK_MESSAGE,
-      conversation_id: conversationId || null,
-      sources: []
-    }, 503, corsHeaders);
+    return jsonError(FALLBACK_MESSAGE, 503, corsHeaders, telemetry, "env_missing", conversationId);
   }
 
   // ---- Stage 1: OpenAI Vector Store search ----
 
-  requestLog(role, mode, "search", true);
+  telemetry.file_search_used = true;
 
-  let searchResponse;
+  let searchResult;
   try {
-    searchResponse = await searchVectorStore(openAiApiKey, vectorStoreId, message);
+    searchResult = await searchVectorStore(openAiApiKey, vectorStoreId, message);
   } catch {
-    requestLog(role, mode, "search", false, true);
-    return jsonResponse({
-      ok: false,
-      answer: FALLBACK_MESSAGE,
-      conversation_id: conversationId || null,
-      sources: []
-    }, 503, corsHeaders);
+    return jsonError(FALLBACK_MESSAGE, 503, corsHeaders, telemetry, "openai_file_search_error", conversationId);
   }
 
-  if (!searchResponse) {
-    requestLog(role, mode, "search", false, true);
-    return jsonResponse({
-      ok: false,
-      answer: FALLBACK_MESSAGE,
-      conversation_id: conversationId || null,
-      sources: []
-    }, 503, corsHeaders);
+  if (!searchResult || !searchResult.response) {
+    return jsonError(FALLBACK_MESSAGE, 503, corsHeaders, telemetry, searchResult && searchResult.error_type || "openai_file_search_error", conversationId);
   }
 
   let searchData;
   try {
-    searchData = await searchResponse.json();
+    searchData = await searchResult.response.json();
   } catch {
-    requestLog(role, mode, "search_parse", false, true);
-    return jsonResponse({
-      ok: false,
-      answer: FALLBACK_MESSAGE,
-      conversation_id: conversationId || null,
-      sources: []
-    }, 503, corsHeaders);
+    return jsonError(FALLBACK_MESSAGE, 503, corsHeaders, telemetry, "json_parse_error", conversationId);
   }
 
   const chunks = extractChunks(searchData);
   const sources = extractSourcesFromSearch(searchData);
 
+  telemetry.sources_count = sources.length;
+
   if (chunks.length === 0) {
-    requestLog(role, mode, "search", false);
-    return jsonResponse({
-      ok: false,
-      answer: "Я не нашёл подходящей информации в базе знаний Pandora по вашему вопросу. Попробуйте переформулировать запрос.",
-      conversation_id: conversationId || null,
-      sources: []
-    }, 200, corsHeaders);
+    return jsonError("Я не нашёл подходящей информации в базе знаний Pandora по вашему вопросу. Попробуйте переформулировать запрос.", 200, corsHeaders, telemetry, "empty_context", conversationId);
   }
 
   // ---- Stage 2: FreeModel generation ----
 
-  requestLog(role, mode, "generate", true);
+  telemetry.freemodel_called = true;
 
   const contextText = chunks.join("\n\n---\n\n");
   const systemMessage = FREE_MODEL_INSTRUCTIONS + "\n" + contextText;
@@ -362,60 +460,37 @@ export async function onRequest(context) {
     { role: "user", content: message }
   ];
 
-  let fmResponse;
+  let fmResult;
   try {
-    fmResponse = await requestFreeModel(freeModelApiKey, freeModelName, freeModelMessages);
+    fmResult = await requestFreeModel(freeModelApiKey, freeModelName, freeModelMessages);
   } catch {
-    requestLog(role, mode, "generate", false, true);
-    return jsonResponse({
-      ok: false,
-      answer: FALLBACK_MESSAGE,
-      conversation_id: conversationId || null,
-      sources
-    }, 503, corsHeaders);
+    return jsonError(FALLBACK_MESSAGE, 503, corsHeaders, telemetry, "freemodel_fetch_error", conversationId, sources);
   }
 
-  if (!fmResponse) {
-    requestLog(role, mode, "generate", false, true);
-    return jsonResponse({
-      ok: false,
-      answer: FALLBACK_MESSAGE,
-      conversation_id: conversationId || null,
-      sources
-    }, 503, corsHeaders);
+  if (!fmResult || !fmResult.response) {
+    return jsonError(FALLBACK_MESSAGE, 503, corsHeaders, telemetry, fmResult && fmResult.error_type || "freemodel_error", conversationId, sources);
   }
 
   let fmData;
   try {
-    fmData = await fmResponse.json();
+    fmData = await fmResult.response.json();
   } catch {
-    requestLog(role, mode, "generate_parse", false, true);
-    return jsonResponse({
-      ok: false,
-      answer: FALLBACK_MESSAGE,
-      conversation_id: conversationId || null,
-      sources
-    }, 503, corsHeaders);
+    return jsonError(FALLBACK_MESSAGE, 503, corsHeaders, telemetry, "json_parse_error", conversationId, sources);
   }
 
   const answer = extractFreeModelAnswer(fmData);
 
   if (!answer) {
-    const errMsg = fmData && fmData.error ? JSON.stringify(fmData.error) : "пустой ответ";
-    requestLog(role, mode, "generate", false, true);
-    return jsonResponse({
-      ok: false,
-      answer: "FreeModel ошибка: " + errMsg,
-      conversation_id: conversationId || null,
-      sources
-    }, 503, corsHeaders);
+    return jsonError(FALLBACK_MESSAGE, 503, corsHeaders, telemetry, "freemodel_empty_answer", conversationId, sources);
   }
 
-  requestLog(role, mode, "complete", true);
+  telemetry.sources_count = sources.length;
+  finalizeTelemetry(telemetry, 200, "none");
   return jsonResponse({
     ok: true,
     answer,
     conversation_id: conversationId || null,
-    sources
+    sources,
+    request_id: requestId
   }, 200, corsHeaders);
 }
