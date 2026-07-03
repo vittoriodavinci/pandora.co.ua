@@ -264,7 +264,7 @@ footer { padding:clamp(20px,4vw,32px) clamp(24px,6vw,80px); border-top:1px solid
 .footer-bar-left { display:flex; align-items:center; flex-wrap:wrap; gap:2px; opacity:0.5; }
 .footer-bar-left a { color:var(--light); text-decoration:none; }
 .footer-bar-left a:hover { opacity:0.7; }
-.footer-rekvizity { cursor:default; }
+.footer-rekvizity { cursor:pointer; }
 .footer-dot { opacity:0.3; margin:0 4px; }
 .footer-bar-right { display:flex; align-items:center; gap:14px; }
 .footer-lang-btn { display:inline-flex; align-items:center; gap:6px; background:none; border:none; color:var(--light); opacity:0.55; font-size:12px; font-family:'DM Sans',sans-serif; cursor:pointer; padding:0; transition:opacity 0.15s; }
@@ -1364,7 +1364,7 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <a href="#contact"><span class="active" data-lang="uk">Контакти</span><span data-lang="ru">Контакты</span><span data-lang="en">Contacts</span><span data-lang="es">Contactos</span></a>
 </div>
 <div class="nav-right">
-<a aria-label="FAQ Pandora" class="nav-icon-btn nav-faq-btn" href="faq.html" title="FAQ Pandora"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path class="faq-bubble" d="M5.1 4.35h13.8a2.95 2.95 0 0 1 2.95 2.95v6.9a2.95 2.95 0 0 1-2.95 2.95h-5.05l-3.45 3.25a.72.72 0 0 1-1.21-.52v-2.73H5.1a2.95 2.95 0 0 1-2.95-2.95V7.3A2.95 2.95 0 0 1 5.1 4.35Z" fill="none" stroke="currentColor" stroke-linejoin="round"></path><path class="faq-mark" d="M10.25 9.65c.28-.92 1.02-1.5 2.06-1.5 1.15 0 1.9.66 1.9 1.62 0 .78-.42 1.24-1.16 1.68-.7.42-.95.78-.95 1.48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path class="faq-mark" d="M12.1 15.25h.01" fill="none" stroke="currentColor" stroke-linecap="round"></path></svg></a>
+<a class="nav-icon-btn nav-faq-btn" href="faq.html" data-i18n-aria="faq.label" data-i18n-title="faq.label" aria-label="Питання" title="Питання"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path class="faq-bubble" d="M5.1 4.35h13.8a2.95 2.95 0 0 1 2.95 2.95v6.9a2.95 2.95 0 0 1-2.95 2.95h-5.05l-3.45 3.25a.72.72 0 0 1-1.21-.52v-2.73H5.1a2.95 2.95 0 0 1-2.95-2.95V7.3A2.95 2.95 0 0 1 5.1 4.35Z" fill="none" stroke="currentColor" stroke-linejoin="round"></path><path class="faq-mark" d="M10.25 9.65c.28-.92 1.02-1.5 2.06-1.5 1.15 0 1.9.66 1.9 1.62 0 .78-.42 1.24-1.16 1.68-.7.42-.95.78-.95 1.48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path class="faq-mark" d="M12.1 15.25h.01" fill="none" stroke="currentColor" stroke-linecap="round"></path></svg></a>
 <!-- Globe icon for language -->
 <div class="nav-lang" id="langSwitcher">
 <button aria-label="Выбор языка" class="nav-icon-btn" id="langBtn" onclick="toggleLangMenu()">
@@ -1821,10 +1821,14 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <script>
 // ── Language data ────────────────────────────────────────────────────────────
 const LANGS = {
-  uk: { flag:'🇺🇦', code:'UA', center:'Пандора', left:'ВЛАСНИК',    subLeft:'Власник',    right:'СПІВРОБІТНИК', subRight:'Співробітник', bottom:'СПОЖИВАЧ',    subBottom:'Споживач'   },
-  ru: { flag:'🇷🇺', code:'RU', center:'Пандора', left:'ВЛАДЕЛЕЦ',   subLeft:'Владелец',   right:'СОТРУДНИК',   subRight:'Сотрудник',   bottom:'ПОТРЕБИТЕЛЬ', subBottom:'Потребитель'},
-  en: { flag:'🇬🇧', code:'EN', center:'Pandora', left:'OWNER',       subLeft:'Owner',      right:'EMPLOYEE',    subRight:'Employee',    bottom:'CONSUMER',    subBottom:'Consumer'  },
-  es: { flag:'🇪🇸', code:'ES', center:'Pandora', left:'PROPIETARIO', subLeft:'Propietario',right:'EMPLEADO',    subRight:'Empleado',    bottom:'CONSUMIDOR',  subBottom:'Consumidor'},
+  uk: {
+    "faq.label": "Питання", flag:'🇺🇦', code:'UA', center:'Пандора', left:'ВЛАСНИК',    subLeft:'Власник',    right:'СПІВРОБІТНИК', subRight:'Співробітник', bottom:'СПОЖИВАЧ',    subBottom:'Споживач'   },
+  ru: {
+    "faq.label": "Вопросы", flag:'🇷🇺', code:'RU', center:'Пандора', left:'ВЛАДЕЛЕЦ',   subLeft:'Владелец',   right:'СОТРУДНИК',   subRight:'Сотрудник',   bottom:'ПОТРЕБИТЕЛЬ', subBottom:'Потребитель'},
+  en: {
+    "faq.label": "FAQ", flag:'🇬🇧', code:'EN', center:'Pandora', left:'OWNER',       subLeft:'Owner',      right:'EMPLOYEE',    subRight:'Employee',    bottom:'CONSUMER',    subBottom:'Consumer'  },
+  es: {
+    "faq.label": "Preguntas", flag:'🇪🇸', code:'ES', center:'Pandora', left:'PROPIETARIO', subLeft:'Propietario',right:'EMPLEADO',    subRight:'Empleado',    bottom:'CONSUMIDOR',  subBottom:'Consumidor'},
 };
 
 function updateVenn(lang) {
@@ -4049,6 +4053,44 @@ Changes:
   #hero .hero-venn svg { width: min(476px, 88vw) !important; }
 }
 </style>
+
+
+<script>
+(function () {
+  const FAQ_LABELS = {
+    uk: 'Питання',
+    ru: 'Вопросы',
+    en: 'FAQ',
+    es: 'Preguntas'
+  };
+
+  function getPandoraLang() {
+    try {
+      return localStorage.getItem('pandora_lang') || localStorage.getItem('pandora-lang') || document.documentElement.lang || 'uk';
+    } catch (e) {
+      return document.documentElement.lang || 'uk';
+    }
+  }
+
+  window.applyPandoraI18nAttributes = function applyPandoraI18nAttributes() {
+    const lang = FAQ_LABELS[getPandoraLang()] ? getPandoraLang() : 'uk';
+    const label = FAQ_LABELS[lang];
+
+    document.querySelectorAll('[data-i18n-aria="faq.label"]').forEach(el => {
+      el.setAttribute('aria-label', label);
+    });
+
+    document.querySelectorAll('[data-i18n-title="faq.label"]').forEach(el => {
+      el.setAttribute('title', label);
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', window.applyPandoraI18nAttributes);
+  document.addEventListener('click', function () {
+    setTimeout(window.applyPandoraI18nAttributes, 0);
+  });
+})();
+</script>
 
 </body>
 </html>
