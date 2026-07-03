@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html>
+<html lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,6 +62,9 @@ nav {
 .nav-right { display:flex; align-items:center; gap:8px; }
 .nav-icon-btn { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; border:none; background:transparent; color:var(--light); opacity:0.7; cursor:pointer; transition:all 0.2s; padding:0; }
 .nav-icon-btn:hover, .nav-icon-btn.open { opacity:1; background:rgba(255,255,255,0.08); }
+.nav-faq-btn svg { display:block; width:26px; height:26px; color:currentColor; overflow:visible; transform:translateY(1px); }
+.nav-faq-btn .faq-bubble { stroke-width:1.5; }
+.nav-faq-btn .faq-mark { stroke-width:1.25; }
 .nav-hamburger { color:var(--accent); opacity:0.85; }
 .nav-hamburger:hover, .nav-hamburger.open { opacity:1; background:rgba(200,168,75,0.12); }
 .nav-user-menu { position:relative; }
@@ -388,12 +391,53 @@ h1.hero-title { grid-column:1 / -1; text-align:center; white-space:nowrap; font-
 .project-intro-grid { position:relative; z-index:1; width:min(1180px,100%); margin:0 auto; display:grid; grid-template-columns:minmax(0,0.95fr) minmax(380px,1.05fr); gap:72px; align-items:center; }
 .project-brand { font-family:"Cormorant Garamond",serif; font-size:clamp(72px,7.5vw,124px); line-height:0.82; font-weight:300; letter-spacing:-0.04em; margin:0 0 30px; }
 .project-brand em { color:var(--accent); font-style:italic; }
-.usen-expansion { display:flex; flex-direction:column; gap:8px; font-size:15px; line-height:1.4; letter-spacing:0.08em; text-transform:uppercase; color:rgba(245,242,237,0.75); }
-.usen-expansion strong { color:var(--light); font-weight:500; }
+.usen-square-mark { display:grid; gap:2px; width:clamp(112px,9.2vw,136px); color:var(--light); font-family:"DM Sans",sans-serif; font-size:clamp(13px,1.12vw,17px); line-height:0.94; font-weight:800; letter-spacing:0; }
+.usen-square-row { display:flex; justify-content:space-between; width:100%; white-space:nowrap; }
+.usen-title-lockup { display:inline-flex; align-items:center; justify-content:center; gap:clamp(14px,1.7vw,22px); color:var(--light); }
+.usen-title-word { font-family:"Cormorant Garamond",serif; font-size:clamp(74px,8.2vw,132px); line-height:0.82; font-weight:300; letter-spacing:0.02em; }
+.usen-title-lockup .usen-square-mark { width:clamp(106px,9.8vw,142px); font-size:clamp(13px,1.18vw,18px); line-height:0.92; transform:translateY(2px); }
+.pandora-room-title { font-family:"Cormorant Garamond",serif; font-size:clamp(74px,8.2vw,132px); line-height:0.82; font-weight:300; letter-spacing:0.02em; text-transform:uppercase; color:var(--light); }
 .project-logo-copy { display:grid; grid-template-columns:170px 1fr; gap:28px; align-items:start; }
 .project-logo-copy img { width:170px; height:auto; display:block; mix-blend-mode:lighten; }
 .accent-copy-block.compact { padding:18px 22px; }
 .accent-copy-block.compact p { font-size:14px; line-height:1.6; }
+/* ABOUT PROJECT CAROUSEL (о проекте / название проекта / логотип проекта) */
+.about-project-landing { min-height:100vh; padding:80px 0 58px; scroll-snap-align:start; background:#080808; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; }
+.about-project-landing::before { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px); background-size:80px 80px; opacity:0.26; }
+.apl-stage { position:relative; width:100%; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:60vh; }
+.apl-panels { position:relative; width:100%; max-width:1180px; margin:0 auto; padding:0 96px; }
+.apl-panel { display:none; width:100%; }
+.apl-panel.apl-active { display:flex; flex-direction:column; animation:aplFade .35s ease; }
+@keyframes aplFade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.apl-inner.project-landing-section, .apl-inner.project-intro-landing { min-height:auto; padding:0; background:transparent; scroll-snap-align:none; }
+.apl-inner.project-landing-section::before, .apl-inner.project-intro-landing::before { display:none; }
+.apl-panel-center { text-align:center; align-items:center; }
+.apl-center-inner { max-width:760px; margin:0 auto; }
+.apl-center-inner .section-label { justify-content:center; }
+.apl-center-title { margin-bottom:24px; }
+.apl-center-copy { min-height:120px; font-size:16px; line-height:1.8; color:rgba(245,242,237,0.6); }
+.apl-arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:5; display:flex; align-items:center; justify-content:center; min-width:42px; min-height:54px; background:var(--accent); border:1px solid rgba(200,168,75,0.8); color:#0D0D0D; opacity:1; cursor:pointer; padding:10px 10px; transition:transform 0.2s, background 0.2s, color 0.2s, opacity 0.2s; font-family:'Barlow Condensed',sans-serif; box-shadow:0 14px 34px rgba(200,168,75,0.16); }
+.apl-arrow:hover:not(:disabled) { transform:translateY(-50%) scale(1.04); background:#E0BE58; color:#0D0D0D; }
+.apl-arrow[hidden], .apl-arrow:disabled { display:none; }
+.apl-arrow-left { left:10px; clip-path:polygon(18% 0,100% 0,100% 100%,18% 100%,0 50%); padding-left:16px; }
+.apl-arrow-right { right:10px; clip-path:polygon(0 0,82% 0,100% 50%,82% 100%,0 100%); padding-right:16px; }
+.apl-arrow-label { display:flex; writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; text-align:center; line-height:1.1; }
+.apl-arrow-icon-only .apl-arrow-label { display:none; }
+.apl-dots { position:fixed; left:50%; bottom:82px; transform:translateX(-50%); z-index:90; display:flex; gap:10px; margin-top:0; opacity:0; pointer-events:none; transition:opacity 0.2s; }
+.about-project-landing.apl-dots-visible .apl-dots { opacity:1; pointer-events:auto; }
+.apl-dot { width:8px; height:8px; border-radius:50%; border:1px solid var(--border); background:transparent; padding:0; cursor:pointer; transition:all 0.2s; }
+.apl-dot:hover { border-color:var(--accent); }
+.apl-dot-active { background:var(--accent); border-color:var(--accent); }
+.about-project-landing .fixed-next { display:inline-flex; }
+@media (max-width:900px) {
+  .apl-panels { padding:0 56px; }
+  .apl-arrow { min-width:44px; min-height:44px; padding:10px 12px; }
+}
+@media (max-width:640px) {
+  .apl-panels { padding:0 40px; }
+  .apl-center-copy { font-size:14.5px; }
+}
+
 .project-landing-section { display:grid; grid-template-columns:minmax(240px,0.7fr) minmax(0,1.4fr); gap:62px; align-items:center; }
 .project-landing-section > div { position:relative; z-index:1; }
 .project-landing-section .ms-num { display:none !important; }
@@ -705,6 +749,11 @@ h1.hero-title { grid-column:1 / -1; text-align:center; white-space:nowrap; font-
   font-weight:300;
   margin:0;
 }
+.project-landing-section .pandora-room-title {
+  font-size:clamp(59px,6.6vw,106px);
+  line-height:0.82;
+  letter-spacing:0.02em;
+}
 .project-landing-section .ms-divider {
   width:64px;
   height:1px;
@@ -910,25 +959,80 @@ h1.hero-title { grid-column:1 / -1; text-align:center; white-space:nowrap; font-
 /* FINAL STRUCTURE POLISH 2026-06-24 */
 #hero .hero-story { max-width: 620px; }
 #hero .hero-story p { font-size: clamp(14px, 1.05vw, 16.5px); line-height: 1.72; }
+
+#about .accent-copy-block p,
+#signal .accent-copy-block p,
+#contact .contact-copy p,
+.apl-panel-left .chapter-main-copy p,
+.project-intro-landing .project-logo-text.accent-copy-block.compact p {
+  font-size: clamp(14px, 1.05vw, 16.5px);
+  line-height: 1.72;
+  color: rgba(245,242,237,0.72);
+  margin: 0 0 12px;
+}
+
+#about .accent-copy-block p:last-child,
+#signal .accent-copy-block p:last-child,
+#contact .contact-copy p:last-child,
+.apl-panel-left .chapter-main-copy p:last-child,
+.project-intro-landing .project-logo-text.accent-copy-block.compact p:last-child {
+  margin-bottom: 0;
+}
+
+#signal .accent-copy-block p {
+  margin-bottom: 20px;
+}
+
+#signal .signal-body {
+  align-items: stretch;
+}
+
+#signal .signal-body .accent-copy-block,
+#signal .signal-note {
+  height: 100%;
+}
+
+#signal .signal-note ul {
+  flex: 1;
+  justify-content: space-between;
+}
+
+.apl-panel-left .project-landing-section .ms-body {
+  align-items: start;
+}
+
+.apl-panel-left .chapter-main-copy {
+  min-height: 252px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.apl-panel-left .project-landing-section .ms-list {
+  align-self: start;
+  gap: 12px;
+  justify-content: flex-start;
+}
+
+.apl-panel-left .project-landing-section .ms-list-item {
+  min-height: 54px;
+}
 #hero .hero-credo { width:min(1180px, calc(100vw - 110px)); justify-self:center; white-space:nowrap; color:var(--accent) !important; font-size:clamp(19px,1.58vw,28px); }
 #about .section-label { display:none !important; }
 #about .about-reframe-copy { display:flex; flex-direction:column; align-items:center; }
 #about .about-reframe-title { text-align:center; width:100%; max-width:none; margin:0 auto 20px; font-size:clamp(28px,2.8vw,50px); line-height:1.3; }
 #about .accent-copy-block { width:100%; }
 .project-intro-landing .project-intro-frame { position:relative; z-index:1; width:min(1180px,100%); margin:0 auto; display:grid; grid-template-rows:auto minmax(0,1fr); gap:42px; }
-.project-intro-title { text-align:center; }
-.project-intro-title .project-brand { margin:0 0 16px; font-size:clamp(52px,5.2vw,82px); line-height:0.95; letter-spacing:0.02em; }
-.project-intro-title .usen-expansion { align-items:center; text-align:center; gap:6px; font-size:clamp(13px,1.04vw,16px); }
 .project-intro-content { display:grid; grid-template-columns:minmax(360px,0.95fr) minmax(300px,0.8fr); gap:76px; align-items:center; }
 .project-logo-text { max-width:520px; justify-self:end; }
 .project-logo-visual { justify-self:start; display:flex; align-items:center; justify-content:center; }
 .project-logo-visual img { width:clamp(195px,21vw,315px); height:auto; display:block; mix-blend-mode:lighten; }
 .project-intro-landing .project-logo-text { max-width:560px; }
 .project-intro-landing .project-logo-text.accent-copy-block.compact { padding:22px 26px; }
-.project-intro-landing .project-logo-text.accent-copy-block.compact p { font-size:clamp(15.5px,1.25vw,18px); line-height:1.72; margin:0 0 18px; }
+.project-intro-landing .project-logo-text.accent-copy-block.compact p { font-size:clamp(14px,1.05vw,16.5px); line-height:1.72; margin:0 0 12px; color:rgba(245,242,237,0.72); }
 .project-intro-landing .project-logo-text.accent-copy-block.compact p:last-child { margin-bottom:0; }
 @media (min-width: 901px) {
-  .project-intro-landing .project-intro-title { transform: translateY(-10%); }
   .project-intro-landing .project-intro-content { transform: translateY(10%); }
   .project-intro-landing .project-logo-visual { transform: translateX(50%); }
 }
@@ -958,6 +1062,7 @@ h1.hero-title { grid-column:1 / -1; text-align:center; white-space:nowrap; font-
 .contact-grid { display:grid; grid-template-columns:minmax(340px,0.9fr) minmax(360px,1fr); gap:70px; align-items:center; }
 .contact-socials { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
 .contact-socials a { color:var(--accent); border:1px solid rgba(200,168,75,0.24); padding:10px 14px; text-decoration:none; font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
+.form-honeypot { position:absolute !important; left:-9999px !important; width:1px !important; height:1px !important; overflow:hidden !important; opacity:0 !important; pointer-events:none !important; }
 .contact-form { border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.025); padding:26px; display:grid; gap:16px; }
 .contact-form label { display:grid; gap:8px; color:rgba(245,242,237,0.78); font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
 .contact-form input, .contact-form textarea { width:100%; box-sizing:border-box; background:#0d0d0d; border:1px solid rgba(255,255,255,0.12); color:var(--light); padding:13px 14px; font:14px/1.45 'DM Sans',sans-serif; outline:none; }
@@ -1082,20 +1187,21 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
     </div>
     <div class="nav-logo-text">
       <span class="nav-logo-title">
-        <span data-lang="uk">Кооператив Пандора</span>
-        <span data-lang="ru" class="active">Кооператив Пандора</span>
+        <span data-lang="uk" class="active">Кооператив Пандора</span>
+        <span data-lang="ru">Кооператив Пандора</span>
         <span data-lang="en">Pandora Cooperative</span>
         <span data-lang="es">Cooperativa Pandora</span>
       </span>
     </div>
   </a>
   <div class="nav-links">
-    <a href="#about"><span data-lang="uk">Про нас</span><span data-lang="ru" class="active">О нас</span><span data-lang="en">About</span><span data-lang="es">Nosotros</span></a>
-    <a href="#project-intro"><span data-lang="uk">Про проєкт</span><span data-lang="ru" class="active">О проекте</span><span data-lang="en">About the project</span><span data-lang="es">Sobre el proyecto</span></a>
-    <a href="#signal"><span data-lang="uk">Сигнал</span><span data-lang="ru" class="active">Сигнал</span><span data-lang="en">Signal</span><span data-lang="es">Señal</span></a>
-    <a href="#contact"><span data-lang="uk">Контакти</span><span data-lang="ru" class="active">Контакты</span><span data-lang="en">Contacts</span><span data-lang="es">Contactos</span></a>
+    <a href="#about"><span data-lang="uk" class="active">Про нас</span><span data-lang="ru">О нас</span><span data-lang="en">About</span><span data-lang="es">Nosotros</span></a>
+    <a href="#project-intro"><span data-lang="uk" class="active">Про проєкт</span><span data-lang="ru">О проекте</span><span data-lang="en">About the project</span><span data-lang="es">Sobre el proyecto</span></a>
+    <a href="#signal"><span data-lang="uk" class="active">Участь</span><span data-lang="ru">Участие</span><span data-lang="en">Participation</span><span data-lang="es">Participación</span></a>
+    <a href="#contact"><span data-lang="uk" class="active">Контакти</span><span data-lang="ru">Контакты</span><span data-lang="en">Contacts</span><span data-lang="es">Contactos</span></a>
   </div>
   <div class="nav-right">
+    <a href="faq.html" class="nav-icon-btn nav-faq-btn" aria-label="FAQ Pandora" title="FAQ Pandora"><svg viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path class="faq-bubble" d="M5.1 4.35h13.8a2.95 2.95 0 0 1 2.95 2.95v6.9a2.95 2.95 0 0 1-2.95 2.95h-5.05l-3.45 3.25a.72.72 0 0 1-1.21-.52v-2.73H5.1a2.95 2.95 0 0 1-2.95-2.95V7.3A2.95 2.95 0 0 1 5.1 4.35Z" fill="none" stroke="currentColor" stroke-linejoin="round"/><path class="faq-mark" d="M10.25 9.65c.28-.92 1.02-1.5 2.06-1.5 1.15 0 1.9.66 1.9 1.62 0 .78-.42 1.24-1.16 1.68-.7.42-.95.78-.95 1.48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path class="faq-mark" d="M12.1 15.25h.01" fill="none" stroke="currentColor" stroke-linecap="round"/></svg></a>
     <!-- Globe icon for language -->
     <div class="nav-lang" id="langSwitcher">
       <button class="nav-icon-btn" id="langBtn" onclick="toggleLangMenu()" aria-label="Выбор языка">
@@ -1122,9 +1228,9 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
       </button>
       <div class="nav-user-dropdown" id="userMenuDropdown">
-        <a href="cabinet.html" class="user-menu-link"><span data-lang="uk">Кабінет</span><span data-lang="ru" class="active">Кабинет</span><span data-lang="en">Cabinet</span><span data-lang="es">Gabinete</span></a>
-        <button class="user-menu-link" onclick="alert('Вход — в разработке')"><span data-lang="uk">Увійти</span><span data-lang="ru" class="active">Войти</span><span data-lang="en">Log in</span><span data-lang="es">Iniciar sesión</span></button>
-        <button class="user-menu-link user-menu-cta" onclick="alert('Регистрация — в разработке')"><span data-lang="uk">Зареєструватися</span><span data-lang="ru" class="active">Зарегистрироваться</span><span data-lang="en">Sign up</span><span data-lang="es">Registrarse</span></button>
+        <a href="cabinet.html" class="user-menu-link" data-event="open_cabinet"><span data-lang="uk" class="active">Кабінет</span><span data-lang="ru">Кабинет</span><span data-lang="en">Cabinet</span><span data-lang="es">Gabinete</span></a>
+        <a href="cabinet.html" class="user-menu-link" data-event="open_cabinet_login"><span data-lang="uk" class="active">Увійти</span><span data-lang="ru">Войти</span><span data-lang="en">Log in</span><span data-lang="es">Iniciar sesión</span></a>
+        <a href="cabinet.html" class="user-menu-link user-menu-cta" data-event="open_cabinet_signup"><span data-lang="uk" class="active">Зареєструватися</span><span data-lang="ru">Зарегистрироваться</span><span data-lang="en">Sign up</span><span data-lang="es">Registrarse</span></a>
       </div>
     </div>
   </div>
@@ -1135,17 +1241,17 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
   <div class="hero-bg"></div>
   <div class="hero-inner">
     <h1 class="hero-title">
-      <span data-lang="uk">Економіка для <em>людей</em></span>
-      <span data-lang="ru" class="active">Экономика для <em>людей</em></span>
+      <span data-lang="uk" class="active">Економіка для <em>людей</em></span>
+      <span data-lang="ru">Экономика для <em>людей</em></span>
       <span data-lang="en">Economy for <em>people</em></span>
       <span data-lang="es">Economía para <em>personas</em></span>
     </h1>
     <div class="hero-left">
       <div class="hero-story">
-        <p><span data-lang="uk">Наш світ звик жити в логіці <strong>хрематистики</strong> — нескінченного накопичення грошей заради грошей, де людина стає лише ресурсом для отримання прибутку.</span><span data-lang="ru" class="active">Наш мир привык жить в логике <strong>хрематистики</strong> — бесконечного накопления денег ради денег, где человек становится лишь ресурсом для извлечения прибыли.</span><span data-lang="en">Our world is used to the logic of <strong>chrematistics</strong> — the endless accumulation of money for money’s sake, where a person becomes only a resource for extracting profit.</span><span data-lang="es">Nuestro mundo se acostumbró a la lógica de la <strong>crematística</strong>: la acumulación infinita de dinero por el dinero, donde la persona se convierte en un recurso para extraer beneficio.</span></p>
-        <p><span data-lang="uk">Ми пропонуємо повернутися до первинного сенсу економіки — розумного ведення господарства, турботи про людей, ефективного розподілу ресурсів і творення.</span><span data-lang="ru" class="active">Мы предлагаем вернуться к изначальному смыслу экономики — разумному ведению хозяйства, заботе о людях, эффективному распределению ресурсов и созиданию.</span><span data-lang="en">We propose returning to the original meaning of economy: wise household management, care for people, efficient distribution of resources and creation.</span><span data-lang="es">Proponemos volver al sentido original de la economía: gestión razonable, cuidado de las personas, distribución eficiente de recursos y creación.</span></p>
-        <p><span data-lang="uk">Наш логотип — це символ відмови від ринкової моделі, де людина змушена приймати лише одну роль: або власника, або клієнта, або найманого працівника.</span><span data-lang="ru" class="active">Наш логотип — это символ отказа от рыночной модели, где человек вынужден принимать только одну роль: или владельца, или клиента, или наёмного работника.</span><span data-lang="en">Our logo symbolises a refusal of the market model where a person is forced to accept only one role: either owner, customer, or employee.</span><span data-lang="es">Nuestro logotipo simboliza el rechazo del modelo de mercado donde una persona se ve obligada a aceptar un solo papel: propietario, cliente o trabajador.</span></p>
-        <p><span data-lang="uk">Як у проєктному трикутнику «швидкість — ціна — якість», де стійкий результат можливий лише при балансі всіх сторін, кооперативна модель прагне поєднати інтереси клієнта, працівника і співвласника в одній спільній системі.</span><span data-lang="ru" class="active">Как в проектном треугольнике “скорость — цена — качество”, где устойчивый результат возможен только при балансе всех сторон, кооперативная модель стремится соединить интересы клиента, работника и совладельца в одной общей системе.</span><span data-lang="en">As in the project triangle of speed, price and quality, where a sustainable result requires balance, the cooperative model seeks to unite the interests of customer, worker and co-owner in one shared system.</span><span data-lang="es">Como en el triángulo de proyecto “velocidad — precio — calidad”, donde el resultado sostenible exige equilibrio, el modelo cooperativo busca unir al cliente, trabajador y copropietario en un sistema común.</span></p>
+        <p><span data-lang="uk" class="active">У сучасному світі популярна логіка <strong>хрематистики</strong> — нескінченного накопичення грошей заради грошей, де людина стає лише ресурсом для отримання прибутку.</span><span data-lang="ru">В современном мире популярна логика <strong>хрематистики</strong> — бесконечного накопления денег ради денег, где человек становится лишь ресурсом для извлечения прибыли.</span><span data-lang="en">In the modern world, the logic of <strong>chrematistics</strong> is popular: the endless accumulation of money for money’s sake, where a person becomes only a resource for extracting profit.</span><span data-lang="es">En el mundo moderno predomina la lógica de la <strong>crematística</strong>: la acumulación infinita de dinero por el dinero, donde la persona se convierte en un recurso para extraer beneficio.</span></p>
+        <p><span data-lang="uk" class="active">Ми пропонуємо повернутися до первинного сенсу економіки — розумного ведення господарства, ефективного розподілу ресурсів і творення заради добробуту та процвітання індивіда і суспільства.</span><span data-lang="ru">Мы предлагаем вернуться к изначальному смыслу экономики — разумному ведению хозяйства, эффективному распределению ресурсов и созиданию во имя благополучия и процветания индивида и общества.</span><span data-lang="en">We propose returning to the original meaning of economy: wise household management, efficient distribution of resources and creation for the wellbeing and prosperity of the individual and society.</span><span data-lang="es">Proponemos volver al sentido original de la economía: gestión razonable, distribución eficiente de recursos y creación para el bienestar y la prosperidad del individuo y la sociedad.</span></p>
+        <p><span data-lang="uk" class="active">Наш логотип — це символ відмови від ринкової моделі, де людина часто змушена приймати лише одну роль: або власника, або клієнта, або найманого працівника.</span><span data-lang="ru">Наш логотип — это символ отказа от рыночной модели, где человек часто вынужден принимать только одну роль: или владельца, или клиента, или наёмного работника.</span><span data-lang="en">Our logo symbolises a refusal of the market model where a person is often forced to accept only one role: either owner, customer, or employee.</span><span data-lang="es">Nuestro logotipo simboliza el rechazo del modelo de mercado donde una persona a menudo se ve obligada a aceptar un solo papel: propietario, cliente o trabajador.</span></p>
+        <p><span data-lang="uk" class="active">Як у проєктному трикутнику «швидкість — ціна — якість», де стійкий результат можливий лише при балансі всіх сторін, кооперативна модель прагне поєднати інтереси клієнта, співробітника і співвласника в одній спільній системі, усунувши тим самим конфлікт інтересів між ними.</span><span data-lang="ru">Как в проектном треугольнике “скорость — цена — качество”, где устойчивый результат возможен только при балансе всех сторон, кооперативная модель стремится соединить интересы клиента, сотрудника и совладельца в одной общей системе, исключив тем самым конфликт интересов между ними.</span><span data-lang="en">As in the project triangle of speed, price and quality, where a sustainable result requires balance between all sides, the cooperative model seeks to unite the interests of customer, contributor and co-owner in one shared system, thereby removing the conflict of interest between them.</span><span data-lang="es">Como en el triángulo de proyecto “velocidad — precio — calidad”, donde el resultado sostenible solo es posible con equilibrio entre todas las partes, el modelo cooperativo busca unir los intereses del cliente, colaborador y copropietario en un sistema común, eliminando así el conflicto de intereses entre ellos.</span></p>
       </div>
     </div>
     <div class="hero-venn">
@@ -1162,291 +1268,230 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
         <text id="venn-label-bottom" x="200" y="310" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" fill="#4a7fc1" opacity="0.95" font-weight="700" letter-spacing="0.5">СПОЖИВАЧ</text>
         <text x="200" y="207" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="24" fill="#C8A84B" font-weight="600" opacity="0.95" filter="url(#glow)">Pandora</text>
       </svg>
-      <div class="venn-caption"><span data-lang="uk">Три ролі · Один пайщик</span><span data-lang="ru" class="active">Три роли · Один пайщик</span><span data-lang="en">Three roles · One member</span><span data-lang="es">Tres roles · Un socio</span></div>
+      <div class="venn-caption"><span data-lang="uk" class="active">Три ролі · Один пайщик</span><span data-lang="ru">Три роли · Один пайщик</span><span data-lang="en">Three roles · One member</span><span data-lang="es">Tres roles · Un socio</span></div>
     </div>
 
 
-    <div class="hero-credo"><span data-lang="uk">«Не інвестуй час і гроші в систему, яку не контролюєш» — кредо засновника</span><span data-lang="ru" class="active">«Не инвестируй время и деньги в систему, которую не контролируешь» — кредо основателя</span><span data-lang="en">“Don’t invest time and money in a system you don’t control” — founder’s credo</span><span data-lang="es">“No inviertas tiempo ni dinero en un sistema que no controlas” — credo del fundador</span></div>
+    <div class="hero-credo"><span data-lang="uk" class="active">«Не інвестуй час і гроші в систему, яку не контролюєш» — кредо засновника</span><span data-lang="ru">«Не инвестируй время и деньги в систему, которую не контролируешь» — кредо основателя</span><span data-lang="en">“Don’t invest time and money in a system you don’t control” — founder’s credo</span><span data-lang="es">“No inviertas tiempo ni dinero en un sistema que no controlas” — credo del fundador</span></div>
   </div>
 </section>
 <section id="about" class="about-landing">
   <div class="about-grid about-reframe-grid">
     <div class="about-reframe-copy">
-      <div class="section-label"><span data-lang="uk">Про кооператив</span><span data-lang="ru" class="active">О кооперативе</span><span data-lang="en">About</span><span data-lang="es">Nosotros</span></div>
-      <h2 class="section-title about-reframe-title"><span data-lang="uk">Пандора — кооператив нового покоління<br>із застосуванням сучасних цифрових технологій.</span><span data-lang="ru" class="active">Пандора — кооператив нового поколения<br>с применением современных цифровых технологий.</span><span data-lang="en">Pandora is a next-generation cooperative<br>using modern digital technologies.</span><span data-lang="es">Pandora es una cooperativa de nueva generación<br>con tecnologías digitales modernas.</span></h2>
+      <div class="section-label"><span data-lang="uk" class="active">Про кооператив</span><span data-lang="ru">О кооперативе</span><span data-lang="en">About</span><span data-lang="es">Nosotros</span></div>
+      <h2 class="section-title about-reframe-title"><span data-lang="uk" class="active">Пандора — кооператив нового покоління<br>із застосуванням сучасних цифрових технологій.</span><span data-lang="ru">Пандора — кооператив нового поколения<br>с применением современных цифровых технологий.</span><span data-lang="en">Pandora is a next-generation cooperative<br>using modern digital technologies.</span><span data-lang="es">Pandora es una cooperativa de nueva generación<br>con tecnologías digitales modernas.</span></h2>
       <div class="accent-copy-block">
-        <h3><span data-lang="uk">Чому саме кооператив?</span><span data-lang="ru" class="active">Почему именно кооператив?</span><span data-lang="en">Why a cooperative?</span><span data-lang="es">¿Por qué una cooperativa?</span></h3>
-        <p><span data-lang="uk">Тому що кооператив — одна з небагатьох законних форм, де головною метою є не прибуток, а задоволення потреб учасників і підвищення якості їхнього життя.</span><span data-lang="ru" class="active">Потому что кооператив — одна из немногих законных форм, где главной целью является не прибыль, а удовлетворение потребностей участников и повышение качества их жизни.</span><span data-lang="en">Because a cooperative is one of the few lawful forms where the main goal is not profit, but meeting participants’ needs and improving their quality of life.</span><span data-lang="es">Porque una cooperativa es una de las pocas formas legales donde el objetivo principal no es el beneficio, sino satisfacer las necesidades de los participantes y mejorar su calidad de vida.</span></p>
-        <p><span data-lang="uk">Організація базується на міцному фундаменті законів про кооперацію, які дають нам легальне право об'єднуватися, створювати внутрішню економіку, обмінюватися благами і будувати власну інфраструктуру без посередників. Статут кооперативу гарантує прозорість внесків, чесний розподіл користі і право кожного учасника на голос. Історично кооперація допомагала людям в епохи криз, дозволяючи їм спільно будувати заводи, житло, магазини та інші необхідні господарські форми.</span><span data-lang="ru" class="active">Организация базируется на прочном фундаменте законов о кооперации, которые дают нам легальное право объединяться, создавать внутреннюю экономику, обмениваться благами и строить собственную инфраструктуру без посредников. Устав кооператива гарантирует прозрачность взносов, честное распределение пользы и право каждого участника на голос. Исторически кооперация помогала людям в эпохи кризисов, позволяя им вскладчину строить заводы, жилье, магазины и другие необходимые хозяйственные формы.</span><span data-lang="en">The organisation is based on cooperative law, which gives us the legal right to unite, create an internal economy, exchange value and build our own infrastructure without intermediaries. The cooperative charter guarantees transparent contributions, fair distribution of benefit and each participant’s right to vote. Historically, cooperation helped people in times of crisis to jointly build factories, housing, stores and other necessary economic forms.</span><span data-lang="es">La organización se apoya en las leyes cooperativas, que dan derecho legal a unirse, crear una economía interna, intercambiar valor y construir infraestructura propia sin intermediarios. El estatuto cooperativo garantiza transparencia de aportes, distribución justa del beneficio y derecho de voto para cada participante. Históricamente, la cooperación ayudó a las personas en épocas de crisis a construir juntas fábricas, viviendas, tiendas y otras formas económicas necesarias.</span></p>
+        <h3><span data-lang="uk" class="active">Чому саме кооператив?</span><span data-lang="ru">Почему именно кооператив?</span><span data-lang="en">Why a cooperative?</span><span data-lang="es">¿Por qué una cooperativa?</span></h3>
+        <p><span data-lang="uk" class="active">Тому що кооператив — одна з небагатьох законних форм, де головною метою є не прибуток, а задоволення потреб учасників і підвищення якості їхнього життя.</span><span data-lang="ru">Потому что кооператив — одна из немногих законных форм, где главной целью является не прибыль, а удовлетворение потребностей участников и повышение качества их жизни.</span><span data-lang="en">Because a cooperative is one of the few lawful forms where the main goal is not profit, but meeting participants’ needs and improving their quality of life.</span><span data-lang="es">Porque una cooperativa es una de las pocas formas legales donde el objetivo principal no es el beneficio, sino satisfacer las necesidades de los participantes y mejorar su calidad de vida.</span></p>
+        <p><span data-lang="uk" class="active">Організація базується на міцному фундаменті законів про кооперацію, які дають нам легальне право об'єднуватися, створювати внутрішню економіку, обмінюватися благами і будувати власну інфраструктуру без посередників. Статут кооперативу гарантує прозорість внесків, чесний розподіл користі і право кожного учасника на голос. Історично кооперація допомагала людям в епохи криз, дозволяючи їм спільно будувати заводи, житло, магазини та інші необхідні господарські форми.</span><span data-lang="ru">Организация базируется на прочном фундаменте законов о кооперации, которые дают нам легальное право объединяться, создавать внутреннюю экономику, обмениваться благами и строить собственную инфраструктуру без посредников. Устав кооператива гарантирует прозрачность взносов, честное распределение пользы и право каждого участника на голос. Исторически кооперация помогала людям в эпохи кризисов, позволяя им вскладчину строить заводы, жилье, магазины и другие необходимые хозяйственные формы.</span><span data-lang="en">The organisation is based on cooperative law, which gives us the legal right to unite, create an internal economy, exchange value and build our own infrastructure without intermediaries. The cooperative charter guarantees transparent contributions, fair distribution of benefit and each participant’s right to vote. Historically, cooperation helped people in times of crisis to jointly build factories, housing, stores and other necessary economic forms.</span><span data-lang="es">La organización se apoya en las leyes cooperativas, que dan derecho legal a unirse, crear una economía interna, intercambiar valor y construir infraestructura propia sin intermediarios. El estatuto cooperativo garantiza transparencia de aportes, distribución justa del beneficio y derecho de voto para cada participante. Históricamente, la cooperación ayudó a las personas en épocas de crisis a construir juntas fábricas, viviendas, tiendas y otras formas económicas necesarias.</span></p>
       </div>
     </div>
     <div class="principles">
       <div class="principle-item">
         <div class="p-dot" style="background:var(--red)"></div>
         <div>
-          <h4><span data-lang="uk">Ти — Власник</span><span data-lang="ru" class="active">Ты — Хозяин</span><span data-lang="en">You're an Owner</span><span data-lang="es">Eres Propietario</span></h4>
-          <p><span data-lang="uk">Пай = твоя частка. Один пайщик — один голос. Ніяких акціонерів, яким потрібен тільки прибуток.</span><span data-lang="ru" class="active">Пай = твоя доля. Один пайщик — один голос. Никаких акционеров которым нужна только прибыль.</span><span data-lang="en">Share = your stake. One member, one vote. No shareholders who only want profit.</span><span data-lang="es">Aportación = tu participación. Un socio, un voto. Sin accionistas que sólo quieren ganancias.</span></p>
+          <h4><span data-lang="uk" class="active">Ти — Власник</span><span data-lang="ru">Ты — Хозяин</span><span data-lang="en">You're an Owner</span><span data-lang="es">Eres Propietario</span></h4>
+          <p><span data-lang="uk" class="active">Пай = твоя частка. Один пайщик — один голос. Ніяких акціонерів, яким потрібен тільки прибуток.</span><span data-lang="ru">Пай = твоя доля. Один пайщик — один голос. Никаких акционеров которым нужна только прибыль.</span><span data-lang="en">Share = your stake. One member, one vote. No shareholders who only want profit.</span><span data-lang="es">Aportación = tu participación. Un socio, un voto. Sin accionistas que sólo quieren ganancias.</span></p>
         </div>
       </div>
       <div class="principle-item">
         <div class="p-dot" style="background:var(--green)"></div>
         <div>
-          <h4><span data-lang="uk">Ти — Співробітник</span><span data-lang="ru" class="active">Ты — Сотрудник</span><span data-lang="en">You're a Contributor</span><span data-lang="es">Eres Colaborador</span></h4>
-          <p><span data-lang="uk">З кожного по таланту, навичці, ідеї. ІІ-агенти беруть рутину. Люди займаються тим, що їм у радість.</span><span data-lang="ru" class="active">С каждого — по таланту, навыку и идее. Труд в собственной компании становится не работой, а любимым делом с достойной оплатой. ИИ-агенты берут на себя рутину — люди занимаются тем, что приносит радость.</span><span data-lang="en">Each contributes talent, skills, ideas. AI agents handle routine. People do what brings them joy.</span><span data-lang="es">Cada uno aporta talento, habilidades, ideas. Los agentes IA gestionan la rutina. Las personas hacen lo que les alegra.</span></p>
+          <h4><span data-lang="uk" class="active">Ти — Співробітник</span><span data-lang="ru">Ты — Сотрудник</span><span data-lang="en">You're a Contributor</span><span data-lang="es">Eres Colaborador</span></h4>
+          <p><span data-lang="uk" class="active">З кожного по таланту, навичці, ідеї. ІІ-агенти беруть рутину. Люди займаються тим, що їм у радість.</span><span data-lang="ru">С каждого — по таланту, навыку и идее. Труд в собственной компании становится не работой, а любимым делом с достойной оплатой. ИИ-агенты берут на себя рутину — люди занимаются тем, что приносит радость.</span><span data-lang="en">Each contributes talent, skills, ideas. AI agents handle routine. People do what brings them joy.</span><span data-lang="es">Cada uno aporta talento, habilidades, ideas. Los agentes IA gestionan la rutina. Las personas hacen lo que les alegra.</span></p>
         </div>
       </div>
       <div class="principle-item">
         <div class="p-dot" style="background:var(--blue)"></div>
         <div>
-          <h4><span data-lang="uk">Ти — Споживач</span><span data-lang="ru" class="active">Ты — Потребитель</span><span data-lang="en">You're a Consumer</span><span data-lang="es">Eres Consumidor</span></h4>
-          <p><span data-lang="uk">Товари та послуги — за собівартістю. Різниця з ринковою ціною не фінансує чуже благополуччя — стає інвестицією в наше щасливе майбутнє.</span><span data-lang="ru" class="active">Товары и услуги — по себестоимости. Разница с рыночной ценой не финансирует чужое благополучие — становится инвестицией в наше счастливое будущее.</span><span data-lang="en">Goods and services at cost. The difference doesn't fund someone else — it becomes an investment in our happy future.</span><span data-lang="es">Bienes y servicios al coste. La diferencia no financia a otros — se convierte en una inversión en nuestro futuro.</span></p>
+          <h4><span data-lang="uk" class="active">Ти — Споживач</span><span data-lang="ru">Ты — Потребитель</span><span data-lang="en">You're a Consumer</span><span data-lang="es">Eres Consumidor</span></h4>
+          <p><span data-lang="uk" class="active">Товари та послуги — за собівартістю. Різниця з ринковою ціною не фінансує чуже благополуччя — стає інвестицією в наше щасливе майбутнє.</span><span data-lang="ru">Товары и услуги — по себестоимости. Разница с рыночной ценой не финансирует чужое благополучие — становится инвестицией в наше счастливое будущее.</span><span data-lang="en">Goods and services at cost. The difference doesn't fund someone else — it becomes an investment in our happy future.</span><span data-lang="es">Bienes y servicios al coste. La diferencia no financia a otros — se convierte en una inversión en nuestro futuro.</span></p>
         </div>
       </div>
     </div>
   </div>
-  <a class="chapter-next inline-next" href="#project-intro"><span data-lang="uk">Читати далі</span><span data-lang="ru" class="active">Читать далее</span><span data-lang="en">Read more</span><span data-lang="es">Leer más</span></a>
 </section>
-<section id="project-intro" class="project-intro-landing">
-  <div class="project-intro-frame">
-    <div class="project-intro-title">
-      <h2 class="project-brand">USEN PANDORA</h2>
-      <div class="usen-expansion">
-        <strong>Universal Social Economic Network</strong>
-        <span data-lang="uk">Універсальна соціально-економічна мережа</span>
-        <span data-lang="ru" class="active">Универсальная социально-экономическая сеть</span>
-        <span data-lang="en">Universal social and economic network</span>
-        <span data-lang="es">Red social y económica universal</span>
+<section id="project-intro" class="about-project-landing">
+  <div class="apl-stage">
+
+    <button type="button" class="apl-arrow apl-arrow-left" id="aplArrowLeft" aria-label="Название">
+      <span class="apl-arrow-label">
+        <span data-lang="uk" class="active">Назва</span>
+        <span data-lang="ru">Название</span>
+        <span data-lang="en">Name</span>
+        <span data-lang="es">Nombre</span>
+      </span>
+    </button>
+
+    <div class="apl-panels">
+
+      <!-- LEFT ZONE: Pandora name -->
+      <div class="apl-panel apl-panel-left" id="aplPanelLeft" data-panel="left">
+        <div class="project-landing-section apl-inner">
+          <div>
+            <div class="ms-title pandora-room-title">PANDORA</div>
+            <div class="ms-divider"></div>
+          </div>
+          <div class="ms-body">
+            <div class="chapter-main-copy"><p>
+              <span data-lang="uk" class="active">В давньогрецькій міфології Пандора — «обдарована всіма». Кожен Бог вклав у неї частину свого дару. Ця ідея дуже близька філософії проекту.</span>
+              <span data-lang="ru">В древнегреческой мифологии Пандора — «одарённая всеми». Каждый Бог вложил в неё часть своего дара. Эта идея близка философии проекта.</span>
+              <span data-lang="en">In ancient Greek mythology, Pandora means "gifted by all". Each God placed a part of their gift in her. This idea is very close to the project's philosophy.</span>
+              <span data-lang="es">En la mitología griega antigua, Pandora significa "dotada por todos". Cada Dios depositó en ella parte de su don. Esta idea es muy cercana a la filosofía del proyecto.</span>
+            </p>
+            <p>
+              <span data-lang="uk" class="active">Кожна людина має унікальні <strong>таланти, знання, досвід, погляди та можливості</strong>. Якщо люди об'єднують свої найкращі якості добровільно — виникає щось більше, ніж просто сума окремих учасників.</span>
+              <span data-lang="ru">Каждый человек обладает уникальными <strong>талантами, знаниями, опытом, взглядами и возможностями</strong>. Если люди объединяют свои лучшие качества добровольно — возникает нечто большее, чем просто сумма участников.</span>
+              <span data-lang="en">Every person has unique <strong>talents, knowledge, experience, views and opportunities</strong>. When people unite their best qualities voluntarily, something greater than the sum of its parts emerges.</span>
+              <span data-lang="es">Cada persona tiene <strong>talentos, conocimientos, experiencia, puntos de vista y oportunidades</strong> únicos. Cuando las personas unen voluntariamente sus mejores cualidades, surge algo mayor que la suma de sus partes.</span>
+            </p>
+            </div><div class="ms-list">
+              <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk" class="active">Колективний інтелект</span><span data-lang="ru">Коллективный интеллект</span><span data-lang="en">Collective intelligence</span><span data-lang="es">Inteligencia colectiva</span></span></div>
+              <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk" class="active">Зв'язок учасників</span><span data-lang="ru">Связь участников</span><span data-lang="en">Member connection</span><span data-lang="es">Conexión entre miembros</span></span></div>
+              <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk" class="active">Обмін досвідом</span><span data-lang="ru">Обмен опытом</span><span data-lang="en">Exchange of experience</span><span data-lang="es">Intercambio de experiencia</span></span></div>
+              <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk" class="active">Збереження знань</span><span data-lang="ru">Сохранение знаний</span><span data-lang="en">Preservation of knowledge</span><span data-lang="es">Preservación del conocimiento</span></span></div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="project-intro-content">
-      <div class="project-logo-text accent-copy-block compact">
-        <p><span data-lang="uk">Логотип проєкту продовжує символіку кооперативу, але переводить її зі стану сталої основи у стан руху.</span><span data-lang="ru" class="active">Логотип проекта продолжает символику кооператива, но переводит её из состояния устойчивой основы в состояние движения.</span><span data-lang="en">The project logo continues the cooperative symbolism, but moves it from a stable foundation into motion.</span><span data-lang="es">El logotipo del proyecto continúa la simbología cooperativa, pero la traslada de una base estable al movimiento.</span></p>
-        <p><span data-lang="uk">Як екран із трьох базових кольорів збирає цілу палітру, так USEN Pandora збирає з ключових принципів проєкту універсальну соціально-економічну мережу.</span><span data-lang="ru" class="active">Как экран из трёх базовых цветов собирает целую палитру, так USEN Pandora собирает из ключевых принципов проекта универсальную социально-экономическую сеть.</span><span data-lang="en">As a screen builds a whole palette from three base colours, USEN Pandora builds a universal socio-economic network from the project’s core principles.</span><span data-lang="es">Como una pantalla compone una paleta completa con tres colores base, USEN Pandora reúne una red socioeconómica universal desde los principios clave del proyecto.</span></p>
+
+      <!-- CENTER ZONE: "О проекте" — placeholder for future text -->
+      <div class="apl-panel apl-panel-center apl-active" id="aplPanelCenter" data-panel="center">
+        <div class="apl-center-inner">
+          <h2 class="section-title apl-center-title">
+            <span class="usen-title-lockup" aria-label="USEN Universal Social Economic Network">
+              <span class="usen-title-word">USEN</span>
+              <strong class="usen-square-mark" aria-label="Universal Social Economic Network">
+                <span class="usen-square-row" aria-hidden="true"><span>U</span><span>N</span><span>I</span><span>V</span><span>E</span><span>R</span><span>S</span><span>A</span><span>L</span></span>
+                <span class="usen-square-row" aria-hidden="true"><span>S</span><span>O</span><span>C</span><span>I</span><span>A</span><span>L</span></span>
+                <span class="usen-square-row" aria-hidden="true"><span>E</span><span>C</span><span>O</span><span>N</span><span>O</span><span>M</span><span>I</span><span>C</span></span>
+                <span class="usen-square-row" aria-hidden="true"><span>N</span><span>E</span><span>T</span><span>W</span><span>O</span><span>R</span><span>K</span></span>
+              </strong>
+            </span>
+          </h2>
+          <div class="apl-center-copy usen-about-copy" id="aplCenterCopy">
+            <div class="usen-about-intro">
+              <p>Универсальная социально-экономическая сеть — это инфраструктура, которую мы строим вместе, чтобы вернуть себе контроль над собственной жизнью.</p>
+              <p>Сегодня мир превращает нас в «ресурс»: мы платим комиссии посредникам, кормим алгоритмы рекламных платформ и зависим от решений корпораций. USEN Pandora предлагает другой путь: мы объединяем людей, технологии и ресурсы в единую защищенную среду, где каждый участник — это совладелец, а не просто пользователь.</p>
+            </div>
+            <div class="usen-about-grid">
+              <article class="usen-about-block">
+                <p><strong class="usen-question">Почему "Универсальная"?</strong> USEN не ограничивается одной нишей. Это базовая «операционная система» для жизни, которая решает задачи любого масштаба: от закрытия бытовых потребностей до реализации больших целей. Нужна взаимопомощь, надежные товары по себестоимости или запуск серьезного совместного производства? Инфраструктура Pandora дает готовые инструменты для реализации.</p>
+                <p>Мы — совладельцы и творцы своей системы, поэтому можем создавать внутри нее всё, что решим нужным. Правовая база потребительской кооперации не ограничивает нас, а наоборот — законно защищает и поощряет такие горизонтальные инициативы.</p>
+              </article>
+              <article class="usen-about-block">
+                <p><strong class="usen-question">Почему "Социально-экономическая"?</strong> В современном мире эти два понятия разорваны: «экономика» выкачивает из нас ресурсы через наценки, кредиты, налоги и другие механизмы, а «социальное» ассоциируется с подачками или благотворительностью.</p>
+                <p>Pandora возвращает всё на свои места: экономика здесь — это не цель, а инструмент для повышения качества жизни сообщества (пайщиков).</p>
+                <p>Вы больше не «потребитель» и не "батарейка" для чужого бизнеса. Вы — совладелец системы. Ваш личный вклад (труд, время, таланты, идеи) честно фиксируется и превращается в ваши незыблемые права, репутацию и голос внутри сети.</p>
+                <p>Поскольку мы создаем инфраструктуру для самих себя, нам не нужно закладывать прибыль в каждый шаг. Исчезают паразитические комиссии посредников. Товары, услуги и технологии становятся доступны по их реальной себестоимости. Деньги больше не утекают «наверх» невидимым акционерам. Вся созданная ценность остается внутри сети в виде коллективного капитала. И этот капитал работает на одну главную задачу — ежедневно снижать стоимость вашей жизни и делать её безопаснее.</p>
+              </article>
+              <article class="usen-about-block">
+                <p><strong class="usen-question">Почему сеть?</strong> Потому что найти по-настоящему близких по духу и целям людей в рамках одного города или страны сейчас крайне сложно. Мы разбросаны по всему миру. Но нас прочно связывает главное: общая идея, миссия и технологии.</p>
+                <p>Чтобы это объединение работало, Pandora строится как максимально гибкая, распределенная структура — словно глобальная паутина. В ней одиночка перестает быть уязвимым, потому что опирается на силу всего сообщества.</p>
+                <p>Вы больше не изолированы. Сеть связывает ваши навыки, потребности и идеи с ресурсами таких же осознанных участников по всему миру. Каждый новый человек — это узел сети, который делает её крепче.</p>
+              </article>
+            </div>
+            <div class="usen-about-cta">
+              <h3>Почему вам стоит стать пайщиком прямо сейчас?</h3>
+              <p>Pandora — это не секта и не лотерея. Это инженерная сборка существующих инструментов кооперации, где технологии (ИИ, распределенные системы, блокчейн решения) убирают бюрократию, оставляя только суть: люди объединяются, чтобы жить лучше, дольше и спокойнее.</p>
+              <p>Здесь ваш вклад — это инвестиция в вашу личную безопасность, в понятное будущее ваших детей и в среду, где быть «честным и полезным» — самый короткий путь к успеху.</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="project-logo-visual"><img src="assets/usen-pandora-vector-transparent.png" alt="USEN Pandora"></div>
+
+      <!-- RIGHT ZONE: project logo -->
+      <div class="apl-panel apl-panel-right" id="aplPanelRight" data-panel="right">
+        <div class="project-intro-landing apl-inner">
+          <div class="project-intro-frame">
+            <div class="project-intro-content">
+              <div class="project-logo-text accent-copy-block compact">
+                <p><span data-lang="uk" class="active">Логотип проєкту продовжує символіку кооперативу, але переводить її зі стану сталої основи у стан руху.</span><span data-lang="ru">Логотип проекта продолжает символику кооператива, но переводит её из состояния устойчивой основы в состояние движения.</span><span data-lang="en">The project logo continues the cooperative symbolism, but moves it from a stable foundation into motion.</span><span data-lang="es">El logotipo del proyecto continúa la simbología cooperativa, pero la traslada de una base estable al movimiento.</span></p>
+                <p><span data-lang="uk" class="active">Як екран із трьох базових кольорів збирає цілу палітру, так USEN Pandora збирає з ключових принципів проєкту універсальну соціально-економічну мережу.</span><span data-lang="ru">Как экран из трёх базовых цветов собирает целую палитру, так USEN Pandora собирает из ключевых принципов проекта универсальную социально-экономическую сеть.</span><span data-lang="en">As a screen builds a whole palette from three base colours, USEN Pandora builds a universal socio-economic network from the project’s core principles.</span><span data-lang="es">Como una pantalla compone una paleta completa con tres colores base, USEN Pandora reúne una red socioeconómica universal desde los principios clave del proyecto.</span></p>
+              </div>
+              <div class="project-logo-visual"><img src="assets/usen-pandora-vector-transparent.png" alt="USEN Pandora"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
+
+    <button type="button" class="apl-arrow apl-arrow-right" id="aplArrowRight" aria-label="Логотип">
+      <span class="apl-arrow-label">
+        <span data-lang="uk" class="active">Логотип</span>
+        <span data-lang="ru">Логотип</span>
+        <span data-lang="en">Logo</span>
+        <span data-lang="es">Logotipo</span>
+      </span>
+    </button>
+
+    <div class="apl-dots" id="aplDots">
+      <button type="button" class="apl-dot" data-panel="left" aria-label="Название"></button>
+      <button type="button" class="apl-dot apl-dot-active" data-panel="center" aria-label="О проекте"></button>
+      <button type="button" class="apl-dot" data-panel="right" aria-label="Логотип"></button>
+    </div>
+
   </div>
-  <a class="inline-next fixed-next" href="#chapter-01"><span data-lang="uk">Читати далі</span><span data-lang="ru" class="active">Читать далее</span><span data-lang="en">Read further</span><span data-lang="es">Leer más</span></a>
+
 </section>
-<div class="project-landing-section" id="chapter-01">
-    <div>
-      <div class="ms-title">
-        <span data-lang="uk">Чому саме Pandora</span>
-        <span data-lang="ru" class="active">Почему Pandora</span>
-        <span data-lang="en">Why Pandora</span>
-        <span data-lang="es">Por qué Pandora</span>
-      </div>
-      <div class="ms-divider"></div>
-    </div>
-    <div class="ms-body">
-      <div class="chapter-main-copy"><p>
-        <span data-lang="uk">В давньогрецькій міфології Пандора — «обдарована всіма». Кожен Бог вклав у неї частину свого дару. Ця ідея дуже близька філософії проекту.</span>
-        <span data-lang="ru" class="active">В древнегреческой мифологии Пандора — «одарённая всеми». Каждый Бог вложил в неё часть своего дара. Эта идея близка философии проекта.</span>
-        <span data-lang="en">In ancient Greek mythology, Pandora means "gifted by all". Each God placed a part of their gift in her. This idea is very close to the project's philosophy.</span>
-        <span data-lang="es">En la mitología griega antigua, Pandora significa "dotada por todos". Cada Dios depositó en ella parte de su don. Esta idea es muy cercana a la filosofía del proyecto.</span>
-      </p>
-      <p>
-        <span data-lang="uk">Кожна людина має унікальні <strong>таланти, знання, досвід, погляди та можливості</strong>. Якщо люди об'єднують свої найкращі якості добровільно — виникає щось більше, ніж просто сума окремих учасників.</span>
-        <span data-lang="ru" class="active">Каждый человек обладает уникальными <strong>талантами, знаниями, опытом, взглядами и возможностями</strong>. Если люди объединяют свои лучшие качества добровольно — возникает нечто большее, чем просто сумма участников.</span>
-        <span data-lang="en">Every person has unique <strong>talents, knowledge, experience, views and opportunities</strong>. When people unite their best qualities voluntarily, something greater than the sum of its parts emerges.</span>
-        <span data-lang="es">Cada persona tiene <strong>talentos, conocimientos, experiencia, puntos de vista y oportunidades</strong> únicos. Cuando las personas unen voluntariamente sus mejores cualidades, surge algo mayor que la suma de sus partes.</span>
-      </p>
-      </div><div class="ms-list">
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Колективний інтелект</span><span data-lang="ru" class="active">Коллективный интеллект</span><span data-lang="en">Collective intelligence</span><span data-lang="es">Inteligencia colectiva</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Зв'язок учасників</span><span data-lang="ru" class="active">Связь участников</span><span data-lang="en">Member connection</span><span data-lang="es">Conexión entre miembros</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Обмін досвідом</span><span data-lang="ru" class="active">Обмен опытом</span><span data-lang="en">Exchange of experience</span><span data-lang="es">Intercambio de experiencia</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Збереження знань</span><span data-lang="ru" class="active">Сохранение знаний</span><span data-lang="en">Preservation of knowledge</span><span data-lang="es">Preservación del conocimiento</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Гармонійне співіснування без руйнування особистості</span><span data-lang="ru" class="active">Гармоничное сосуществование без разрушения личности</span><span data-lang="en">Harmonious coexistence without destroying individuality</span><span data-lang="es">Coexistencia armoniosa sin destruir la individualidad</span></span></div>
-      </div>
-    </div>
-      <a class="chapter-next" href="#chapter-02"><span data-lang="uk">Читати далі</span><span data-lang="ru" class="active">Читать далее</span><span data-lang="en">Read more</span><span data-lang="es">Leer más</span></a>
-  </div>
-<div class="project-landing-section" id="chapter-02">
-    <div>
-      <div class="ms-title">
-        <span data-lang="uk">Головна ідея</span>
-        <span data-lang="ru" class="active">Главная идея</span>
-        <span data-lang="en">Core idea</span>
-        <span data-lang="es">Idea principal</span>
-      </div>
-      <div class="ms-divider"></div>
-    </div>
-    <div class="ms-body">
-      <div class="chapter-main-copy"><p>
-        <span data-lang="uk">USEN Pandora — це спроба створити інфраструктуру, що належить самим учасникам. Не державі. Не корпораціям. Не фондам. Не інвесторам.</span>
-        <span data-lang="ru" class="active">USEN Pandora — попытка создать инфраструктуру, принадлежащую самим участникам. Не государству. Не корпорациям. Не фондам. Не инвесторам.</span>
-        <span data-lang="en">USEN Pandora is an attempt to build infrastructure owned by its participants. Not the state. Not corporations. Not foundations. Not investors.</span>
-        <span data-lang="es">USEN Pandora es un intento de crear infraestructura que pertenezca a los propios participantes. No al estado. No a las corporaciones. No a los fondos. No a los inversores.</span>
-      </p>
-      <p>
-        <span data-lang="uk"><strong>А людям, які прийняли добровільне рішення брати участь у її розвитку.</strong> Ключовий принцип — добровільний вхід і добровільний вихід. Жодного примусу.</span>
-        <span data-lang="ru" class="active"><strong>А людям, которые приняли добровольное решение участвовать в её развитии.</strong> Ключевой принцип — добровольный вход и добровольный выход. Никакого принуждения.</span>
-        <span data-lang="en"><strong>But to the people who voluntarily chose to participate in its development.</strong> The key principle is voluntary entry and voluntary exit. No coercion.</span>
-        <span data-lang="es"><strong>Sino a las personas que voluntariamente decidieron participar en su desarrollo.</strong> El principio clave es la entrada y salida voluntarias. Sin coerción.</span>
-      </p>
-      </div><div class="principle-cards">
-        <div class="pc-card">
-          <div class="pc-card-accent" style="background:var(--accent)"></div>
-          <h4><span data-lang="uk">Добровільність</span><span data-lang="ru" class="active">Добровольность</span><span data-lang="en">Voluntariness</span><span data-lang="es">Voluntariedad</span></h4>
-          <p><span data-lang="uk">Ніякого примусу. Вхід і вихід — завжди особисте рішення кожного учасника.</span><span data-lang="ru" class="active">Никакого принуждения. Вход и выход — всегда личное решение каждого участника.</span><span data-lang="en">No coercion. Entry and exit are always each member's personal choice.</span><span data-lang="es">Sin coerción. La entrada y salida siempre son decisión personal de cada miembro.</span></p>
-        </div>
-        <div class="pc-card">
-          <div class="pc-card-accent" style="background:var(--green)"></div>
-          <h4><span data-lang="uk">Прозорість</span><span data-lang="ru" class="active">Прозрачность</span><span data-lang="en">Transparency</span><span data-lang="es">Transparencia</span></h4>
-          <p><span data-lang="uk">Відкриті правила, чесні механізми, зрозумілі умови для всіх учасників.</span><span data-lang="ru" class="active">Открытые правила, честные механизмы, понятные условия для всех участников.</span><span data-lang="en">Open rules, fair mechanisms, clear terms for all participants.</span><span data-lang="es">Reglas abiertas, mecanismos justos, condiciones claras para todos los participantes.</span></p>
-        </div>
-        <div class="pc-card">
-          <div class="pc-card-accent" style="background:var(--blue)"></div>
-          <h4><span data-lang="uk">Взаємна вигода</span><span data-lang="ru" class="active">Взаимная выгода</span><span data-lang="en">Mutual benefit</span><span data-lang="es">Beneficio mutuo</span></h4>
-          <p><span data-lang="uk">Система приносить реальну цінність кожному, хто бере участь у її розвитку.</span><span data-lang="ru" class="active">Система приносит реальную ценность каждому, кто участвует в её развитии.</span><span data-lang="en">The system brings real value to everyone who participates in its development.</span><span data-lang="es">El sistema aporta valor real a todos los que participan en su desarrollo.</span></p>
-        </div>
-      </div>
-    </div>
-      <a class="chapter-next" href="#chapter-03"><span data-lang="uk">Читати далі</span><span data-lang="ru" class="active">Читать далее</span><span data-lang="en">Read more</span><span data-lang="es">Leer más</span></a>
-  </div>
-<div class="project-landing-section" id="chapter-03">
-    <div>
-      <div class="ms-title">
-        <span data-lang="uk">Мета</span>
-        <span data-lang="ru" class="active">Цель</span>
-        <span data-lang="en">Goal</span>
-        <span data-lang="es">Objetivo</span>
-      </div>
-      <div class="ms-divider"></div>
-    </div>
-    <div class="ms-body">
-      <div class="chapter-main-copy"><p>
-        <span data-lang="uk">Мета Pandora — <strong>створення універсальної соціально-економічної мережі U.S.E.N.</strong></span>
-        <span data-lang="ru" class="active">Цель Pandora — <strong>создание универсальной социально-экономической сети U.S.E.N.</strong></span>
-        <span data-lang="en">Pandora's goal is <strong>to create the Universal Social and Economic Network — U.S.E.N.</strong></span>
-        <span data-lang="es">El objetivo de Pandora es <strong>crear la Red Social y Económica Universal — U.S.E.N.</strong></span>
-      </p>
-      <p>
-        <span data-lang="uk">USEN — єдиний головний проєкт кооперативу. Pandora ID, кабінет пайовика, AI-помічник, внутрішній облік, взаємодопомога та майбутні сервіси — це частини його спільної інфраструктури, а не окремі проєкти.</span>
-        <span data-lang="ru" class="active">USEN — единственный главный проект кооператива. Pandora ID, кабинет пайщика, AI-помощник, внутренний учёт, взаимопомощь и будущие сервисы — это части его общей инфраструктуры, а не отдельные проекты.</span>
-        <span data-lang="en">USEN is the cooperative's single core project. Pandora ID, the member account, AI assistant, internal accounting, mutual aid and future services are parts of its shared infrastructure, not separate projects.</span>
-        <span data-lang="es">USEN es el único proyecto central de la cooperativa. Pandora ID, el área del socio, el asistente de IA, la contabilidad interna, la ayuda mutua y los futuros servicios son partes de su infraestructura común, no proyectos separados.</span>
-      </p>
-      </div><div class="ms-list">
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Здоров'я та освіта</span><span data-lang="ru" class="active">Здоровье и образование</span><span data-lang="en">Health and education</span><span data-lang="es">Salud y educación</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Взаємодопомога</span><span data-lang="ru" class="active">Взаимопомощь</span><span data-lang="en">Mutual aid</span><span data-lang="es">Ayuda mutua</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Цифрова безпека</span><span data-lang="ru" class="active">Цифровая безопасность</span><span data-lang="en">Digital security</span><span data-lang="es">Seguridad digital</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Економічна стійкість</span><span data-lang="ru" class="active">Экономическая устойчивость</span><span data-lang="en">Economic resilience</span><span data-lang="es">Resiliencia económica</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Технологічна незалежність</span><span data-lang="ru" class="active">Технологическая независимость</span><span data-lang="en">Technological independence</span><span data-lang="es">Independencia tecnológica</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Зниження паразитичних витрат</span><span data-lang="ru" class="active">Снижение паразитических издержек</span><span data-lang="en">Reducing parasitic costs</span><span data-lang="es">Reducción de costes parasitarios</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Підвищення рівня усвідомленості</span><span data-lang="ru" class="active">Повышение уровня осознанности</span><span data-lang="en">Raising awareness</span><span data-lang="es">Aumento de la conciencia</span></span></div>
-      </div>
-    </div>
-      <a class="chapter-next" href="#chapter-04"><span data-lang="uk">Читати далі</span><span data-lang="ru" class="active">Читать далее</span><span data-lang="en">Read more</span><span data-lang="es">Leer más</span></a>
-  </div>
-<div class="project-landing-section" id="chapter-04">
-    <div>
-      <div class="ms-title">
-        <span data-lang="uk">Кооперація нового покоління</span>
-        <span data-lang="ru" class="active">Кооперация нового поколения</span>
-        <span data-lang="en">Next-generation cooperation</span>
-        <span data-lang="es">Cooperación de nueva generación</span>
-      </div>
-      <div class="ms-divider"></div>
-    </div>
-    <div class="ms-body">
-      <div class="chapter-main-copy"><p>
-        <span data-lang="uk">Традиційні кооперативи часто обмежені географією, бюрократією та відсутністю технологій. USEN Pandora досліджує можливість створення <strong>цифрового кооперативного середовища нового покоління</strong>.</span>
-        <span data-lang="ru" class="active">Традиционные кооперативы часто ограничены географией, бюрократией и отсутствием технологий. USEN Pandora исследует возможность создания <strong>цифровой кооперативной среды нового поколения</strong>.</span>
-        <span data-lang="en">Traditional cooperatives are often limited by geography, bureaucracy and lack of technology. USEN Pandora explores the possibility of creating a <strong>next-generation digital cooperative environment</strong>.</span>
-        <span data-lang="es">Las cooperativas tradicionales suelen estar limitadas por la geografía, la burocracia y la falta de tecnología. USEN Pandora explora la posibilidad de crear un <strong>entorno cooperativo digital de nueva generación</strong>.</span>
-      </p>
-      </div><div class="ms-list">
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Штучний інтелект та автоматизація</span><span data-lang="ru" class="active">Искусственный интеллект и автоматизация</span><span data-lang="en">Artificial intelligence and automation</span><span data-lang="es">Inteligencia artificial y automatización</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Цифрова інфраструктура</span><span data-lang="ru" class="active">Цифровая инфраструктура</span><span data-lang="en">Digital infrastructure</span><span data-lang="es">Infraestructura digital</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Колективна аналітика</span><span data-lang="ru" class="active">Коллективная аналитика</span><span data-lang="en">Collective analytics</span><span data-lang="es">Analítica colectiva</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Репутаційні механізми</span><span data-lang="ru" class="active">Репутационные механизмы</span><span data-lang="en">Reputation mechanisms</span><span data-lang="es">Mecanismos de reputación</span></span></div>
-        <div class="ms-list-item"><div class="ms-dot"></div><span><span data-lang="uk">Спільне володіння ресурсами</span><span data-lang="ru" class="active">Совместное владение ресурсами</span><span data-lang="en">Shared ownership of resources</span><span data-lang="es">Propiedad compartida de recursos</span></span></div>
-      </div>
-    </div>
-      <a class="chapter-next" href="#chapter-05"><span data-lang="uk">Читати далі</span><span data-lang="ru" class="active">Читать далее</span><span data-lang="en">Read more</span><span data-lang="es">Leer más</span></a>
-  </div>
-<div class="project-landing-section" id="chapter-05">
-    <div>
-      <div class="ms-title">
-        <span data-lang="uk">Чому проект починається зараз</span>
-        <span data-lang="ru" class="active">Почему проект начинается сейчас</span>
-        <span data-lang="en">Why now</span>
-        <span data-lang="es">Por qué ahora</span>
-      </div>
-      <div class="ms-divider"></div>
-    </div>
-    <div class="ms-body wide-body">
-      <div class="chapter-main-copy wide-copy"><p>
-        <span data-lang="uk">Багато ідей існували роками. Але тільки розвиток нейромереж і сучасних AI-інструментів вперше дозволив одній людині наблизитися до створення складних інфраструктурних проектів без величезних команд і мільярдних бюджетів.</span>
-        <span data-lang="ru" class="active">Многие идеи существовали годами. Но только развитие нейросетей и современных AI-инструментов впервые позволило одному человеку приблизиться к созданию сложных инфраструктурных проектов без огромных команд и миллиардных бюджетов.</span>
-        <span data-lang="en">Many ideas have existed for years. But only the development of neural networks and modern AI tools has for the first time allowed a single person to approach building complex infrastructure projects without massive teams and billion-dollar budgets.</span>
-        <span data-lang="es">Muchas ideas han existido durante años. Pero solo el desarrollo de las redes neuronales y las herramientas de IA modernas ha permitido por primera vez a una sola persona acercarse a la creación de proyectos de infraestructura complejos sin grandes equipos ni presupuestos millonarios.</span>
-      </p>
-      <p>
-        <span data-lang="uk">Сьогодні AI здатний <strong>прискорювати розробку, автоматизувати процеси, писати код, проектувати системи та знижувати вхідний поріг</strong>. Це не магія — це новий рівень доступності технологій.</span>
-        <span data-lang="ru" class="active">Сегодня AI способен <strong>ускорять разработку, автоматизировать процессы, писать код, проектировать системы и снижать входной порог</strong>. Это не магия — это новый уровень доступности технологий.</span>
-        <span data-lang="en">Today AI can <strong>accelerate development, automate processes, write code, design systems and lower the entry threshold</strong>. This is not magic — it is a new level of technological accessibility.</span>
-        <span data-lang="es">Hoy la IA puede <strong>acelerar el desarrollo, automatizar procesos, escribir código, diseñar sistemas y reducir el umbral de entrada</strong>. No es magia — es un nuevo nivel de accesibilidad tecnológica.</span>
-      </p>
-      </div>
-    </div><a class="chapter-next" href="#signal"><span data-lang="uk">Читати далі</span><span data-lang="ru" class="active">Читать далее</span><span data-lang="en">Read more</span><span data-lang="es">Leer más</span></a>
-  </div>
+
 <section id="signal" class="signal-landing">
-  <h2 class="section-title"><span data-lang="uk">Будеш і далі фінансувати чужі системи<br>чи побудуємо разом свою?</span><span data-lang="ru" class="active">Будешь и дальше финансировать чужие системы<br>или построим вместе свою?</span><span data-lang="en">Will you keep funding systems you do not control<br>or shall we build our own together?</span><span data-lang="es">¿Seguirás financiando sistemas ajenos<br>o construiremos juntos el nuestro?</span></h2>
+  <h2 class="section-title"><span data-lang="uk" class="active">Будеш і далі фінансувати чужі системи<br>чи побудуємо разом свою?</span><span data-lang="ru">Будешь и дальше финансировать чужие системы<br>или построим вместе свою?</span><span data-lang="en">Will you keep funding systems you do not control<br>or shall we build our own together?</span><span data-lang="es">¿Seguirás financiando sistemas ajenos<br>o construiremos juntos el nuestro?</span></h2>
   <div class="signal-body">
     <div class="accent-copy-block">
-      <p><span data-lang="uk">Сигнал — це спосіб розповісти одне одному про Pandora без нав'язливої реклами.</span><span data-lang="ru" class="active">Сигнал — это способ рассказать друг другу о Pandora без навязчивой рекламы.</span><span data-lang="en">Signal is a way to share Pandora with each other without intrusive advertising.</span><span data-lang="es">Señal es una forma de compartir Pandora entre nosotros sin publicidad invasiva.</span></p>
-      <p><span data-lang="uk">Учасник може поділитися посиланням, QR-кодом, постом, повідомленням або особистим запрошенням.</span><span data-lang="ru" class="active">Участник может поделиться ссылкой, QR-кодом, постом, сообщением или личным приглашением.</span><span data-lang="en">A participant can share a link, QR code, post, message or personal invitation.</span><span data-lang="es">Un participante puede compartir un enlace, código QR, publicación, mensaje o invitación personal.</span></p>
-      <p><span data-lang="uk">Якщо людина прийшла за вашою рекомендацією та стала в результаті пайовиком — система фіксує джерело та ви отримуєте подарунок.</span><span data-lang="ru" class="active">Если человек пришёл по вашей рекомендации и стал в итоге пайщиком — система фиксирует источник и вы получаете подарок.</span><span data-lang="en">If someone comes through your referral and eventually becomes a member — the system records the source and you receive a gift.</span><span data-lang="es">Si alguien llega por tu recomendación y se convierte en socio — el sistema registra la fuente y recibes un regalo.</span></p>
-      <p><span data-lang="uk">Подробиці доступні в особистому кабінеті після реєстрації на сайті.</span><span data-lang="ru" class="active">Подробности доступны в личном кабинете после регистрации на сайте.</span><span data-lang="en">Details are available in the personal account after registering on the site.</span><span data-lang="es">Los detalles están disponibles en el área personal después de registrarse en el sitio.</span></p>
+      <p><span data-lang="uk" class="active">Ми розробили просту й прозору систему рекомендацій і винагород як маркетинговий елемент розвитку проєкту.</span><span data-lang="ru">Мы разработали простую и прозрачную систему рекомендаций и вознаграждений как маркетинговый элемент развития проекта.</span><span data-lang="en">We have created a simple and transparent recommendation and reward system as a marketing element of the project growth.</span><span data-lang="es">Hemos creado un sistema simple y transparente de recomendaciones y recompensas como elemento de marketing del desarrollo del proyecto.</span></p>
+      <p><span data-lang="uk" class="active">Сигнал — це один зі способів розповісти про нас іншим людям без нав'язливої реклами.</span><span data-lang="ru">Сигнал — это один из способов рассказать о нас другим людям без навязчивой рекламы.</span><span data-lang="en">Signal is one way to tell other people about us without intrusive advertising.</span><span data-lang="es">Signal es una forma de contar a otras personas sobre nosotros sin publicidad intrusiva.</span></p>
+      <p><span data-lang="uk" class="active">Учасник ділиться персональним посиланням, QR-кодом, постом, повідомленням або особистим запрошенням.</span><span data-lang="ru">Участник делится персональной ссылкой, QR-кодом, постом, сообщением или личным приглашением.</span><span data-lang="en">A participant shares a personal link, QR code, post, message or personal invitation.</span><span data-lang="es">Un participante comparte un enlace personal, código QR, publicación, mensaje o invitación personal.</span></p>
+      <p><span data-lang="uk" class="active">Коли нова людина приходить за вашою рекомендацією і стає пайовиком, ви отримуєте подяку за реальний внесок у розвиток кооперативу.</span><span data-lang="ru">Когда новый человек приходит по вашей рекомендации и становится пайщиком — вы получаете благодарность за реальный вклад в развитие кооператива.</span><span data-lang="en">When a new person comes through your recommendation and becomes a member, you receive gratitude for a real contribution to the cooperative development.</span><span data-lang="es">Cuando una nueva persona llega por tu recomendación y se convierte en socio, recibes agradecimiento por una contribución real al desarrollo de la cooperativa.</span></p>
     </div>
     <div class="signal-note">
-      <h3><span data-lang="uk">Зверніть увагу</span><span data-lang="ru" class="active">Обратите внимание</span><span data-lang="en">Please note</span><span data-lang="es">Importante</span></h3>
+      <h3><span data-lang="uk" class="active">Зверніть увагу</span><span data-lang="ru">Обратите внимание</span><span data-lang="en">Please note</span><span data-lang="es">Importante</span></h3>
       <ul>
-        <li><div class="p-dot" style="background:var(--accent)"></div><div><span data-lang="uk">Це не фінансова піраміда і не мережевий маркетинг.</span><span data-lang="ru" class="active">Это не финансовая пирамида и не сетевой маркетинг.</span><span data-lang="en">This is not a financial pyramid and not network marketing.</span><span data-lang="es">Esto no es una pirámide financiera ni marketing multinivel.</span></div></li>
-        <li><div class="p-dot" style="background:var(--accent)"></div><div><span data-lang="uk">Немає багаторівневих нарахувань та обіцянок доходу.</span><span data-lang="ru" class="active">Нет многоуровневых начислений и обещаний дохода.</span><span data-lang="en">No multi-level payouts and no income promises.</span><span data-lang="es">Sin pagos multinivel ni promesas de ingresos.</span></div></li>
-        <li><div class="p-dot" style="background:var(--accent)"></div><div><span data-lang="uk">Тільки подяка за реальний підтверджений внесок.</span><span data-lang="ru" class="active">Только благодарность за реальный подтверждённый вклад.</span><span data-lang="en">Only gratitude for real, confirmed contribution.</span><span data-lang="es">Solo agradecimiento por una contribución real y confirmada.</span></div></li>
+        <li><div class="p-dot" style="background:var(--accent)"></div><div><span data-lang="uk" class="active">Це не фінансова піраміда.</span><span data-lang="ru">Это не финансовая пирамида.</span><span data-lang="en">This is not a financial pyramid.</span><span data-lang="es">Esto no es una pirámide financiera.</span></div></li>
+        <li><div class="p-dot" style="background:var(--accent)"></div><div><span data-lang="uk" class="active">Це не мережевий маркетинг.</span><span data-lang="ru">Это не сетевой маркетинг.</span><span data-lang="en">This is not network marketing.</span><span data-lang="es">Esto no es marketing multinivel.</span></div></li>
+        <li><div class="p-dot" style="background:var(--accent)"></div><div><span data-lang="uk" class="active">Немає багаторівневих нарахувань.</span><span data-lang="ru">Нет многоуровневых начислений.</span><span data-lang="en">There are no multi-level payouts.</span><span data-lang="es">No hay pagos multinivel.</span></div></li>
+        <li><div class="p-dot" style="background:var(--accent)"></div><div><span data-lang="uk" class="active">Немає обіцянок пасивного доходу.</span><span data-lang="ru">Нет обещаний пассивного дохода.</span><span data-lang="en">There are no promises of passive income.</span><span data-lang="es">No hay promesas de ingresos pasivos.</span></div></li>
+        <li><div class="p-dot" style="background:var(--accent)"></div><div><span data-lang="uk" class="active">Допоміг розвитку — отримав подарунок!</span><span data-lang="ru">Помог развитию — получил подарок!</span><span data-lang="en">Helped development — received a gift!</span><span data-lang="es">Ayudaste al desarrollo — recibiste un regalo!</span></div></li>
       </ul>
     </div>
   </div>
   <div class="final-actions">
-    <a href="cabinet.html" class="btn-primary"><span data-lang="uk">Приєднатися</span><span data-lang="ru" class="active">Присоединиться</span><span data-lang="en">Join Pandora</span><span data-lang="es">Unirse</span></a>
     <div class="share-btn-wrap">
-      <a href="#signal" class="btn-outline" onclick="toggleShareMenu(event)"><span data-lang="uk">Розповісти другу</span><span data-lang="ru" class="active">Рассказать другу</span><span data-lang="en">Tell a friend</span><span data-lang="es">Contarle a un amigo</span></a>
+      <a href="#signal" class="btn-outline" onclick="toggleShareMenu(event)"><span data-lang="uk" class="active">Розповісти другу</span><span data-lang="ru">Рассказать другу</span><span data-lang="en">Tell a friend</span><span data-lang="es">Contarle a un amigo</span></a>
       <div class="share-menu" id="shareMenu">
         <button onclick="shareTo('telegram')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M21.5 3.5L2.5 10.5l6 3 4-5 5 7 4-12z"/></svg> Telegram</button>
         <button onclick="shareTo('facebook')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> Facebook</button>
         <button onclick="shareTo('twitter')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 4l7.7 10.3L4 20h1.7l6.3-6.8L17 20h5.3L14 9l6.8-8h-1.7L13.4 7.6 8 4H4z"/></svg> X / Twitter</button>
         <button onclick="shareTo('whatsapp')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.5 14.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.4-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.1-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.2-.6.2-.2.3-.4.5-.6.2-.2.2-.4.1-.6-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5H7c-.2 0-.5 0-.7.3-.2.3-1 .9-1 2.3 0 1.4 1 2.7 1.2 2.9.2.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.3-.7.3-1.3.5-1.4.2-.1.4-.1.6 0 .3.1 1.7.8 2 .9.3.2.5.2.6.3.1.1.1.7-.2 1.3z"/></svg> WhatsApp</button>
         <button onclick="shareTo('viber')"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm3.5 13.5c-.3.3-.7.5-1 .3-1.5-.6-3-1.8-4-3-.8-1-1.5-2.2-1.5-3.5 0-.8.3-1.5.8-2 .3-.3.7-.3 1-.1.4.3.7.8 1 1.2.2.3.2.6 0 .8-.2.2-.4.4-.5.7-.1.2 0 .5.3.7.5.5 1.2 1 1.9 1.3.3.1.6.1.8-.2.2-.3.5-.6.8-.8.3-.2.7-.1.9.2.5.7.9 1.3 1.3 2 .2.4.2.8-.3 1.3z"/></svg> Viber</button>
-        <hr>
-        <button onclick="shareTo('copy')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Скопировать ссылку</button>
       </div>
     </div>
+    <a href="cabinet.html" class="btn-primary"><span data-lang="uk" class="active">Приєднатися</span><span data-lang="ru">Присоединиться</span><span data-lang="en">Join Pandora</span><span data-lang="es">Unirse</span></a>
   </div>
   <div class="signal-status" id="signalCopyStatus" aria-live="polite"></div>
-  <h3 class="signal-lead-bottom"><span data-lang="uk">Pandora зростає від людини до людини!</span><span data-lang="ru" class="active">Pandora растёт от человека к человеку!</span><span data-lang="en">Pandora grows from person to person!</span><span data-lang="es">¡Pandora crece de persona a persona!</span></h3>
+  <h3 class="signal-lead-bottom"><span data-lang="uk" class="active">Pandora зростає від людини до людини!</span><span data-lang="ru">Pandora растёт от человека к человеку!</span><span data-lang="en">Pandora grows from person to person!</span><span data-lang="es">¡Pandora crece de persona a persona!</span></h3>
 </section>
 
 <!-- CONTACT -->
 <section id="contact" class="contact-landing">
   <div class="contact-frame">
-    <h2 class="section-title contact-title"><span data-lang="uk">Контакти</span><span data-lang="ru" class="active">Контакты</span><span data-lang="en">Contacts</span><span data-lang="es">Contactos</span></h2>
+    <h2 class="section-title contact-title"><span data-lang="uk" class="active">Контакти</span><span data-lang="ru">Контакты</span><span data-lang="en">Contacts</span><span data-lang="es">Contactos</span></h2>
     <div class="contact-grid">
       <div class="accent-copy-block contact-copy">
-        <h3><span data-lang="uk">Напишіть команді Pandora</span><span data-lang="ru" class="active">Напишите команде Pandora</span><span data-lang="en">Write to the Pandora team</span><span data-lang="es">Escribe al equipo Pandora</span></h3>
-        <p><span data-lang="uk">Питання, пропозиції, участь у кооперативі або співпраця — залиште звернення, і ми повернемося з відповіддю.</span><span data-lang="ru" class="active">Вопросы, предложения, участие в кооперативе или сотрудничество — оставьте обращение, и мы вернёмся с ответом.</span><span data-lang="en">Questions, proposals, participation or cooperation — leave a message and we will reply.</span><span data-lang="es">Preguntas, propuestas, participación o cooperación: deja un mensaje y responderemos.</span></p>
+        <h3><span data-lang="uk" class="active">Напишіть команді Pandora</span><span data-lang="ru">Напишите команде Pandora</span><span data-lang="en">Write to the Pandora team</span><span data-lang="es">Escribe al equipo Pandora</span></h3>
+        <p><span data-lang="uk" class="active">Питання, пропозиції, участь у кооперативі або співпраця — залиште звернення, і ми повернемося з відповіддю.</span><span data-lang="ru">Вопросы, предложения, участие в кооперативе или сотрудничество — оставьте обращение, и мы вернёмся с ответом.</span><span data-lang="en">Questions, proposals, participation or cooperation — leave a message and we will reply.</span><span data-lang="es">Preguntas, propuestas, participación o cooperación: deja un mensaje y responderemos.</span></p>
         <div class="contact-socials">
           <a href="https://t.me/usenpandora" target="_blank" rel="noopener">Telegram</a>
           <a href="https://www.facebook.com/usenpandora/" target="_blank" rel="noopener">Facebook</a>
         </div>
       </div>
       <form class="contact-form" onsubmit="handlePandoraContact(event)">
-        <label><span data-lang="uk">Ваше ім’я</span><span data-lang="ru" class="active">Ваше имя</span><span data-lang="en">Your name</span><span data-lang="es">Su nombre</span><input name="name" autocomplete="name"></label>
-        <label><span data-lang="uk">Email або Telegram</span><span data-lang="ru" class="active">Email или Telegram</span><span data-lang="en">Email or Telegram</span><span data-lang="es">Email o Telegram</span><input name="contact" autocomplete="email"></label>
-        <label><span data-lang="uk">Повідомлення</span><span data-lang="ru" class="active">Сообщение</span><span data-lang="en">Message</span><span data-lang="es">Mensaje</span><textarea name="message" rows="6" required></textarea></label>
-        <button type="submit" class="contact-submit"><span data-lang="uk">Надіслати</span><span data-lang="ru" class="active">Отправить</span><span data-lang="en">Send</span><span data-lang="es">Enviar</span></button>
+        <label><span data-lang="uk" class="active">Ваше ім’я</span><span data-lang="ru">Ваше имя</span><span data-lang="en">Your name</span><span data-lang="es">Su nombre</span><input name="name" autocomplete="name"></label>
+        <label><span data-lang="uk" class="active">Email або Telegram</span><span data-lang="ru">Email или Telegram</span><span data-lang="en">Email or Telegram</span><span data-lang="es">Email o Telegram</span><input name="contact" autocomplete="email"></label>
+        <label><span data-lang="uk" class="active">Повідомлення</span><span data-lang="ru">Сообщение</span><span data-lang="en">Message</span><span data-lang="es">Mensaje</span><textarea name="message" rows="6" required></textarea></label>
+        <label class="form-honeypot" aria-hidden="true" tabindex="-1">Website<input name="botcheck" autocomplete="off" tabindex="-1"></label>
+        <button type="submit" class="contact-submit"><span data-lang="uk" class="active">Надіслати</span><span data-lang="ru">Отправить</span><span data-lang="en">Send</span><span data-lang="es">Enviar</span></button>
         <div class="contact-status" id="contactStatus" role="status" aria-live="polite"></div>
       </form>
     </div>
@@ -1457,16 +1502,18 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <footer>
   <div class="footer-bar">
     <div class="footer-bar-left">
-      <span data-lang="uk">© 2026 Pandora, coop.</span>
-      <span data-lang="ru" class="active">© 2026 Pandora, coop.</span>
+      <span data-lang="uk" class="active">© 2026 Pandora, coop.</span>
+      <span data-lang="ru">© 2026 Pandora, coop.</span>
       <span data-lang="en">© 2026 Pandora, coop.</span>
       <span data-lang="es">© 2026 Pandora, coop.</span>
       <span class="footer-dot">·</span>
-      <a href="#"><span data-lang="uk">Конфіденційність</span><span data-lang="ru" class="active">Конфиденциальность</span><span data-lang="en">Privacy</span><span data-lang="es">Privacidad</span></a>
+      <a href="privacy.html" data-event="open_privacy"><span data-lang="uk" class="active">Конфіденційність</span><span data-lang="ru">Конфиденциальность</span><span data-lang="en">Privacy</span><span data-lang="es">Privacidad</span></a>
       <span class="footer-dot">·</span>
-      <a href="#"><span data-lang="uk">Умови</span><span data-lang="ru" class="active">Условия</span><span data-lang="en">Terms</span><span data-lang="es">Términos</span></a>
+      <a href="terms.html" data-event="open_terms"><span data-lang="uk" class="active">Умови</span><span data-lang="ru">Условия</span><span data-lang="en">Terms</span><span data-lang="es">Términos</span></a>
       <span class="footer-dot">·</span>
-      <span class="footer-rekvizity"><span data-lang="uk">Реквізити</span><span data-lang="ru" class="active">Реквизиты</span><span data-lang="en">Company details</span><span data-lang="es">Datos registrales</span></span>
+      <a href="requisites.html" class="footer-rekvizity" data-event="open_requisites"><span data-lang="uk" class="active">Реквізити</span><span data-lang="ru">Реквизиты</span><span data-lang="en">Company details</span><span data-lang="es">Datos registrales</span></a>
+      <span class="footer-dot">·</span>
+      <a href="faq.html" data-event="open_faq"><span data-lang="uk" class="active">FAQ</span><span data-lang="ru">FAQ</span><span data-lang="en">FAQ</span><span data-lang="es">FAQ</span></a>
     </div>
     <div class="footer-bar-right">
       <div class="footer-socials">
@@ -1524,7 +1571,7 @@ function updateLangBtn(lang) {
 function updateFooterLang(lang) {
   const names = { uk:'Українська', ru:'Русский', en:'English', es:'Español' };
   const el = document.getElementById('footerLangLabel');
-  if (el) el.textContent = names[lang] || 'Русский';
+  if (el) el.textContent = names[lang] || 'Українська';
 }
 
 // Данные о форматах телефонов по странам
@@ -1571,7 +1618,7 @@ function validatePhone(input, code) {
     input.insertAdjacentElement('afterend', hint);
   }
   if (input.value && !ok) {
-    hint.textContent = 'Потрібно ' + fmt.len + ' цифр. Формат: ' + fmt.placeholder;
+    hint.textContent = (localStorage.getItem('pandora_lang') === 'ru' ? 'Нужно ' : 'Потрібно ') + fmt.len + (localStorage.getItem('pandora_lang') === 'ru' ? ' цифр. Формат: ' : ' цифр. Формат: ') + fmt.placeholder;
     hint.style.display = 'block';
   } else {
     hint.style.display = 'none';
@@ -1691,11 +1738,15 @@ function switchEntity(type) {
 }
 
 function setLang(lang) {
+  const safe = LANGS[lang] ? lang : 'uk';
+  lang = safe;
+  document.documentElement.lang = lang;
   document.querySelectorAll('[data-lang]').forEach(el =>
     el.classList.toggle('active', el.getAttribute('data-lang') === lang));
   updateVenn(lang);
   updateLangBtn(lang);
   updateFooterLang(lang);
+  localStorage.setItem('pandora_lang', lang);
   localStorage.setItem('pandora-lang', lang);
   // Update chat UI if available
   if (typeof pcUpdateUI === 'function') pcUpdateUI(lang);
@@ -1743,7 +1794,7 @@ document.addEventListener('click', e => {
   if (um && !um.contains(e.target)) closeUserMenu();
 });
 
-const saved = localStorage.getItem('pandora-lang') || 'ru';
+const saved = localStorage.getItem('pandora_lang') || localStorage.getItem('pandora-lang') || 'uk';
 setLang(saved);
 
 function handleJoin(e) {
@@ -1844,898 +1895,7 @@ window.addEventListener('scroll', () => {
 });
 </script>
 
-
-<script>
-let pcHistory = [];
-let pcOpen = false;
-let pcMode = "ai";
-let pcConversationId = sessionStorage.getItem("pandora-ai-conversation-id") || "";
-let pcFixationActive = false;
-let pcAudioRecorder = null;
-let pcAudioStream = null;
-let pcAudioChunks = [];
-let pcAudioTimer = null;
-let pcAudioStartedAt = 0;
-let pcFixationObjectUrl = "";
-
-// Localization for chat UI
-const PC_STRINGS = {
-  uk: {
-    greeting: "Поставте запитання про Pandora, пайовиків, вступ, внески або кооперативну модель.",
-    placeholder: "Задайте питання...",
-    suggestions: ["Що таке Pandora?", "Як вступити?", "Що таке пайовик?", "Чи можна заробити?"],
-    errorNet: "Помилка з'єднання. Спробуйте ще раз або: usenpandora@gmail.com",
-    errorOther: "Щось пішло не так. Напишіть нам: usenpandora@gmail.com",
-    subtitle: "Кооперативний AI-помічник",
-    aiMode: "AI-помічник",
-    qaMode: "Повідомити про баг / ідею",
-    qaTitle: "Допоможіть покращити Pandora",
-    qaIntro: "Тестування — це внесок співробітника. Пропозиції — це внесок співвласника.",
-    qaBug: "🐞 Знайшов баг",
-    qaBugDescription: "Повідомити, що працює не так",
-    qaSuggestion: "💡 Є пропозиція",
-    qaSuggestionDescription: "Запропонувати, як зробити краще",
-    qaFixation: "🎯 Режим фіксації",
-    qaFixationDescription: "Швидко зафіксувати фото, відео або голос",
-    qaBack: "← Назад",
-    qaBugFields: ["Що ви очікували?", "Що сталося насправді?", "Де це сталося?", "Як повторити?", "Контакт, необов'язково"],
-    qaSuggestionFields: ["Що ви пропонуєте?", "Яку проблему це вирішує?", "Кому це допоможе?", "Чому це важливо?", "Контакт, необов'язково"],
-    attachments: "Додати матеріали",
-    attachmentsHint: "Файл, фото, документ, зображення, відео або аудіо",
-    uploadPending: "Файли буде додано до звіту після ввімкнення серверного завантаження. Зараз вони залишаються лише у вашому браузері.",
-    selectedFiles: "Вибрані файли",
-    fixationTitle: "Пульт фіксації",
-    fixationExit: "Повернутися до Pandora AI",
-    photoFixation: "Фотофіксація",
-    chooseImage: "Вибрати фото",
-    videoFixation: "Відеофіксація",
-    chooseVideo: "Вибрати відео",
-    voiceFixation: "Голосова фіксація",
-    stopRecording: "Зупинити",
-    recording: "Запис",
-    voiceNext: "Автоматичне розшифрування голосу буде підключено наступним етапом.",
-    mediaLocal: "Матеріал не надсилається автоматично. Перевірте його перед подальшою дією.",
-    microphoneUnavailable: "Запис голосу не підтримується цим браузером.",
-    microphoneDenied: "Не вдалося отримати доступ до мікрофона. Перевірте дозвіл браузера.",
-    screenRecordingSoon: "Запис екрана поки не ввімкнено. Виберіть готовий відеофайл.",
-    removePreview: "Прибрати матеріал"
-  },
-  ru: {
-    greeting: "Задайте вопрос о Pandora, пайщиках, вступлении, взносах или кооперативной модели.",
-    placeholder: "Задайте вопрос...",
-    suggestions: ["Что такое Pandora?", "Как вступить?", "Что такое пайщик?", "Можно ли заработать?"],
-    errorNet: "Ошибка соединения. Попробуйте ещё раз или: usenpandora@gmail.com",
-    errorOther: "Что-то пошло не так. Напишите нам: usenpandora@gmail.com",
-    subtitle: "Кооперативный AI-помощник",
-    aiMode: "AI-помощник",
-    qaMode: "Сообщить баг / идею",
-    qaTitle: "Помогите улучшить Pandora",
-    qaIntro: "Тестирование — это вклад сотрудника. Предложения — это вклад совладельца.",
-    qaBug: "🐞 Нашёл баг",
-    qaBugDescription: "Сообщить, что работает не так",
-    qaSuggestion: "💡 Есть предложение",
-    qaSuggestionDescription: "Предложить, как сделать лучше",
-    qaFixation: "🎯 Режим фиксации",
-    qaFixationDescription: "Быстро зафиксировать фото, видео или голос",
-    qaBack: "← Назад",
-    qaBugFields: ["Что вы ожидали?", "Что произошло на самом деле?", "Где это произошло?", "Как повторить?", "Контакт, необязательно"],
-    qaSuggestionFields: ["Что вы предлагаете?", "Какую проблему это решает?", "Кому это поможет?", "Почему это важно?", "Контакт, необязательно"],
-    attachments: "Добавить материалы",
-    attachmentsHint: "Файл, фото, документ, изображение, видео или аудио",
-    uploadPending: "Файлы будут добавлены к отчёту после включения серверной загрузки. Сейчас они остаются только в вашем браузере.",
-    selectedFiles: "Выбранные файлы",
-    fixationTitle: "Пульт фиксации",
-    fixationExit: "Вернуться в Pandora AI",
-    photoFixation: "Фотофиксация",
-    chooseImage: "Выбрать фото",
-    videoFixation: "Видеофиксация",
-    chooseVideo: "Выбрать видео",
-    voiceFixation: "Голосовая фиксация",
-    stopRecording: "Остановить",
-    recording: "Запись",
-    voiceNext: "Автоматическая расшифровка голоса будет подключена следующим этапом.",
-    mediaLocal: "Материал не отправляется автоматически. Проверьте его перед дальнейшим действием.",
-    microphoneUnavailable: "Запись голоса не поддерживается этим браузером.",
-    microphoneDenied: "Не удалось получить доступ к микрофону. Проверьте разрешение браузера.",
-    screenRecordingSoon: "Запись экрана пока не включена. Выберите готовый видеофайл.",
-    removePreview: "Убрать материал"
-  },
-  en: {
-    greeting: "Ask about Pandora, cooperative members, joining, contributions, or the cooperative model.",
-    placeholder: "Ask a question...",
-    suggestions: ["What is Pandora?", "How do I join?", "What is a member?", "Can I earn money?"],
-    errorNet: "Connection error. Please try again or: usenpandora@gmail.com",
-    errorOther: "Something went wrong. Contact us: usenpandora@gmail.com",
-    subtitle: "Cooperative AI assistant",
-    aiMode: "AI assistant",
-    qaMode: "Report a bug / idea",
-    qaTitle: "Help improve Pandora",
-    qaIntro: "Testing is a contributor's input. Suggestions are a co-owner's input.",
-    qaBug: "🐞 I found a bug",
-    qaBugDescription: "Report something that does not work",
-    qaSuggestion: "💡 I have a suggestion",
-    qaSuggestionDescription: "Suggest how to make it better",
-    qaFixation: "🎯 Fixation mode",
-    qaFixationDescription: "Quickly capture a photo, video, or voice note",
-    qaBack: "← Back",
-    qaBugFields: ["What did you expect?", "What actually happened?", "Where did it happen?", "How can we reproduce it?", "Contact, optional"],
-    qaSuggestionFields: ["What do you suggest?", "What problem does it solve?", "Who will it help?", "Why is it important?", "Contact, optional"],
-    attachments: "Add materials",
-    attachmentsHint: "File, photo, document, image, video, or audio",
-    uploadPending: "Files will be added to the report after server upload is enabled. For now they remain only in your browser.",
-    selectedFiles: "Selected files",
-    fixationTitle: "Fixation controls",
-    fixationExit: "Return to Pandora AI",
-    photoFixation: "Photo capture",
-    chooseImage: "Choose image",
-    videoFixation: "Video capture",
-    chooseVideo: "Choose video",
-    voiceFixation: "Voice capture",
-    stopRecording: "Stop",
-    recording: "Recording",
-    voiceNext: "Automatic voice transcription will be added in the next stage.",
-    mediaLocal: "Media is not sent automatically. Review it before any next action.",
-    microphoneUnavailable: "Voice recording is not supported by this browser.",
-    microphoneDenied: "Microphone access failed. Check the browser permission.",
-    screenRecordingSoon: "Screen recording is not enabled yet. Choose an existing video file.",
-    removePreview: "Remove media"
-  },
-  es: {
-    greeting: "Pregunta sobre Pandora, los socios, la incorporación, las aportaciones o el modelo cooperativo.",
-    placeholder: "Haz una pregunta...",
-    suggestions: ["¿Qué es Pandora?", "¿Cómo unirse?", "¿Qué es un socio?", "¿Se puede ganar dinero?"],
-    errorNet: "Error de conexión. Inténtalo de nuevo o: usenpandora@gmail.com",
-    errorOther: "Algo salió mal. Escríbenos: usenpandora@gmail.com",
-    subtitle: "Asistente IA cooperativo",
-    aiMode: "Asistente IA",
-    qaMode: "Informar error / idea",
-    qaTitle: "Ayuda a mejorar Pandora",
-    qaIntro: "Probar es una aportación de colaborador. Proponer es una aportación de copropietario.",
-    qaBug: "🐞 Encontré un error",
-    qaBugDescription: "Informar de algo que no funciona",
-    qaSuggestion: "💡 Tengo una sugerencia",
-    qaSuggestionDescription: "Proponer cómo hacerlo mejor",
-    qaFixation: "🎯 Modo de captura",
-    qaFixationDescription: "Capturar rápidamente una foto, vídeo o nota de voz",
-    qaBack: "← Volver",
-    qaBugFields: ["¿Qué esperabas?", "¿Qué ocurrió realmente?", "¿Dónde ocurrió?", "¿Cómo se puede repetir?", "Contacto, opcional"],
-    qaSuggestionFields: ["¿Qué propones?", "¿Qué problema resuelve?", "¿A quién ayudará?", "¿Por qué es importante?", "Contacto, opcional"],
-    attachments: "Añadir materiales",
-    attachmentsHint: "Archivo, foto, documento, imagen, vídeo o audio",
-    uploadPending: "Los archivos se añadirán al informe cuando se active la carga al servidor. Por ahora permanecen solo en tu navegador.",
-    selectedFiles: "Archivos seleccionados",
-    fixationTitle: "Controles de captura",
-    fixationExit: "Volver a Pandora AI",
-    photoFixation: "Captura de foto",
-    chooseImage: "Elegir imagen",
-    videoFixation: "Captura de vídeo",
-    chooseVideo: "Elegir vídeo",
-    voiceFixation: "Captura de voz",
-    stopRecording: "Detener",
-    recording: "Grabando",
-    voiceNext: "La transcripción automática de voz se añadirá en la siguiente etapa.",
-    mediaLocal: "El material no se envía automáticamente. Revísalo antes de continuar.",
-    microphoneUnavailable: "Este navegador no admite la grabación de voz.",
-    microphoneDenied: "No se pudo acceder al micrófono. Revisa el permiso del navegador.",
-    screenRecordingSoon: "La grabación de pantalla aún no está activada. Elige un archivo de vídeo existente.",
-    removePreview: "Quitar material"
-  }
-};
-
-function getPcLang() {
-  return localStorage.getItem('pandora-lang') || 'ru';
-}
-
-function pcUpdateUI(lang) {
-  const s = PC_STRINGS[lang] || PC_STRINGS.uk;
-  // Update placeholder
-  const inp = document.getElementById("pcInput");
-  if (inp) inp.placeholder = s.placeholder;
-  // Update suggestions
-  const sugBox = document.getElementById("pcSuggestions");
-  if (sugBox) {
-    sugBox.innerHTML = s.suggestions.map(t =>
-      `<button class="pc-suggestion" onclick="pcAsk(this.textContent)">${t}</button>`
-    ).join("");
-  }
-  const aiMode = document.getElementById("pcModeAi");
-  const qaMode = document.getElementById("pcModeQa");
-  const qaTitle = document.getElementById("pcQaTitle");
-  const qaIntro = document.getElementById("pcQaIntro");
-  const qaBug = document.getElementById("pcQaBug");
-  const qaBugDescription = document.getElementById("pcQaBugDescription");
-  const qaSuggestion = document.getElementById("pcQaSuggestion");
-  const qaSuggestionDescription = document.getElementById("pcQaSuggestionDescription");
-  const qaFixation = document.getElementById("pcQaFixation");
-  const qaFixationDescription = document.getElementById("pcQaFixationDescription");
-  const subtitle = document.getElementById("pcSubtitle");
-  if (aiMode) aiMode.textContent = s.aiMode;
-  if (qaMode) qaMode.textContent = s.qaMode;
-  if (qaTitle) qaTitle.textContent = s.qaTitle;
-  if (qaIntro) qaIntro.textContent = s.qaIntro;
-  if (qaBug) qaBug.textContent = s.qaBug;
-  if (qaBugDescription) qaBugDescription.textContent = s.qaBugDescription;
-  if (qaSuggestion) qaSuggestion.textContent = s.qaSuggestion;
-  if (qaSuggestionDescription) qaSuggestionDescription.textContent = s.qaSuggestionDescription;
-  if (qaFixation) qaFixation.textContent = s.qaFixation;
-  if (qaFixationDescription) qaFixationDescription.textContent = s.qaFixationDescription;
-  if (subtitle) subtitle.textContent = s.subtitle;
-  pcUpdateFixationUI(s);
-  const activeFeedbackForm = document.getElementById("pcQaForm");
-  if (activeFeedbackForm && activeFeedbackForm.dataset.type) {
-    pcOpenFeedback(activeFeedbackForm.dataset.type);
-  }
-}
-
-// Hook into selectLang to update chat UI
-const _origSelectLang = typeof selectLang === "function" ? selectLang : null;
-
-function togglePandoraChat() {
-  if (pcFixationActive) {
-    pcExitFixationMode();
-    return;
-  }
-  pcOpen = !pcOpen;
-  document.getElementById("pandora-chat-window").classList.toggle("open", pcOpen);
-  pcSyncLauncherVisibility();
-  if (!pcOpen) {
-    // also exit fullscreen when closing
-    document.getElementById("pandora-chat-window").classList.remove("fullscreen");
-    pcFullscreen = false;
-    updateExpandIcon();
-  }
-  if (pcOpen) setTimeout(() => document.getElementById("pcInput").focus(), 200);
-}
-
-function pcSyncLauncherVisibility() {
-  const launcher = document.getElementById("pandora-chat-btn");
-  if (launcher) launcher.hidden = pcOpen || pcFixationActive;
-}
-
-let pcFullscreen = false;
-function togglePandoraFullscreen() {
-  pcFullscreen = !pcFullscreen;
-  document.getElementById("pandora-chat-window").classList.toggle("fullscreen", pcFullscreen);
-  updateExpandIcon();
-}
-function updateExpandIcon() {
-  const icon = document.getElementById("pcExpandIcon");
-  if (!icon) return;
-  if (pcFullscreen) {
-    // collapse icon (inward arrows)
-    icon.innerHTML = `
-      <line x1="1" y1="5" x2="5" y2="1"/><polyline points="1,1 5,1 5,5"/>
-      <line x1="13" y1="5" x2="9" y2="1"/><polyline points="13,1 9,1 9,5"/>
-      <line x1="1" y1="9" x2="5" y2="13"/><polyline points="1,13 5,13 5,9"/>
-      <line x1="13" y1="9" x2="9" y2="13"/><polyline points="13,13 9,13 9,9"/>`;
-    document.getElementById("pcExpandBtn").title = "Згорнути";
-  } else {
-    // expand icon (outward arrows)
-    icon.innerHTML = `
-      <polyline points="1,5 1,1 5,1"/><line x1="1" y1="1" x2="5.5" y2="5.5"/>
-      <polyline points="9,1 13,1 13,5"/><line x1="13" y1="1" x2="8.5" y2="5.5"/>
-      <polyline points="1,9 1,13 5,13"/><line x1="1" y1="13" x2="5.5" y2="8.5"/>
-      <polyline points="13,9 13,13 9,13"/><line x1="13" y1="13" x2="8.5" y2="8.5"/>`;
-    document.getElementById("pcExpandBtn").title = "Розгорнути на весь екран";
-  }
-}
-
-function pcAsk(text) {
-  document.getElementById("pcSuggestions").style.display = "none";
-  document.getElementById("pcInput").value = text;
-  pcSend();
-}
-
-function pcSetMode(mode) {
-  pcMode = mode === "qa" ? "qa" : "ai";
-  document.getElementById("pcModeAi").classList.toggle("active", pcMode === "ai");
-  document.getElementById("pcModeQa").classList.toggle("active", pcMode === "qa");
-  document.getElementById("pcMessages").style.display = pcMode === "ai" ? "flex" : "none";
-  document.getElementById("pcSuggestions").style.display =
-    pcMode === "ai" && pcHistory.length === 0 ? "flex" : "none";
-  document.getElementById("pcInputRow").style.display = pcMode === "ai" ? "flex" : "none";
-  document.getElementById("pcQaPanel").style.display = pcMode === "qa" ? "flex" : "none";
-}
-
-function pcOpenFeedback(type) {
-  const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
-  const isBug = type === "bug";
-  const fields = isBug ? s.qaBugFields : s.qaSuggestionFields;
-  const title = isBug ? s.qaBug : s.qaSuggestion;
-  const form = document.getElementById("pcQaForm");
-  const choices = document.getElementById("pcQaChoices");
-  form.dataset.type = isBug ? "bug" : "suggestion";
-  form.innerHTML = `
-    <button class="pc-qa-back" type="button" onclick="pcCloseFeedback()">${s.qaBack}</button>
-    <h4>${title}</h4>
-    ${fields.map((label, index) => `
-      <label class="pc-qa-field">
-        <span>${label}</span>
-        ${index === fields.length - 1
-          ? `<input type="text" autocomplete="email">`
-          : `<textarea rows="2"></textarea>`}
-      </label>
-    `).join("")}
-    <label class="pc-attachment-picker">
-      <span class="pc-attachment-title">${s.attachments}</span>
-      <span class="pc-attachment-hint">${s.attachmentsHint}</span>
-      <input type="file" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.odt,.txt">
-    </label>
-    <div class="pc-file-list" aria-live="polite"></div>
-    <div class="pc-upload-status">${s.uploadPending}</div>
-  `;
-  const fileInput = form.querySelector('input[type="file"]');
-  fileInput.addEventListener("change", () => pcRenderSelectedFiles(fileInput));
-  choices.style.display = "none";
-  form.style.display = "flex";
-  const firstField = form.querySelector("textarea, input");
-  if (firstField) firstField.focus();
-}
-
-function pcCloseFeedback() {
-  const form = document.getElementById("pcQaForm");
-  form.style.display = "none";
-  form.innerHTML = "";
-  form.dataset.type = "";
-  document.getElementById("pcQaChoices").style.display = "grid";
-}
-
-function pcRenderSelectedFiles(input) {
-  const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
-  const list = input.closest(".pc-qa-form").querySelector(".pc-file-list");
-  const files = Array.from(input.files || []);
-  list.innerHTML = files.length
-    ? `<strong>${s.selectedFiles}:</strong><ul>${files.map(file =>
-        `<li>${pcEscapeHtml(file.name)} · ${pcFormatBytes(file.size)}</li>`
-      ).join("")}</ul>`
-    : "";
-}
-
-function pcEscapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  })[char]);
-}
-
-function pcFormatBytes(bytes) {
-  if (!Number.isFinite(bytes) || bytes <= 0) return "0 KB";
-  const units = ["B", "KB", "MB", "GB"];
-  const unit = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
-  const amount = bytes / Math.pow(1024, unit);
-  return `${amount >= 10 || unit === 0 ? amount.toFixed(0) : amount.toFixed(1)} ${units[unit]}`;
-}
-
-function pcEnterFixationMode() {
-  pcFixationActive = true;
-  pcOpen = false;
-  document.getElementById("pandora-chat-window").classList.remove("open", "fullscreen");
-  pcSyncLauncherVisibility();
-  document.getElementById("pc-fixation-dock").classList.add("active");
-  pcFullscreen = false;
-  updateExpandIcon();
-}
-
-function pcExitFixationMode() {
-  pcFixationActive = false;
-  pcStopAudioRecording(true);
-  pcClearFixationPreview();
-  document.getElementById("pc-fixation-dock").classList.remove("active", "recording");
-  pcOpen = true;
-  document.getElementById("pandora-chat-window").classList.add("open");
-  pcSyncLauncherVisibility();
-  pcSetMode("qa");
-}
-
-function pcUpdateFixationUI(s) {
-  const mappings = {
-    pcFixationTitle: s.fixationTitle,
-    pcFixationExit: s.fixationExit,
-    pcPhotoLabel: s.photoFixation,
-    pcPhotoChoose: s.chooseImage,
-    pcVideoLabel: s.videoFixation,
-    pcVideoChoose: s.chooseVideo,
-    pcVoiceLabel: s.voiceFixation,
-    pcVoiceNext: s.voiceNext
-  };
-  Object.entries(mappings).forEach(([id, text]) => {
-    const element = document.getElementById(id);
-    if (element) element.textContent = text;
-  });
-  const photoAction = document.getElementById("pcPhotoAction");
-  const videoAction = document.getElementById("pcVideoAction");
-  const voiceAction = document.getElementById("pcVoiceAction");
-  if (photoAction) photoAction.title = s.photoFixation;
-  if (videoAction) videoAction.title = `${s.videoFixation}. ${s.screenRecordingSoon}`;
-  if (voiceAction) voiceAction.title = s.voiceFixation;
-  const voiceLabel = document.getElementById("pcVoiceLabel");
-  if (voiceLabel && pcAudioRecorder && pcAudioRecorder.state === "recording") {
-    voiceLabel.textContent = s.stopRecording;
-  }
-}
-
-function pcOpenPhotoCapture() {
-  if (pcAudioRecorder && pcAudioRecorder.state === "recording") pcStopAudioRecording(true);
-  document.getElementById("pcPhotoCapture").click();
-}
-
-function pcOpenPhotoLibrary(event) {
-  event.stopPropagation();
-  if (pcAudioRecorder && pcAudioRecorder.state === "recording") pcStopAudioRecording(true);
-  document.getElementById("pcPhotoLibrary").click();
-}
-
-function pcOpenVideoLibrary() {
-  if (pcAudioRecorder && pcAudioRecorder.state === "recording") pcStopAudioRecording(true);
-  document.getElementById("pcVideoLibrary").click();
-}
-
-function pcHandleFixationFile(input, kind) {
-  const file = input.files && input.files[0];
-  if (!file) return;
-  pcClearFixationPreview();
-  pcFixationObjectUrl = URL.createObjectURL(file);
-  const preview = document.getElementById("pcFixationPreview");
-  const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
-  const media = kind === "video"
-    ? `<video controls src="${pcFixationObjectUrl}"></video>`
-    : `<img src="${pcFixationObjectUrl}" alt="${pcEscapeHtml(s.photoFixation)}">`;
-  preview.innerHTML = `
-    ${media}
-    <div class="pc-fixation-file">${pcEscapeHtml(file.name)} · ${pcFormatBytes(file.size)}</div>
-    <div class="pc-fixation-note">${s.mediaLocal}</div>
-    <button type="button" class="pc-preview-remove" onclick="pcClearFixationPreview()">${s.removePreview}</button>
-  `;
-  preview.hidden = false;
-}
-
-async function pcToggleAudioRecording() {
-  if (pcAudioRecorder && pcAudioRecorder.state === "recording") {
-    pcStopAudioRecording();
-    return;
-  }
-  const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) {
-    pcShowFixationStatus(s.microphoneUnavailable, true);
-    return;
-  }
-  try {
-    pcClearFixationPreview();
-    pcAudioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    pcAudioChunks = [];
-    pcAudioRecorder = new MediaRecorder(pcAudioStream);
-    pcAudioRecorder.addEventListener("dataavailable", event => {
-      if (event.data && event.data.size) pcAudioChunks.push(event.data);
-    });
-    pcAudioRecorder.addEventListener("stop", pcBuildAudioPreview, { once: true });
-    pcAudioRecorder.start();
-    pcAudioStartedAt = Date.now();
-    document.getElementById("pc-fixation-dock").classList.add("recording");
-    document.getElementById("pcVoiceLabel").textContent = s.stopRecording;
-    pcUpdateAudioTimer();
-    pcAudioTimer = setInterval(pcUpdateAudioTimer, 1000);
-  } catch (error) {
-    pcReleaseAudioStream();
-    pcShowFixationStatus(s.microphoneDenied, true);
-  }
-}
-
-function pcStopAudioRecording(silent = false) {
-  if (pcAudioTimer) clearInterval(pcAudioTimer);
-  pcAudioTimer = null;
-  if (pcAudioRecorder && pcAudioRecorder.state === "recording") {
-    if (silent) {
-      pcAudioRecorder.removeEventListener("stop", pcBuildAudioPreview);
-    }
-    pcAudioRecorder.stop();
-  }
-  document.getElementById("pc-fixation-dock").classList.remove("recording");
-  const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
-  document.getElementById("pcVoiceLabel").textContent = s.voiceFixation;
-  pcReleaseAudioStream();
-  if (silent) {
-    pcAudioRecorder = null;
-    pcAudioChunks = [];
-    document.getElementById("pcVoiceTimer").textContent = "00:00";
-  }
-}
-
-function pcReleaseAudioStream() {
-  if (pcAudioStream) pcAudioStream.getTracks().forEach(track => track.stop());
-  pcAudioStream = null;
-}
-
-function pcUpdateAudioTimer() {
-  const seconds = Math.max(0, Math.floor((Date.now() - pcAudioStartedAt) / 1000));
-  const minutes = String(Math.floor(seconds / 60)).padStart(2, "0");
-  const remainder = String(seconds % 60).padStart(2, "0");
-  document.getElementById("pcVoiceTimer").textContent = `${minutes}:${remainder}`;
-}
-
-function pcBuildAudioPreview() {
-  const s = PC_STRINGS[getPcLang()] || PC_STRINGS.uk;
-  const blob = new Blob(pcAudioChunks, { type: pcAudioRecorder && pcAudioRecorder.mimeType || "audio/webm" });
-  pcClearFixationPreview();
-  pcFixationObjectUrl = URL.createObjectURL(blob);
-  const preview = document.getElementById("pcFixationPreview");
-  preview.innerHTML = `
-    <audio controls src="${pcFixationObjectUrl}"></audio>
-    <div class="pc-fixation-note">${s.mediaLocal}</div>
-    <div class="pc-fixation-note">${s.voiceNext}</div>
-    <button type="button" class="pc-preview-remove" onclick="pcClearFixationPreview()">${s.removePreview}</button>
-  `;
-  preview.hidden = false;
-  pcAudioRecorder = null;
-  pcAudioChunks = [];
-}
-
-function pcClearFixationPreview() {
-  if (pcFixationObjectUrl) URL.revokeObjectURL(pcFixationObjectUrl);
-  pcFixationObjectUrl = "";
-  const preview = document.getElementById("pcFixationPreview");
-  if (preview) {
-    preview.hidden = true;
-    preview.innerHTML = "";
-  }
-  ["pcPhotoCapture", "pcPhotoLibrary", "pcVideoLibrary"].forEach(id => {
-    const input = document.getElementById(id);
-    if (input) input.value = "";
-  });
-}
-
-function pcShowFixationStatus(message, isError = false) {
-  const preview = document.getElementById("pcFixationPreview");
-  preview.innerHTML = `<div class="pc-fixation-note${isError ? " error" : ""}">${pcEscapeHtml(message)}</div>`;
-  preview.hidden = false;
-}
-
-async function pcSend() {
-  const inp = document.getElementById("pcInput");
-  const text = inp.value.trim();
-  if (!text) return;
-  inp.value = "";
-  inp.style.height = "auto";
-  document.getElementById("pcSuggestions").style.display = "none";
-  pcAddMsg("user", text);
-  pcHistory.push({ role: "user", content: text });
-  const sendBtn = document.getElementById("pcSendBtn");
-  sendBtn.disabled = true;
-  const typingId = pcAddTyping();
-  try {
-    const res = await fetch("/api/pandora-ai", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        message: text,
-        mode: "ai",
-        role: "guest",
-        conversation_id: pcConversationId || undefined
-      })
-    });
-    const data = await res.json();
-    pcRemoveTyping(typingId);
-    if (data && data.answer) {
-      const reply = data.answer;
-      pcAddMsg("bot", reply);
-      pcHistory.push({ role: "assistant", content: reply });
-      if (data.conversation_id) {
-        pcConversationId = data.conversation_id;
-        sessionStorage.setItem("pandora-ai-conversation-id", pcConversationId);
-      }
-    } else {
-      pcAddMsg("bot", (PC_STRINGS[getPcLang()]||PC_STRINGS.uk).errorOther);
-    }
-  } catch(e) {
-    pcRemoveTyping(typingId);
-    pcAddMsg("bot", (PC_STRINGS[getPcLang()]||PC_STRINGS.uk).errorNet);
-  }
-  sendBtn.disabled = false;
-  inp.focus();
-}
-
-function pcAddMsg(role, text) {
-  const msgs = document.getElementById("pcMessages");
-  const div = document.createElement("div");
-  div.className = "pc-msg " + role;
-  div.textContent = text;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function pcAddTyping() {
-  const msgs = document.getElementById("pcMessages");
-  const id = "typing-" + Date.now();
-  const div = document.createElement("div");
-  div.className = "pc-msg typing";
-  div.id = id;
-  div.innerHTML = "<div class=\"pc-typing-dots\"><span></span><span></span><span></span></div>";
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-  return id;
-}
-
-function pcRemoveTyping(id) {
-  const el = document.getElementById(id);
-  if (el) el.remove();
-}
-
-// pcUpdateUI and greeting init called after chat widget HTML is rendered (see end of body)
-</script>
-
-<!-- Pandora AI Cooperative Assistant -->
-<style>
-#pandora-chat-btn {
-  position: fixed; bottom: 28px; right: 28px; z-index: 9999;
-  width: 58px; height: 58px; border-radius: 50%;
-  padding: 3px;
-  background: #fff; border: 2px solid #C0392B; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  transition: transform 0.2s, opacity 0.2s;
-}
-#pandora-chat-btn:hover { transform: scale(1.08); opacity: 0.92; }
-#pandora-chat-btn svg { width: 46px; height: 46px; }
-#pandora-chat-btn[hidden] { display: none; }
-
-#pandora-chat-window {
-  position: fixed; bottom: 92px; right: 28px; z-index: 9998;
-  width: 340px; max-height: 500px;
-  background: #fff; border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 4px; display: flex; flex-direction: column;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.15);
-  transform: scale(0.95) translateY(10px); opacity: 0;
-  pointer-events: none; transition: all 0.2s ease;
-}
-#pandora-chat-window.open {
-  transform: scale(1) translateY(0); opacity: 1; pointer-events: all;
-}
-.pc-header {
-  background: #0D0D0D; padding: 13px 16px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-radius: 4px 4px 0 0;
-}
-.pc-header-left { display: flex; align-items: center; gap: 10px; }
-.pc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
-.pc-title { font-size: 13px; font-weight: 500; color: #F5F2ED; letter-spacing: 0.05em; }
-.pc-title-row { display:flex; align-items:center; gap:7px; }
-.pc-header-beta { color:#C8A84B; border:1px solid rgba(200,168,75,0.45); padding:1px 5px; border-radius:8px; font-size:7px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; }
-.pc-sub { font-size: 10px; color: rgba(245,242,237,0.4); letter-spacing: 0.08em; text-transform: uppercase; }
-.pc-close { background: none; border: none; color: rgba(245,242,237,0.4); cursor: pointer; font-size: 18px; line-height: 1; padding: 0; transition: color 0.15s; }
-.pc-close:hover { color: #F5F2ED; }
-.pc-modes {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 4px; padding: 6px;
-  border-bottom: 1px solid #E4E7EC;
-  background: #F7F8FA;
-}
-.pc-mode {
-  padding: 9px 10px; border: 1px solid transparent; border-radius: 6px;
-  background: transparent; color: #535A66; cursor: pointer;
-  font: 600 12px/1.3 "DM Sans", sans-serif; letter-spacing: 0;
-  text-transform: none; transition: all 0.15s;
-}
-.pc-mode.active { color: #17356F; border-color: #D7DDE8; background: #fff; box-shadow: 0 1px 3px rgba(16,24,40,0.06); }
-.pc-mode-feedback { color: #535A66; }
-.pc-mode-feedback.active { color: #654D0C; border-color: #E5D8AE; background: #FFFDF6; }
-.pc-messages {
-  flex: 1; overflow-y: auto; padding: 14px;
-  display: flex; flex-direction: column; gap: 10px;
-  scroll-behavior: smooth; min-height: 0;
-}
-.pc-messages::-webkit-scrollbar { width: 3px; }
-.pc-messages::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 2px; }
-.pc-msg { max-width: 88%; font-size: 13px; line-height: 1.55; padding: 9px 12px; }
-.pc-msg.bot { background: #f4f2ee; color: #0D0D0D; align-self: flex-start; border-radius: 4px 4px 4px 0; }
-.pc-msg.user { background: #1A3A7A; color: #fff; align-self: flex-end; border-radius: 4px 4px 0 4px; }
-.pc-msg.typing { background: #f4f2ee; align-self: flex-start; padding: 12px 16px; }
-.pc-typing-dots { display: flex; gap: 4px; }
-.pc-typing-dots span { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.25); animation: pcDot 1.2s infinite; }
-.pc-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-.pc-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes pcDot { 0%,80%,100%{transform:scale(0.7);opacity:0.4} 40%{transform:scale(1);opacity:1} }
-.pc-suggestions { padding: 0 14px 8px; display: flex; flex-wrap: wrap; gap: 6px; }
-.pc-suggestion {
-  font-size: 11px; padding: 5px 10px; border: 1px solid rgba(26,58,122,0.2);
-  color: #1A3A7A; background: rgba(26,58,122,0.04); cursor: pointer;
-  border-radius: 2px; transition: all 0.15s; letter-spacing: 0.03em;
-  font-family: "DM Sans", sans-serif;
-}
-.pc-suggestion:hover { background: rgba(26,58,122,0.1); }
-.pc-input-row {
-  padding: 10px 12px; border-top: 1px solid rgba(0,0,0,0.07);
-  display: flex; gap: 8px; align-items: flex-end;
-}
-.pc-input {
-  flex: 1; border: 1px solid rgba(0,0,0,0.1); background: #fafafa;
-  padding: 9px 11px; font-size: 13px; font-family: "DM Sans", sans-serif;
-  color: #0D0D0D; outline: none; resize: none; border-radius: 3px;
-  max-height: 90px; line-height: 1.45; transition: border-color 0.2s;
-}
-.pc-input:focus { border-color: #1A3A7A; background: #fff; }
-.pc-send {
-  width: 36px; height: 36px; background: #1A3A7A; border: none;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  border-radius: 3px; flex-shrink: 0; transition: opacity 0.2s;
-}
-.pc-send:hover { opacity: 0.85; }
-.pc-send svg { width: 16px; height: 16px; fill: #fff; }
-.pc-send:disabled { opacity: 0.4; cursor: default; }
-.pc-qa-panel {
-  display: none; flex: 1; flex-direction: column; justify-content: flex-start;
-  gap: 12px; padding: 14px; color: #20242A; overflow-y: auto;
-  background: #F7F8FA;
-}
-.pc-qa-heading {
-  padding: 13px 14px; background: #fff;
-  border: 1px solid #E1E5EB; border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(16,24,40,0.04);
-}
-.pc-qa-heading h3 { margin: 0 0 5px; font: 650 16px/1.35 "DM Sans", sans-serif; color: #18202B; }
-.pc-qa-heading p { margin: 0; font: 400 13px/1.5 "DM Sans", sans-serif; color: #4F5865; }
-.pc-qa-choices { display: grid; gap: 8px; }
-.pc-qa-action {
-  width: 100%; padding: 12px 13px; border: 1px solid #DCE1E8; border-radius: 8px;
-  background: #fff; color: #17356F; cursor: pointer; text-align: left;
-  font-family: "DM Sans", sans-serif; transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
-  display: flex; flex-direction: column; gap: 3px;
-}
-.pc-qa-action:hover { transform: translateY(-1px); border-color: #AEBBD0; box-shadow: 0 4px 12px rgba(16,24,40,0.07); }
-.pc-qa-action:focus-visible { outline: 3px solid rgba(26,58,122,0.18); outline-offset: 1px; }
-.pc-qa-action-title { font-size: 15px; line-height: 1.35; font-weight: 650; color: #17356F; }
-.pc-qa-action-description { font-size: 13px; line-height: 1.45; color: #56606D; }
-.pc-qa-action-fixation { border-color: #DED9CC; background: #FFFDF8; }
-.pc-qa-form {
-  display: none; flex-direction: column; gap: 13px;
-  padding: 14px; border: 1px solid #E1E5EB; border-radius: 9px;
-  background: #fff; color: #20242A;
-  font: 14px/1.45 "DM Sans", sans-serif;
-  box-shadow: 0 1px 3px rgba(16,24,40,0.04);
-}
-.pc-qa-form h4 { margin: 0; font: 650 16px/1.35 "DM Sans", sans-serif; color: #182C50; }
-.pc-qa-back { align-self: flex-start; padding: 2px 0; border: 0; background: none; color: #31558D; cursor: pointer; font: 600 13px/1.35 "DM Sans", sans-serif; }
-.pc-qa-back:hover { color: #17356F; text-decoration: underline; }
-.pc-qa-field { display: flex; flex-direction: column; gap: 6px; text-align: left; }
-.pc-qa-field span {
-  font-size: 13px; line-height: 1.4; font-weight: 600; color: #29313B;
-  text-transform: none; letter-spacing: 0;
-}
-.pc-qa-field textarea,
-.pc-qa-field input:not([type="file"]) {
-  width: 100%; box-sizing: border-box; border: 1px solid #C9D0DA;
-  background: #fff; color: #20242A; border-radius: 7px; outline: none;
-  padding: 9px 10px; resize: vertical; font: 14px/1.45 "DM Sans", sans-serif;
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-.pc-qa-field textarea { min-height: 70px; }
-.pc-qa-field textarea::placeholder,
-.pc-qa-field input::placeholder { color: #6A7280; opacity: 1; }
-.pc-qa-field textarea:focus,
-.pc-qa-field input:focus,
-.pc-attachment-picker:focus-within { border-color: #31558D; background: #fff; box-shadow: 0 0 0 3px rgba(49,85,141,0.14); }
-.pc-attachment-picker {
-  display: flex; flex-direction: column; gap: 5px; padding: 11px;
-  border: 1px dashed #AAB6C7; background: #F8FAFC;
-  cursor: pointer; border-radius: 8px;
-}
-.pc-attachment-title { font-size: 13px; font-weight: 650; color: #29313B; }
-.pc-attachment-hint { font-size: 12px; line-height: 1.45; color: #5C6572; }
-.pc-attachment-picker input { width: 100%; font-size: 12px; color: #29313B; }
-.pc-file-list { font-size: 12px; line-height: 1.45; color: #29313B; overflow-wrap: anywhere; }
-.pc-file-list ul { margin: 5px 0 0; padding-left: 20px; }
-.pc-upload-status { padding: 9px 10px; border: 1px solid #E8DDAF; border-radius: 7px; background: #FFFDF5; color: #514617; font-size: 12px; line-height: 1.45; }
-
-#pc-fixation-dock {
-  position: fixed; right: 20px; bottom: 20px; z-index: 10000;
-  width: min(360px, calc(100vw - 32px)); display: none;
-  background: #fff; border: 1px solid rgba(0,0,0,0.12); border-radius: 16px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.2); overflow: hidden;
-}
-#pc-fixation-dock.active { display: block; }
-.pc-fixation-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; background: #101114; color: #fff; }
-.pc-fixation-head strong { font-size: 14px; }
-.pc-fixation-exit { border: 0; background: transparent; color: #fff; text-decoration: underline; cursor: pointer; font: 500 12px/1.3 "DM Sans", sans-serif; }
-.pc-fixation-controls { display: grid; grid-template-columns: 1fr 1fr 72px; min-height: 82px; }
-.pc-fixation-action {
-  position: relative; border: 0; border-right: 1px solid rgba(0,0,0,0.08);
-  background: #fff; cursor: pointer; padding: 12px 8px 9px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
-  font-family: "DM Sans", sans-serif; color: #171A1F;
-}
-.pc-fixation-action::before { content: ""; position: absolute; inset: 0 0 auto; height: 5px; background: #1A3A7A; }
-.pc-fixation-action.video::before { background: #2E9B45; }
-.pc-fixation-action.voice::before { background: #C0392B; }
-.pc-fixation-action:hover, .pc-fixation-action:focus-visible { background: #F5F7FA; outline: 3px solid rgba(26,58,122,0.18); outline-offset: -3px; }
-.pc-fixation-icon { font-size: 24px; line-height: 1; }
-.pc-fixation-label { font-size: 12px; font-weight: 650; text-align: center; }
-.pc-fixation-secondary { border: 0; padding: 0; background: none; color: #1A3A7A; cursor: pointer; font: 500 11px/1.3 "DM Sans", sans-serif; text-decoration: underline; }
-.pc-voice-timer { display: none; font: 700 12px/1 monospace; color: #C0392B; }
-#pc-fixation-dock.recording .pc-voice-timer { display: block; }
-#pc-fixation-dock.recording .pc-fixation-action.voice { background: #FFF0EE; animation: pcRecordPulse 1.4s infinite; }
-@keyframes pcRecordPulse { 0%,100%{box-shadow:inset 0 0 0 0 rgba(192,57,43,0)} 50%{box-shadow:inset 0 0 0 4px rgba(192,57,43,0.22)} }
-.pc-fixation-preview { padding: 12px; border-top: 1px solid rgba(0,0,0,0.08); background: #FAFAFA; }
-.pc-fixation-preview img, .pc-fixation-preview video { display: block; width: 100%; max-height: 230px; object-fit: contain; background: #111; border-radius: 6px; }
-.pc-fixation-preview audio { width: 100%; }
-.pc-fixation-file, .pc-fixation-note { margin-top: 8px; color: #30343B; font-size: 13px; line-height: 1.45; overflow-wrap: anywhere; }
-.pc-fixation-note.error { color: #9E2A1F; }
-.pc-preview-remove { margin-top: 9px; padding: 7px 10px; border: 1px solid rgba(192,57,43,0.3); background: #fff; color: #8D2A21; cursor: pointer; font: 600 12px/1.2 "DM Sans", sans-serif; }
-.pc-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
-
-/* Expand / fullscreen button */
-.pc-expand {
-  background: none; border: none;
-  color: rgba(245,242,237,0.4); cursor: pointer;
-  padding: 0; line-height: 1; transition: color 0.15s;
-  display: flex; align-items: center; justify-content: center;
-  width: 22px; height: 22px;
-}
-.pc-expand:hover { color: #F5F2ED; }
-.pc-expand svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-/* Fullscreen state */
-#pandora-chat-window.fullscreen {
-  bottom: 0; right: 0;
-  width: 100vw; max-height: 100vh; height: 100vh;
-  border-radius: 0;
-  border: none;
-}
-#pandora-chat-window.fullscreen .pc-messages {
-  flex: 1;
-}
-@media(max-width:600px){
-  #pandora-chat-btn { right:16px; bottom:18px; width:54px; height:54px; }
-  #pandora-chat-btn svg { width:42px; height:42px; }
-  #pandora-chat-window { right:12px; bottom:80px; width:calc(100vw - 24px); max-height:72vh; }
-  #pc-fixation-dock { right: 12px; bottom: 12px; width: calc(100vw - 24px); }
-}
-
-/* === UNIFIED HEADERS === */
-.project-landing-section .ms-title,
-.project-brand,
-.reference-simple-title,
-.final-title {
-  font-family: "Cormorant Garamond", serif !important;
-  font-weight: 300 !important;
-  font-size: clamp(44px, 4.7vw, 74px) !important;
-  line-height: 1.05 !important;
-  text-align: center !important;
-  margin: 0 auto 34px !important;
-}
-/* === SUBHEADINGS BOLD === */
-#about .accent-copy-block h3,
-.principle-item h4 {
-  font-weight: 700 !important;
-  font-size: clamp(14px, 1.05vw, 16.5px) !important;
-  line-height: 1.72 !important;
-  color: rgba(245, 242, 237, 0.72) !important;
-  font-family: "DM Sans", sans-serif !important;
-}
-
-/* === UNIFIED BODY TEXT === */
-#about .accent-copy-block p,
-.project-landing-section .ms-body p,
-.project-landing-section .ms-body li,
-.project-landing-section .ms-list-item,
-.project-intro-content p,
-.project-intro-frame p,
-.chapter-main-copy p,
-.reference-card p,
-.inspiration-card p,
-#contact p,
-.contact-form p,
-#join li,
-#join p,
-.final-call-landing p,
-.principle-item p {
-  font-size: clamp(14px, 1.05vw, 16.5px) !important;
-  line-height: 1.72 !important;
-  color: rgba(245, 242, 237, 0.72) !important;
-}
-</style>
+<!-- Pandora clean visual layer -->
 <style id="pandora-clean-visual-layer-v0-5">
   :root {
     --clean-footer-h: 38px;
@@ -2781,34 +1941,45 @@ function pcRemoveTyping(id) {
     align-self: center;
     justify-self: center;
     width: fit-content;
+    min-height: 46px;
     margin: clamp(26px, 3.5vh, 44px) auto 64px;
-    gap: 16px;
-    color: rgba(245, 241, 229, 0.58);
+    gap: 10px;
+    padding: 0 18px;
+    border: 1px solid rgba(200,168,75,0.72);
+    background: var(--accent);
+    color: #0D0D0D !important;
     text-decoration: none;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     font-size: 0.72rem;
+    font-weight: 700;
     line-height: 1;
+    box-shadow: 0 14px 34px rgba(200,168,75,0.16);
+    transition: transform 0.2s, background 0.2s, border-color 0.2s;
   }
 
   .chapter-next::before,
   .inline-next::before,
   .fixed-next::before {
-    content: "";
-    display: block;
-    width: 58px;
-    height: 1px;
-    background: var(--accent);
-    opacity: 0.9;
+    display: none;
   }
 
   .chapter-next::after,
   .inline-next::after,
   .fixed-next::after {
     content: "↓";
-    color: var(--accent);
-    font-size: 0.85rem;
+    color: #0D0D0D !important;
+    font-size: 0.95rem;
     line-height: 1;
+  }
+
+  .chapter-next:hover,
+  .inline-next:hover,
+  .fixed-next:hover {
+    transform: translateY(-2px);
+    background: #E0BE58;
+    border-color: #E0BE58;
+    color: #0D0D0D;
   }
 
   /* Signal: handled by pandora-modernization-cleanup-v0-6 */
@@ -2883,14 +2054,6 @@ function pcRemoveTyping(id) {
 
   footer { /* overridden by Airbnb footer — see base styles */ }
 
-  #pandora-chat-btn {
-    bottom: 62px;
-  }
-
-  #pandora-chat-window {
-    bottom: 128px;
-  }
-
   @media (max-height: 820px) and (min-width: 900px) {
     .chapter-next,
     .inline-next,
@@ -2946,9 +2109,6 @@ function pcRemoveTyping(id) {
       min-width: 0;
     }
 
-    #pandora-chat-btn {
-      bottom: 62px;
-    }
   }
   /* Signal: handled by pandora-modernization-cleanup-v0-6 */
   /* v0.5.1: project next-link baseline + vertical principle cards */
@@ -3054,144 +2214,380 @@ function pcRemoveTyping(id) {
   #about .accent-copy-block p:last-child {
     margin-bottom: 0;
   }
+
+  /* v0.5.6: signal CTA edge alignment — button inner edges follow text-column edges */
+  #signal .final-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+    gap: 72px;
+    align-items: flex-start;
+    width: min(1180px, 100%);
+    margin: clamp(38px, 4.2vh, 44px) auto 0;
+  }
+
+  #signal .final-actions .share-btn-wrap {
+    justify-self: end;
+  }
+
+  #signal .final-actions > .btn-primary {
+    justify-self: start;
+  }
+
+  #signal .final-actions .btn-primary,
+  #signal .final-actions .btn-outline {
+    min-width: 184px;
+    min-height: 44px;
+    padding: 13px 26px;
+  }
+
+  /* Align the bottom signal phrase to the visual center of the two CTA buttons. */
+  #signal .signal-lead-bottom {
+    transform: translateX(clamp(30px, 3.25vw, 43px));
+  }
+
+  @media (max-width: 900px) {
+    #signal .final-actions {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    #signal .final-actions .share-btn-wrap,
+    #signal .final-actions > .btn-primary {
+      justify-self: stretch;
+    }
+
+    #signal .signal-lead-bottom {
+      transform: none;
+    }
+  }
+
   /* v0.5.4: keep about natural position — no translateY */
 
   /* v0.5.5: keep about at natural position — no translateY override */
+
+  /* v0.5.7: project carousel arrow buttons + yellow down next buttons */
+  .about-project-landing .fixed-next {
+    display: inline-flex !important;
+    position: fixed !important;
+    left: 50% !important;
+    bottom: 122px !important;
+    transform: translateX(-50%) !important;
+    z-index: 91;
+    margin: 0 !important;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .about-project-landing.apl-dots-visible .fixed-next {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .about-project-landing:not(.apl-center-active) .fixed-next {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .about-project-landing .apl-stage {
+    min-height: calc(100svh - 124px);
+  }
+
+  .about-project-landing .apl-arrow {
+    position: fixed;
+    top: 50svh;
+    transform: translateY(-50%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .about-project-landing.apl-in-view .apl-arrow:not([hidden]) {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .about-project-landing .apl-arrow:hover:not(:disabled) {
+    transform: translateY(-50%) scale(1.04);
+  }
+
+  .about-project-landing.apl-center-active .apl-stage {
+    justify-content: flex-start;
+    padding-top: clamp(18px, 3vh, 34px);
+    box-sizing: border-box;
+  }
+
+  .about-project-landing.apl-center-active .apl-panels {
+    max-width: none;
+    padding: 0 clamp(54px, 7vw, 92px);
+  }
+
+  .apl-panel-center .apl-center-inner {
+    width: min(1320px, calc(100vw - 112px));
+    max-width: none;
+    margin: 0 auto;
+    transform: none;
+  }
+
+  .apl-panel-center .usen-title-word {
+    font-size: clamp(59px, 6.6vw, 106px);
+  }
+
+  .apl-panel-center .usen-title-lockup .usen-square-mark {
+    width: clamp(86px, 7.8vw, 114px);
+    font-size: clamp(10px, 0.94vw, 14px);
+  }
+
+  .apl-panel-center .apl-center-title {
+    margin-bottom: clamp(8px, 1.1vh, 14px);
+  }
+
+  .usen-about-copy {
+    width: min(1220px, 100%);
+    max-height: calc(100svh - clamp(188px, 23vh, 250px));
+    overflow-y: auto;
+    margin: 0 auto;
+    padding: 0 6px 12px;
+    text-align: left;
+    color: rgba(245,242,237,0.68);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(200,168,75,0.42) rgba(255,255,255,0.04);
+  }
+
+  .usen-about-copy p {
+    margin: 0 0 7px;
+    font-size: clamp(11px, 0.68vw, 12.5px);
+    line-height: 1.42;
+  }
+
+  .usen-about-intro {
+    width: 100%;
+    margin: 0 auto 10px;
+    display: block;
+    max-width: 1180px;
+    text-align: center;
+  }
+
+  .usen-about-intro p:first-child {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(18px, 1.45vw, 27px);
+    line-height: 1.12;
+    color: rgba(245,242,237,0.88);
+    margin-bottom: 6px;
+  }
+
+  .usen-about-intro p:last-child {
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+
+  .usen-about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    align-items: start;
+  }
+
+  .usen-about-block {
+    border-left: 2px solid var(--accent);
+    background: rgba(200,168,75,0.035);
+    padding: 8px 18px 8px 20px;
+  }
+
+  .usen-about-cta h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    color: var(--accent);
+    margin: 0 0 12px;
+  }
+
+  .usen-question {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .usen-about-cta {
+    width: min(1080px, 100%);
+    margin: clamp(9px, 1.4vh, 16px) auto 0;
+    text-align: center;
+  }
+
+  .usen-about-cta h3 {
+    font-size: clamp(22px, 1.9vw, 34px);
+    line-height: 1.06;
+    margin-bottom: 6px;
+  }
+
+  .usen-about-cta p {
+    color: rgba(245,242,237,0.7);
+  }
+
+  @media (max-width: 980px) {
+    .apl-panel-center .apl-center-inner {
+      width: min(100%, calc(100vw - 96px));
+    }
+
+    .usen-about-copy {
+      max-height: calc(100svh - 230px);
+    }
+
+  }
+
+  .chapter-next,
+  .inline-next,
+  .fixed-next,
+  #about.about-landing > a.inline-next,
+  .chapter-next:visited,
+  .inline-next:visited,
+  .fixed-next:visited,
+  #about.about-landing > a.inline-next:visited {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 18px;
+    gap: 10px;
+    border: 1px solid rgba(200,168,75,0.72);
+    background: var(--accent);
+    color: #0D0D0D !important;
+    font-weight: 700;
+    box-shadow: 0 14px 34px rgba(200,168,75,0.16);
+  }
+
+  .chapter-next::before,
+  .inline-next::before,
+  .fixed-next::before {
+    display: none !important;
+  }
+
+  .chapter-next::after,
+  .inline-next::after,
+  .fixed-next::after {
+    color: #0D0D0D !important;
+  }
+
+  #about.about-landing > a.inline-next,
+  #about.about-landing > a.inline-next:visited {
+    display: none !important;
+  }
+
+  .about-project-landing .apl-dots {
+    bottom: clamp(76px, 11.5vh, 92px);
+  }
+
+  /* v0.5.8: compact contacts section with visible footer */
+  #contact.contact-landing {
+    min-height: calc(100svh - 74px) !important;
+    padding-top: clamp(78px, 9vh, 96px) !important;
+    padding-bottom: clamp(18px, 3vh, 28px) !important;
+    justify-content: center;
+  }
+
+  #contact .contact-title {
+    margin-bottom: clamp(18px, 2.4vh, 26px);
+  }
+
+  #contact .contact-grid {
+    gap: clamp(34px, 4.4vw, 54px);
+    align-items: center;
+  }
+
+  #contact .contact-form {
+    width: min(100%, 460px);
+    justify-self: start;
+    padding: clamp(16px, 2vw, 20px);
+    gap: 10px;
+  }
+
+  #contact .contact-form label {
+    gap: 5px;
+    font-size: 11px;
+  }
+
+  #contact .contact-form input,
+  #contact .contact-form textarea {
+    padding: 9px 11px;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  #contact .contact-form textarea {
+    min-height: 88px;
+    height: 96px;
+    resize: vertical;
+  }
+
+  #contact .contact-submit {
+    padding: 11px 18px;
+  }
+
+  footer {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    border-top: 0 !important;
+  }
+
+  @media (max-width: 760px) {
+    #contact.contact-landing {
+      min-height: auto !important;
+      padding-top: 78px !important;
+      padding-bottom: 22px !important;
+    }
+
+    #contact .contact-grid {
+      gap: 22px;
+    }
+
+  }
+
+/* UI bugfix: project-next controls inside the viewport */
 </style>
-<button id="pandora-chat-btn" onclick="togglePandoraChat()" aria-label="Pandora AI чат">
-  <svg viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="27" cy="27" r="23" fill="#fff" stroke="#C0392B" stroke-width="3"/>
-    <path d="M11 29 Q11 21 19 21 H27 Q35 21 35 29 Q35 35 29 36 L15 40 L18 35 Q11 34 11 29Z" fill="none" stroke="#1A3A7A" stroke-width="2.5" stroke-linejoin="round"/>
-    <path d="M21 18 Q21 11 29 11 H36 Q43 11 43 18 Q43 24 37 25 L39 30 L27 26 Q21 24 21 18Z" fill="none" stroke="#2E9B45" stroke-width="2.5" stroke-linejoin="round"/>
-  </svg>
-</button>
-
-<div id="pandora-chat-window">
-  <div class="pc-header">
-    <div class="pc-header-left">
-      <div class="pc-dot"></div>
-      <div>
-        <div class="pc-title-row"><div class="pc-title">Pandora AI</div><span class="pc-header-beta">beta</span></div>
-        <div class="pc-sub" id="pcSubtitle">Кооперативний AI-помічник</div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:6px;">
-      <button class="pc-expand" id="pcExpandBtn" onclick="togglePandoraFullscreen()" title="Розгорнути на весь екран">
-        <svg id="pcExpandIcon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;">
-          <polyline points="1,5 1,1 5,1"/><line x1="1" y1="1" x2="5.5" y2="5.5"/>
-          <polyline points="9,1 13,1 13,5"/><line x1="13" y1="1" x2="8.5" y2="5.5"/>
-          <polyline points="1,9 1,13 5,13"/><line x1="1" y1="13" x2="5.5" y2="8.5"/>
-          <polyline points="13,9 13,13 9,13"/><line x1="13" y1="13" x2="8.5" y2="8.5"/>
-        </svg>
-      </button>
-      <button class="pc-close" onclick="togglePandoraChat()">&#x00D7;</button>
-    </div>
-  </div>
-  <div class="pc-modes" role="tablist" aria-label="Режим асистента">
-    <button class="pc-mode active" id="pcModeAi" type="button" onclick="pcSetMode('ai')">AI-помічник</button>
-    <button class="pc-mode pc-mode-feedback" id="pcModeQa" type="button" onclick="pcSetMode('qa')">Повідомити про баг / ідею</button>
-  </div>
-  <div class="pc-messages" id="pcMessages">
-    <div class="pc-msg bot" id="pcGreeting">Поставте запитання про Pandora, пайовиків, вступ, внески або кооперативну модель.</div>
-  </div>
-  <div class="pc-suggestions" id="pcSuggestions">
-    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Що таке Pandora?</button>
-    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Як вступити?</button>
-    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Що таке пайовик?</button>
-    <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Чи можна заробити?</button>
-  </div>
-  <div class="pc-input-row" id="pcInputRow">
-    <textarea class="pc-input" id="pcInput" placeholder="Задайте питання..." rows="1"
-      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();pcSend()}"
-      oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px'"></textarea>
-    <button class="pc-send" id="pcSendBtn" onclick="pcSend()">
-      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-    </button>
-  </div>
-  <div class="pc-qa-panel" id="pcQaPanel">
-    <div class="pc-qa-heading">
-      <h3 id="pcQaTitle">Допоможіть покращити Pandora</h3>
-      <p id="pcQaIntro">Тестування — це внесок співробітника. Пропозиції — це внесок співвласника.</p>
-    </div>
-    <div class="pc-qa-choices" id="pcQaChoices">
-      <button class="pc-qa-action" type="button" onclick="pcOpenFeedback('bug')">
-        <span class="pc-qa-action-title" id="pcQaBug">🐞 Знайшов баг</span>
-        <span class="pc-qa-action-description" id="pcQaBugDescription">Повідомити, що працює не так</span>
-      </button>
-      <button class="pc-qa-action" type="button" onclick="pcOpenFeedback('suggestion')">
-        <span class="pc-qa-action-title" id="pcQaSuggestion">💡 Є пропозиція</span>
-        <span class="pc-qa-action-description" id="pcQaSuggestionDescription">Запропонувати, як зробити краще</span>
-      </button>
-      <button class="pc-qa-action pc-qa-action-fixation" type="button" onclick="pcEnterFixationMode()">
-        <span class="pc-qa-action-title" id="pcQaFixation">🎯 Режим фіксації</span>
-        <span class="pc-qa-action-description" id="pcQaFixationDescription">Швидко зафіксувати фото, відео або голос</span>
-      </button>
-    </div>
-    <div class="pc-qa-form" id="pcQaForm" data-type=""></div>
-  </div>
-</div>
-
-<div id="pc-fixation-dock" role="region" aria-label="Пульт фіксації">
-  <div class="pc-fixation-head">
-    <strong id="pcFixationTitle">Пульт фіксації</strong>
-    <button class="pc-fixation-exit" id="pcFixationExit" type="button" onclick="pcExitFixationMode()">Повернутися до Pandora AI</button>
-  </div>
-  <div class="pc-fixation-controls">
-    <button class="pc-fixation-action photo" id="pcPhotoAction" type="button" onclick="pcOpenPhotoCapture()" title="Фотофіксація">
-      <span class="pc-fixation-icon" aria-hidden="true">📷</span>
-      <span class="pc-fixation-label" id="pcPhotoLabel">Фотофіксація</span>
-      <span class="pc-fixation-secondary" id="pcPhotoChoose" role="button" tabindex="0" onclick="pcOpenPhotoLibrary(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();pcOpenPhotoLibrary(event)}">Вибрати фото</span>
-    </button>
-    <button class="pc-fixation-action video" id="pcVideoAction" type="button" onclick="pcOpenVideoLibrary()" title="Відеофіксація">
-      <span class="pc-fixation-icon" aria-hidden="true">🎥</span>
-      <span class="pc-fixation-label" id="pcVideoLabel">Відеофіксація</span>
-      <span class="pc-fixation-secondary" id="pcVideoChoose">Вибрати відео</span>
-    </button>
-    <button class="pc-fixation-action voice" id="pcVoiceAction" type="button" onclick="pcToggleAudioRecording()" title="Голосова фіксація">
-      <span class="pc-fixation-icon" aria-hidden="true">🎙</span>
-      <span class="pc-fixation-label" id="pcVoiceLabel">Голос</span>
-      <span class="pc-voice-timer" id="pcVoiceTimer">00:00</span>
-    </button>
-  </div>
-  <div class="pc-fixation-preview" id="pcFixationPreview" hidden></div>
-  <p class="pc-visually-hidden" id="pcVoiceNext">Автоматичне розшифрування голосу буде підключено наступним етапом.</p>
-  <input class="pc-visually-hidden" id="pcPhotoCapture" type="file" accept="image/*" capture="environment" onchange="pcHandleFixationFile(this,'image')">
-  <input class="pc-visually-hidden" id="pcPhotoLibrary" type="file" accept="image/*" onchange="pcHandleFixationFile(this,'image')">
-  <input class="pc-visually-hidden" id="pcVideoLibrary" type="file" accept="video/*" onchange="pcHandleFixationFile(this,'video')">
-</div>
-
 <script>
-// Init chat UI language — runs after chat DOM is in place
-(function() {
-  const lang = getPcLang();
-  pcUpdateUI(lang);
-  const greeting = document.getElementById('pcGreeting');
-  if (greeting) greeting.textContent = (PC_STRINGS[lang] || PC_STRINGS.uk).greeting;
-})();
-</script>
-
-
-<script>
-function handlePandoraContact(event) {
+async function handlePandoraContact(event) {
   event.preventDefault();
   const form = event.currentTarget;
   const status = document.getElementById('contactStatus');
+  const btn = form.querySelector('.contact-submit');
   const name = (form.elements.name?.value || '').trim();
   const contact = (form.elements.contact?.value || '').trim();
   const message = (form.elements.message?.value || '').trim();
+  const botcheck = (form.elements.botcheck?.value || '').trim();
+  if (botcheck) {
+    if (status) status.textContent = 'Сообщение отправлено. Мы свяжемся с вами.';
+    form.reset();
+    return;
+  }
   if (!message) {
     if (status) status.textContent = 'Заполните сообщение перед отправкой.';
     return;
   }
-  const subject = encodeURIComponent('Сообщение с сайта Pandora');
-  const body = encodeURIComponent(`Имя: ${name || '-'}\nКонтакт: ${contact || '-'}\n\n${message}`);
-  if (status) status.textContent = 'Сейчас откроется почтовый клиент. Если он не открылся, напишите на usenpandora@gmail.com.';
-  window.location.href = `mailto:usenpandora@gmail.com?subject=${subject}&body=${body}`;
+  const payload = new URLSearchParams();
+  payload.append('access_key', 'd2629b69-5660-43e0-8b0d-f2ac60a2c452');
+  payload.append('subject', 'Pandora contact form');
+  payload.append('from_name', name || 'Pandora site contact');
+  payload.append('name', name);
+  payload.append('contact', contact);
+  payload.append('message', message);
+  payload.append('source', 'pandora-contact-form');
+  if (status) status.textContent = 'Отправляем...';
+  if (btn) btn.disabled = true;
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: payload.toString()
+    });
+    if (!res.ok) throw new Error('contact-submit-failed');
+    if (status) status.textContent = 'Сообщение отправлено. Мы свяжемся с вами.';
+    form.reset();
+  } catch (error) {
+    if (status) status.textContent = 'Не удалось отправить. Попробуйте позже или напишите на usenpandora@gmail.com';
+  } finally {
+    if (btn) btn.disabled = false;
+  }
 }
 </script>
 
 <script id="pandora-refactor-behavior-v0-1">
-const SHARE_TEXT = encodeURIComponent('Pandora — кооператив нового поколения. Универсальная социально-экономическая сеть U.S.E.N. Присоединяйся:');
+const SHARE_TEXT = encodeURIComponent('Стань совладельцем универсальной социально-экономической сети - USEN Pandora. Подробности тут:');
 const SHARE_URL = encodeURIComponent('https://pandora.co.ua');
 
 function toggleShareMenu(event) {
@@ -3202,20 +2598,14 @@ function toggleShareMenu(event) {
 
 function shareTo(network) {
   const url = 'https://pandora.co.ua';
-  const text = 'Pandora — кооператив нового поколения. Универсальная социально-экономическая сеть U.S.E.N. Присоединяйся: ' + url;
+  const text = 'Стань совладельцем универсальной социально-экономической сети - USEN Pandora. Подробности тут: ' + url;
   let link;
   switch (network) {
-    case 'telegram': link = 'https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text); break;
+    case 'telegram': link = 'https://t.me/share/url?text=' + encodeURIComponent(text); break;
     case 'facebook': link = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url); break;
     case 'twitter': link = 'https://x.com/intent/post?text=' + encodeURIComponent(text); break;
     case 'whatsapp': link = 'https://wa.me/?text=' + encodeURIComponent(text); break;
     case 'viber': link = 'viber://forward?text=' + encodeURIComponent(text); break;
-    case 'copy':
-      navigator.clipboard.writeText(text).then(() => {
-        const status = document.getElementById('signalCopyStatus');
-        if (status) { status.textContent = 'Ссылка скопирована'; setTimeout(() => status.textContent = '', 3000); }
-      });
-      break;
   }
   if (link) window.open(link, '_blank', 'noopener');
   document.getElementById('shareMenu').classList.remove('open');
@@ -3230,16 +2620,196 @@ document.addEventListener('click', function(e) {
 
 
 
+<script id="pandora-about-project-carousel-v1">
+(function () {
+  var order = ['left', 'center', 'right'];
+  var stage = document.querySelector('.about-project-landing .apl-stage');
+  if (!stage) return;
+  var panels = {
+    left: document.getElementById('aplPanelLeft'),
+    center: document.getElementById('aplPanelCenter'),
+    right: document.getElementById('aplPanelRight')
+  };
+  var dots = document.querySelectorAll('.apl-dot');
+  var btnLeft = document.getElementById('aplArrowLeft');
+  var btnRight = document.getElementById('aplArrowRight');
+  var idx = 1;
+  var labels = {
+    left: '<span data-lang="uk" class="active">Назва</span><span data-lang="ru">Название</span><span data-lang="en">Name</span><span data-lang="es">Nombre</span>',
+    center: '<span data-lang="uk" class="active">Про проєкт</span><span data-lang="ru">О проекте</span><span data-lang="en">About the project</span><span data-lang="es">Sobre el proyecto</span>',
+    right: '<span data-lang="uk" class="active">Логотип</span><span data-lang="ru">Логотип</span><span data-lang="en">Logo</span><span data-lang="es">Logotipo</span>'
+  };
+  var ariaLabels = {
+    left: 'Название',
+    center: 'О проекте',
+    right: 'Логотип'
+  };
+
+  function setArrowState(btn, targetKey, visible, iconOnly) {
+    if (!btn) return;
+    btn.hidden = !visible;
+    btn.classList.toggle('apl-arrow-icon-only', !!iconOnly);
+    btn.setAttribute('aria-label', visible ? (iconOnly ? (btn === btnLeft ? 'Назад' : 'Вперёд') : ariaLabels[targetKey]) : '');
+    var label = btn.querySelector('.apl-arrow-label');
+    if (label && labels[targetKey]) {
+      label.innerHTML = labels[targetKey];
+      if (typeof setLang === 'function') {
+        setLang(localStorage.getItem('pandora_lang') || localStorage.getItem('pandora-lang') || 'uk');
+      }
+    }
+  }
+
+  function syncDotsVisibility() {
+    var section = document.querySelector('.about-project-landing');
+    if (!section) return;
+    var rect = section.getBoundingClientRect();
+    var visible = rect.top < window.innerHeight * 0.75 && rect.bottom > window.innerHeight * 0.25;
+    section.classList.toggle('apl-in-view', visible);
+    section.classList.toggle('apl-dots-visible', visible);
+  }
+
+  function render() {
+    order.forEach(function (key, i) {
+      if (!panels[key]) return;
+      panels[key].classList.toggle('apl-active', i === idx);
+    });
+    dots.forEach(function (dot) {
+      dot.classList.toggle('apl-dot-active', dot.getAttribute('data-panel') === order[idx]);
+    });
+    var section = document.querySelector('.about-project-landing');
+    if (section) {
+      var isCenter = order[idx] === 'center';
+      section.classList.toggle('apl-center-active', isCenter);
+      if (isCenter) section.classList.remove('project-next-hidden');
+    }
+    setArrowState(btnLeft, order[idx - 1], idx > 0, false);
+    setArrowState(btnRight, order[idx + 1], idx < order.length - 1, false);
+    syncDotsVisibility();
+  }
+
+  function goTo(targetIdx) {
+    idx = Math.max(0, Math.min(order.length - 1, targetIdx));
+    render();
+  }
+
+  if (btnLeft) btnLeft.addEventListener('click', function () { goTo(idx - 1); });
+  if (btnRight) btnRight.addEventListener('click', function () { goTo(idx + 1); });
+  stage.addEventListener('wheel', function (e) {
+    if (idx === 1 || Math.abs(e.deltaY) < 8 || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+    e.preventDefault();
+    goTo(1);
+  }, { passive: false });
+  dots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      goTo(order.indexOf(dot.getAttribute('data-panel')));
+    });
+  });
+  window.addEventListener('scroll', syncDotsVisibility, { passive: true });
+  window.addEventListener('resize', syncDotsVisibility);
+  window.setTimeout(syncDotsVisibility, 120);
+
+  var touchStartX = null;
+  var touchStartY = null;
+  stage.addEventListener('touchstart', function (e) {
+    if (!e.touches || !e.touches.length) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (touchStartX === null) return;
+    var touch = (e.changedTouches && e.changedTouches[0]) || null;
+    if (!touch) return;
+    var dx = touch.clientX - touchStartX;
+    var dy = touch.clientY - touchStartY;
+    touchStartX = null;
+    touchStartY = null;
+    if (idx !== 1 && Math.abs(dy) >= 40 && Math.abs(dy) > Math.abs(dx)) {
+      goTo(1);
+      return;
+    }
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    if (dx < 0) { goTo(idx + 1); } else { goTo(idx - 1); }
+  }, { passive: true });
+
+  render();
+})();
+</script>
+
+<script id="pandora-project-intro-next-visibility-fix-v1">
+(function () {
+  var section = document.getElementById('project-intro');
+  if (!section) return;
+
+  function isProjectIntroVisible() {
+    var rect = section.getBoundingClientRect();
+    return rect.top < window.innerHeight * 0.82 && rect.bottom > window.innerHeight * 0.18;
+  }
+
+  function isProjectCenterActive() {
+    return section.classList.contains('apl-center-active');
+  }
+
+  function syncNextVisibility() {
+    var visible = isProjectIntroVisible();
+    if (!visible) {
+      section.classList.remove('project-next-hidden');
+    }
+  }
+
+  function handleWheelNavigation(event) {
+    if (!isProjectIntroVisible() || !isProjectCenterActive()) return;
+    if (event.deltaY < 0) {
+      section.classList.remove('project-next-hidden');
+    } else if (event.deltaY > 0) {
+      section.classList.add('project-next-hidden');
+    }
+  }
+
+  var lastTouchY = null;
+
+  function rememberTouchStart(event) {
+    if (!event.touches || !event.touches.length) return;
+    lastTouchY = event.touches[0].clientY;
+  }
+
+  function handleTouchNavigation(event) {
+    if (!event.touches || !event.touches.length || lastTouchY === null) return;
+    if (!isProjectIntroVisible() || !isProjectCenterActive()) return;
+    var currentY = event.touches[0].clientY;
+    var dy = currentY - lastTouchY;
+    if (Math.abs(dy) < 8) return;
+    if (dy > 0) {
+      section.classList.remove('project-next-hidden');
+    } else {
+      section.classList.add('project-next-hidden');
+    }
+    lastTouchY = currentY;
+  }
+
+  document.querySelectorAll('a[href="#project-intro"]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      section.classList.remove('project-next-hidden');
+      window.setTimeout(syncNextVisibility, 80);
+    });
+  });
+  window.addEventListener('scroll', syncNextVisibility, { passive: true });
+  window.addEventListener('resize', syncNextVisibility, { passive: true });
+  window.addEventListener('wheel', handleWheelNavigation, { passive: true });
+  window.addEventListener('touchstart', rememberTouchStart, { passive: true });
+  window.addEventListener('touchmove', handleTouchNavigation, { passive: true });
+  window.setTimeout(syncNextVisibility, 120);
+})();
+</script>
+
 <script id="pandora-keyboard-zone-navigation-v0-2">
 (function () {
   const zoneIds = [
-    'hero', 'about', 'project-intro', 'chapter-01', 'chapter-02', 'chapter-03',
-    'chapter-04', 'chapter-05', 'examples', 'signal', 'contact'
+    'hero', 'about', 'project-intro', 'examples', 'signal', 'contact'
   ];
   let scrollLocked = false;
   function isEditableTarget(target) {
     if (!target || target === document.body) return false;
-    const editable = target.closest('input, textarea, select, button, [contenteditable="true"], #pandora-chat-window, #pc-fixation-dock');
+    const editable = target.closest('input, textarea, select, button, [contenteditable="true"]');
     return Boolean(editable);
   }
   function getNavOffset() {
@@ -3298,19 +2868,4 @@ Changes:
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
