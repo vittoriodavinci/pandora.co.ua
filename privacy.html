@@ -1,37 +1,58 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Политика конфиденциальности — Pandora / U.S.E.N.</title>
+<title>Політика конфіденційності — Pandora / U.S.E.N.</title>
 <meta name="robots" content="noindex, follow">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <style>
 :root{--bg:#080808;--text:#f5f2ed;--muted:rgba(245,242,237,.68);--line:rgba(255,255,255,.11);--gold:#c8a84b}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 16% 12%,rgba(212,43,43,.12),transparent 28%),radial-gradient(circle at 84% 10%,rgba(26,58,122,.16),transparent 34%),var(--bg);color:var(--text);font-family:"DM Sans",Arial,sans-serif;line-height:1.65}.topbar{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px clamp(20px,6vw,72px);border-bottom:1px solid var(--line);background:rgba(8,8,8,.82);backdrop-filter:blur(16px)}.brand{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}.mark{position:relative;width:34px;height:34px}.mark span{position:absolute;width:22px;height:22px;border-radius:50%;opacity:.78}.r{background:#d42b2b;left:0;top:6px}.g{background:#1a7a3c;right:0;top:6px}.b{background:#1a3a7a;left:6px;bottom:0}.brand strong{font-size:13px;letter-spacing:.08em}.nav{display:flex;gap:14px;flex-wrap:wrap}.nav a,.footer a{color:var(--muted);text-decoration:none;font-size:12px}.nav a:hover,.footer a:hover{color:var(--gold)}main{width:min(880px,calc(100% - 40px));margin:0 auto;padding:clamp(48px,8vw,88px) 0}h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(42px,6vw,72px);line-height:1;margin:0 0 12px;font-weight:300}.lead{color:var(--gold);margin:0 0 34px;font-size:14px;letter-spacing:.06em}.card{border-left:2px solid var(--gold);background:rgba(200,168,75,.035);padding:24px 28px;margin:18px 0}h2{font-size:17px;letter-spacing:.12em;text-transform:uppercase;margin:34px 0 10px;color:var(--gold)}p,li{color:var(--muted);font-size:15px}ul{padding-left:22px}.footer{border-top:1px solid var(--line);padding:18px clamp(20px,6vw,72px);display:flex;gap:16px;flex-wrap:wrap;justify-content:center}@media(max-width:620px){.topbar{align-items:flex-start;flex-direction:column}.nav{gap:10px}main{width:min(100% - 28px,880px);padding-top:38px}.card{padding:18px}}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 16% 12%,rgba(212,43,43,.12),transparent 28%),radial-gradient(circle at 84% 10%,rgba(26,58,122,.16),transparent 34%),var(--bg);color:var(--text);font-family:"DM Sans",Arial,sans-serif;line-height:1.65}
+.topbar{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px clamp(20px,6vw,72px);border-bottom:1px solid var(--line);background:rgba(8,8,8,.82);backdrop-filter:blur(16px)}
+.brand{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}.mark{position:relative;width:34px;height:34px}.mark span{position:absolute;width:22px;height:22px;border-radius:50%;opacity:.78}.r{background:#d42b2b;left:0;top:6px}.g{background:#1a7a3c;right:0;top:6px}.b{background:#1a3a7a;left:6px;bottom:0}.brand strong{font-size:13px;letter-spacing:.08em}.nav{display:flex;gap:14px;flex-wrap:wrap}.nav a,.footer a{color:var(--muted);text-decoration:none;font-size:12px}.nav a:hover,.footer a:hover{color:var(--gold)}
+main{width:min(880px,calc(100% - 40px));margin:0 auto;padding:clamp(48px,8vw,88px) 0}
+h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(42px,6vw,72px);line-height:1;margin:0 0 12px;font-weight:300}.lead{color:var(--gold);margin:0 0 34px;font-size:14px;letter-spacing:.06em}.card{border-left:2px solid var(--gold);background:rgba(200,168,75,.035);padding:24px 28px;margin:18px 0}h2{font-size:17px;letter-spacing:.12em;text-transform:uppercase;margin:34px 0 10px;color:var(--gold)}p,li{color:var(--muted);font-size:15px}ul{padding-left:22px}.footer{border-top:1px solid var(--line);padding:18px clamp(20px,6vw,72px);display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+[data-lang]{display:none}[data-lang].active{display:block}span[data-lang].active{display:inline}
+@media(max-width:620px){.topbar{align-items:flex-start;flex-direction:column}.nav{gap:10px}main{width:min(100% - 28px,880px);padding-top:38px}.card{padding:18px}}
 </style>
 </head>
-<body>
+<body data-page="privacy">
 <header class="topbar">
-  <a class="brand" href="index.html"><span class="mark" aria-hidden="true"><span class="r"></span><span class="g"></span><span class="b"></span></span><strong>Кооператив Пандора</strong></a>
-  <nav class="nav"><a href="index.html">Главная</a><a href="terms.html">Условия</a><a href="requisites.html">Реквизиты</a></nav>
+  <a class="brand" href="index.html"><span class="mark" aria-hidden="true"><span class="r"></span><span class="g"></span><span class="b"></span></span><strong><span data-lang="uk">Кооператив Пандора</span><span data-lang="ru">Кооператив Пандора</span><span data-lang="en">Pandora Cooperative</span><span data-lang="es">Cooperativa Pandora</span></strong></a>
+  <nav class="nav" aria-label="Page navigation"><a href="index.html"><span data-lang="uk">На головну</span><span data-lang="ru">На главную</span><span data-lang="en">Back to home</span><span data-lang="es">Volver al inicio</span></a></nav>
 </header>
 <main>
+
+<article data-lang="uk">
+  <h1>Політика конфіденційності</h1>
+  <p class="lead">Чернетка для тестового запуску. Документ буде уточнюватися.</p>
+  <section class="card"><p>Цей документ описує, які дані можуть оброблятися під час тестового використання сайту Pandora / U.S.E.N. Формулювання є робочими і не замінюють фінальний юридичний документ.</p></section>
+  <h2>Які дані можуть збиратися</h2>
+  <p>Сайт може отримувати дані, які користувач сам вводить у форми: ім’я, email, телефон, країну, месенджери, текст звернення, коментарі та дані заявки. Також можуть оброблятися технічні дані браузера, необхідні для роботи сайту, безпеки та запобігання спаму.</p>
+  <h2>Цілі обробки</h2>
+  <ul><li>зворотний зв’язок з користувачем;</li><li>обробка заявки або звернення;</li><li>комунікація з учасником проєкту;</li><li>покращення сайту та користувацького досвіду;</li><li>безпека та запобігання спаму.</li></ul>
+  <h2>Передача даних</h2>
+  <p>Дані не продаються третім особам. Для надсилання форм можуть використовуватися зовнішні сервіси обробки заявок і повідомлень. Такі сервіси отримують лише дані, необхідні для доставки звернення.</p>
+  <h2>Права користувача</h2>
+  <p>Користувач може запросити уточнення, виправлення або видалення своїх даних, якщо це технічно можливо в межах поточного етапу проєкту. Для звернення використовуйте email: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <h2>Строк зберігання</h2>
+  <p>Дані зберігаються стільки, скільки необхідно для обробки звернення, тестування сайту, підготовки документів проєкту та виконання розумних організаційних завдань.</p>
+  <h2>Cookies і локальне сховище</h2>
+  <p>Сайт може використовувати localStorage для збереження вибраної мови інтерфейсу та користувацьких налаштувань. Це допомагає відновити вибрану мову при повторному відкритті сайту.</p>
+  <h2>Контакт</h2>
+  <p>З питань конфіденційності: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <p>Дата оновлення: 01.07.2026</p>
+</article>
+<article data-lang="ru">
   <h1>Политика конфиденциальности</h1>
   <p class="lead">Черновик для тестового запуска. Документ будет уточняться.</p>
-  <section class="card">
-    <p>Этот документ описывает, какие данные могут обрабатываться при тестовом использовании сайта Pandora / U.S.E.N. Формулировки являются рабочими и не заменяют финальный юридический документ.</p>
-  </section>
+  <section class="card"><p>Этот документ описывает, какие данные могут обрабатываться при тестовом использовании сайта Pandora / U.S.E.N. Формулировки являются рабочими и не заменяют финальный юридический документ.</p></section>
   <h2>Какие данные могут собираться</h2>
   <p>Сайт может получать данные, которые пользователь сам вводит в формы: имя, email, телефон, страну, мессенджеры, текст обращения, комментарии и данные заявки. Также могут обрабатываться технические данные браузера, необходимые для работы сайта, безопасности и предотвращения спама.</p>
   <h2>Цели обработки</h2>
-  <ul>
-    <li>обратная связь с пользователем;</li>
-    <li>обработка заявки или обращения;</li>
-    <li>коммуникация с участником проекта;</li>
-    <li>улучшение сайта и пользовательского опыта;</li>
-    <li>безопасность и предотвращение спама.</li>
-  </ul>
+  <ul><li>обратная связь с пользователем;</li><li>обработка заявки или обращения;</li><li>коммуникация с участником проекта;</li><li>улучшение сайта и пользовательского опыта;</li><li>безопасность и предотвращение спама.</li></ul>
   <h2>Передача данных</h2>
   <p>Данные не продаются третьим лицам. Для отправки форм могут использоваться внешние сервисы обработки заявок и сообщений. Такие сервисы получают только данные, необходимые для доставки обращения.</p>
   <h2>Права пользователя</h2>
@@ -43,7 +64,94 @@
   <h2>Контакт</h2>
   <p>По вопросам конфиденциальности: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
   <p>Дата обновления: 01.07.2026</p>
+</article>
+<article data-lang="en">
+  <h1>Privacy Policy</h1>
+  <p class="lead">Draft for the test launch. The document will be clarified.</p>
+  <section class="card"><p>This document describes what data may be processed during test use of the Pandora / U.S.E.N. website. The wording is provisional and does not replace the final legal document.</p></section>
+  <h2>What data may be collected</h2>
+  <p>The website may receive data that the user enters into forms: name, email, phone number, country, messengers, message text, comments and application data. Technical browser data required for website operation, security and spam prevention may also be processed.</p>
+  <h2>Purposes of processing</h2>
+  <ul><li>feedback and communication with the user;</li><li>processing an application or request;</li><li>communication with a project participant;</li><li>improving the website and user experience;</li><li>security and spam prevention.</li></ul>
+  <h2>Data transfer</h2>
+  <p>Data is not sold to third parties. External services may be used to process forms and messages. Such services receive only the data required to deliver the request.</p>
+  <h2>User rights</h2>
+  <p>The user may request clarification, correction or deletion of their data if this is technically possible at the current stage of the project. Use this email for requests: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <h2>Storage period</h2>
+  <p>Data is stored for as long as necessary to process the request, test the website, prepare project documents and perform reasonable organisational tasks.</p>
+  <h2>Cookies and local storage</h2>
+  <p>The website may use localStorage to save the selected interface language and user settings. This helps restore the selected language when the website is opened again.</p>
+  <h2>Contact</h2>
+  <p>For privacy questions: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <p>Updated: 01.07.2026</p>
+</article>
+<article data-lang="es">
+  <h1>Política de privacidad</h1>
+  <p class="lead">Borrador para el lanzamiento de prueba. El documento será precisado.</p>
+  <section class="card"><p>Este documento describe qué datos pueden procesarse durante el uso de prueba del sitio Pandora / U.S.E.N. Las formulaciones son provisionales y no sustituyen el documento legal final.</p></section>
+  <h2>Qué datos pueden recopilarse</h2>
+  <p>El sitio puede recibir los datos que el usuario introduce en los formularios: nombre, email, teléfono, país, mensajeros, texto del mensaje, comentarios y datos de la solicitud. También pueden procesarse datos técnicos del navegador necesarios para el funcionamiento del sitio, la seguridad y la prevención del spam.</p>
+  <h2>Finalidades del tratamiento</h2>
+  <ul><li>comunicación con el usuario;</li><li>procesamiento de una solicitud o mensaje;</li><li>comunicación con un participante del proyecto;</li><li>mejora del sitio y de la experiencia del usuario;</li><li>seguridad y prevención del spam.</li></ul>
+  <h2>Transferencia de datos</h2>
+  <p>Los datos no se venden a terceros. Para enviar formularios pueden utilizarse servicios externos de procesamiento de solicitudes y mensajes. Estos servicios reciben solo los datos necesarios para entregar el mensaje.</p>
+  <h2>Derechos del usuario</h2>
+  <p>El usuario puede solicitar la aclaración, corrección o eliminación de sus datos si esto es técnicamente posible en la etapa actual del proyecto. Para consultas, use el email: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <h2>Periodo de almacenamiento</h2>
+  <p>Los datos se conservan durante el tiempo necesario para procesar la solicitud, probar el sitio, preparar documentos del proyecto y realizar tareas organizativas razonables.</p>
+  <h2>Cookies y almacenamiento local</h2>
+  <p>El sitio puede usar localStorage para guardar el idioma seleccionado de la interfaz y la configuración del usuario. Esto ayuda a restaurar el idioma elegido al volver a abrir el sitio.</p>
+  <h2>Contacto</h2>
+  <p>Para cuestiones de privacidad: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <p>Fecha de actualización: 01.07.2026</p>
+</article>
+
 </main>
-<footer class="footer"><a href="index.html">Главная</a><a href="terms.html">Условия</a><a href="requisites.html">Реквизиты</a></footer>
+<footer class="footer"><a href="index.html"><span data-lang="uk">На головну</span><span data-lang="ru">На главную</span><span data-lang="en">Back to home</span><span data-lang="es">Volver al inicio</span></a></footer>
+<script>
+(function () {
+  const LANGS = { uk: true, ru: true, en: true, es: true };
+  const TITLES = {
+    privacy: {
+      uk: 'Політика конфіденційності — Pandora / U.S.E.N.',
+      ru: 'Политика конфиденциальности — Pandora / U.S.E.N.',
+      en: 'Privacy Policy — Pandora / U.S.E.N.',
+      es: 'Política de privacidad — Pandora / U.S.E.N.'
+    },
+    terms: {
+      uk: 'Умови використання — Pandora / U.S.E.N.',
+      ru: 'Условия использования — Pandora / U.S.E.N.',
+      en: 'Terms of Use — Pandora / U.S.E.N.',
+      es: 'Términos de uso — Pandora / U.S.E.N.'
+    }
+  };
+
+  function readSavedLang() {
+    try {
+      return localStorage.getItem('pandora_lang') || localStorage.getItem('pandora-lang') || 'uk';
+    } catch (e) {
+      return 'uk';
+    }
+  }
+
+  function setPageLang(lang) {
+    lang = LANGS[lang] ? lang : 'uk';
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.classList.toggle('active', el.getAttribute('data-lang') === lang);
+    });
+
+    const page = document.body.getAttribute('data-page');
+    if (TITLES[page] && TITLES[page][lang]) document.title = TITLES[page][lang];
+
+    try {
+      localStorage.setItem('pandora_lang', lang);
+      localStorage.setItem('pandora-lang', lang);
+    } catch (e) {}
+  }
+
+  setPageLang(readSavedLang());
+})();
+</script>
 </body>
 </html>
