@@ -341,7 +341,7 @@ function normalizeRequest(body) {
     : "";
 
   if (!message || message.length > MAX_MESSAGE_LENGTH) return null;
-  if (mode !== "ai" || role !== "guest") return null;
+  if (mode !== "ai" || role !== "member") return null;
   if (conversationId.length > MAX_CONVERSATION_ID_LENGTH) return null;
   if (conversationId && !/^resp_[A-Za-z0-9_-]+$/.test(conversationId)) return null;
   if (requestId && !/^[A-Za-z0-9_-]{8,80}$/.test(requestId)) return null;
