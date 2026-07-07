@@ -18,6 +18,13 @@
     return dict[key]||TEXT.en[key]||key;
   };
 
+  window.pandoraSyncCaptchaLanguage=function(lang){
+    const normalized=({ua:'uk',uk:'uk',ru:'ru',en:'en',es:'es'}[lang])||'uk';
+    document.querySelectorAll('.h-captcha[data-captcha="true"]').forEach(el=>{
+      el.setAttribute('data-lang',normalized);
+    });
+  };
+
   function setError(input,key){
     if(!input)return false;
     input.setCustomValidity(window.pandoraFormText(key));
@@ -267,12 +274,21 @@
   window.initPandoraFormGuards=function(){
     document.querySelectorAll('form').forEach(form=>ensureStartedAt(form));
     window.pandoraInitCountryPhone(document);
+    window.pandoraSyncCaptchaLanguage(localStorage.getItem('pandora_lang')||document.documentElement.lang||'uk');
     document.querySelectorAll('input[type="email"],input[type="tel"],textarea').forEach(input=>{
       if(input.dataset.pandoraGuardBound)return;
       input.dataset.pandoraGuardBound='1';
       input.addEventListener('input',()=>clear(input));
     });
   };
+
+  window.addEventListener('storage',event=>{
+    if(event.key==='pandora_lang')window.pandoraSyncCaptchaLanguage(event.newValue||document.documentElement.lang||'uk');
+  });
+
+  document.addEventListener('click',()=>{
+    setTimeout(()=>window.pandoraSyncCaptchaLanguage(localStorage.getItem('pandora_lang')||document.documentElement.lang||'uk'),0);
+  });
 
   document.addEventListener('DOMContentLoaded',window.initPandoraFormGuards);
 })();
