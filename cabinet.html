@@ -7,6 +7,7 @@
 <meta name="description" content="Прототип кабинета кооператива Пандора: профиль, участие, документы, заявка и проектный образ Pandora ID.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/pandora-language-modal.css">
 <style>
 :root{
   --bg:#080808; --text:#f5f2ed; --muted:rgba(245,242,237,.66); --dim:rgba(245,242,237,.40);
@@ -75,6 +76,49 @@ a{color:inherit}.app{height:100vh;display:grid;grid-template-rows:var(--cabinet-
   }
 #pandora-chat-window{height:min(500px,calc(100vh - var(--cabinet-nav-h) - var(--cabinet-dock-h) - 34px))}.pc-dot{animation:pulse 2s infinite}.pc-close,.pc-expand{background:none;border:none;color:rgba(245,242,237,.4);cursor:pointer;line-height:1;padding:0;transition:color .15s}.pc-close{font-size:18px}.pc-expand{display:flex;align-items:center;justify-content:center;width:22px;height:22px}.pc-close:hover,.pc-expand:hover{color:#F5F2ED}.pc-modes{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:6px;border-bottom:1px solid #E4E7EC;background:#F7F8FA}.pc-mode{padding:9px 10px;border:1px solid transparent;border-radius:6px;background:transparent;color:#535A66;cursor:pointer;font:600 12px/1.3 "DM Sans",Arial,sans-serif;letter-spacing:0;text-transform:none;transition:all .15s}.pc-mode.active{color:#17356F;border-color:#D7DDE8;background:#fff;box-shadow:0 1px 3px rgba(16,24,40,.06)}.pc-mode-feedback.active{color:#654D0C;border-color:#E5D8AE;background:#FFFDF6}.pc-messages{scroll-behavior:smooth;min-height:0}.pc-messages::-webkit-scrollbar{width:3px}.pc-messages::-webkit-scrollbar-thumb{background:rgba(0,0,0,.1);border-radius:2px}.pc-suggestions{padding:0 14px 8px;display:flex;flex-wrap:wrap;gap:6px}.pc-suggestion{font-size:11px;padding:5px 10px;border:1px solid rgba(26,58,122,.2);color:#1A3A7A;background:rgba(26,58,122,.04);cursor:pointer;border-radius:2px;transition:all .15s;letter-spacing:.03em;font-family:"DM Sans",Arial,sans-serif}.pc-suggestion:hover{background:rgba(26,58,122,.1)}.pc-send:hover{opacity:.85}.pc-send:disabled{opacity:.4;cursor:default}.pc-msg.typing{color:#697386;font-style:italic}.pc-qa-panel{display:none;flex:1;flex-direction:column;justify-content:flex-start;gap:12px;padding:14px;color:#20242A;overflow-y:auto;background:#F7F8FA}.pc-qa-heading{padding:13px 14px;background:#fff;border:1px solid #E1E5EB;border-radius:8px;box-shadow:0 1px 3px rgba(16,24,40,.04)}.pc-qa-heading h3{margin:0 0 5px;font:650 16px/1.35 "DM Sans",Arial,sans-serif;color:#18202B}.pc-qa-heading p{margin:0;font:400 13px/1.5 "DM Sans",Arial,sans-serif;color:#4F5865}.pc-qa-choices{display:grid;gap:8px}.pc-qa-action{width:100%;padding:12px 13px;border:1px solid #DCE1E8;border-radius:8px;background:#fff;color:#17356F;cursor:pointer;text-align:left;font-family:"DM Sans",Arial,sans-serif;transition:transform .15s,border-color .15s,box-shadow .15s;display:flex;flex-direction:column;gap:3px}.pc-qa-action:hover{transform:translateY(-1px);border-color:#AEBBD0;box-shadow:0 4px 12px rgba(16,24,40,.07)}.pc-qa-action-title{font-size:15px;line-height:1.35;font-weight:650;color:#17356F}.pc-qa-action-description{font-size:13px;line-height:1.45;color:#56606D}.pc-qa-action-fixation{border-color:#DED9CC;background:#FFFDF8}.pc-qa-form{display:none;flex-direction:column;gap:13px;padding:14px;border:1px solid #E1E5EB;border-radius:9px;background:#fff;color:#20242A;font:14px/1.45 "DM Sans",Arial,sans-serif;box-shadow:0 1px 3px rgba(16,24,40,.04)}.pc-qa-form h4{margin:0;font:650 16px/1.35 "DM Sans",Arial,sans-serif;color:#182C50}.pc-qa-back{align-self:flex-start;padding:2px 0;border:0;background:none;color:#31558D;cursor:pointer;font:600 13px/1.35 "DM Sans",Arial,sans-serif}.pc-qa-back:hover{color:#17356F;text-decoration:underline}.pc-qa-field{display:flex;flex-direction:column;gap:6px;text-align:left}.pc-qa-field span{font-size:13px;line-height:1.4;font-weight:600;color:#29313B;text-transform:none;letter-spacing:0}.pc-qa-field textarea,.pc-qa-field input{width:100%;box-sizing:border-box;border:1px solid #C9D0DA;background:#fff;color:#20242A;border-radius:7px;outline:none;padding:9px 10px;resize:vertical;font:14px/1.45 "DM Sans",Arial,sans-serif}.pc-qa-field textarea{min-height:70px}.pc-upload-status{padding:9px 10px;border:1px solid #E8DDAF;border-radius:7px;background:#FFFDF5;color:#514617;font-size:12px;line-height:1.45}#pandora-chat-window.fullscreen{top:var(--cabinet-nav-h);right:0;bottom:var(--cabinet-dock-h);width:min(560px,100vw);max-height:none;height:auto;border-radius:0;border:none}#pandora-chat-window.fullscreen .pc-messages{flex:1}
 .view > div:first-child > .kicker,.view.single > .stack > div:first-child > .kicker{display:none}.view[data-view="pandora-id"] h1{font-size:clamp(74px,8.2vw,132px);line-height:.82;letter-spacing:.02em;text-transform:uppercase;color:var(--text)}.view[data-view="pandora-id"] h1 .gold{color:inherit}
+
+select option {
+  background: #14120f;
+  color: #f3ead2;
+}
+
+select option:checked {
+  background: #d6b34a;
+  color: #111;
+}
+
+/* pandora-phone-country-ux */
+select option {
+  background: #14120f;
+  color: #f3ead2;
+}
+
+select option:checked {
+  background: #d6b34a;
+  color: #111;
+}
+
+.phone-row {
+  display: grid;
+  grid-template-columns: 4.8rem 1fr auto;
+  gap: .45rem;
+  align-items: center;
+}
+
+.phone-remove {
+  border: 1px solid rgba(214,179,74,.45);
+  background: rgba(214,179,74,.08);
+  color: #d6b34a;
+  padding: .55rem .75rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: .68rem;
+  letter-spacing: .08em;
+}
+
+.phone-remove:hover {
+  background: rgba(214,179,74,.18);
+}
 </style>
 </head>
 <body class="lang-hidden">
@@ -230,10 +274,31 @@ a{color:inherit}.app{height:100vh;display:grid;grid-template-rows:var(--cabinet-
           <form class="mini-form" id="formIndividual" onsubmit="handleJoin(event)">
             <div class="field"><label data-i18n="application.lastname">Фамилия</label><input name="lastname"></div><div class="field"><label data-i18n="application.firstname">Имя</label><input name="firstname"></div>
             <div class="field"><label>Email</label><input type="email" name="email" placeholder="your@email.com"></div><div class="field"><label data-i18n="application.city">Город</label><input name="city" data-i18n-placeholder="application.cityPlaceholder" placeholder="Харьков"></div>
-            <div class="field"><label data-i18n="application.country">Страна</label><select id="countrySelect" name="country" onchange="onCountryChange(this)"><option data-code="+?" data-i18n="application.choose">Выбрать</option><option data-code="+380" data-i18n="country.ua">Украина (+380)</option><option data-code="+48" data-i18n="country.pl">Польша (+48)</option><option data-code="+49" data-i18n="country.de">Германия (+49)</option></select></div>
+            <div class="field"><label data-i18n="application.country">Страна</label><select id="countrySelect" name="country" onchange="onCountryChange(this)"><option data-code="+?" data-i18n="application.choose">Выбрать</option>
+<option data-code="+380">Україна / Ukraine (+380)</option>
+<option data-code="+48">Польща / Poland (+48)</option>
+<option data-code="+49">Німеччина / Germany (+49)</option>
+<option data-code="+34">Іспанія / Spain (+34)</option>
+<option data-code="+359">Болгарія / Bulgaria (+359)</option>
+<option data-code="+420">Чехія / Czechia (+420)</option>
+<option data-code="+421">Словаччина / Slovakia (+421)</option>
+<option data-code="+40">Румунія / Romania (+40)</option>
+<option data-code="+373">Молдова / Moldova (+373)</option>
+<option data-code="+370">Литва / Lithuania (+370)</option>
+<option data-code="+371">Латвія / Latvia (+371)</option>
+<option data-code="+372">Естонія / Estonia (+372)</option>
+<option data-code="+39">Італія / Italy (+39)</option>
+<option data-code="+33">Франція / France (+33)</option>
+<option data-code="+351">Португалія / Portugal (+351)</option>
+<option data-code="+31">Нідерланди / Netherlands (+31)</option>
+<option data-code="+44">Велика Британія / United Kingdom (+44)</option>
+<option data-code="+90">Туреччина / Turkey (+90)</option>
+<option data-code="+995">Грузія / Georgia (+995)</option>
+<option data-code="+1">США / USA (+1)</option>
+<option data-code="+1">Канада / Canada (+1)</option></select></div>
             <div class="field"><label data-i18n="application.phone">Телефон</label><div class="phone-row"><input class="phone-code" value="+?" readonly><input name="phone[]" data-i18n-placeholder="application.phonePlaceholder" placeholder="номер"></div></div>
             <div class="field full"><label data-i18n="application.comment">Комментарий</label><textarea data-i18n-placeholder="application.commentPlaceholder" placeholder="Коротко: кто вы и как хотите участвовать"></textarea></div>
-            <div class="field full"><button class="action-btn primary" type="submit" data-i18n="application.save">Сохранить как макет</button> <button class="action-btn" type="button" onclick="addPhone()" data-i18n="application.addPhone">Добавить телефон</button></div>
+            <div class="field full"><button class="action-btn primary" type="submit" data-i18n="application.save">Сохранить как макет</button> <button class="action-btn" type="button" onclick="addPhone(this)" data-i18n="application.addPhone">Добавить телефон</button></div>
           </form>
           <form class="mini-form" id="formLegal" style="display:none" onsubmit="handleJoin(event)">
             <div class="field"><label data-i18n="application.org">Организация</label><input></div><div class="field"><label data-i18n="application.form">Форма</label><input placeholder="ТОВ / LLC / Кооператив"></div>
@@ -359,7 +424,7 @@ const CABINET_I18N={
     'panel.inside':'Что будет внутри','panel.now':'Что доступно сейчас','panel.help':'Как помочь',
     'signal.kicker':'Участие · рекомендации','signal.lead':'Система рекомендаций и вознаграждений помогает фиксировать приглашения, связь участников и реальный вклад. Внутреннее рабочее название этого слоя — «Сигнал». Без обещаний дохода и финансовых гарантий.','signal.ref':'Рекомендательная ссылка','signal.linkStatus':'создание ссылок · макет','signal.print':'Печатные материалы','signal.printPreview':'QR / листовка / карточка','signal.printMock':'макет для печати','signal.code':'Код рекомендации','signal.important':'Важно','signal.importantText':'Это связь и приглашение, не доход, не бонусная схема и не финансовая гарантия.',
     'documents.lead':'Здесь собраны законы о кооперации, будущий устав Pandora, положения о паевых взносах, регламенты, кодекс этики и библиотека проекта.','documents.law':'Законодательство','documents.law1':'Закон Украины «О кооперации»','documents.law2':'Закон «О потребительской кооперации»','documents.internal':'Внутренние документы','documents.charter':'Устав Кооператива Пандора','documents.soonReg':'Скоро · после регистрации','documents.pai':'Положение о паевых взносах','documents.soonRules':'Скоро · размеры и порядок','documents.ethics':'Кодекс этики пайщика','documents.soonPrinciples':'Скоро · принципы сообщества','documents.library':'Библиотека','documents.ica':'Кооперативные принципы МКА',
-    'application.kicker':'Заявка в кооператив','application.lead':'Заявка в кооператив — отдельный шаг после регистрации на сайте. Подача заявки не означает автоматическое принятие в пайщики.','application.individual':'Физическое лицо','application.legal':'Юридическое лицо','application.lastname':'Фамилия','application.firstname':'Имя','application.city':'Город','application.cityPlaceholder':'Харьков','application.country':'Страна','application.choose':'Выбрать','country.ua':'Украина (+380)','country.pl':'Польша (+48)','country.de':'Германия (+49)','application.phone':'Телефон','application.phonePlaceholder':'номер','application.comment':'Комментарий','application.commentPlaceholder':'Коротко: кто вы и как хотите участвовать','application.save':'Сохранить как макет','application.addPhone':'Добавить телефон','application.org':'Организация','application.form':'Форма','application.representative':'Представитель','application.orgCommentPlaceholder':'Как организация может быть связана с Pandora',
+    'application.kicker':'Заявка в кооператив','application.lead':'Заявка в кооператив — отдельный шаг после регистрации на сайте. Подача заявки не означает автоматическое принятие в пайщики.','application.individual':'Физическое лицо','application.legal':'Юридическое лицо','application.lastname':'Фамилия','application.firstname':'Имя','application.city':'Город','application.cityPlaceholder':'Харьков','application.country':'Страна','application.choose':'Выбрать','country.ua':'Украина (+380)','country.pl':'Польша (+48)','country.de':'Германия (+49)','application.phone':'Телефон','application.phonePlaceholder':'номер','application.comment':'Комментарий','application.commentPlaceholder':'Коротко: кто вы и как хотите участвовать','application.save':'Отправить заявку','application.addPhone':'Добавить телефон','application.org':'Организация','application.form':'Форма','application.representative':'Представитель','application.orgCommentPlaceholder':'Как организация может быть связана с Pandora',
     'id.kicker':'Pandora ID · этап подтверждения','id.title':'PANDORA ID','id.lead':'Pandora ID — следующий этап после профиля, заявки и подтверждения участия. Кабинет помогает пройти путь к получению Pandora ID и дальнейшему участию в кооперативной инфраструктуре.','id.status':'ПРОТОТИП','id.name':'Имя / псевдоним','id.signalCode':'Код рекомендации','id.level':'Уровень','id.levelValue':'пользователь сайта','id.pending':'ожидает подтверждения','mock':'МАКЕТ','application.extraPhone':'Доп. телефон','application.mockStatus':'Заявка пока не отправляется автоматически. Это макет кабинета Пандора.','chat.subtitle':'AI-помощник кабинета','chat.greeting':'Спросите про профиль, участие, документы, заявку или Pandora ID.','chat.placeholder':'Задайте вопрос...','chat.localReply':'Я уже в кабинете. Могу подсказать по разделам: профиль, участие, документы, заявка и Pandora ID.'
   },
   uk:{
@@ -369,7 +434,7 @@ const CABINET_I18N={
     'panel.inside':'Що буде всередині','panel.now':'Що доступно зараз','panel.help':'Як допомогти',
     'signal.kicker':'Участь · рекомендації','signal.lead':'Система рекомендацій і винагород допомагає фіксувати запрошення, зв’язок учасників і реальний внесок. Внутрішня робоча назва цього шару — «Сигнал». Без обіцянок доходу і фінансових гарантій.','signal.ref':'Рекомендаційне посилання','signal.linkStatus':'створення посилань · макет','signal.print':'Друковані матеріали','signal.printPreview':'QR / листівка / картка','signal.printMock':'макет для друку','signal.code':'Код рекомендації','signal.important':'Важливо','signal.importantText':'Це зв’язок і запрошення, не дохід, не бонусна схема і не фінансова гарантія.',
     'documents.lead':'Тут зібрані закони про кооперацію, майбутній статут Pandora, положення про пайові внески, регламенти, кодекс етики і бібліотека проєкту.','documents.law':'Законодавство','documents.law1':'Закон України «Про кооперацію»','documents.law2':'Закон «Про споживчу кооперацію»','documents.internal':'Внутрішні документи','documents.charter':'Статут Кооперативу Пандора','documents.soonReg':'Скоро · після реєстрації','documents.pai':'Положення про пайові внески','documents.soonRules':'Скоро · розміри і порядок','documents.ethics':'Кодекс етики пайовика','documents.soonPrinciples':'Скоро · принципи спільноти','documents.library':'Бібліотека','documents.ica':'Кооперативні принципи МКА',
-    'application.kicker':'Заявка до кооперативу','application.lead':'Заявка до кооперативу — окремий крок після реєстрації на сайті. Подання заявки не означає автоматичне прийняття в пайовики.','application.individual':'Фізична особа','application.legal':'Юридична особа','application.lastname':'Прізвище','application.firstname':'Ім’я','application.city':'Місто','application.cityPlaceholder':'Харків','application.country':'Країна','application.choose':'Обрати','country.ua':'Україна (+380)','country.pl':'Польща (+48)','country.de':'Німеччина (+49)','application.phone':'Телефон','application.phonePlaceholder':'номер','application.comment':'Коментар','application.commentPlaceholder':'Коротко: хто ви і як хочете брати участь','application.save':'Зберегти як макет','application.addPhone':'Додати телефон','application.org':'Організація','application.form':'Форма','application.representative':'Представник','application.orgCommentPlaceholder':'Як організація може бути пов’язана з Pandora',
+    'application.kicker':'Заявка до кооперативу','application.lead':'Заявка до кооперативу — окремий крок після реєстрації на сайті. Подання заявки не означає автоматичне прийняття в пайовики.','application.individual':'Фізична особа','application.legal':'Юридична особа','application.lastname':'Прізвище','application.firstname':'Ім’я','application.city':'Місто','application.cityPlaceholder':'Харків','application.country':'Країна','application.choose':'Обрати','country.ua':'Україна (+380)','country.pl':'Польща (+48)','country.de':'Німеччина (+49)','application.phone':'Телефон','application.phonePlaceholder':'номер','application.comment':'Коментар','application.commentPlaceholder':'Коротко: хто ви і як хочете брати участь','application.save':'Надіслати заявку','application.addPhone':'Додати телефон','application.org':'Організація','application.form':'Форма','application.representative':'Представник','application.orgCommentPlaceholder':'Як організація може бути пов’язана з Pandora',
     'id.kicker':'Pandora ID · етап підтвердження','id.title':'PANDORA ID','id.lead':'Pandora ID — наступний етап після профілю, заявки та підтвердження участі. Кабінет допомагає пройти шлях до отримання Pandora ID і подальшої участі в кооперативній інфраструктурі.','id.status':'ПРОТОТИП','id.name':'Ім’я / псевдонім','id.signalCode':'Код рекомендації','id.level':'Рівень','id.levelValue':'користувач сайту','id.pending':'очікує підтвердження','mock':'МАКЕТ','application.extraPhone':'Дод. телефон','application.mockStatus':'Заявка поки не надсилається автоматично. Це макет кабінету Пандора.','chat.subtitle':'AI-помічник кабінету','chat.greeting':'Запитайте про профіль, участь, документи, заявку або Pandora ID.','chat.placeholder':'Поставте питання...','chat.localReply':'Я вже в кабінеті. Можу підказати щодо розділів: профіль, участь, документи, заявка і Pandora ID.'
   },
   en:{
@@ -379,7 +444,7 @@ const CABINET_I18N={
     'panel.inside':'What will be inside','panel.now':'Available now','panel.help':'How to help',
     'signal.kicker':'Participation · recommendations','signal.lead':'The recommendation and reward system helps record invitations, participant connections and real contribution. The internal working name of this layer is “Signal”. No income promises or financial guarantees.','signal.ref':'Recommendation link','signal.linkStatus':'link creation · mockup','signal.print':'Print materials','signal.printPreview':'QR / flyer / card','signal.printMock':'print mockup','signal.code':'Recommendation code','signal.important':'Important','signal.importantText':'This is connection and invitation, not income, not a bonus scheme and not a financial guarantee.',
     'documents.lead':'This area gathers cooperative laws, the future Pandora charter, contribution rules, regulations, ethics code and the project library.','documents.law':'Legislation','documents.law1':'Law of Ukraine “On Cooperation”','documents.law2':'Law “On Consumer Cooperation”','documents.internal':'Internal documents','documents.charter':'Pandora Cooperative Charter','documents.soonReg':'Soon · after registration','documents.pai':'Contribution rules','documents.soonRules':'Soon · amounts and procedure','documents.ethics':'Member ethics code','documents.soonPrinciples':'Soon · community principles','documents.library':'Library','documents.ica':'ICA cooperative principles',
-    'application.kicker':'Cooperative application','application.lead':'The cooperative application is a separate step after site registration. Submitting an application does not mean automatic acceptance as a member.','application.individual':'Individual','application.legal':'Legal entity','application.lastname':'Last name','application.firstname':'First name','application.city':'City','application.cityPlaceholder':'Kharkiv','application.country':'Country','application.choose':'Choose','country.ua':'Ukraine (+380)','country.pl':'Poland (+48)','country.de':'Germany (+49)','application.phone':'Phone','application.phonePlaceholder':'number','application.comment':'Comment','application.commentPlaceholder':'Briefly: who you are and how you want to participate','application.save':'Save as mockup','application.addPhone':'Add phone','application.org':'Organization','application.form':'Form','application.representative':'Representative','application.orgCommentPlaceholder':'How the organization can be connected with Pandora',
+    'application.kicker':'Cooperative application','application.lead':'The cooperative application is a separate step after site registration. Submitting an application does not mean automatic acceptance as a member.','application.individual':'Individual','application.legal':'Legal entity','application.lastname':'Last name','application.firstname':'First name','application.city':'City','application.cityPlaceholder':'Kharkiv','application.country':'Country','application.choose':'Choose','country.ua':'Ukraine (+380)','country.pl':'Poland (+48)','country.de':'Germany (+49)','application.phone':'Phone','application.phonePlaceholder':'number','application.comment':'Comment','application.commentPlaceholder':'Briefly: who you are and how you want to participate','application.save':'Send application','application.addPhone':'Add phone','application.org':'Organization','application.form':'Form','application.representative':'Representative','application.orgCommentPlaceholder':'How the organization can be connected with Pandora',
     'id.kicker':'Pandora ID · confirmation stage','id.title':'PANDORA ID','id.lead':'Pandora ID is the next stage after profile, application and participation confirmation. The cabinet helps the user move toward receiving Pandora ID and further participation in the cooperative infrastructure.','id.status':'PROTOTYPE','id.name':'Name / nickname','id.signalCode':'Recommendation code','id.level':'Level','id.levelValue':'site user','id.pending':'awaiting confirmation','mock':'MOCK','application.extraPhone':'Extra phone','application.mockStatus':'The application is not sent automatically yet. This is a Pandora cabinet mockup.','chat.subtitle':'Cabinet AI assistant','chat.greeting':'Ask about profile, participation, documents, application or Pandora ID.','chat.placeholder':'Ask a question...','chat.localReply':'I am in the cabinet now. I can help with profile, participation, documents, application and Pandora ID.'
   },
   es:{
@@ -389,7 +454,7 @@ const CABINET_I18N={
     'panel.inside':'Qué habrá dentro','panel.now':'Disponible ahora','panel.help':'Cómo ayudar',
     'signal.kicker':'Participación · recomendaciones','signal.lead':'El sistema de recomendaciones y recompensas ayuda a registrar invitaciones, conexión entre participantes y contribución real. El nombre interno de trabajo de esta capa es “Signal”. Sin promesas de ingresos ni garantías financieras.','signal.ref':'Enlace de recomendación','signal.linkStatus':'creación de enlaces · maqueta','signal.print':'Materiales impresos','signal.printPreview':'QR / folleto / tarjeta','signal.printMock':'maqueta para imprimir','signal.code':'Código de recomendación','signal.important':'Importante','signal.importantText':'Esto es conexión e invitación, no ingreso, no esquema de bonos y no garantía financiera.',
     'documents.lead':'Aquí se reúnen leyes cooperativas, el futuro estatuto de Pandora, reglas de aportes, reglamentos, código ético y biblioteca del proyecto.','documents.law':'Legislación','documents.law1':'Ley de Ucrania “Sobre la cooperación”','documents.law2':'Ley “Sobre la cooperación de consumidores”','documents.internal':'Documentos internos','documents.charter':'Estatuto de la Cooperativa Pandora','documents.soonReg':'Pronto · después del registro','documents.pai':'Reglas de aportes','documents.soonRules':'Pronto · importes y procedimiento','documents.ethics':'Código ético del socio','documents.soonPrinciples':'Pronto · principios de la comunidad','documents.library':'Biblioteca','documents.ica':'Principios cooperativos de la ACI',
-    'application.kicker':'Solicitud a la cooperativa','application.lead':'La solicitud a la cooperativa es un paso separado después del registro en el sitio. Enviar una solicitud no significa aceptación automática como socio.','application.individual':'Persona física','application.legal':'Persona jurídica','application.lastname':'Apellido','application.firstname':'Nombre','application.city':'Ciudad','application.cityPlaceholder':'Járkiv','application.country':'País','application.choose':'Elegir','country.ua':'Ucrania (+380)','country.pl':'Polonia (+48)','country.de':'Alemania (+49)','application.phone':'Teléfono','application.phonePlaceholder':'número','application.comment':'Comentario','application.commentPlaceholder':'Brevemente: quién eres y cómo quieres participar','application.save':'Guardar como maqueta','application.addPhone':'Añadir teléfono','application.org':'Organización','application.form':'Forma','application.representative':'Representante','application.orgCommentPlaceholder':'Cómo puede relacionarse la organización con Pandora',
+    'application.kicker':'Solicitud a la cooperativa','application.lead':'La solicitud a la cooperativa es un paso separado después del registro en el sitio. Enviar una solicitud no significa aceptación automática como socio.','application.individual':'Persona física','application.legal':'Persona jurídica','application.lastname':'Apellido','application.firstname':'Nombre','application.city':'Ciudad','application.cityPlaceholder':'Járkiv','application.country':'País','application.choose':'Elegir','country.ua':'Ucrania (+380)','country.pl':'Polonia (+48)','country.de':'Alemania (+49)','application.phone':'Teléfono','application.phonePlaceholder':'número','application.comment':'Comentario','application.commentPlaceholder':'Brevemente: quién eres y cómo quieres participar','application.save':'Enviar solicitud','application.addPhone':'Añadir teléfono','application.org':'Organización','application.form':'Forma','application.representative':'Representante','application.orgCommentPlaceholder':'Cómo puede relacionarse la organización con Pandora',
     'id.kicker':'Pandora ID · etapa de confirmación','id.title':'PANDORA ID','id.lead':'Pandora ID es la siguiente etapa después del perfil, la solicitud y la confirmación de participación. El gabinete ayuda a avanzar hacia Pandora ID y la participación posterior en la infraestructura cooperativa.','id.status':'PROTOTIPO','id.name':'Nombre / seudónimo','id.signalCode':'Código de recomendación','id.level':'Nivel','id.levelValue':'usuario del sitio','id.pending':'esperando confirmación','mock':'MAQUETA','application.extraPhone':'Teléfono extra','application.mockStatus':'La solicitud aún no se envía automáticamente. Es una maqueta del gabinete Pandora.','chat.subtitle':'Asistente AI del gabinete','chat.greeting':'Pregunta sobre perfil, participación, documentos, solicitud o Pandora ID.','chat.placeholder':'Haz una pregunta...','chat.localReply':'Ya estoy en el gabinete. Puedo ayudar con perfil, participación, documentos, solicitud y Pandora ID.'
   }
 };
@@ -411,6 +476,8 @@ function applyCabinetLang(lang){
   document.querySelectorAll('[data-lang]').forEach(el=>el.classList.toggle('active',el.getAttribute('data-lang')===safe));
   applyCabinetCopy(safe);
   if(typeof pcUpdateUI==='function')pcUpdateUI(safe);
+  if(typeof refreshPhoneRemoveButtons==='function'){document.querySelectorAll('form').forEach(form=>refreshPhoneRemoveButtons(form))}
+  if(typeof renderLanguageModal==='function')renderLanguageModal();
   document.querySelectorAll('.lang-option').forEach(btn=>btn.classList.toggle('active',btn.dataset.langOpt===safe));
   const btn=document.getElementById('langBtn');
   if(btn){btn.setAttribute('aria-expanded','false');btn.classList.remove('open')}
@@ -454,12 +521,201 @@ function addPhone(){
   form.insertBefore(row,anchor);
 }
 function handleJoin(event){
-  event.preventDefault();
-  let status=event.currentTarget.querySelector('.join-status-message');
-  if(!status){status=document.createElement('div');status.className='field full join-status-message';event.currentTarget.appendChild(status)}
-  const dict=CABINET_I18N[currentCabinetLang]||CABINET_I18N.ru;
-  status.textContent=dict['application.mockStatus'];
+  const form = event.currentTarget;
+
+  let status = form.querySelector('.join-status-message');
+  if (!status) {
+    status = document.createElement('div');
+    status.className = 'field full join-status-message';
+    form.appendChild(status);
+  }
+
+  const fail = (message) => {
+    event.preventDefault();
+    status.textContent = message;
+    return false;
+  };
+
+  form.querySelectorAll('[data-web3forms-hidden="1"]').forEach((el) => el.remove());
+
+  const addHidden = (name, value) => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.value = value || '';
+    input.setAttribute('data-web3forms-hidden', '1');
+    form.appendChild(input);
+  };
+
+  const isLegal = form.id === 'formLegal';
+
+  form.setAttribute('action', 'https://api.web3forms.com/submit');
+  form.setAttribute('method', 'POST');
+  form.setAttribute('accept-charset', 'UTF-8');
+
+  addHidden('access_key', 'd2629b69-5660-43e0-8b0d-f2ac60a2c452');
+  addHidden('subject', isLegal ? 'Pandora cabinet application — legal entity' : 'Pandora cabinet application — individual');
+  addHidden('from_name', 'Pandora cabinet form');
+  addHidden('source', 'cabinet.html');
+  addHidden('language', currentCabinetLang || 'ru');
+  addHidden('application_type', isLegal ? 'legal_entity' : 'individual');
+
+  if (isLegal) {
+    const inputs = form.querySelectorAll('input');
+    const organization = (inputs[0] && inputs[0].value || '').trim();
+    const orgForm = (inputs[1] && inputs[1].value || '').trim();
+    const email = (inputs[2] && inputs[2].value || '').trim();
+    const representative = (inputs[3] && inputs[3].value || '').trim();
+    const comment = (form.querySelector('textarea') && form.querySelector('textarea').value || '').trim();
+
+    if (!email && !representative && !organization) {
+      return fail('Укажите организацию, представителя или email.');
+    }
+
+    addHidden('organization', organization);
+    addHidden('organization_form', orgForm);
+    addHidden('email', email);
+    addHidden('representative', representative);
+    addHidden('comment', comment);
+    addHidden('message', [
+      'Тип: юридическое лицо',
+      'Организация: ' + organization,
+      'Форма: ' + orgForm,
+      'Email: ' + email,
+      'Представитель: ' + representative,
+      'Комментарий: ' + comment
+    ].join('\n'));
+  } else {
+    const lastname = (form.querySelector('[name="lastname"]') && form.querySelector('[name="lastname"]').value || '').trim();
+    const firstname = (form.querySelector('[name="firstname"]') && form.querySelector('[name="firstname"]').value || '').trim();
+    const email = (form.querySelector('[name="email"]') && form.querySelector('[name="email"]').value || '').trim();
+    const city = (form.querySelector('[name="city"]') && form.querySelector('[name="city"]').value || '').trim();
+    const countrySelect = form.querySelector('[name="country"]');
+    const country = countrySelect && countrySelect.selectedIndex >= 0 ? countrySelect.options[countrySelect.selectedIndex].textContent.trim() : '';
+    const comment = (form.querySelector('textarea') && form.querySelector('textarea').value || '').trim();
+
+    const phones = [];
+    let phoneCodeMissing = false;
+
+    form.querySelectorAll('.phone-row').forEach((row) => {
+      const codeInput = row.querySelector('.phone-code');
+      const code = codeInput ? (codeInput.value || codeInput.textContent || '').trim() : '';
+      const numberInput = row.querySelector('input[name="phone[]"]');
+      const number = numberInput ? numberInput.value.trim() : '';
+      if (!number) return;
+      if (!code || code === '+?') phoneCodeMissing = true;
+      phones.push((code && code !== '+?' ? code + ' ' : '') + number);
+    });
+
+    if (phoneCodeMissing) {
+      return fail('Выберите страну, чтобы к телефону добавился код страны.');
+    }
+
+    if (!email && phones.length === 0) {
+      return fail('Укажите email или телефон для связи.');
+    }
+
+    addHidden('lastname', lastname);
+    addHidden('firstname', firstname);
+    addHidden('email', email);
+    addHidden('city', city);
+    addHidden('country_text', country);
+    addHidden('phones', phones.join(' | '));
+    addHidden('comment', comment);
+    addHidden('message', [
+      'Тип: физическое лицо',
+      'Фамилия: ' + lastname,
+      'Имя: ' + firstname,
+      'Email: ' + email,
+      'Город: ' + city,
+      'Страна: ' + country,
+      'Телефоны: ' + phones.join(' | '),
+      'Комментарий: ' + comment
+    ].join('\n'));
+  }
+
+  status.textContent = 'Отправляем заявку...';
+
+  const submitBtn = form.querySelector('button[type="submit"]');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправка...';
+  }
+
+  return true;
 }
+
+/* Pandora form UX patch start */
+function getSelectedCountryCode(select){
+  if (!select || select.selectedIndex < 0) return '+?';
+  const option = select.options[select.selectedIndex];
+  return option && option.dataset && option.dataset.code ? option.dataset.code : '+?';
+}
+
+function onCountryChange(select){
+  const form = select.closest('form') || document;
+  const code = getSelectedCountryCode(select);
+  form.querySelectorAll('.phone-code').forEach((input) => {
+    input.value = code;
+  });
+}
+
+function getPhoneRemoveLabel(){
+  const labels = {
+    ru: 'Убрать',
+    uk: 'Прибрати',
+    en: 'Remove',
+    es: 'Quitar'
+  };
+  return labels[currentCabinetLang] || labels.ru;
+}
+
+function refreshPhoneRemoveButtons(form){
+  const rows = Array.from(form.querySelectorAll('.phone-row'));
+  rows.forEach((row, index) => {
+    const existing = row.querySelector('.phone-remove');
+    if (index === 0) {
+      if (existing) existing.remove();
+      return;
+    }
+
+    let btn = existing;
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'phone-remove';
+      row.appendChild(btn);
+    }
+
+    btn.textContent = getPhoneRemoveLabel();
+    btn.onclick = () => {
+      row.remove();
+      refreshPhoneRemoveButtons(form);
+    };
+  });
+}
+
+function addPhone(button){
+  const form = button.closest('form');
+  if (!form) return;
+
+  const firstRow = form.querySelector('.phone-row');
+  if (!firstRow) return;
+
+  const row = firstRow.cloneNode(true);
+  row.querySelectorAll('.phone-remove').forEach((btn) => btn.remove());
+
+  const numberInput = row.querySelector('input[name="phone[]"]');
+  if (numberInput) numberInput.value = '';
+
+  const countrySelect = form.querySelector('select[name="country"]');
+  const codeInput = row.querySelector('.phone-code');
+  if (codeInput) codeInput.value = getSelectedCountryCode(countrySelect);
+
+  button.parentNode.insertBefore(row, button);
+  refreshPhoneRemoveButtons(form);
+}
+/* Pandora form UX patch end */
 const PC_CABINET_STRINGS={
   ru:{subtitle:'Кооперативный AI-помощник',aiMode:'AI-помощник',qaMode:'Сообщить о баге / идее',greeting:'Я уже в кабинете. Могу подсказать по разделам: профиль, участие, документы, заявка и Pandora ID.',placeholder:'Задайте вопрос...',suggestions:['Что такое Pandora?','Как подать заявку?','Что такое Pandora ID?','Как работает участие?','Какие документы нужны?','Как я могу помочь проекту?'],localReply:'Я уже в кабинете. Могу подсказать по разделам: профиль, участие, документы, заявка и Pandora ID.',errorReply:'Сейчас не удалось получить ответ AI. Попробуйте еще раз чуть позже.',typing:'Думаю...',qaTitle:'Помогите улучшить Pandora',qaIntro:'Тестирование — это вклад сотрудника. Предложения — это вклад совладельца.',qaBug:'Нашел баг',qaBugDescription:'Сообщить, что работает не так',qaSuggestion:'Есть предложение',qaSuggestionDescription:'Предложить, как сделать лучше',qaFixation:'Режим фиксации',qaFixationDescription:'Быстро зафиксировать замечание в кабинете',feedbackBack:'Назад',feedbackBugTitle:'Сообщить о баге',feedbackSuggestionTitle:'Предложить идею',feedbackText:'Описание',feedbackTextPlaceholder:'Опишите, что заметили',feedbackContact:'Контакт для связи',feedbackSave:'Сохранить в макете',feedbackSaved:'Сообщение зафиксировано в макете кабинета.'},
   uk:{subtitle:'Кооперативний AI-помічник',aiMode:'AI-помічник',qaMode:'Повідомити про баг / ідею',greeting:'Я вже в кабінеті. Можу підказати по розділах: профіль, участь, документи, заявка та Pandora ID.',placeholder:'Поставте питання...',suggestions:['Що таке Pandora?','Як подати заявку?','Що таке Pandora ID?','Як працює участь?','Які документи потрібні?','Як я можу допомогти проєкту?'],localReply:'Я вже в кабінеті. Можу підказати по розділах: профіль, участь, документи, заявка та Pandora ID.',errorReply:'Зараз не вдалося отримати відповідь AI. Спробуйте ще раз трохи пізніше.',typing:'Думаю...',qaTitle:'Допоможіть покращити Pandora',qaIntro:'Тестування — це внесок співробітника. Пропозиції — це внесок співвласника.',qaBug:'Знайшов баг',qaBugDescription:'Повідомити, що працює не так',qaSuggestion:'Є пропозиція',qaSuggestionDescription:'Запропонувати, як зробити краще',qaFixation:'Режим фіксації',qaFixationDescription:'Швидко зафіксувати зауваження в кабінеті',feedbackBack:'Назад',feedbackBugTitle:'Повідомити про баг',feedbackSuggestionTitle:'Запропонувати ідею',feedbackText:'Опис',feedbackTextPlaceholder:'Опишіть, що помітили',feedbackContact:'Контакт для зв’язку',feedbackSave:'Зберегти в макеті',feedbackSaved:'Повідомлення зафіксовано в макеті кабінету.'},
@@ -591,5 +847,7 @@ function pcEnterFixationMode(){
 }
 window.addEventListener('DOMContentLoaded',()=>{let saved='uk';try{saved=localStorage.getItem('pandora_lang')||localStorage.getItem('pandora-cabinet-lang')||localStorage.getItem('pandora-lang')||'uk'}catch(e){}applyCabinetLang(saved);openCabinetView('profile')});
 </script>
+<script src="assets/js/pandora-language-data.js"></script>
+<script src="assets/js/pandora-i18n.js"></script>
 </body>
 </html>
