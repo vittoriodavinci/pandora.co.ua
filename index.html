@@ -1072,6 +1072,8 @@ h1.hero-title { grid-column:1 / -1; text-align:center; white-space:nowrap; font-
 .contact-form label { display:grid; gap:8px; color:rgba(245,242,237,0.78); font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
 .contact-form input, .contact-form select, .contact-form textarea { width:100%; box-sizing:border-box; background:#0d0d0d; border:1px solid rgba(255,255,255,0.12); color:var(--light); padding:13px 14px; font:14px/1.45 'DM Sans',sans-serif; outline:none; }
 .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { border-color:rgba(200,168,75,0.62); }
+.contact-phone-row { display:grid; grid-template-columns:88px 1fr; gap:8px; align-items:center; }
+.contact-phone-row .phone-code { text-align:center; color:var(--accent); letter-spacing:.08em; }
 .contact-submit { justify-self:start; border:0; background:var(--accent); color:#0d0d0d; padding:13px 22px; font-size:12px; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; }
 @media (max-width: 900px) {
   #hero .hero-credo { white-space:normal; width:calc(100vw - 40px); }
@@ -1779,19 +1781,22 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <a href="https://www.facebook.com/usenpandora/" rel="noopener" target="_blank">Facebook</a>
 </div>
 </div>
-<form accept-charset="UTF-8" action="https://api.web3forms.com/submit" class="contact-form" method="POST" onsubmit="syncPandoraContactLanguage(this)">
+<form accept-charset="UTF-8" action="https://api.web3forms.com/submit" class="contact-form" method="POST" onsubmit="return preparePandoraContactForm(this)">
 <input name="access_key" type="hidden" value="d2629b69-5660-43e0-8b0d-f2ac60a2c452"/>
 <input name="subject" type="hidden" value="Pandora site contact form"/>
 <input name="from_name" type="hidden" value="Pandora website"/>
 <input name="source" type="hidden" value="index.html"/>
 <input name="form_type" type="hidden" value="contact"/>
 <input id="contactLanguage" name="language" type="hidden" value="uk"/>
+<input name="full_phone" type="hidden" value=""/>
+<input name="form_started_at" type="hidden" value=""/>
 <input autocomplete="off" name="botcheck" style="display:none" tabindex="-1" type="text"/>
 <label><span class="active" data-lang="uk">Ваше ім’я</span><span data-lang="ru">Ваше имя</span><span data-lang="en">Your name</span><span data-lang="es">Tu nombre</span><input autocomplete="name" name="name"/></label>
-<label><span class="active" data-lang="uk">Email</span><span data-lang="ru">Email</span><span data-lang="en">Email</span><span data-lang="es">Email</span><input autocomplete="email" name="email" type="email"/></label>
-<label><span class="active" data-lang="uk">Телефон</span><span data-lang="ru">Телефон</span><span data-lang="en">Phone</span><span data-lang="es">Teléfono</span><input autocomplete="tel" name="phone" type="tel"/></label>
-<label><span class="active" data-lang="uk">Країна</span><span data-lang="ru">Страна</span><span data-lang="en">Country</span><span data-lang="es">País</span><input autocomplete="country-name" name="country"/></label>
-<label><span class="active" data-lang="uk">Повідомлення</span><span data-lang="ru">Сообщение</span><span data-lang="en">Message</span><span data-lang="es">Mensaje</span><textarea name="message" required="" rows="6"></textarea></label>
+<label><span class="active" data-lang="uk">Email</span><span data-lang="ru">Email</span><span data-lang="en">Email</span><span data-lang="es">Email</span><input autocomplete="email" name="email" required="" type="email"/></label>
+<label><span class="active" data-lang="uk">Країна</span><span data-lang="ru">Страна</span><span data-lang="en">Country</span><span data-lang="es">País</span><select name="country" autocomplete="country-name" data-country-options required="" onchange="pandoraSyncPhoneCode(this)"></select></label>
+<label><span class="active" data-lang="uk">Телефон</span><span data-lang="ru">Телефон</span><span data-lang="en">Phone</span><span data-lang="es">Teléfono</span><span class="phone-row contact-phone-row"><input class="phone-code" name="phone_code" readonly="" value="+?"/><input autocomplete="tel" inputmode="tel" name="phone" placeholder="номер" required="" type="tel"/></span></label>
+<label><span class="active" data-lang="uk">Повідомлення</span><span data-lang="ru">Сообщение</span><span data-lang="en">Message</span><span data-lang="es">Mensaje</span><textarea maxlength="2000" minlength="10" name="message" required="" rows="6"></textarea></label>
+<div class="h-captcha" data-captcha="true"></div>
 <button class="contact-submit" type="submit"><span class="active" data-lang="uk">Надіслати повідомлення</span><span data-lang="ru">Отправить сообщение</span><span data-lang="en">Send message</span><span data-lang="es">Enviar mensaje</span></button>
 </form>
 </div>
@@ -2634,6 +2639,11 @@ function syncPandoraContactLanguage(form) {
     input.value = document.documentElement.lang || 'uk';
   }
   return true;
+}
+
+function preparePandoraContactForm(form) {
+  if (typeof syncPandoraContactLanguage === 'function') syncPandoraContactLanguage(form);
+  return validatePandoraForm(form, { phoneRequired: true, messageRequired: true, maxLinks: 1, minSeconds: 4, antiSpam: true });
 }
 </script>
 <script id="pandora-refactor-behavior-v0-1">
@@ -3784,5 +3794,7 @@ Changes:
 
 <script src="assets/js/pandora-language-data.js"></script>
 <script src="assets/js/pandora-i18n.js"></script>
+<script src="assets/js/pandora-form-guard.js"></script>
+<script src="https://web3forms.com/client/script.js" async defer></script>
 </body>
 </html>

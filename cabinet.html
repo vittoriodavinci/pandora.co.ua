@@ -273,7 +273,7 @@ select option:checked {
           <div class="form-tabs"><button class="tab-btn active" id="btnIndividual" onclick="switchEntity('individual')" data-i18n="application.individual">Физическое лицо</button><button class="tab-btn" id="btnLegal" onclick="switchEntity('legal')" data-i18n="application.legal">Юридическое лицо</button></div>
           <form class="mini-form" id="formIndividual" onsubmit="handleJoin(event)">
             <div class="field"><label data-i18n="application.lastname">Фамилия</label><input name="lastname"></div><div class="field"><label data-i18n="application.firstname">Имя</label><input name="firstname"></div>
-            <div class="field"><label>Email</label><input type="email" name="email" placeholder="your@email.com"></div><div class="field"><label data-i18n="application.city">Город</label><input name="city" data-i18n-placeholder="application.cityPlaceholder" placeholder="Харьков"></div>
+            <div class="field"><label>Email</label><input type="email" name="email" autocomplete="email" required placeholder="your@email.com"></div><div class="field"><label data-i18n="application.city">Город</label><input name="city" data-i18n-placeholder="application.cityPlaceholder" placeholder="Харьков"></div>
             <div class="field"><label data-i18n="application.country">Страна</label><select id="countrySelect" name="country" onchange="onCountryChange(this)"><option data-code="+?" data-i18n="application.choose">Выбрать</option>
 <option data-code="+380">Україна / Ukraine (+380)</option>
 <option data-code="+48">Польща / Poland (+48)</option>
@@ -296,14 +296,14 @@ select option:checked {
 <option data-code="+995">Грузія / Georgia (+995)</option>
 <option data-code="+1">США / USA (+1)</option>
 <option data-code="+1">Канада / Canada (+1)</option></select></div>
-            <div class="field"><label data-i18n="application.phone">Телефон</label><div class="phone-row"><input class="phone-code" value="+?" readonly><input name="phone[]" data-i18n-placeholder="application.phonePlaceholder" placeholder="номер"></div></div>
-            <div class="field full"><label data-i18n="application.comment">Комментарий</label><textarea data-i18n-placeholder="application.commentPlaceholder" placeholder="Коротко: кто вы и как хотите участвовать"></textarea></div>
+            <div class="field"><label data-i18n="application.phone">Телефон</label><div class="phone-row"><input class="phone-code" value="+?" readonly><input name="phone[]" type="tel" inputmode="tel" autocomplete="tel" required data-i18n-placeholder="application.phonePlaceholder" placeholder="номер"></div></div>
+            <div class="field full"><label data-i18n="application.comment">Комментарий</label><textarea required minlength="10" maxlength="2000" data-i18n-placeholder="application.commentPlaceholder" placeholder="Коротко: кто вы и как хотите участвовать"></textarea></div>
             <div class="field full"><button class="action-btn primary" type="submit" data-i18n="application.save">Сохранить как макет</button> <button class="action-btn" type="button" onclick="addPhone(this)" data-i18n="application.addPhone">Добавить телефон</button></div>
           </form>
           <form class="mini-form" id="formLegal" style="display:none" onsubmit="handleJoin(event)">
             <div class="field"><label data-i18n="application.org">Организация</label><input></div><div class="field"><label data-i18n="application.form">Форма</label><input placeholder="ТОВ / LLC / Кооператив"></div>
-            <div class="field"><label>Email</label><input type="email"></div><div class="field"><label data-i18n="application.representative">Представитель</label><input></div>
-            <div class="field full"><label data-i18n="application.comment">Комментарий</label><textarea data-i18n-placeholder="application.orgCommentPlaceholder" placeholder="Как организация может быть связана с Pandora"></textarea></div>
+            <div class="field"><label>Email</label><input type="email" name="email" autocomplete="email" required></div><div class="field"><label data-i18n="application.representative">Представитель</label><input></div>
+            <div class="field full"><label data-i18n="application.comment">Комментарий</label><textarea required minlength="10" maxlength="2000" data-i18n-placeholder="application.orgCommentPlaceholder" placeholder="Как организация может быть связана с Pandora"></textarea></div>
             <div class="field full"><button class="action-btn primary" type="submit" data-i18n="application.save">Сохранить как макет</button></div>
           </form>
         </div>
@@ -536,6 +536,23 @@ function handleJoin(event){
     return false;
   };
 
+  const isLegal = form.id === 'formLegal';
+  if (typeof validatePandoraForm === 'function') {
+    // Anti-spam/captcha belongs to future cabinet login/registration gate, not to authenticated in-cabinet application forms.
+    const valid = validatePandoraForm(form, {
+      phoneRequired: !isLegal,
+      messageRequired: true,
+      maxLinks: 2,
+      minSeconds: 0,
+      antiSpam: false
+    });
+    if (!valid) {
+      event.preventDefault();
+      status.textContent = '';
+      return false;
+    }
+  }
+
   form.querySelectorAll('[data-web3forms-hidden="1"]').forEach((el) => el.remove());
 
   const addHidden = (name, value) => {
@@ -546,8 +563,6 @@ function handleJoin(event){
     input.setAttribute('data-web3forms-hidden', '1');
     form.appendChild(input);
   };
-
-  const isLegal = form.id === 'formLegal';
 
   form.setAttribute('action', 'https://api.web3forms.com/submit');
   form.setAttribute('method', 'POST');
@@ -706,7 +721,13 @@ function addPhone(button){
   row.querySelectorAll('.phone-remove').forEach((btn) => btn.remove());
 
   const numberInput = row.querySelector('input[name="phone[]"]');
-  if (numberInput) numberInput.value = '';
+  if (numberInput) {
+    numberInput.value = '';
+    numberInput.type = 'tel';
+    numberInput.inputMode = 'tel';
+    numberInput.autocomplete = 'tel';
+    numberInput.required = false;
+  }
 
   const countrySelect = form.querySelector('select[name="country"]');
   const codeInput = row.querySelector('.phone-code');
@@ -849,5 +870,6 @@ window.addEventListener('DOMContentLoaded',()=>{let saved='uk';try{saved=localSt
 </script>
 <script src="assets/js/pandora-language-data.js"></script>
 <script src="assets/js/pandora-i18n.js"></script>
+<script src="assets/js/pandora-form-guard.js"></script>
 </body>
 </html>
