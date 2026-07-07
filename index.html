@@ -1343,6 +1343,33 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
   #aplPanelRight .rgb-narrative-principle { margin-bottom: 8px; }
 }
 </style>
+<style id="pandora-hcaptcha-official-style">
+.pandora-hcaptcha {
+  display: block;
+  width: 304px;
+  height: 78px;
+  min-height: 78px;
+  margin: 12px 0;
+  padding: 2px;
+  background: #0f0d09;
+  border: 1px solid rgba(212, 175, 55, 0.72);
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.10),
+    inset 0 0 0 1px rgba(212, 175, 55, 0.08);
+}
+.pandora-hcaptcha iframe {
+  display: block !important;
+  width: 306px !important;
+  height: 80px !important;
+  max-width: none !important;
+  margin: -1px 0 0 -1px;
+  border: 0 !important;
+  border-radius: 3px;
+}
+</style>
+
 </head>
 <body>
 <nav>
@@ -1796,7 +1823,7 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <label><span class="active" data-lang="uk">Країна</span><span data-lang="ru">Страна</span><span data-lang="en">Country</span><span data-lang="es">País</span><select name="country" autocomplete="country-name" data-country-options required="" onchange="pandoraSyncPhoneCode(this)"></select></label>
 <label><span class="active" data-lang="uk">Телефон</span><span data-lang="ru">Телефон</span><span data-lang="en">Phone</span><span data-lang="es">Teléfono</span><span class="phone-row contact-phone-row"><input class="phone-code" name="phone_code" readonly="" value="+?"/><input autocomplete="tel" inputmode="tel" name="phone" placeholder="номер" required="" type="tel"/></span></label>
 <label><span class="active" data-lang="uk">Повідомлення</span><span data-lang="ru">Сообщение</span><span data-lang="en">Message</span><span data-lang="es">Mensaje</span><textarea maxlength="2000" minlength="10" name="message" required="" rows="6"></textarea></label>
-<div class="h-captcha" data-captcha="true" data-lang="uk"></div>
+<div id="pandora-hcaptcha" class="pandora-hcaptcha" data-pandora-captcha="true"></div>
 <button class="contact-submit" type="submit"><span class="active" data-lang="uk">Надіслати повідомлення</span><span data-lang="ru">Отправить сообщение</span><span data-lang="en">Send message</span><span data-lang="es">Enviar mensaje</span></button>
 </form>
 </div>
@@ -3795,6 +3822,77 @@ Changes:
 <script src="assets/js/pandora-language-data.js"></script>
 <script src="assets/js/pandora-i18n.js"></script>
 <script src="assets/js/pandora-form-guard.js"></script>
-<script src="https://web3forms.com/client/script.js" async defer></script>
+<script id="pandora-hcaptcha-render-script">
+(function(){
+  const SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
+  window.pandoraHCaptchaWidgetId = null;
+
+  function normalizeCaptchaLang(lang) {
+    lang = String(lang || '').toLowerCase();
+    return ({ ua: 'uk', uk: 'uk', ru: 'ru', en: 'en', es: 'es' }[lang]) || 'uk';
+  }
+
+  function currentCaptchaLang() {
+    const active = document.querySelector('[data-lang-opt].active');
+    return normalizeCaptchaLang(
+      active?.getAttribute('data-lang-opt') ||
+      localStorage.getItem('pandora_lang') ||
+      document.documentElement.lang ||
+      'uk'
+    );
+  }
+
+  window.pandoraRenderHCaptcha = function(lang) {
+    const box = document.getElementById('pandora-hcaptcha');
+    if (!box || !window.hcaptcha || !window.hcaptcha.render) return;
+
+    const resolved = normalizeCaptchaLang(lang || currentCaptchaLang());
+
+    try {
+      if (window.pandoraHCaptchaWidgetId !== null && window.hcaptcha.remove) {
+        window.hcaptcha.remove(window.pandoraHCaptchaWidgetId);
+      }
+    } catch (e) {}
+
+    box.innerHTML = '';
+    box.removeAttribute('data-lang');
+
+    window.pandoraHCaptchaWidgetId = window.hcaptcha.render(box, {
+      sitekey: SITEKEY,
+      theme: 'dark',
+      size: 'normal',
+      hl: resolved
+    });
+
+    box.setAttribute('data-hcaptcha-lang', resolved);
+  };
+
+  window.pandoraHCaptchaReady = function() {
+    window.pandoraRenderHCaptcha();
+  };
+
+  function rerender(lang) {
+    setTimeout(function(){ window.pandoraRenderHCaptcha(lang); }, 250);
+  }
+
+  document.addEventListener('click', function(event) {
+    const control = event.target.closest('[data-lang-opt]');
+    if (!control) return;
+    rerender(control.getAttribute('data-lang-opt'));
+  }, true);
+
+  window.addEventListener('storage', function(event) {
+    if (event.key === 'pandora_lang') rerender(event.newValue);
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ rerender(); });
+  } else {
+    rerender();
+  }
+})();
+</script>
+<script src="https://js.hcaptcha.com/1/api.js?onload=pandoraHCaptchaReady&render=explicit&recaptchacompat=off" async defer></script>
+
 </body>
 </html>

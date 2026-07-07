@@ -18,14 +18,12 @@
     return dict[key]||TEXT.en[key]||key;
   };
 
-  window.pandoraSyncCaptchaLanguage=function(lang){
-    const normalized=({ua:'uk',uk:'uk',ru:'ru',en:'en',es:'es'}[lang])||'uk';
+  window.pandoraSyncCaptchaLanguage=function(){
     document.querySelectorAll('.h-captcha[data-captcha="true"]').forEach(el=>{
-      el.setAttribute('data-lang',normalized);
+      el.removeAttribute('data-lang');
     });
   };
-
-  function setError(input,key){
+function setError(input,key){
     if(!input)return false;
     input.setCustomValidity(window.pandoraFormText(key));
     input.reportValidity();
