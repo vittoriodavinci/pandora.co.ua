@@ -35,3 +35,7 @@ Thumbs.db
 tmp/
 temp/
 .cache/
+
+# Local AI patch backups
+_backup_ai_patches/
+*.bak_*
