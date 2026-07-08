@@ -63,32 +63,53 @@ nav {
 .nav-right { display:flex; align-items:center; gap:8px; }
 .nav-icon-btn { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; border:none; background:transparent; color:var(--light); opacity:0.7; cursor:pointer; transition:all 0.2s; padding:0; }
 .nav-icon-btn:hover, .nav-icon-btn.open { opacity:1; background:rgba(255,255,255,0.08); }
-.nav-faq-btn svg { display:block; width:26px; height:26px; color:currentColor; overflow:visible; transform:translateY(1px); }
-.nav-faq-btn .faq-bubble { stroke-width:1.5; }
-.nav-faq-btn .faq-mark { stroke-width:1.25; }
-.nav-faq-text-btn {
-  width:auto;
-  min-width:40px;
-  padding:0 12px;
-  border-radius:999px;
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:13px;
-  line-height:40px;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  text-decoration:none;
-}
-.nav-faq-text-btn span[data-lang] { display:none; }
-.nav-faq-text-btn span[data-lang].active { display:inline; }
-
 .nav-hamburger { color:var(--accent); opacity:0.85; }
 .nav-hamburger:hover, .nav-hamburger.open { opacity:1; background:rgba(200,168,75,0.12); }
 .nav-user-menu { position:relative; }
 .nav-user-dropdown { display:none; position:absolute; top:calc(100% + 6px); right:0; background:rgba(13,13,13,0.97); border:1px solid var(--border); backdrop-filter:blur(16px); min-width:240px; z-index:200; border-radius:8px; overflow:hidden; }
 .nav-user-dropdown.open { display:block; }
-.user-menu-link { display:block; width:100%; padding:14px 18px; border:none; background:none; color:var(--light); font-size:13px; font-family:'DM Sans',sans-serif; text-align:left; cursor:pointer; text-decoration:none; transition:background 0.15s; }
-.user-menu-link:hover { background:rgba(255,255,255,0.04); }
-.user-menu-cta { color:var(--accent); font-weight:500; border-top:1px solid var(--border); }
+.user-menu-link { display:block; width:100%; padding:14px 18px; border:none; background:none; color:var(--light); font-size:13px; font-family:'DM Sans',sans-serif; text-align:left; cursor:pointer; text-decoration:none; transition:background 0.15s,color 0.15s; }
+.user-menu-link:hover, .user-menu-link:focus-visible { background:rgba(255,255,255,0.04); color:var(--accent); }
+.user-menu-auth-row { display:flex; align-items:center; gap:6px; padding:14px 18px; color:var(--light); font-size:13px; font-family:'DM Sans',sans-serif; border-bottom:1px solid var(--border); }
+.user-menu-auth-link { color:inherit; text-decoration:none; transition:color 0.15s; }
+.user-menu-auth-link:hover, .user-menu-auth-link:focus-visible { color:var(--accent); }
+.user-menu-separator { opacity:0.55; }
+
+/* AUTH MODAL */
+.auth-modal-backdrop { position:fixed; inset:0; z-index:350; display:none; align-items:center; justify-content:center; padding:72px 18px 24px; background:rgba(4,4,4,0.42); backdrop-filter:blur(6px); }
+.auth-modal-backdrop.open { display:flex; }
+.auth-modal { position:relative; width:min(420px,calc(100vw - 32px)); height:auto !important; min-height:0 !important; max-height:calc(100vh - 96px); overflow:auto; scroll-snap-align:none !important; border:1px solid rgba(200,168,75,0.24); border-radius:16px; background:linear-gradient(180deg,#1a1a1a 0%,#111 100%); box-shadow:0 24px 72px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.035) inset; padding:22px 24px 20px; }
+.auth-modal[hidden] { display:none; }
+.auth-close { position:absolute; top:10px; right:10px; width:30px; height:30px; border:1px solid rgba(255,255,255,0.08); border-radius:50%; background:rgba(255,255,255,0.03); color:rgba(245,242,237,0.72); cursor:pointer; font-size:18px; line-height:1; }
+.auth-close:hover { border-color:rgba(200,168,75,0.45); color:var(--accent); }
+.auth-kicker { margin-bottom:6px; font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); }
+.auth-title { margin:0 34px 8px 0; font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:300; line-height:1.08; }
+.auth-copy { margin:0 0 14px; color:rgba(245,242,237,0.62); font-size:12px; line-height:1.5; }
+.auth-form { display:flex; flex-direction:column; gap:10px; }
+.auth-field { display:flex; flex-direction:column; gap:6px; color:rgba(245,242,237,0.72); font-size:12px; letter-spacing:0.04em; }
+.auth-field input { width:100%; border:1px solid rgba(255,255,255,0.1); border-radius:9px; background:rgba(255,255,255,0.045); color:var(--light); padding:11px 12px; font:400 14px 'DM Sans',sans-serif; outline:none; }
+.auth-field input:focus { border-color:rgba(200,168,75,0.55); box-shadow:0 0 0 3px rgba(200,168,75,0.08); }
+.auth-primary { width:100%; border:none; border-radius:9px; background:var(--accent); color:#111; padding:11px 14px; font:600 13px 'DM Sans',sans-serif; cursor:pointer; }
+.auth-primary:hover { filter:brightness(1.06); }
+.auth-note { margin:-2px 0 0; color:rgba(245,242,237,0.46); font-size:11px; line-height:1.4; }
+.auth-captcha-step { display:none; border:1px dashed rgba(200,168,75,0.28); border-radius:10px; padding:10px 12px; background:rgba(200,168,75,0.045); color:rgba(245,242,237,0.66); font-size:11px; line-height:1.45; }
+.auth-captcha-step.open { display:block; }
+.auth-status { display:none; color:rgba(200,168,75,0.86); font-size:11px; line-height:1.4; }
+.auth-status:not(:empty) { display:block; }
+.auth-divider { display:flex; align-items:center; gap:10px; margin:12px 0 10px; color:rgba(245,242,237,0.4); font-size:11px; }
+.auth-divider::before,.auth-divider::after { content:""; flex:1; height:1px; background:rgba(255,255,255,0.08); }
+.auth-socials { display:flex; flex-direction:column; gap:8px; }
+.auth-social { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; min-height:40px; border-radius:9px; border:1px solid transparent; font:600 13px 'DM Sans',sans-serif; cursor:pointer; }
+.auth-social.google { background:#f5f5f5; color:#151515; }
+.auth-social.facebook { background:#1877f2; color:white; }
+.auth-social-mark { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; background:rgba(255,255,255,0.18); font-weight:700; }
+.auth-dev-link { display:flex; align-items:center; justify-content:center; width:100%; min-height:36px; margin-top:8px; border:1px dashed rgba(200,168,75,0.32); border-radius:9px; background:rgba(200,168,75,0.045); color:rgba(200,168,75,0.92); text-decoration:none; font:600 12px 'DM Sans',sans-serif; }
+.auth-dev-link:hover { background:rgba(200,168,75,0.09); border-color:rgba(200,168,75,0.52); }
+.auth-switch { margin-top:12px; text-align:center; color:rgba(245,242,237,0.5); font-size:12px; }
+.auth-switch button { border:none; background:none; color:var(--accent); cursor:pointer; font:600 12px 'DM Sans',sans-serif; padding:0 0 0 4px; }
+.auth-legal { margin-top:12px; color:rgba(245,242,237,0.44); font-size:10.5px; line-height:1.45; }
+.auth-legal a { color:rgba(200,168,75,0.86); text-decoration:none; }
+@media(max-width:560px){ .auth-modal-backdrop { align-items:flex-start; padding-top:70px; } .auth-modal { padding:20px 18px 18px; border-radius:15px; } .auth-title { font-size:28px; } }
 
 /* NAV LANG — keep old rules for dropdown, override button */
 
@@ -1345,28 +1366,39 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 </style>
 <style id="pandora-hcaptcha-official-style">
 .pandora-hcaptcha {
+  position: relative;
   display: block;
   width: 304px;
   height: 78px;
   min-height: 78px;
   margin: 12px 0;
-  padding: 2px;
-  background: #0f0d09;
-  border: 1px solid rgba(212, 175, 55, 0.72);
+  padding: 0;
+  background: transparent;
+  border: 0;
   border-radius: 5px;
   overflow: hidden;
-  box-shadow:
-    0 0 0 1px rgba(212, 175, 55, 0.10),
-    inset 0 0 0 1px rgba(212, 175, 55, 0.08);
+  box-shadow: none;
+}
+.pandora-hcaptcha::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border: 2px solid rgba(212, 175, 55, 0.92);
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 1px rgba(212, 175, 55, 0.68);
 }
 .pandora-hcaptcha iframe {
   display: block !important;
-  width: 306px !important;
-  height: 80px !important;
+  width: 304px !important;
+  height: 78px !important;
   max-width: none !important;
-  margin: -1px 0 0 -1px;
+  margin: 0;
   border: 0 !important;
-  border-radius: 3px;
+  border-radius: 4px;
+  outline: 0 !important;
+  box-shadow: none !important;
 }
 </style>
 
@@ -1395,10 +1427,9 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <a href="#about"><span class="active" data-lang="uk">Про нас</span><span data-lang="ru">О нас</span><span data-lang="en">About</span><span data-lang="es">Nosotros</span></a>
 <a href="#project-intro"><span class="active" data-lang="uk">Про проєкт</span><span data-lang="ru">О проекте</span><span data-lang="en">About the project</span><span data-lang="es">Sobre el proyecto</span></a>
 <a href="#signal"><span class="active" data-lang="uk">Участь</span><span data-lang="ru">Участие</span><span data-lang="en">Participation</span><span data-lang="es">Participación</span></a>
-<a href="#contact"><span class="active" data-lang="uk">Контакти</span><span data-lang="ru">Контакты</span><span data-lang="en">Contacts</span><span data-lang="es">Contactos</span></a>
+<a href="#contact"><span class="active" data-lang="uk">Зв’язатися</span><span data-lang="ru">Связаться</span><span data-lang="en">Contact us</span><span data-lang="es">Contactar</span></a>
 </div>
 <div class="nav-right">
-<a class="nav-icon-btn nav-faq-btn nav-faq-text-btn" href="faq.html"><span class="active" data-lang="uk">Питання</span><span data-lang="ru">Вопросы</span><span data-lang="en">FAQ</span><span data-lang="es">Preguntas</span></a>
 <!-- Globe icon for language -->
 <div class="nav-lang" id="langSwitcher">
 <button aria-label="Выбор языка" class="nav-icon-btn" id="langBtn" onclick="toggleLangMenu()">
@@ -1425,13 +1456,63 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="18"><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
 </button>
 <div class="nav-user-dropdown" id="userMenuDropdown">
-<a class="user-menu-link" data-event="open_cabinet" href="cabinet.html"><span class="active" data-lang="uk">Кабінет</span><span data-lang="ru">Кабинет</span><span data-lang="en">Cabinet</span><span data-lang="es">Gabinete</span></a>
-<a class="user-menu-link" data-event="open_cabinet_login" href="cabinet.html"><span class="active" data-lang="uk">Увійти</span><span data-lang="ru">Войти</span><span data-lang="en">Log in</span><span data-lang="es">Iniciar sesión</span></a>
-<a class="user-menu-link user-menu-cta" data-event="open_cabinet_signup" href="cabinet.html"><span class="active" data-lang="uk">Зареєструватися</span><span data-lang="ru">Зарегистрироваться</span><span data-lang="en">Sign up</span><span data-lang="es">Registrarse</span></a>
+<div class="user-menu-auth-row"><a class="user-menu-auth-link" data-event="open_login_modal" href="#login" onclick="openAuthModal('login', event)"><span class="active" data-lang="uk">Увійти</span><span data-lang="ru">Войти</span><span data-lang="en">Log in</span><span data-lang="es">Iniciar sesión</span></a><span class="user-menu-separator">/</span><a class="user-menu-auth-link" data-event="open_register_modal" href="#register" onclick="openAuthModal('register', event)"><span class="active" data-lang="uk">Зареєструватися</span><span data-lang="ru">Зарегистрироваться</span><span data-lang="en">Sign up</span><span data-lang="es">Registrarse</span></a></div>
+<a class="user-menu-link" data-event="open_faq" href="faq.html"><span class="active" data-lang="uk">Питання</span><span data-lang="ru">Вопросы</span><span data-lang="en">FAQ</span><span data-lang="es">Preguntas</span></a>
 </div>
 </div>
 </div>
 </nav>
+<div class="auth-modal-backdrop" id="authModalBackdrop" aria-hidden="true" onclick="handleAuthBackdropClick(event)">
+<section class="auth-modal" id="authLoginModal" role="dialog" aria-modal="true" aria-labelledby="authLoginTitle" hidden>
+<button class="auth-close" type="button" aria-label="Close" onclick="closeAuthModal()">×</button>
+<h2 class="auth-title" id="authLoginTitle"><span class="active" data-lang="uk">Вхід</span><span data-lang="ru">Вход</span><span data-lang="en">Login</span><span data-lang="es">Entrada</span></h2>
+<p class="auth-copy"><span class="active" data-lang="uk">Увійдіть через email із підтвердженням або скористайтеся Google чи Facebook.</span><span data-lang="ru">Войдите через email с подтверждением или воспользуйтесь Google либо Facebook.</span><span data-lang="en">Sign in with email confirmation, or continue with Google or Facebook.</span><span data-lang="es">Entra con confirmación por email o continúa con Google o Facebook.</span></p>
+<form class="auth-form" onsubmit="handleAuthEmailFlow('login', event)">
+<label class="auth-field"><span class="active" data-lang="uk">Електронна пошта</span><span data-lang="ru">Электронная почта</span><span data-lang="en">Email</span><span data-lang="es">Email</span><input autocomplete="email" name="login_email" placeholder="Email" required type="email"/></label>
+<p class="auth-note"><span class="active" data-lang="uk">Після підключення auth-сервера сюди прийде посилання для входу.</span><span data-lang="ru">После подключения auth-сервера сюда придёт ссылка для входа.</span><span data-lang="en">After the auth server is connected, a sign-in link will be sent here.</span><span data-lang="es">Cuando se conecte el servidor auth, se enviará aquí un enlace de acceso.</span></p>
+<button class="auth-primary" type="submit"><span class="active" data-lang="uk">Продовжити через email</span><span data-lang="ru">Продолжить через email</span><span data-lang="en">Continue with email</span><span data-lang="es">Continuar con email</span></button>
+<div class="auth-captcha-step" id="authLoginCaptchaStep">
+<span class="active" data-lang="uk">На наступному кроці тут буде перевірка captcha та підтвердження входу через email.</span>
+<span data-lang="ru">На следующем шаге здесь будет проверка captcha и подтверждение входа через email.</span>
+<span data-lang="en">The next step will show captcha verification and email sign-in confirmation here.</span>
+<span data-lang="es">En el siguiente paso aparecerá aquí la verificación captcha y la confirmación por email.</span>
+</div>
+<div class="auth-status" id="authLoginStatus" aria-live="polite"></div>
+</form>
+<div class="auth-divider"><span class="active" data-lang="uk">Або через</span><span data-lang="ru">Или через</span><span data-lang="en">Or continue with</span><span data-lang="es">O mediante</span></div>
+<div class="auth-socials">
+<button class="auth-social google" type="button" onclick="showAuthProviderPending('Google')"><span class="auth-social-mark">G</span>Google</button>
+<button class="auth-social facebook" type="button" onclick="showAuthProviderPending('Facebook')"><span class="auth-social-mark">f</span>Facebook</button>
+</div>
+<a class="auth-dev-link" href="cabinet.html"><span class="active" data-lang="uk">Тимчасово увійти в кабінет</span><span data-lang="ru">Временно войти в кабинет</span><span data-lang="en">Temporary cabinet access</span><span data-lang="es">Acceso temporal al gabinete</span></a>
+<div class="auth-switch"><span class="active" data-lang="uk">Ще немає акаунта?</span><span data-lang="ru">Ещё нет аккаунта?</span><span data-lang="en">No account yet?</span><span data-lang="es">¿Aún no tienes cuenta?</span><button type="button" onclick="openAuthModal('register')"><span class="active" data-lang="uk">Зареєструватися</span><span data-lang="ru">Зарегистрироваться</span><span data-lang="en">Register</span><span data-lang="es">Registrarse</span></button></div>
+</section>
+<section class="auth-modal" id="authRegisterModal" role="dialog" aria-modal="true" aria-labelledby="authRegisterTitle" hidden>
+<button class="auth-close" type="button" aria-label="Close" onclick="closeAuthModal()">×</button>
+<h2 class="auth-title" id="authRegisterTitle"><span class="active" data-lang="uk">Реєстрація</span><span data-lang="ru">Регистрация</span><span data-lang="en">Registration</span><span data-lang="es">Registro</span></h2>
+<p class="auth-copy"><span class="active" data-lang="uk">Створіть профіль через email із підтвердженням або прив’яжіть його до Google чи Facebook.</span><span data-lang="ru">Создайте профиль через email с подтверждением или привяжите его к Google либо Facebook.</span><span data-lang="en">Create a profile with email confirmation, or link it to Google or Facebook.</span><span data-lang="es">Crea un perfil con confirmación por email o vincúlalo con Google o Facebook.</span></p>
+<form class="auth-form" onsubmit="handleAuthEmailFlow('register', event)">
+<label class="auth-field"><span class="active" data-lang="uk">Електронна пошта</span><span data-lang="ru">Электронная почта</span><span data-lang="en">Email</span><span data-lang="es">Email</span><input autocomplete="email" name="register_email" placeholder="Email" required type="email"/></label>
+<p class="auth-note"><span class="active" data-lang="uk">Після підключення auth-сервера на email буде відправлено підтвердження.</span><span data-lang="ru">После подключения auth-сервера на email будет отправлено подтверждение.</span><span data-lang="en">After the auth server is connected, an email confirmation will be sent.</span><span data-lang="es">Cuando se conecte el servidor auth, se enviará una confirmación por email.</span></p>
+<button class="auth-primary" type="submit"><span class="active" data-lang="uk">Зареєструватися через email</span><span data-lang="ru">Зарегистрироваться через email</span><span data-lang="en">Register with email</span><span data-lang="es">Registrarse con email</span></button>
+<div class="auth-captcha-step" id="authRegisterCaptchaStep">
+<span class="active" data-lang="uk">Captcha з’являється тільки для email-реєстрації. Google і Facebook її не потребують.</span>
+<span data-lang="ru">Captcha появляется только для email-регистрации. Google и Facebook в ней не нуждаются.</span>
+<span data-lang="en">Captcha appears only for email registration. Google and Facebook do not need it.</span>
+<span data-lang="es">Captcha aparece solo para el registro por email. Google y Facebook no la necesitan.</span>
+</div>
+<div class="auth-status" id="authRegisterStatus" aria-live="polite"></div>
+</form>
+<div class="auth-divider"><span class="active" data-lang="uk">Або через</span><span data-lang="ru">Или через</span><span data-lang="en">Or continue with</span><span data-lang="es">O mediante</span></div>
+<div class="auth-socials">
+<button class="auth-social google" type="button" onclick="showAuthProviderPending('Google')"><span class="auth-social-mark">G</span>Google</button>
+<button class="auth-social facebook" type="button" onclick="showAuthProviderPending('Facebook')"><span class="auth-social-mark">f</span>Facebook</button>
+</div>
+<a class="auth-dev-link" href="cabinet.html"><span class="active" data-lang="uk">Тимчасово увійти в кабінет</span><span data-lang="ru">Временно войти в кабинет</span><span data-lang="en">Temporary cabinet access</span><span data-lang="es">Acceso temporal al gabinete</span></a>
+<p class="auth-legal"><span class="active" data-lang="uk">Продовжуючи реєстрацію, ви підтверджуєте згоду з </span><span data-lang="ru">Продолжая регистрацию, вы подтверждаете согласие с </span><span data-lang="en">By continuing registration, you agree to the </span><span data-lang="es">Al continuar el registro, aceptas los </span><a href="terms.html"><span class="active" data-lang="uk">умовами</span><span data-lang="ru">условиями</span><span data-lang="en">terms</span><span data-lang="es">términos</span></a><span class="active" data-lang="uk"> та </span><span data-lang="ru"> и </span><span data-lang="en"> and </span><span data-lang="es"> y la </span><a href="privacy.html"><span class="active" data-lang="uk">політикою конфіденційності</span><span data-lang="ru">политикой конфиденциальности</span><span data-lang="en">privacy policy</span><span data-lang="es">política de privacidad</span></a>.</p>
+<div class="auth-switch"><span class="active" data-lang="uk">Вже є акаунт?</span><span data-lang="ru">Уже есть аккаунт?</span><span data-lang="en">Already have an account?</span><span data-lang="es">¿Ya tienes cuenta?</span><button type="button" onclick="openAuthModal('login')"><span class="active" data-lang="uk">Увійти</span><span data-lang="ru">Войти</span><span data-lang="en">Log in</span><span data-lang="es">Iniciar sesión</span></button></div>
+</section>
+</div>
 <!-- HERO -->
 <section id="hero">
 <div class="hero-bg"></div>
@@ -1763,10 +1844,10 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <h2 class="section-title"><span class="active" data-lang="uk">Будеш і далі фінансувати чужі системи<br/>чи побудуємо разом свою?</span><span data-lang="ru">Будешь и дальше финансировать чужие системы<br/>или построим вместе свою?</span><span data-lang="en">Will you keep funding systems you do not control<br/>or shall we build our own together?</span><span data-lang="es">¿Seguirás financiando sistemas ajenos<br/>o construiremos juntos el nuestro?</span></h2>
 <div class="signal-body">
 <div class="accent-copy-block">
-<p><span class="active" data-lang="uk">Ми розробили просту й прозору систему рекомендацій і винагород як маркетинговий елемент розвитку проєкту.</span><span data-lang="ru">Мы разработали простую и прозрачную систему рекомендаций и вознаграждений как маркетинговый элемент развития проекта.</span><span data-lang="en">We have created a simple and transparent recommendation and reward system as a marketing element of the project growth.</span><span data-lang="es">Hemos creado un sistema simple y transparente de recomendaciones y recompensas como elemento de marketing del desarrollo del proyecto.</span></p>
-<p><span class="active" data-lang="uk">Сигнал — це один зі способів розповісти про нас іншим людям без нав'язливої реклами.</span><span data-lang="ru">Сигнал — это один из способов рассказать о нас другим людям без навязчивой рекламы.</span><span data-lang="en">Signal is one way to tell other people about us without intrusive advertising.</span><span data-lang="es">Signal es una forma de contar a otras personas sobre nosotros sin publicidad intrusiva.</span></p>
+<p><span class="active" data-lang="uk">Ми розробили просту й прозору систему рекомендацій і винагород — “Сигнал”.</span><span data-lang="ru">Мы разработали простую и прозрачную систему рекомендаций и вознаграждений — “Сигнал”.</span><span data-lang="en">We have created a simple and transparent recommendation and reward system: “Signal”.</span><span data-lang="es">Hemos creado un sistema simple y transparente de recomendaciones y recompensas: “Signal”.</span></p>
 <p><span class="active" data-lang="uk">Учасник ділиться персональним посиланням, QR-кодом, постом, повідомленням або особистим запрошенням.</span><span data-lang="ru">Участник делится персональной ссылкой, QR-кодом, постом, сообщением или личным приглашением.</span><span data-lang="en">A participant shares a personal link, QR code, post, message or personal invitation.</span><span data-lang="es">Un participante comparte un enlace personal, código QR, publicación, mensaje o invitación personal.</span></p>
 <p><span class="active" data-lang="uk">Коли нова людина приходить за вашою рекомендацією і стає пайовиком, ви отримуєте подяку за реальний внесок у розвиток кооперативу.</span><span data-lang="ru">Когда новый человек приходит по вашей рекомендации и становится пайщиком — вы получаете благодарность за реальный вклад в развитие кооператива.</span><span data-lang="en">When a new person comes through your recommendation and becomes a member, you receive gratitude for a real contribution to the cooperative development.</span><span data-lang="es">Cuando una nueva persona llega por tu recomendación y se convierte en socio, recibes agradecimiento por una contribución real al desarrollo de la cooperativa.</span></p>
+<p><span class="active" data-lang="uk">Створити свій “Сигнал” можна в особистому кабінеті після реєстрації на сайті.</span><span data-lang="ru">Создать свой “Сигнал” можно в личном кабинете после регистрации на сайте.</span><span data-lang="en">You can create your own “Signal” in the personal cabinet after registering on the site.</span><span data-lang="es">Puedes crear tu propio “Signal” en el gabinete personal después de registrarte en el sitio.</span></p>
 </div>
 <div class="signal-note">
 <h3><span class="active" data-lang="uk">Зверніть увагу</span><span data-lang="ru">Обратите внимание</span><span data-lang="en">Please note</span><span data-lang="es">Importante</span></h3>
@@ -1790,7 +1871,7 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <button onclick="shareTo('viber')"><svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm3.5 13.5c-.3.3-.7.5-1 .3-1.5-.6-3-1.8-4-3-.8-1-1.5-2.2-1.5-3.5 0-.8.3-1.5.8-2 .3-.3.7-.3 1-.1.4.3.7.8 1 1.2.2.3.2.6 0 .8-.2.2-.4.4-.5.7-.1.2 0 .5.3.7.5.5 1.2 1 1.9 1.3.3.1.6.1.8-.2.2-.3.5-.6.8-.8.3-.2.7-.1.9.2.5.7.9 1.3 1.3 2 .2.4.2.8-.3 1.3z"></path></svg> Viber</button>
 </div>
 </div>
-<a class="btn-primary" href="cabinet.html"><span class="active" data-lang="uk">Приєднатися</span><span data-lang="ru">Присоединиться</span><span data-lang="en">Join Pandora</span><span data-lang="es">Unirse</span></a>
+<a class="btn-primary" href="#register" onclick="openAuthModal('register', event)"><span class="active" data-lang="uk">Приєднатися</span><span data-lang="ru">Присоединиться</span><span data-lang="en">Join Pandora</span><span data-lang="es">Unirse</span></a>
 </div>
 <div aria-live="polite" class="signal-status" id="signalCopyStatus"></div>
 <h3 class="signal-lead-bottom"><span class="active" data-lang="uk">Pandora зростає від людини до людини!</span><span data-lang="ru">Pandora растёт от человека к человеку!</span><span data-lang="en">Pandora grows from person to person!</span><span data-lang="es">¡Pandora crece de persona a persona!</span></h3>
@@ -1798,16 +1879,7 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <!-- CONTACT -->
 <section class="contact-landing" id="contact">
 <div class="contact-frame">
-<h2 class="section-title contact-title"><span class="active" data-lang="uk">Контакти</span><span data-lang="ru">Контакты</span><span data-lang="en">Contacts</span><span data-lang="es">Contactos</span></h2>
 <div class="contact-grid">
-<div class="accent-copy-block contact-copy">
-<h3><span class="active" data-lang="uk">Зв’язатися з Pandora</span><span data-lang="ru">Связаться с Pandora</span><span data-lang="en">Contact Pandora</span><span data-lang="es">Contactar con Pandora</span></h3>
-<p><span class="active" data-lang="uk">Питання, пропозиція або участь — залиште повідомлення, і команда повернеться з відповіддю.</span><span data-lang="ru">Вопрос, предложение или участие — оставьте сообщение, и команда вернётся с ответом.</span><span data-lang="en">A question, proposal or participation request — leave a message and the team will reply.</span><span data-lang="es">Pregunta, propuesta o participación: deja un mensaje y el equipo responderá.</span></p>
-<div class="contact-socials">
-<a href="https://t.me/usenpandora" rel="noopener" target="_blank">Telegram</a>
-<a href="https://www.facebook.com/usenpandora/" rel="noopener" target="_blank">Facebook</a>
-</div>
-</div>
 <form accept-charset="UTF-8" action="https://api.web3forms.com/submit" class="contact-form" method="POST" onsubmit="return preparePandoraContactForm(this)">
 <input name="access_key" type="hidden" value="d2629b69-5660-43e0-8b0d-f2ac60a2c452"/>
 <input name="subject" type="hidden" value="Pandora site contact form"/>
@@ -1987,6 +2059,100 @@ function closeUserMenu() {
   document.getElementById('userMenuDropdown').classList.remove('open');
 }
 
+function openAuthModal(mode, event) {
+  if (event) event.preventDefault();
+  closeUserMenu();
+  const backdrop = document.getElementById('authModalBackdrop');
+  const login = document.getElementById('authLoginModal');
+  const register = document.getElementById('authRegisterModal');
+  if (!backdrop || !login || !register) return;
+  const isRegister = mode === 'register';
+  login.hidden = isRegister;
+  register.hidden = !isRegister;
+  backdrop.classList.add('open');
+  backdrop.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('authLoginCaptchaStep')?.classList.remove('open');
+  document.getElementById('authRegisterCaptchaStep')?.classList.remove('open');
+  setAuthStatus('login', '');
+  setAuthStatus('register', '');
+  const activeInput = (isRegister ? register : login).querySelector('input');
+  setTimeout(() => activeInput?.focus(), 40);
+  if (history.replaceState) history.replaceState(null, '', isRegister ? '#register' : '#login');
+}
+
+function closeAuthModal() {
+  const backdrop = document.getElementById('authModalBackdrop');
+  if (!backdrop) return;
+  backdrop.classList.remove('open');
+  backdrop.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  document.getElementById('authLoginModal')?.setAttribute('hidden', '');
+  document.getElementById('authRegisterModal')?.setAttribute('hidden', '');
+  document.getElementById('authLoginCaptchaStep')?.classList.remove('open');
+  document.getElementById('authRegisterCaptchaStep')?.classList.remove('open');
+  if ((location.hash === '#login' || location.hash === '#register') && history.replaceState) {
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+}
+
+function handleAuthBackdropClick(event) {
+  if (event.target && event.target.id === 'authModalBackdrop') closeAuthModal();
+}
+
+function showAuthCaptchaStep(mode) {
+  const id = mode === 'register' ? 'authRegisterCaptchaStep' : 'authLoginCaptchaStep';
+  document.getElementById(id)?.classList.add('open');
+}
+
+function setAuthStatus(mode, text) {
+  const id = mode === 'register' ? 'authRegisterStatus' : 'authLoginStatus';
+  const el = document.getElementById(id);
+  if (el) el.textContent = text || '';
+}
+
+function getAuthStatusMessage(mode) {
+  const lang = document.documentElement.lang || 'uk';
+  const messages = {
+    login: {
+      uk: 'Auth-сервер ще не підключено. UI готовий до інтеграції входу через email.',
+      ru: 'Auth-сервер ещё не подключён. UI готов к интеграции входа через email.',
+      en: 'The auth server is not connected yet. The UI is ready for email sign-in integration.',
+      es: 'El servidor auth aún no está conectado. La interfaz está lista para integrar el acceso por email.'
+    },
+    register: {
+      uk: 'Auth-сервер ще не підключено. UI готовий до інтеграції email-реєстрації.',
+      ru: 'Auth-сервер ещё не подключён. UI готов к интеграции email-регистрации.',
+      en: 'The auth server is not connected yet. The UI is ready for email registration integration.',
+      es: 'El servidor auth aún no está conectado. La interfaz está lista para integrar el registro por email.'
+    },
+    provider: {
+      uk: 'OAuth для {provider} буде ввімкнено після створення client id та secret.',
+      ru: 'OAuth для {provider} будет включён после создания client id и secret.',
+      en: '{provider} OAuth will be enabled after client id and secret are created.',
+      es: 'OAuth de {provider} se activará después de crear client id y secret.'
+    }
+  };
+  const group = messages[mode] || messages.login;
+  return group[lang] || group.uk;
+}
+
+function handleAuthEmailFlow(mode, event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+  showAuthCaptchaStep(mode);
+  setAuthStatus(mode, getAuthStatusMessage(mode));
+}
+
+function showAuthProviderPending(provider) {
+  const mode = document.getElementById('authRegisterModal')?.hidden === false ? 'register' : 'login';
+  setAuthStatus(mode, getAuthStatusMessage('provider').replace('{provider}', provider));
+}
+
 // Close dropdowns on outside click
 document.addEventListener('click', e => {
   const sw = document.getElementById('langSwitcher');
@@ -1995,8 +2161,15 @@ document.addEventListener('click', e => {
   if (um && !um.contains(e.target)) closeUserMenu();
 });
 
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAuthModal();
+});
+
 const saved = localStorage.getItem('pandora_lang') || localStorage.getItem('pandora-lang') || 'uk';
 setLang(saved);
+if (location.hash === '#login' || location.hash === '#register') {
+  openAuthModal(location.hash === '#register' ? 'register' : 'login');
+}
 
 const sects = document.querySelectorAll('section[id]');
 window.addEventListener('scroll', () => {
@@ -2674,9 +2847,6 @@ function preparePandoraContactForm(form) {
 }
 </script>
 <script id="pandora-refactor-behavior-v0-1">
-const SHARE_TEXT = encodeURIComponent('Стань совладельцем универсальной социально-экономической сети - USEN Pandora. Подробности тут:');
-const SHARE_URL = encodeURIComponent('https://pandora.co.ua');
-
 function toggleShareMenu(event) {
   event.preventDefault();
   const menu = document.getElementById('shareMenu');
@@ -2685,11 +2855,11 @@ function toggleShareMenu(event) {
 
 function shareTo(network) {
   const url = 'https://pandora.co.ua';
-  const text = 'Стань совладельцем универсальной социально-экономической сети - USEN Pandora. Подробности тут: ' + url;
+  const text = 'Стань совладельцем универсальной социально-экономической сети - USEN Pandora! Подробности тут: ' + url;
   let link;
   switch (network) {
-    case 'telegram': link = 'https://t.me/share/url?text=' + encodeURIComponent(text); break;
-    case 'facebook': link = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url); break;
+    case 'telegram': link = 'https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent('Стань совладельцем универсальной социально-экономической сети - USEN Pandora! Подробности тут:'); break;
+    case 'facebook': link = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '&quote=' + encodeURIComponent(text) + '&hashtag=' + encodeURIComponent('#USENPandora'); break;
     case 'twitter': link = 'https://x.com/intent/post?text=' + encodeURIComponent(text); break;
     case 'whatsapp': link = 'https://wa.me/?text=' + encodeURIComponent(text); break;
     case 'viber': link = 'viber://forward?text=' + encodeURIComponent(text); break;
@@ -3706,6 +3876,24 @@ Changes:
     min-height: auto !important;
   }
 }
+</style>
+
+
+<style id="pandora-contact-form-only-v0-1">
+  #contact .contact-frame {
+    width: min(520px, 100%) !important;
+  }
+
+  #contact .contact-grid {
+    display: block !important;
+  }
+
+  #contact .contact-form {
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    justify-self: center !important;
+  }
 </style>
 
 

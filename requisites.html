@@ -8,177 +8,104 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/pandora-language-modal.css">
 <style>
-:root{--bg:#080808;--text:#f5f2ed;--muted:rgba(245,242,237,.68);--line:rgba(255,255,255,.11);--gold:#c8a84b}
+:root{--bg:#080808;--paper:#12110f;--paper2:#181613;--text:#f5f2ed;--muted:rgba(245,242,237,.68);--soft:rgba(245,242,237,.48);--line:rgba(255,255,255,.1);--gold:#c8a84b}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at 16% 12%,rgba(212,43,43,.12),transparent 28%),radial-gradient(circle at 84% 10%,rgba(26,58,122,.16),transparent 34%),var(--bg);color:var(--text);font-family:"DM Sans",Arial,sans-serif;line-height:1.65}
-.topbar{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px clamp(20px,6vw,72px);border-bottom:1px solid var(--line);background:rgba(8,8,8,.82);backdrop-filter:blur(16px)}
-.brand{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
-.mark{position:relative;width:34px;height:34px}
-.mark span{position:absolute;width:22px;height:22px;border-radius:50%;opacity:.78}
+body{margin:0;background:radial-gradient(circle at 16% 10%,rgba(212,43,43,.1),transparent 28%),radial-gradient(circle at 86% 8%,rgba(26,58,122,.14),transparent 34%),var(--bg);color:var(--text);font-family:"DM Sans",Arial,sans-serif;line-height:1.62}
+.topbar{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px clamp(20px,6vw,72px);border-bottom:1px solid var(--line);background:rgba(8,8,8,.84);backdrop-filter:blur(16px)}
+.brand{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}.mark{position:relative;width:34px;height:34px}.mark span{position:absolute;width:22px;height:22px;border-radius:50%;opacity:.78}
 .r{background:#d42b2b;left:0;top:6px}.g{background:#1a7a3c;right:0;top:6px}.b{background:#1a3a7a;left:6px;bottom:0}
-.brand strong{font-size:13px;letter-spacing:.08em}
-.nav{display:flex;gap:14px;flex-wrap:wrap}
-.nav a,.footer a{color:var(--muted);text-decoration:none;font-size:12px}
-.nav a:hover,.footer a:hover{color:var(--gold)}
-main{width:min(880px,calc(100% - 40px));margin:0 auto;padding:clamp(48px,8vw,88px) 0}
-h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(42px,6vw,72px);line-height:1;margin:0 0 12px;font-weight:300}
-.lead{color:var(--gold);margin:0 0 34px;font-size:14px;letter-spacing:.06em}
-.requisites-card{border-left:2px solid var(--gold);background:rgba(200,168,75,.035);padding:22px 28px;margin:18px 0 30px}
-.req-row{display:grid;grid-template-columns:minmax(190px,.42fr) 1fr;gap:28px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08)}
-.req-row:last-child{border-bottom:none}
-.req-label{color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
-.req-value{color:var(--muted);font-size:15px}
-.req-value a{color:#6c8cff}
-h2{font-size:17px;letter-spacing:.12em;text-transform:uppercase;margin:34px 0 10px;color:var(--gold)}
-p,li{color:var(--muted);font-size:15px}
-ul{padding-left:22px}
-details{border:1px solid var(--line);background:rgba(255,255,255,.025);padding:14px 18px;margin:18px 0;color:var(--muted)}
-summary{cursor:pointer;color:var(--gold);font-size:13px}
+.brand strong{font-size:13px;letter-spacing:.08em}.nav{display:flex;gap:14px;flex-wrap:wrap}.nav a,.footer a{color:var(--muted);text-decoration:none;font-size:12px}.nav a:hover,.footer a:hover{color:var(--gold)}
+main{width:min(960px,calc(100% - 40px));margin:0 auto;padding:clamp(38px,6vw,66px) 0}
+.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}
+h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(38px,5.5vw,64px);line-height:1;margin:0 0 10px;font-weight:300}.lead{color:var(--muted);margin:0;font-size:14px;max-width:670px}
+.stamp{border:1px solid rgba(200,168,75,.28);background:rgba(200,168,75,.045);padding:12px 14px;color:var(--gold);font-size:11px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.folder{position:relative;margin-top:8px}.folder::before,.folder::after{content:"";position:absolute;border:1px solid rgba(200,168,75,.1);background:rgba(255,255,255,.018);inset:34px 16px -12px -16px;z-index:0;transform:rotate(-1.6deg)}.folder::after{inset:42px -14px -18px 18px;transform:rotate(1.2deg);background:rgba(200,168,75,.018)}
+.tabs{position:relative;z-index:2;display:flex;align-items:flex-end;gap:6px;overflow-x:auto;padding:0 4px 0 10px;scrollbar-width:thin}
+.tab{flex:0 0 auto;border:1px solid rgba(200,168,75,.22);border-bottom:0;border-radius:9px 9px 0 0;background:#0e0d0b;color:rgba(245,242,237,.62);padding:11px 16px 10px;font:600 11px "DM Sans",Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.tab.active{position:relative;z-index:4;background:linear-gradient(180deg,#211e17,#15130f);color:var(--gold);border-color:rgba(200,168,75,.46);padding-top:14px}
+.document{position:relative;z-index:3;border:1px solid rgba(200,168,75,.26);background:linear-gradient(180deg,var(--paper2),var(--paper));box-shadow:0 24px 70px rgba(0,0,0,.34);padding:clamp(22px,4vw,38px);min-height:430px}
+.panel{display:none}.panel.active{display:block}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:16px}
+.panel h2{margin:0;color:var(--gold);font-size:14px;letter-spacing:.14em;text-transform:uppercase}.panel-note{margin:0;color:var(--soft);font-size:12px;max-width:360px;text-align:right}
+.rows{display:grid;gap:0}.row{display:grid;grid-template-columns:minmax(170px,.36fr) 1fr;gap:20px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.075)}.row:last-child{border-bottom:none}
+.label{color:var(--soft);font-size:11px;letter-spacing:.1em;text-transform:uppercase}.value{color:var(--muted);font-size:15px;word-break:break-word}.value strong{color:var(--text);font-weight:500}.value a{color:#8ea2ff;text-decoration:none}.value a:hover{text-decoration:underline}
+.placeholder{display:inline-flex;align-items:center;border:1px solid rgba(200,168,75,.28);color:var(--gold);padding:2px 7px;margin-left:6px;border-radius:999px;font-size:10px;letter-spacing:.08em;text-transform:uppercase}.note{margin:18px 0 0;color:var(--soft);font-size:13px}
 .footer{border-top:1px solid var(--line);padding:18px clamp(20px,6vw,72px);display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-[data-lang]{display:none}
-[data-lang].active{display:block}
-span[data-lang].active{display:inline}
-@media(max-width:620px){
-  .topbar{align-items:flex-start;flex-direction:column}
-  .nav{gap:10px}
-  main{width:min(100% - 28px,880px);padding-top:38px}
-  .requisites-card{padding:18px}
-  .req-row{grid-template-columns:1fr;gap:6px}
-}
+[data-lang]{display:none}[data-lang].active{display:block}span[data-lang].active{display:inline}
+@media(max-width:760px){.topbar,.hero{align-items:flex-start;flex-direction:column}.stamp{white-space:normal}.tabs{padding-left:2px}.tab{padding:10px 12px 9px;font-size:10px}.document{min-height:0;padding:20px 16px}.folder::before,.folder::after{display:none}.panel-head{display:block}.panel-note{text-align:left;margin-top:8px}.row{grid-template-columns:1fr;gap:4px;padding:12px 0}main{width:min(100% - 28px,960px);padding-top:34px}}
 </style>
 </head>
 <body data-page="requisites">
 <header class="topbar">
   <a class="brand" href="index.html">
     <span class="mark" aria-hidden="true"><span class="r"></span><span class="g"></span><span class="b"></span></span>
-    <strong>
-      <span data-lang="uk">Кооператив Пандора</span>
-      <span data-lang="ru">Кооператив Пандора</span>
-      <span data-lang="en">Pandora Cooperative</span>
-      <span data-lang="es">Cooperativa Pandora</span>
-    </strong>
+    <strong><span data-lang="uk">Кооператив Пандора</span><span data-lang="ru">Кооператив Пандора</span><span data-lang="en">Pandora Cooperative</span><span data-lang="es">Cooperativa Pandora</span></strong>
   </a>
   <nav class="nav" aria-label="Page navigation">
-    <a href="index.html">
-      <span data-lang="uk">На головну</span>
-      <span data-lang="ru">На главную</span>
-      <span data-lang="en">Back to home</span>
-      <span data-lang="es">Volver al inicio</span>
-    </a>
+    <a href="index.html"><span data-lang="uk">На головну</span><span data-lang="ru">На главную</span><span data-lang="en">Back to home</span><span data-lang="es">Volver al inicio</span></a>
   </nav>
 </header>
 
 <main>
+  <div class="hero">
+    <div>
+      <h1><span data-lang="uk">Реквізити</span><span data-lang="ru">Реквизиты</span><span data-lang="en">Company Details</span><span data-lang="es">Datos oficiales</span></h1>
+      <p class="lead"><span data-lang="uk">Офіційна картка Pandora / U.S.E.N.: юридичні дані, платіжні реквізити та контактні дані.</span><span data-lang="ru">Официальная карточка Pandora / U.S.E.N.: юридические данные, платёжные реквизиты и контактные данные.</span><span data-lang="en">The official Pandora / U.S.E.N. card: legal data, payment details and contact data.</span><span data-lang="es">Ficha oficial de Pandora / U.S.E.N.: datos legales, detalles de pago y datos de contacto.</span></p>
+    </div>
+    <div class="stamp"><span data-lang="uk">Чернетка до затвердження</span><span data-lang="ru">Черновик до утверждения</span><span data-lang="en">Draft until approval</span><span data-lang="es">Borrador hasta aprobación</span></div>
+  </div>
 
-<article data-lang="uk">
-  <h1>Реквізити</h1>
-  <p class="lead">Інформація буде уточнюватися та доповнюватися в міру підготовки документів.</p>
+  <section class="folder" aria-label="Requisites folder">
+    <div class="tabs" role="tablist">
+      <button class="tab active" type="button" data-req-tab="legal"><span data-lang="uk">Юрдані</span><span data-lang="ru">Юрданные</span><span data-lang="en">Legal</span><span data-lang="es">Legal</span></button>
+      <button class="tab" type="button" data-req-tab="bank"><span data-lang="uk">Банк</span><span data-lang="ru">Банк</span><span data-lang="en">Bank</span><span data-lang="es">Banco</span></button>
+      <button class="tab" type="button" data-req-tab="contacts"><span data-lang="uk">Контакти</span><span data-lang="ru">Контакты</span><span data-lang="en">Contacts</span><span data-lang="es">Contactos</span></button>
+      <button class="tab" type="button" data-req-tab="note"><span data-lang="uk">Примітка</span><span data-lang="ru">Примечание</span><span data-lang="en">Note</span><span data-lang="es">Nota</span></button>
+    </div>
 
-  <section class="requisites-card">
-    <div class="req-row"><div class="req-label">Повне найменування</div><div class="req-value">уточнюється</div></div>
-    <div class="req-row"><div class="req-label">Скорочене найменування</div><div class="req-value">Pandora / U.S.E.N.</div></div>
-    <div class="req-row"><div class="req-label">Юрисдикція</div><div class="req-value">Україна</div></div>
-    <div class="req-row"><div class="req-label">Організаційна форма</div><div class="req-value">кооператив / уточнюється за реєстраційними документами</div></div>
-    <div class="req-row"><div class="req-label">Email</div><div class="req-value"><a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a></div></div>
-    <div class="req-row"><div class="req-label">Сайт</div><div class="req-value"><a href="https://pandora.co.ua/">https://pandora.co.ua/</a></div></div>
-    <div class="req-row"><div class="req-label">Документи</div><div class="req-value">у підготовці / будуть опубліковані після затвердження</div></div>
+    <div class="document">
+      <article class="panel active" data-req-panel="legal">
+        <div class="panel-head"><h2><span data-lang="uk">Юридичні дані</span><span data-lang="ru">Юридические данные</span><span data-lang="en">Legal Data</span><span data-lang="es">Datos legales</span></h2><p class="panel-note"><span data-lang="uk">Основна офіційна картка організації.</span><span data-lang="ru">Основная официальная карточка организации.</span><span data-lang="en">The core official organisation card.</span><span data-lang="es">Ficha oficial principal de la organización.</span></p></div>
+        <div class="rows">
+          <div class="row"><div class="label"><span data-lang="uk">Повна назва</span><span data-lang="ru">Полное название</span><span data-lang="en">Full name</span><span data-lang="es">Nombre completo</span></div><div class="value"><strong>Pandora / U.S.E.N.</strong><span class="placeholder">placeholder</span></div></div>
+          <div class="row"><div class="label"><span data-lang="uk">Форма</span><span data-lang="ru">Форма</span><span data-lang="en">Legal form</span><span data-lang="es">Forma legal</span></div><div class="value"><span data-lang="uk">кооператив, уточнюється за документами</span><span data-lang="ru">кооператив, уточняется по документам</span><span data-lang="en">cooperative, to be confirmed by documents</span><span data-lang="es">cooperativa, por confirmar según documentos</span></div></div>
+          <div class="row"><div class="label"><span data-lang="uk">Юрисдикція</span><span data-lang="ru">Юрисдикция</span><span data-lang="en">Jurisdiction</span><span data-lang="es">Jurisdicción</span></div><div class="value"><span data-lang="uk">Україна</span><span data-lang="ru">Украина</span><span data-lang="en">Ukraine</span><span data-lang="es">Ucrania</span></div></div>
+          <div class="row"><div class="label"><span data-lang="uk">Реєстр. номер</span><span data-lang="ru">Рег. номер</span><span data-lang="en">Registry no.</span><span data-lang="es">Núm. registro</span></div><div class="value">00000000 <span class="placeholder">demo</span></div></div>
+          <div class="row"><div class="label"><span data-lang="uk">Адреса</span><span data-lang="ru">Адрес</span><span data-lang="en">Address</span><span data-lang="es">Dirección</span></div><div class="value"><span data-lang="uk">буде додано після затвердження</span><span data-lang="ru">будет добавлен после утверждения</span><span data-lang="en">to be added after approval</span><span data-lang="es">se añadirá tras la aprobación</span></div></div>
+        </div>
+      </article>
+
+      <article class="panel" data-req-panel="bank">
+        <div class="panel-head"><h2><span data-lang="uk">Банківські реквізити</span><span data-lang="ru">Банковские реквизиты</span><span data-lang="en">Bank Details</span><span data-lang="es">Datos bancarios</span></h2><p class="panel-note"><span data-lang="uk">Демо-дані для макету. Не використовувати для платежів.</span><span data-lang="ru">Демо-данные для макета. Не использовать для платежей.</span><span data-lang="en">Demo data for the layout. Do not use for payments.</span><span data-lang="es">Datos demo para la maqueta. No usar para pagos.</span></p></div>
+        <div class="rows">
+          <div class="row"><div class="label">IBAN</div><div class="value">UA00 0000 0000 0000 0000 0000 000 <span class="placeholder">demo</span></div></div>
+          <div class="row"><div class="label"><span data-lang="uk">Банк</span><span data-lang="ru">Банк</span><span data-lang="en">Bank</span><span data-lang="es">Banco</span></div><div class="value">Example Bank Ukraine <span class="placeholder">demo</span></div></div>
+          <div class="row"><div class="label">SWIFT/BIC</div><div class="value">EXAMPLEXX <span class="placeholder">demo</span></div></div>
+          <div class="row"><div class="label"><span data-lang="uk">Валюта</span><span data-lang="ru">Валюта</span><span data-lang="en">Currency</span><span data-lang="es">Moneda</span></div><div class="value">UAH / EUR / USD <span class="placeholder">demo</span></div></div>
+          <div class="row"><div class="label"><span data-lang="uk">Призначення</span><span data-lang="ru">Назначение</span><span data-lang="en">Payment purpose</span><span data-lang="es">Concepto</span></div><div class="value"><span data-lang="uk">організаційний / пайовий внесок, після узгодження</span><span data-lang="ru">организационный / паевой взнос, после согласования</span><span data-lang="en">organisational / share contribution, after confirmation</span><span data-lang="es">aportación organizativa / cooperativa, previa confirmación</span></div></div>
+        </div>
+      </article>
+
+      <article class="panel" data-req-panel="contacts">
+        <div class="panel-head"><h2><span data-lang="uk">Контакти</span><span data-lang="ru">Контакты</span><span data-lang="en">Contacts</span><span data-lang="es">Contactos</span></h2><p class="panel-note"><span data-lang="uk">Офіційні канали для звернень та листування.</span><span data-lang="ru">Официальные каналы для обращений и переписки.</span><span data-lang="en">Official channels for requests and correspondence.</span><span data-lang="es">Canales oficiales para solicitudes y correspondencia.</span></p></div>
+        <div class="rows">
+          <div class="row"><div class="label">Email</div><div class="value"><a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a></div></div>
+          <div class="row"><div class="label"><span data-lang="uk">Сайт</span><span data-lang="ru">Сайт</span><span data-lang="en">Website</span><span data-lang="es">Sitio</span></div><div class="value"><a href="https://pandora.co.ua/">https://pandora.co.ua/</a></div></div>
+          <div class="row"><div class="label"><span data-lang="uk">Телефон</span><span data-lang="ru">Телефон</span><span data-lang="en">Phone</span><span data-lang="es">Teléfono</span></div><div class="value">+380 00 000 00 00 <span class="placeholder">demo</span></div></div>
+          <div class="row"><div class="label"><span data-lang="uk">Форма</span><span data-lang="ru">Форма</span><span data-lang="en">Form</span><span data-lang="es">Formulario</span></div><div class="value"><a href="index.html#contact"><span data-lang="uk">Зв’язатися на сайті</span><span data-lang="ru">Связаться на сайте</span><span data-lang="en">Contact us on the site</span><span data-lang="es">Contactar en el sitio</span></a></div></div>
+        </div>
+      </article>
+
+      <article class="panel" data-req-panel="note">
+        <div class="panel-head"><h2><span data-lang="uk">Примітка</span><span data-lang="ru">Примечание</span><span data-lang="en">Note</span><span data-lang="es">Nota</span></h2><p class="panel-note"><span data-lang="uk">Безпечна позначка для тимчасових даних.</span><span data-lang="ru">Безопасная пометка для временных данных.</span><span data-lang="en">A safety note for temporary data.</span><span data-lang="es">Nota de seguridad para datos temporales.</span></p></div>
+        <p class="note"><span data-lang="uk">Банківські та реєстраційні поля на цій сторінці є демонстраційними. Перед будь-яким платежем або офіційним листуванням реквізити потрібно підтвердити через офіційний канал Pandora.</span><span data-lang="ru">Банковские и регистрационные поля на этой странице демонстрационные. Перед любым платежом или официальной перепиской реквизиты нужно подтвердить через официальный канал Pandora.</span><span data-lang="en">Bank and registry fields on this page are demonstrational. Before any payment or official correspondence, details must be confirmed through an official Pandora channel.</span><span data-lang="es">Los datos bancarios y registrales de esta página son demostrativos. Antes de cualquier pago o comunicación oficial, deben confirmarse por un canal oficial de Pandora.</span></p>
+      </article>
+    </div>
   </section>
-
-  <h2>Важливо</h2>
-  <p>Ця сторінка є шаблоном для тестового запуску і буде оновлена після фіналізації юридичних даних.</p>
-
-  <details>
-    <summary>Проєктні відомості</summary>
-    <p>Pandora / U.S.E.N. розвивається як кооперативна соціально-економічна інфраструктура. Остаточні юридичні реквізити будуть додані після затвердження документів.</p>
-  </details>
-
-  <p>Дата оновлення: 01.07.2026</p>
-</article>
-
-<article data-lang="ru">
-  <h1>Реквизиты</h1>
-  <p class="lead">Информация будет уточняться и дополняться по мере подготовки документов.</p>
-
-  <section class="requisites-card">
-    <div class="req-row"><div class="req-label">Полное наименование</div><div class="req-value">уточняется</div></div>
-    <div class="req-row"><div class="req-label">Сокращенное наименование</div><div class="req-value">Pandora / U.S.E.N.</div></div>
-    <div class="req-row"><div class="req-label">Юрисдикция</div><div class="req-value">Украина</div></div>
-    <div class="req-row"><div class="req-label">Организационная форма</div><div class="req-value">кооператив / уточняется по регистрационным документам</div></div>
-    <div class="req-row"><div class="req-label">Email</div><div class="req-value"><a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a></div></div>
-    <div class="req-row"><div class="req-label">Сайт</div><div class="req-value"><a href="https://pandora.co.ua/">https://pandora.co.ua/</a></div></div>
-    <div class="req-row"><div class="req-label">Документы</div><div class="req-value">в подготовке / будут опубликованы после утверждения</div></div>
-  </section>
-
-  <h2>Важно</h2>
-  <p>Эта страница является шаблоном для тестового запуска и будет обновлена после финализации юридических данных.</p>
-
-  <details>
-    <summary>Проектные сведения</summary>
-    <p>Pandora / U.S.E.N. развивается как кооперативная социально-экономическая инфраструктура. Финальные юридические реквизиты будут добавлены после утверждения документов.</p>
-  </details>
-
-  <p>Дата обновления: 01.07.2026</p>
-</article>
-
-<article data-lang="en">
-  <h1>Requisites</h1>
-  <p class="lead">The information will be clarified and expanded as the documents are prepared.</p>
-
-  <section class="requisites-card">
-    <div class="req-row"><div class="req-label">Full name</div><div class="req-value">to be clarified</div></div>
-    <div class="req-row"><div class="req-label">Short name</div><div class="req-value">Pandora / U.S.E.N.</div></div>
-    <div class="req-row"><div class="req-label">Jurisdiction</div><div class="req-value">Ukraine</div></div>
-    <div class="req-row"><div class="req-label">Legal form</div><div class="req-value">cooperative / to be clarified according to registration documents</div></div>
-    <div class="req-row"><div class="req-label">Email</div><div class="req-value"><a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a></div></div>
-    <div class="req-row"><div class="req-label">Website</div><div class="req-value"><a href="https://pandora.co.ua/">https://pandora.co.ua/</a></div></div>
-    <div class="req-row"><div class="req-label">Documents</div><div class="req-value">in preparation / will be published after approval</div></div>
-  </section>
-
-  <h2>Important</h2>
-  <p>This page is a template for the test launch and will be updated after the legal data is finalised.</p>
-
-  <details>
-    <summary>Project details</summary>
-    <p>Pandora / U.S.E.N. is developing as a cooperative socio-economic infrastructure. Final legal requisites will be added after the documents are approved.</p>
-  </details>
-
-  <p>Updated: 01.07.2026</p>
-</article>
-
-<article data-lang="es">
-  <h1>Datos legales</h1>
-  <p class="lead">La información se precisará y ampliará a medida que se preparen los documentos.</p>
-
-  <section class="requisites-card">
-    <div class="req-row"><div class="req-label">Nombre completo</div><div class="req-value">por precisar</div></div>
-    <div class="req-row"><div class="req-label">Nombre abreviado</div><div class="req-value">Pandora / U.S.E.N.</div></div>
-    <div class="req-row"><div class="req-label">Jurisdicción</div><div class="req-value">Ucrania</div></div>
-    <div class="req-row"><div class="req-label">Forma organizativa</div><div class="req-value">cooperativa / por precisar según los documentos de registro</div></div>
-    <div class="req-row"><div class="req-label">Email</div><div class="req-value"><a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a></div></div>
-    <div class="req-row"><div class="req-label">Sitio web</div><div class="req-value"><a href="https://pandora.co.ua/">https://pandora.co.ua/</a></div></div>
-    <div class="req-row"><div class="req-label">Documentos</div><div class="req-value">en preparación / se publicarán después de la aprobación</div></div>
-  </section>
-
-  <h2>Importante</h2>
-  <p>Esta página es una plantilla para el lanzamiento de prueba y se actualizará después de finalizar los datos legales.</p>
-
-  <details>
-    <summary>Datos del proyecto</summary>
-    <p>Pandora / U.S.E.N. se desarrolla como una infraestructura socioeconómica cooperativa. Los datos legales finales se añadirán después de la aprobación de los documentos.</p>
-  </details>
-
-  <p>Fecha de actualización: 01.07.2026</p>
-</article>
-
 </main>
 
 <footer class="footer">
-  <a href="index.html">
-    <span data-lang="uk">На головну</span>
-    <span data-lang="ru">На главную</span>
-    <span data-lang="en">Back to home</span>
-    <span data-lang="es">Volver al inicio</span>
-  </a>
+  <a href="index.html"><span data-lang="uk">На головну</span><span data-lang="ru">На главную</span><span data-lang="en">Back to home</span><span data-lang="es">Volver al inicio</span></a>
+  <a href="index.html#contact"><span data-lang="uk">Зв’язатися</span><span data-lang="ru">Связаться</span><span data-lang="en">Contact us</span><span data-lang="es">Contactar</span></a>
 </footer>
 
 <script>
@@ -187,35 +114,39 @@ span[data-lang].active{display:inline}
   const TITLES = {
     uk: 'Реквізити — Pandora / U.S.E.N.',
     ru: 'Реквизиты — Pandora / U.S.E.N.',
-    en: 'Requisites — Pandora / U.S.E.N.',
-    es: 'Datos legales — Pandora / U.S.E.N.'
+    en: 'Company Details — Pandora / U.S.E.N.',
+    es: 'Datos oficiales — Pandora / U.S.E.N.'
   };
-
   function setPageLang(lang) {
     lang = LANGS[lang] ? lang : 'uk';
-
     document.documentElement.lang = lang;
     document.title = TITLES[lang] || TITLES.uk;
-
     document.querySelectorAll('[data-lang]').forEach(el => {
       el.classList.toggle('active', el.getAttribute('data-lang') === lang);
     });
-
     try {
       localStorage.setItem('pandora_lang', lang);
       localStorage.setItem('pandora-lang', lang);
     } catch (e) {}
   }
-
+  function setRequisitesTab(tab) {
+    document.querySelectorAll('[data-req-tab]').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-req-tab') === tab);
+    });
+    document.querySelectorAll('[data-req-panel]').forEach(panel => {
+      panel.classList.toggle('active', panel.getAttribute('data-req-panel') === tab);
+    });
+  }
+  document.addEventListener('click', event => {
+    const tab = event.target.closest('[data-req-tab]');
+    if (tab) setRequisitesTab(tab.getAttribute('data-req-tab'));
+  });
   let saved = 'uk';
   try {
-    saved =
-      localStorage.getItem('pandora_lang') ||
-      localStorage.getItem('pandora-lang') ||
-      'uk';
+    saved = localStorage.getItem('pandora_lang') || localStorage.getItem('pandora-lang') || 'uk';
   } catch (e) {}
-
   setPageLang(saved);
+  setRequisitesTab('legal');
 })();
 </script>
 <script src="assets/js/pandora-language-data.js"></script>
