@@ -2184,16 +2184,31 @@ if (location.hash === '#login' || location.hash === '#register') {
 }
 
 const sects = document.querySelectorAll('section[id]');
-window.addEventListener('scroll', () => {
+function updatePandoraNavActive() {
   let cur = '';
   sects.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
   document.querySelectorAll('.nav-links a').forEach(a => {
     const href = a.getAttribute('href');
     // treat #active as part of #projects for nav highlighting
     const active = href === '#'+cur || (href === '#projects' && cur === 'active') || (href === '#docs' && cur === 'docs');
+    a.classList.toggle('mobile-active', active);
     a.style.opacity = active ? '1' : '0.45';
   });
+}
+window.addEventListener('scroll', updatePandoraNavActive);
+window.addEventListener('hashchange', updatePandoraNavActive);
+window.addEventListener('load', () => setTimeout(updatePandoraNavActive, 80));
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.classList.remove('mobile-active');
+      link.style.opacity = '0.45';
+    });
+    a.classList.add('mobile-active');
+    a.style.opacity = '1';
+  });
 });
+updatePandoraNavActive();
 </script>
 <!-- Pandora clean visual layer -->
 <style id="pandora-clean-visual-layer-v0-5">
@@ -4115,7 +4130,8 @@ Changes:
 <style id="pandora-index-mobile-hotfix-v0-1">
 @media (max-width: 900px) {
   :root {
-    --mobile-header-h: 116px;
+    --mobile-header-h: 92px;
+    --mobile-section-h: calc(100svh - var(--mobile-header-h));
   }
 
   html,
@@ -4129,19 +4145,15 @@ Changes:
     scroll-padding-top: var(--mobile-header-h);
   }
 
-  body {
-    padding-top: var(--mobile-header-h);
-  }
-
   nav {
     min-height: var(--mobile-header-h);
-    padding: 14px 20px 10px !important;
+    padding: 10px 16px 7px !important;
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
       "brand actions"
       "links links";
-    row-gap: 12px;
+    row-gap: 6px;
     align-items: center;
   }
 
@@ -4154,7 +4166,7 @@ Changes:
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: 0.03em;
   }
 
@@ -4168,8 +4180,8 @@ Changes:
     display: flex !important;
     width: 100%;
     justify-content: center;
-    gap: clamp(12px, 4vw, 22px);
-    padding: 10px 0 0;
+    gap: clamp(10px, 3.3vw, 16px);
+    padding: 7px 0 0;
     border-top: 1px solid rgba(255,255,255,0.06);
     overflow-x: auto;
     scrollbar-width: none;
@@ -4181,10 +4193,17 @@ Changes:
 
   .nav-links a {
     flex: 0 0 auto;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1;
     opacity: 0.78;
     white-space: nowrap;
+  }
+
+  .nav-links a.mobile-active,
+  .nav-links a:hover,
+  .nav-links a:focus-visible {
+    color: #fff !important;
+    opacity: 1 !important;
   }
 
   #hero,
@@ -4198,18 +4217,29 @@ Changes:
   #docs,
   #join,
   #contact.contact-landing {
-    min-height: auto !important;
-    height: auto !important;
-    overflow: visible !important;
-    padding-top: clamp(34px, 8vw, 54px) !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    padding-bottom: clamp(54px, 12vw, 76px) !important;
-    scroll-margin-top: var(--mobile-header-h);
+    min-height: var(--mobile-section-h) !important;
+    height: var(--mobile-section-h) !important;
+    overflow: hidden !important;
+    padding-top: 12px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    padding-bottom: 18px !important;
+    scroll-margin-top: 0 !important;
   }
 
   #hero {
-    padding-top: calc(var(--mobile-header-h) + clamp(28px, 8vw, 48px)) !important;
+    min-height: 100svh !important;
+    height: auto !important;
+    padding-top: calc(var(--mobile-header-h) + 18px) !important;
+    padding-bottom: 28px !important;
+    overflow: visible !important;
+  }
+
+  #about.about-landing,
+  .about-project-landing,
+  #signal.signal-landing,
+  #contact.contact-landing {
+    display: block !important;
   }
 
   #about .about-reframe-title,
@@ -4221,8 +4251,8 @@ Changes:
     margin-right: 0 !important;
     white-space: normal !important;
     overflow: visible !important;
-    font-size: clamp(31px, 9vw, 44px) !important;
-    line-height: 1.16 !important;
+    font-size: clamp(27px, 7.6vw, 34px) !important;
+    line-height: 1.04 !important;
   }
 
   #about .about-reframe-title br,
@@ -4239,8 +4269,79 @@ Changes:
     overflow: visible !important;
   }
 
+  #about .about-reframe-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto minmax(0, 1fr) minmax(0, .82fr) !important;
+    row-gap: 10px !important;
+    align-content: start !important;
+    width: 100% !important;
+  }
+
+  #about .section-label {
+    display: none !important;
+  }
+
+  #about .about-reframe-copy {
+    display: contents !important;
+  }
+
+  #about .about-reframe-title {
+    margin: 0 0 2px !important;
+    text-align: left !important;
+  }
+
+  #about .accent-copy-block {
+    padding: 15px 16px !important;
+    max-height: 38svh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  #about .accent-copy-block h3 {
+    font-size: clamp(24px, 7vw, 32px) !important;
+    line-height: 1.04 !important;
+    margin-bottom: 8px !important;
+  }
+
+  #about .accent-copy-block p {
+    font-size: 15px !important;
+    line-height: 1.48 !important;
+    margin-bottom: 9px !important;
+  }
+
+  #about .principles {
+    gap: 10px !important;
+    max-height: 30svh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  #about .principle-item {
+    grid-template-columns: 11px 1fr !important;
+    gap: 14px !important;
+    padding: 0 0 11px !important;
+  }
+
+  #about .principle-item h4 {
+    font-size: clamp(24px, 7vw, 32px) !important;
+    line-height: 1.04 !important;
+  }
+
+  #about .principle-item p {
+    font-size: 14px !important;
+    line-height: 1.42 !important;
+  }
+
   .about-project-landing {
     display: block !important;
+    min-height: var(--mobile-section-h) !important;
+    height: var(--mobile-section-h) !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    overflow: hidden !important;
   }
 
   .about-project-landing .apl-stage,
@@ -4263,15 +4364,60 @@ Changes:
   .about-project-landing .apl-stage {
     display: block !important;
     padding: 0 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    transform: none !important;
+    position: relative !important;
   }
 
   .about-project-landing .apl-panels {
     width: 100% !important;
     padding: 0 !important;
+    height: 100% !important;
+    display: contents !important;
+  }
+
+  .about-project-landing .apl-panel {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 
   .about-project-landing .apl-panel.apl-active {
     display: block !important;
+    height: 100% !important;
+  }
+
+  .about-project-landing .apl-panel:not(.apl-active) {
+    display: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .apl-panel-center .apl-center-inner {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    transform: none !important;
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) auto !important;
+    align-content: start !important;
+    gap: 10px !important;
+  }
+
+  .apl-panel-center .apl-center-title {
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  .apl-panel-center .usen-about-copy {
+    height: 100% !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 
   .about-project-landing .apl-arrow {
@@ -4280,40 +4426,70 @@ Changes:
 
   #aplPanelLeft .pandora-room-title,
   .project-brand {
-    font-size: clamp(36px, 12vw, 54px) !important;
-    line-height: 1.05 !important;
+    font-size: clamp(30px, 9vw, 42px) !important;
+    line-height: 1 !important;
+    margin: 0 !important;
   }
 
   #aplPanelLeft .pandora-name-copy p,
   #aplPanelRight .rgb-logo-doc p,
   #aplPanelRight .rgb-narrative-principle p {
-    font-size: clamp(16px, 4.5vw, 20px) !important;
-    line-height: 1.58 !important;
+    font-size: clamp(14px, 3.9vw, 16px) !important;
+    line-height: 1.46 !important;
+    margin-bottom: 10px !important;
+  }
+
+  #aplPanelLeft .pandora-name-section,
+  #aplPanelRight .project-intro-landing.apl-inner {
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    gap: 10px !important;
+    height: 100% !important;
+    padding: 0 !important;
+  }
+
+  #aplPanelLeft .ms-divider {
+    margin: 8px auto 0 !important;
+  }
+
+  #aplPanelLeft .pandora-name-body,
+  #aplPanelLeft .pandora-name-copy,
+  #aplPanelRight .project-logo-text.rgb-logo-doc {
+    max-height: none !important;
+    height: 100% !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding-right: 8px !important;
   }
 
   #aplPanelRight .project-intro-content.rgb-logo-layout {
     display: grid !important;
     grid-template-columns: 1fr !important;
-    gap: 22px !important;
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    gap: 10px !important;
     align-items: start !important;
+    height: 100% !important;
   }
 
   #aplPanelRight .project-logo-visual.rgb-logo-hero {
     min-height: 0 !important;
     justify-content: center !important;
     align-items: start !important;
-    margin-top: -10px !important;
+    margin-top: 0 !important;
   }
 
   #aplPanelRight .project-logo-visual.rgb-logo-hero img {
-    width: min(54vw, 220px) !important;
-    max-width: 220px !important;
+    width: min(34vw, 138px) !important;
+    max-width: 138px !important;
     margin: 0 auto !important;
   }
 
   #contact.contact-landing {
     padding-left: 18px !important;
     padding-right: 18px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
   }
 
   #contact .contact-frame,
