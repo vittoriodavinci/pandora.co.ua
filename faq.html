@@ -1,12 +1,56 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FAQ Pandora / USEN Pandora</title>
   <meta name="description" content="FAQ Pandora: кооперативная социально-экономическая система, путь участника, Pandora ID, система рекомендаций и вознаграждений, документы и будущий контур USEN.">
+  <link rel="canonical" href="https://pandora.co.ua/faq.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pandora.co.ua/faq.html">
+  <meta property="og:title" content="Вопросы Pandora / USEN">
+  <meta property="og:description" content="Ответы о Pandora, USEN, участии, Pandora ID, документах и развитии кооперативной инфраструктуры.">
+  <meta property="og:image" content="https://pandora.co.ua/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Вопросы Pandora / USEN">
+  <meta name="twitter:description" content="Ответы о Pandora, USEN, участии, Pandora ID, документах и развитии кооперативной инфраструктуры.">
+  <meta name="twitter:image" content="https://pandora.co.ua/assets/og-image.png">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="assets/css/pandora-language-modal.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=DM+Sans:wght@300;400;500&amp;family=Barlow+Condensed:wght@300;400;500&amp;display=swap" rel="stylesheet">
+  <script>try{document.documentElement.setAttribute('data-pandora-lang',localStorage.getItem('pandora_lang')||localStorage.getItem('pandora-lang')||'uk')}catch(e){document.documentElement.setAttribute('data-pandora-lang','uk')}</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Что такое Pandora?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pandora - это проект кооперативной социально-экономической экосистемы, где человек постепенно становится участником общей инфраструктуры."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Что такое USEN Pandora?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "USEN Pandora - будущий сетевой контур проекта для людей, проектов, документов, задач, сервисов, репутации, кооперации и совместного владения инфраструктурой."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Что такое Pandora ID?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pandora ID - планируемый идентификатор участника инфраструктуры Pandora, который связывает профиль, заявку, документы, рекомендации и дальнейшие доступы."
+        }
+      }
+    ]
+  }
+  </script>
   <style>
     :root { --bg:#080808; --text:#F5F2ED; --muted:rgba(245,242,237,.64); --soft:rgba(255,255,255,.025); --line:rgba(210,177,74,.18); --gold:#D2B14A; --red:#C0392B; --green:#27AE60; --blue:#1A3A7A; }
     * { box-sizing:border-box; }
@@ -14,12 +58,6 @@
     body { margin:0; min-height:100vh; background:var(--bg); color:var(--text); font-family:"DM Sans", Arial, sans-serif; }
     body::before { content:""; position:fixed; inset:0; pointer-events:none; background:linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px); background-size:96px 96px; opacity:.38; }
     a { color:inherit; text-decoration:none; }
-    .topbar { position:sticky; top:0; z-index:10; min-height:74px; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px clamp(22px,4.4vw,60px); background:rgba(8,8,8,.88); border-bottom:1px solid rgba(255,255,255,.07); backdrop-filter:blur(16px); }
-    .brand { display:flex; align-items:center; gap:14px; font-weight:700; color:var(--text); }
-    .brand svg { width:38px; height:38px; flex:0 0 auto; }
-    .brand span { font-size:14px; letter-spacing:.04em; }
-    .nav { display:flex; align-items:center; gap:18px; color:rgba(245,242,237,.58); font-size:12px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
-    .nav a:hover { color:var(--gold); }
     main { position:relative; width:min(1100px, calc(100% - 40px)); margin:0 auto; padding:clamp(52px,8vh,86px) 0 90px; }
     .hero { display:grid; grid-template-columns:minmax(0, .95fr) minmax(280px, .62fr); gap:clamp(28px,5vw,70px); align-items:end; margin-bottom:clamp(36px,6vh,64px); }
     .eyebrow { display:inline-flex; align-items:center; gap:9px; color:var(--gold); font-size:11px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; }
@@ -41,196 +79,506 @@
     .answer li { margin:6px 0; }
     .panel { display:none; }
     .panel.active { display:block; }
+    html[data-pandora-lang="uk"] [data-lang].active:not([data-lang="uk"]),html[data-pandora-lang="ru"] [data-lang].active:not([data-lang="ru"]),html[data-pandora-lang="en"] [data-lang].active:not([data-lang="en"]),html[data-pandora-lang="es"] [data-lang].active:not([data-lang="es"]) { display:none; }
+    html[data-pandora-lang="uk"] [data-lang="uk"],html[data-pandora-lang="ru"] [data-lang="ru"],html[data-pandora-lang="en"] [data-lang="en"],html[data-pandora-lang="es"] [data-lang="es"] { display:block; }
+    html[data-pandora-lang="uk"] span[data-lang="uk"],html[data-pandora-lang="ru"] span[data-lang="ru"],html[data-pandora-lang="en"] span[data-lang="en"],html[data-pandora-lang="es"] span[data-lang="es"] { display:inline; }
+    [data-lang] { display:none; }
+    [data-lang].active { display:block; }
+    span[data-lang].active { display:inline; }
     @media (max-width:760px) {
-      .topbar { align-items:flex-start; flex-direction:column; padding:14px 18px; }
-      .nav { width:100%; justify-content:space-between; gap:10px; font-size:10px; }
       main { width:min(100% - 28px, 1100px); padding-top:40px; }
       .hero { grid-template-columns:1fr; align-items:start; }
       summary { grid-template-columns:30px 1fr 18px; padding:17px 15px; gap:10px; }
       .answer { padding:0 15px 18px 55px; font-size:14px; }
     }
-  </style>
+html{height:100%;background:var(--bg);scroll-behavior:smooth}body{height:100vh;overflow:hidden}.site-header{position:fixed;top:0;left:0;right:15px;z-index:100;height:73px;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;background:rgba(13,13,13,.9);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(16px)}
+.site-brand{display:flex;align-items:center;gap:14px;color:var(--text);text-decoration:none;min-width:max-content}.site-brand strong{font-size:14px;font-weight:500;letter-spacing:.05em}.site-mark{position:relative;width:38px;height:38px;flex:0 0 auto}.site-mark span{position:absolute;width:24px;height:24px;border-radius:50%;opacity:.75}.site-mark-r{background:#d42b2b;left:0;top:3px}.site-mark-g{background:#1a7a3c;right:0;top:3px}.site-mark-b{background:#1a3a7a;left:7px;bottom:0}
+.site-nav{display:flex;align-items:center;gap:18px;color:var(--text);font-family:"Barlow Condensed","DM Sans",Arial,sans-serif;font-size:13px;font-weight:400;line-height:16px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}.site-nav a,.site-footer a,.site-user-link,.site-user-auth-link{color:inherit;text-decoration:none;opacity:.45;transition:opacity .2s,color .15s}.site-nav a:hover,.site-footer a:hover,.site-user-auth-link:hover,.site-user-link:hover{opacity:1;color:var(--gold)}
+.site-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px}.site-icon-link,.site-lang,.site-user-btn{width:40px;height:40px;display:grid;place-items:center;border:0;background:transparent;color:var(--text);opacity:.7;cursor:pointer;padding:0;border-radius:50%;transition:all .2s}.site-lang:hover,.site-user-btn:hover{opacity:1;background:rgba(255,255,255,.08)}.site-user-btn{color:var(--gold);opacity:.85}.site-user-menu{position:relative}.site-user-dropdown{display:none;position:absolute;top:calc(100% + 6px);right:0;min-width:240px;border:1px solid rgba(255,255,255,.07);border-radius:8px;background:rgba(13,13,13,.97);backdrop-filter:blur(16px);overflow:hidden}.site-user-dropdown.open{display:block}.site-user-auth-row{display:flex;align-items:center;gap:6px;padding:14px 18px;color:var(--text);font:13px "DM Sans",Arial,sans-serif;border-bottom:1px solid rgba(255,255,255,.07)}.site-user-separator{opacity:.55}.site-user-link{display:block;padding:14px 18px;font:13px "DM Sans",Arial,sans-serif}
+.site-main{position:fixed;top:73px;bottom:44px;left:0;right:0;width:100%;margin:0;overflow:auto;padding:clamp(42px,7vh,72px) 0 78px}.site-main>*{width:min(1100px,calc(100% - 40px));margin-left:auto;margin-right:auto}.site-page-title{margin:0 0 30px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(38px,5.2vw,68px);line-height:1;font-weight:400;letter-spacing:.01em}
+.site-footer{position:fixed;left:0;right:15px;bottom:0;z-index:100;height:44px;border-top:0;background:rgba(13,13,13,.92);padding:0 80px;display:flex;align-items:center}.site-footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:12px;width:100%;max-width:1180px;margin:0 auto;color:rgba(245,242,237,.5);font-size:12px;line-height:16px}.site-footer-left,.site-footer-right{display:flex;align-items:center;gap:2px;flex-wrap:nowrap}.site-footer-dot{opacity:.3;margin:0 4px}.site-footer-socials{display:flex;align-items:center;gap:10px}.site-footer .site-icon-link{display:flex;width:auto;height:auto;border-radius:0;color:var(--text);opacity:.45}.site-footer .site-icon-link:hover{opacity:.85;background:transparent}.site-footer-lang{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:rgba(245,242,237,.55);font:12px/16px "DM Sans",Arial,sans-serif;cursor:pointer;padding:0;white-space:nowrap}.site-footer-lang:hover{color:rgba(245,242,237,.85)}
+@media(max-width:1280px){.site-header{padding:16px 36px}.site-footer{padding:0 36px}}
+@media(max-width:1024px){.site-header{padding:14px 24px}.site-footer{padding:0 24px}}
+@media(max-width:980px){.site-header{right:0;height:104px;display:grid;grid-template-columns:1fr auto;align-items:start;padding:16px 20px}.site-nav{grid-column:1/-1;justify-content:flex-start;flex-wrap:wrap;gap:12px;font-size:10px}.site-actions{grid-column:2;grid-row:1}.site-main{top:104px;bottom:128px;padding-top:34px}.site-main h1{font-size:clamp(32px,10vw,44px);overflow-wrap:anywhere}.site-footer{right:0;padding:20px 24px}.site-footer-inner{align-items:flex-start;flex-direction:column}.site-footer-dot{display:none}}
+
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="index.html#about" aria-label="Кооператив Пандора">
-      <svg viewBox="0 0 48 48" aria-hidden="true">
-        <circle cx="18" cy="18" r="14" fill="#C0392B" opacity=".82"/>
-        <circle cx="30" cy="18" r="14" fill="#27AE60" opacity=".82"/>
-        <circle cx="24" cy="30" r="14" fill="#1A3A7A" opacity=".82"/>
-      </svg>
-      <span>Кооператив Пандора</span>
-    </a>
-    <nav class="nav" aria-label="FAQ navigation">
-      <a href="index.html#about" data-i18n="site">На головну</a>
-    </nav>
-  </header>
+  <header class="site-header">
+  <a class="site-brand" href="index.html#hero" aria-label="&#1050;&#1086;&#1086;&#1087;&#1077;&#1088;&#1072;&#1090;&#1080;&#1074; &#1055;&#1072;&#1085;&#1076;&#1086;&#1088;&#1072;">
+    <span class="site-mark" aria-hidden="true"><span class="site-mark-r"></span><span class="site-mark-g"></span><span class="site-mark-b"></span></span>
+    <strong><span data-lang="uk" class="active">&#1050;&#1086;&#1086;&#1087;&#1077;&#1088;&#1072;&#1090;&#1080;&#1074; &#1055;&#1072;&#1085;&#1076;&#1086;&#1088;&#1072;</span><span data-lang="ru">&#1050;&#1086;&#1086;&#1087;&#1077;&#1088;&#1072;&#1090;&#1080;&#1074; &#1055;&#1072;&#1085;&#1076;&#1086;&#1088;&#1072;</span><span data-lang="en">Pandora Cooperative</span><span data-lang="es">Cooperativa Pandora</span></strong>
+  </a>
+  <nav class="site-nav" aria-label="Site navigation">
+    <a href="index.html#about"><span data-lang="uk" class="active">&#1055;&#1088;&#1086; &#1085;&#1072;&#1089;</span><span data-lang="ru">&#1054; &#1085;&#1072;&#1089;</span><span data-lang="en">About</span><span data-lang="es">Nosotros</span></a>
+    <a href="index.html#project-intro"><span data-lang="uk" class="active">&#1055;&#1088;&#1086; &#1087;&#1088;&#1086;&#1108;&#1082;&#1090;</span><span data-lang="ru">&#1054; &#1087;&#1088;&#1086;&#1077;&#1082;&#1090;&#1077;</span><span data-lang="en">About the project</span><span data-lang="es">Sobre el proyecto</span></a>
+    <a href="index.html#signal"><span data-lang="uk" class="active">&#1059;&#1095;&#1072;&#1089;&#1090;&#1100;</span><span data-lang="ru">&#1059;&#1095;&#1072;&#1089;&#1090;&#1080;&#1077;</span><span data-lang="en">Participation</span><span data-lang="es">Participaci&oacute;n</span></a>
+    <a href="index.html#contact"><span data-lang="uk" class="active">&#1047;&#1074;’&#1103;&#1079;&#1072;&#1090;&#1080;&#1089;&#1103;</span><span data-lang="ru">&#1057;&#1074;&#1103;&#1079;&#1072;&#1090;&#1100;&#1089;&#1103;</span><span data-lang="en">Contact us</span><span data-lang="es">Contactar</span></a>
+  </nav>
+  <div class="site-actions">
+    <button class="site-lang" type="button" onclick="window.openLanguageModal ? openLanguageModal() : null" aria-label="Language">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+    </button>
+    <div class="site-user-menu">
+      <button class="site-user-btn" type="button" onclick="toggleSiteUserMenu()" aria-label="Account menu">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+      <div class="site-user-dropdown" id="siteUserDropdown">
+        <div class="site-user-auth-row"><a class="site-user-auth-link" href="index.html#login"><span data-lang="uk" class="active">&#1059;&#1074;&#1110;&#1081;&#1090;&#1080;</span><span data-lang="ru">&#1042;&#1086;&#1081;&#1090;&#1080;</span><span data-lang="en">Log in</span><span data-lang="es">Iniciar sesi&oacute;n</span></a><span class="site-user-separator">/</span><a class="site-user-auth-link" href="index.html#register"><span data-lang="uk" class="active">&#1047;&#1072;&#1088;&#1077;&#1108;&#1089;&#1090;&#1088;&#1091;&#1074;&#1072;&#1090;&#1080;&#1089;&#1103;</span><span data-lang="ru">&#1047;&#1072;&#1088;&#1077;&#1075;&#1080;&#1089;&#1090;&#1088;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;&#1089;&#1103;</span><span data-lang="en">Sign up</span><span data-lang="es">Registrarse</span></a></div>
+        <a class="site-user-link" href="faq.html"><span data-lang="uk" class="active">&#1055;&#1080;&#1090;&#1072;&#1085;&#1085;&#1103;</span><span data-lang="ru">&#1042;&#1086;&#1087;&#1088;&#1086;&#1089;&#1099;</span><span data-lang="en">FAQ</span><span data-lang="es">Preguntas</span></a>
+      </div>
+    </div>
+  </div>
+</header>
 
-  <main>
+  <main class="site-main">
     <section class="panel active" data-lang-panel="uk">
       <div class="hero">
         <div>
-          <h1>Питання</h1>
+          <h1 class="site-page-title">Питання</h1>
         </div>
       </div>
-      <div class="faq-list" id="faqUk"></div>
+      <div class="faq-list" id="faqUk">
+        <details open>
+          <summary><span class="num">01</span><span>Що таке Pandora?</span></summary>
+          <div class="answer"><p>Pandora - це проєкт кооперативної соціально-економічної екосистеми. Його завдання - створити інфраструктуру, де людина перестає бути лише клієнтом і поступово стає учасником: може користуватися сервісами, допомагати розвитку, входити в робочі процеси, брати участь у проєктах і отримувати підтверджені права всередині системи.</p><p>Pandora будується навколо простої ідеї: не вкладати життя, гроші і працю тільки в чужі системи, які людина не контролює. Натомість учасники мають створювати і розвивати спільну інфраструктуру, якою можуть користуватися самі.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">02</span><span>Що таке USEN Pandora?</span></summary>
+          <div class="answer"><p>USEN Pandora - це ширший мережевий контур проєкту. Якщо Pandora на першому етапі може бути пов'язана з конкретним кооперативом, сайтом і кабінетом, то USEN - це майбутня соціально-економічна мережа: середовище для людей, проєктів, документів, задач, сервісів, репутації, кооперації і спільного володіння інфраструктурою.</p><p>USEN не задумується як звичайна соцмережа заради постів і лайків. Це має бути мережа участі: профіль, ролі, документи, доступи, проєкти, задачі, внесок, репутація і зв'язок з реальними кооперативними процесами.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">03</span><span>Чим Pandora відрізняється від звичайної компанії?</span></summary>
+          <div class="answer"><p>Звичайна компанія частіше будується навколо власника, продукту і клієнта. Клієнт платить, користується і залишається зовні системи.</p><p>Pandora будується навколо іншої логіки: людина може бути не тільки споживачем, а й учасником роботи, співрозробником, пайовиком і співвласником інфраструктури. Це не скасовує правил, документів, відповідальності і дисципліни. Навпаки, Pandora має зв'язати права, обов'язки, внесок і доступи в зрозумілу систему.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">04</span><span>Що означає “не клієнт, а учасник”?</span></summary>
+          <div class="answer"><p>Клієнт зазвичай приходить за готовою послугою і не впливає на устрій системи. Учасник може не тільки користуватися, а й допомагати покращувати, тестувати, пропонувати, виконувати задачі, входити в проєкти і з часом отримувати підтверджений статус.</p><p>Pandora не повинна виховувати пасивне споживання. Якщо людина хоче більше можливостей, вона має переходити від позиції “дайте мені сервіс” до позиції “я беру участь у створенні спільної системи”.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">05</span><span>Що таке кооператив у логіці Pandora?</span></summary>
+          <div class="answer"><p>Кооператив - це форма об'єднання людей, де учасники спільно створюють, використовують і розвивають загальну інфраструктуру. Для Pandora кооператив важливий не як красиве слово, а як юридична й організаційна основа: членство, пайові внески, правила, документи, участь, права, обов'язки і механізми спільного управління.</p><p>Pandora розглядає кооператив як один із практичних інструментів переходу від звичайної ринкової моделі до більш стійкої системи спільного володіння і користування інфраструктурою.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">06</span><span>Що таке три ролі Pandora?</span></summary>
+          <div class="answer"><p>У Pandora людина розглядається одразу в кількох ролях:</p><ul><li>споживач: користується сервісами і продуктами системи;</li><li>співробітник / учасник роботи: допомагає створювати, тестувати і розвивати інфраструктуру;</li><li>співвласник / пайовик: бере участь у правах, документах, рішеннях і довгостроковому розвитку.</li></ul><p>Сенс Pandora в тому, щоб ці ролі не були розірвані. Людина не повинна бути тільки покупцем чужої системи. Вона може поступово входити в систему як учасник.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">07</span><span>Що таке Pandora ID?</span></summary>
+          <div class="answer"><p>Pandora ID - майбутній ідентифікатор учасника інфраструктури Pandora. Це не просто номер, бейдж або декоративна картка. На першому етапі Pandora ID має пов'язувати профіль, заявку, документи, систему рекомендацій і винагород, підтвердження участі і подальший доступ до можливостей системи.</p><p>Pandora ID - це проміжна мета першого етапу: людина проходить шлях від знайомства з проєктом до оформленої участі. Після юридичного оформлення кооперативу і документів Pandora ID має бути пов'язаний з підтверджуючим пакетом учасника, його правами, обов'язками, доступами і формою участі в інфраструктурі.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">08</span><span>Що дає Pandora ID?</span></summary>
+          <div class="answer"><p>Pandora ID має стати точкою входу в глибшу участь. Після отримання Pandora ID людина отримує не просто акаунт на сайті, а основу для доступу до подальших можливостей: участі в розробці, тестуванні, проєктах, документах, сервісах і майбутній інфраструктурі USEN.</p><p>Після оформлення кооперативу і необхідних документів участь має підтверджуватися відповідним пакетом документів: заявкою, рішенням про прийняття, статусом учасника, правилами користування інфраструктурою, положеннями про права й обов'язки, а також іншими документами, затвердженими всередині кооперативу.</p><p>Pandora ID не обіцяє миттєве юридичне співволодіння до створення і оформлення всіх документів. Він є частиною планованої інфраструктури підтвердженої участі.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">09</span><span>Як людина проходить шлях від гостя до учасника?</span></summary>
+          <div class="answer"><p>Базовий шлях такий:</p><ol><li>Гість вивчає сайт і FAQ.</li><li>Переходить у кабінет.</li><li>Заповнює профіль.</li><li>Подає заявку.</li><li>Проходить перевірку і підтвердження.</li><li>Отримує Pandora ID.</li><li>Отримує доступ до подальшої участі: тестування, задач, документів, сервісів, проєктів і майбутнього середовища USEN.</li></ol><p>Цей шлях потрібен, щоб Pandora не була просто сайтом для випадкових перехожих. Система має відрізняти гостя, кандидата, учасника, пайовика і довіреного учасника.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">10</span><span>Подання заявки означає автоматичний вступ?</span></summary>
+          <div class="answer"><p>Ні. Подання заявки - це перший крок. Вона не означає автоматичне прийняття в пайовики, не створює фінансових обіцянок і не замінює юридичні документи.</p><p>Pandora має будуватися через зрозумілі правила: хто може вступити, які дані потрібні, які є права та обов'язки, як приймаються рішення, як людина може вийти, як система захищається від зловживань.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">11</span><span>Що таке система рекомендацій і винагород?</span></summary>
+          <div class="answer"><p>Система рекомендацій і винагород - це майбутній механізм Pandora для запрошень, довіри, зв'язку учасників і фіксації корисного внеску. Вона потрібна не для пірамідальної схеми і не для обіцянок легких грошей, а для того, щоб бачити, хто кого привів, хто допоміг розвитку проєкту, хто брав участь у тестуванні, документах, сервісах, проєктах і розвитку мережі.</p><p>У майбутньому така система може бути пов'язана з репутацією, доступами, бонусами, внутрішніми правилами і винагородами. Внутрішня робоча назва цього шару - «Сигнал».</p></div>
+        </details>
+        <details>
+          <summary><span class="num">12</span><span>Що таке кабінет Pandora?</span></summary>
+          <div class="answer"><p>Кабінет Pandora - це прототип особистого простору учасника. У ньому мають поєднуватися профіль, система рекомендацій і винагород, документи, заявка, Pandora ID і AI-помічник.</p><p>Зараз кабінет є прототипом. Його завдання - показати шлях людини: від інтересу до проєкту до оформлення участі і подальшого доступу до інфраструктури.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">13</span><span>Чому AI-помічник не відкритий усім гостям?</span></summary>
+          <div class="answer"><p>AI використовує зовнішні обчислювальні ресурси. Pandora не повинна перетворювати AI на безкоштовну іграшку для випадкових перехожих. Для гостей достатньо FAQ і відкритих матеріалів.</p><p>AI-помічник має бути частиною кабінету, тобто інструментом людини, яка вже зробила крок до участі. У майбутньому AI може допомагати з профілем, документами, заявкою, Pandora ID, тестуванням сайту, пропозиціями, помилками і участю в проєктах.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">14</span><span>Що таке “активація AI”?</span></summary>
+          <div class="answer"><p>Активація AI - це майбутній механізм увімкнення AI-помічника через усвідомлену дію. Людина може пройти інструкцію, прийняти правила, підключити особистий AI-ключ або внести технічний внесок у розвиток Pandora.</p><p>Головний принцип: є функціонал - хочеш користуватися - активуй участь. Pandora будує не споживацьку халяву, а систему розумного використання ресурсів.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">15</span><span>Чи буде в Pandora дохід?</span></summary>
+          <div class="answer"><p>Pandora не обіцяє миттєвий або гарантований дохід. Проєкт не повинен продавати людям ілюзію швидких грошей.</p><p>Але це не означає, що користь і дохід відсутні. Pandora будується як соціально-економічна система, де дохід має з'являтися не з обіцянок, а з реальних проєктів, сервісів, зниження витрат, підвищення якості товарів і послуг, довіри між учасниками і репутації всередині мережі.</p><p>На першому етапі пріоритет Pandora - створити власні соціально-економічні програми і проєкти, навчитися знижувати вартість доступу до товарів і послуг, підвищувати якість, збирати учасників, формувати довіру і зрозумілі правила.</p><p>Окремий інвестиційний контур планується пізніше - після запуску НІП, майбутньої колективної інвестиційної платформи проєкту. До цього не можна обіцяти дохід як готовий результат. Можна говорити тільки про проєктовану економічну логіку і майбутні можливості після запуску реальних механізмів.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">16</span><span>У чому економічна логіка Pandora?</span></summary>
+          <div class="answer"><p>Економічна логіка Pandora не зводиться до роздачі прибутку. Спочатку система має створювати користь: об'єднувати людей, запускати проєкти, знижувати витрати, покращувати доступ до товарів і послуг, формувати довіру між учасниками і збирати репутацію.</p><p>Якщо звичайна ринкова модель часто заробляє на розриві між власником, працівником і клієнтом, то Pandora прагне поєднати ці ролі. Учасник може бути споживачем, співробітником і співвласником інфраструктури.</p><p>Дохід має бути наслідком працюючої системи, а не рекламною обіцянкою. Тому Pandora спочатку будує інфраструктуру, документи, проєкти, довіру і правила, а інвестиційний контур через НІП має з'явитися пізніше.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">17</span><span>Що таке “співволодіння” в Pandora?</span></summary>
+          <div class="answer"><p>Співволодіння в Pandora не повинно бути красивим словом без документів. Воно має підтверджуватися правилами, статусами, рішеннями, реєстрами, членством, пайовими механізмами і документами кооперативу.</p><p>До юридичного оформлення не можна обіцяти людині готове співволодіння. Коректна формула: Pandora проєктує систему, де участь, внесок і права мають бути пов'язані з підтверджуючим пакетом документів після оформлення кооперативу і внутрішніх правил.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">18</span><span>Що таке “пакет документів учасника”?</span></summary>
+          <div class="answer"><p>У майбутньому пакет документів може включати:</p><ul><li>заявку;</li><li>підтвердження прийняття;</li><li>статус учасника / пайовика;</li><li>правила користування інфраструктурою;</li><li>положення про права та обов'язки;</li><li>положення про внески;</li><li>регламенти участі;</li><li>документи, пов'язані з Pandora ID;</li><li>правила доступу до USEN;</li><li>документи системи рекомендацій і винагород;</li><li>внутрішні положення кооперативу.</li></ul><p>Зараз це напрям у розробці. Реальні документи будуть додаватися в міру оформлення кооперативу.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">19</span><span>Що таке “участь у розробці”?</span></summary>
+          <div class="answer"><p>Участь у розробці - це не тільки програмування. Людина може допомагати по-різному:</p><ul><li>тестувати сайт;</li><li>знаходити помилки;</li><li>пропонувати покращення;</li><li>писати тексти;</li><li>допомагати з дизайном;</li><li>перевіряти документи;</li><li>брати участь у юридичній підготовці;</li><li>допомагати з медіа;</li><li>розвивати напрями;</li><li>збирати зворотний зв'язок;</li><li>допомагати у майбутній інфраструктурі USEN.</li></ul><p>Pandora має бачити не тільки гроші людини, а й її навички, таланти і компетенції.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">20</span><span>Що таке картка навичок, талантів і компетенцій?</span></summary>
+          <div class="answer"><p>Це майбутня частина профілю учасника. Вона потрібна, щоб розуміти, чим людина може бути корисною системі і що система може запропонувати їй.</p><p>Pandora цікавить не тільки анкета “ім'я і телефон”, а реальна карта можливостей: досвід, професія, навички, інтереси, ресурси, готовність допомагати, напрями участі.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">21</span><span>Що буде з реальними фото, документами і красивими матеріалами?</span></summary>
+          <div class="answer"><p>Зараз сайт показує смислову структуру і прототип. Реальні фотографії, юридичні документи, підтвердження, пакети учасника, розширені матеріали і візуальні докази будуть додаватися в міру створення кооперативу, оформлення документів і запуску конкретних напрямів.</p><p>Не треба імітувати готову інфраструктуру там, де вона ще створюється. Pandora має говорити чесно: що вже є, що в прототипі, що планується.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">22</span><span>Як можна допомогти вже зараз?</span></summary>
+          <div class="answer"><p>Можна:</p><ul><li>вивчити сайт і FAQ;</li><li>перейти в кабінет;</li><li>протестувати прототип;</li><li>повідомити про помилку;</li><li>запропонувати покращення;</li><li>допомогти з текстами;</li><li>допомогти з дизайном;</li><li>допомогти з кодом;</li><li>допомогти з документами;</li><li>допомогти з юридичною логікою;</li><li>допомогти з медіа;</li><li>допомогти з майбутньою інфраструктурою USEN.</li></ul><p>Головне - не залишатися тільки спостерігачем. Pandora будується через участь.</p></div>
+        </details>
+      </div>
     </section>
 
     <section class="panel" data-lang-panel="ru">
       <div class="hero">
         <div>
-          <h1>Вопросы</h1>
+          <h1 class="site-page-title">Вопросы</h1>
         </div>
       </div>
-      <div class="faq-list" id="faqRu"></div>
+      <div class="faq-list" id="faqRu">
+        <details open>
+          <summary><span class="num">01</span><span>Что такое Pandora?</span></summary>
+          <div class="answer"><p>Pandora — это проект кооперативной социально-экономической экосистемы. Его задача — создать инфраструктуру, где человек перестаёт быть только клиентом и постепенно становится участником: может пользоваться сервисами, помогать развитию, входить в рабочие процессы, участвовать в проектах и получать подтверждённые права внутри системы.</p><p>Pandora строится вокруг простой идеи: не вкладывать жизнь, деньги и труд только в чужие системы, которые человек не контролирует. Вместо этого участники должны создавать и развивать общую инфраструктуру, которой могут пользоваться сами.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">02</span><span>Что такое USEN Pandora?</span></summary>
+          <div class="answer"><p>USEN Pandora — это более широкий сетевой контур проекта. Если Pandora на первом этапе может быть связана с конкретным кооперативом, сайтом и кабинетом, то USEN — это будущая социально-экономическая сеть: среда для людей, проектов, документов, задач, сервисов, репутации, кооперации и совместного владения инфраструктурой.</p><p>USEN не задумывается как обычная соцсеть ради постов и лайков. Это должна быть сеть участия: профиль, роли, документы, доступы, проекты, задачи, вклад, репутация и связь с реальными кооперативными процессами.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">03</span><span>Чем Pandora отличается от обычной компании?</span></summary>
+          <div class="answer"><p>Обычная компания чаще строится вокруг владельца, продукта и клиента. Клиент платит, пользуется и остаётся снаружи системы.</p><p>Pandora строится вокруг другой логики: человек может быть не только потребителем, но и участником работы, соразработчиком, пайщиком и совладельцем инфраструктуры. Это не отменяет правил, документов, ответственности и дисциплины. Наоборот, Pandora должна связать права, обязанности, вклад и доступы в понятную систему.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">04</span><span>Что значит “не клиент, а участник”?</span></summary>
+          <div class="answer"><p>Клиент обычно приходит за готовой услугой и не влияет на устройство системы. Участник может не только пользоваться, но и помогать улучшать, тестировать, предлагать, выполнять задачи, входить в проекты и со временем получать подтверждённый статус.</p><p>Pandora не должна воспитывать пассивное потребление. Если человек хочет больше возможностей, он должен переходить от позиции “дайте мне сервис” к позиции “я участвую в создании общей системы”.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">05</span><span>Что такое кооператив в логике Pandora?</span></summary>
+          <div class="answer"><p>Кооператив — это форма объединения людей, где участники совместно создают, используют и развивают общую инфраструктуру. Для Pandora кооператив важен не как красивое слово, а как юридическая и организационная основа: членство, паевые взносы, правила, документы, участие, права, обязанности и механизмы совместного управления.</p><p>Pandora рассматривает кооператив как один из практических инструментов перехода от обычной рыночной модели к более устойчивой системе совместного владения и пользования инфраструктурой.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">06</span><span>Что такое три роли Pandora?</span></summary>
+          <div class="answer"><p>В Pandora человек рассматривается сразу в нескольких ролях:</p><ul><li>потребитель: пользуется сервисами и продуктами системы;</li><li>сотрудник / участник работы: помогает создавать, тестировать и развивать инфраструктуру;</li><li>совладелец / пайщик: участвует в правах, документах, решениях и долгосрочном развитии.</li></ul><p>Смысл Pandora в том, чтобы эти роли не были разорваны. Человек не должен быть только покупателем чужой системы. Он может постепенно входить в систему как участник.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">07</span><span>Что такое Pandora ID?</span></summary>
+          <div class="answer"><p>Pandora ID — будущий идентификатор участника инфраструктуры Pandora. Это не просто номер, бейдж или декоративная карта. На первом этапе Pandora ID должен связывать профиль, заявку, документы, систему рекомендаций и вознаграждений, подтверждение участия и дальнейший доступ к возможностям системы.</p><p>Pandora ID — это промежуточная цель первого этапа: человек проходит путь от знакомства с проектом к оформленному участию. После юридического оформления кооператива и документов Pandora ID должен быть связан с подтверждающим пакетом участника, его правами, обязанностями, доступами и формой участия в инфраструктуре.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">08</span><span>Что даёт Pandora ID?</span></summary>
+          <div class="answer"><p>Pandora ID должен стать точкой входа в более глубокое участие. После получения Pandora ID человек получает не просто аккаунт на сайте, а основу для доступа к дальнейшим возможностям: участию в разработке, тестировании, проектах, документах, сервисах и будущей инфраструктуре USEN.</p><p>После оформления кооператива и необходимых документов участие должно подтверждаться соответствующим пакетом документов: заявкой, решением о принятии, статусом участника, правилами пользования инфраструктурой, положениями о правах и обязанностях, а также другими документами, утверждёнными внутри кооператива.</p><p>Pandora ID не должен обещать мгновенное юридическое совладение до создания и оформления всех документов. Он является частью планируемой инфраструктуры подтверждённого участия.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">09</span><span>Как человек проходит путь от гостя к участнику?</span></summary>
+          <div class="answer"><p>Базовый путь такой:</p><ol><li>Гость изучает сайт и FAQ.</li><li>Переходит в кабинет.</li><li>Заполняет профиль.</li><li>Подаёт заявку.</li><li>Проходит проверку и подтверждение.</li><li>Получает Pandora ID.</li><li>Получает доступ к дальнейшему участию: тестированию, задачам, документам, сервисам, проектам и будущей среде USEN.</li></ol><p>Этот путь нужен, чтобы Pandora не была просто сайтом для случайных прохожих. Система должна отличать гостя, кандидата, участника, пайщика и доверенного участника.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">10</span><span>Подача заявки означает автоматическое вступление?</span></summary>
+          <div class="answer"><p>Нет. Подача заявки — это первый шаг. Она не означает автоматическое принятие в пайщики, не создаёт финансовых обещаний и не заменяет юридические документы.</p><p>Pandora должна строиться через понятные правила: кто может вступить, какие данные нужны, какие есть права и обязанности, как принимаются решения, как человек может выйти, как защищается система от злоупотреблений.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">11</span><span>Что такое система рекомендаций и вознаграждений?</span></summary>
+          <div class="answer"><p>Система рекомендаций и вознаграждений — это будущий механизм Pandora для приглашений, доверия, связи участников и фиксации полезного вклада. Она нужна не для пирамидальной схемы и не для обещаний лёгких денег, а для того, чтобы видеть, кто кого привёл, кто помог развитию проекта, кто участвовал в тестировании, документах, сервисах, проектах и развитии сети.</p><p>В будущем такая система может быть связана с репутацией, доступами, бонусами, внутренними правилами и вознаграждениями. Внутреннее рабочее название этого слоя — «Сигнал».</p></div>
+        </details>
+        <details>
+          <summary><span class="num">12</span><span>Что такое кабинет Pandora?</span></summary>
+          <div class="answer"><p>Кабинет Pandora — это прототип личного пространства участника. В нём должны соединяться профиль, система рекомендаций и вознаграждений, документы, заявка, Pandora ID и AI-помощник.</p><p>Сейчас кабинет является прототипом. Его задача — показать путь человека: от интереса к проекту до оформления участия и дальнейшего доступа к инфраструктуре.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">13</span><span>Почему AI-помощник не открыт всем гостям?</span></summary>
+          <div class="answer"><p>AI использует внешние вычислительные ресурсы. Pandora не должна превращать AI в бесплатную игрушку для случайных прохожих. Для гостей достаточно FAQ и открытых материалов.</p><p>AI-помощник должен быть частью кабинета, то есть инструментом человека, который уже сделал шаг к участию. В будущем AI может помогать с профилем, документами, заявкой, Pandora ID, тестированием сайта, предложениями, ошибками и участием в проектах.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">14</span><span>Что такое “активация AI”?</span></summary>
+          <div class="answer"><p>Активация AI — это будущий механизм включения AI-помощника через осознанное действие. Человек может пройти инструкцию, принять правила, подключить личный AI-ключ или внести технический вклад в развитие Pandora.</p><p>Главный принцип: есть функционал — хочешь пользоваться — активируй участие. Pandora строит не потребительскую халяву, а систему разумного использования ресурсов.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">15</span><span>Будет ли в Pandora доход?</span></summary>
+          <div class="answer"><p>Pandora не обещает мгновенный или гарантированный доход. Проект не должен продавать людям иллюзию быстрых денег.</p><p>Но это не значит, что выгода и доход отсутствуют. Pandora строится как социально-экономическая система, где доход должен появляться не из обещаний, а из реальных проектов, сервисов, снижения издержек, повышения качества товаров и услуг, доверия между участниками и репутации внутри сети.</p><p>На первом этапе приоритет Pandora — создать собственные социально-экономические программы и проекты, научиться снижать стоимость доступа к товарам и услугам, повышать качество, собирать участников, формировать доверие и понятные правила.</p><p>Отдельный инвестиционный контур планируется позже — после запуска НИП, будущей коллективной инвестиционной платформы проекта. До этого нельзя обещать доход как готовый результат. Можно говорить только о проектируемой экономической логике и будущих возможностях после запуска реальных механизмов.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">16</span><span>В чём экономическая логика Pandora?</span></summary>
+          <div class="answer"><p>Экономическая логика Pandora не сводится к раздаче прибыли. Сначала система должна создавать пользу: объединять людей, запускать проекты, снижать издержки, улучшать доступ к товарам и услугам, формировать доверие между участниками и собирать репутацию.</p><p>Если обычная рыночная модель часто зарабатывает на разрыве между владельцем, работником и клиентом, то Pandora стремится соединить эти роли. Участник может быть потребителем, сотрудником и совладельцем инфраструктуры.</p><p>Доход должен быть следствием работающей системы, а не рекламным обещанием. Поэтому Pandora сначала строит инфраструктуру, документы, проекты, доверие и правила, а инвестиционный контур через НИП должен появиться позже.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">17</span><span>Что такое “совладение” в Pandora?</span></summary>
+          <div class="answer"><p>Совладение в Pandora не должно быть красивым словом без документов. Оно должно подтверждаться правилами, статусами, решениями, реестрами, членством, паевыми механизмами и документами кооператива.</p><p>До юридического оформления нельзя обещать человеку готовое совладение. Корректная формулировка: Pandora проектирует систему, где участие, вклад и права должны быть связаны с подтверждающим пакетом документов после оформления кооператива и внутренних правил.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">18</span><span>Что такое “пакет документов участника”?</span></summary>
+          <div class="answer"><p>В будущем пакет документов может включать:</p><ul><li>заявку;</li><li>подтверждение принятия;</li><li>статус участника / пайщика;</li><li>правила пользования инфраструктурой;</li><li>положения о правах и обязанностях;</li><li>положения о взносах;</li><li>регламенты участия;</li><li>документы, связанные с Pandora ID;</li><li>правила доступа к USEN;</li><li>документы системы рекомендаций и вознаграждений;</li><li>внутренние положения кооператива.</li></ul><p>Сейчас это направление в разработке. Реальные документы будут добавляться по мере оформления кооператива.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">19</span><span>Что такое “участие в разработке”?</span></summary>
+          <div class="answer"><p>Участие в разработке — это не только программирование. Человек может помогать по-разному:</p><ul><li>тестировать сайт;</li><li>находить ошибки;</li><li>предлагать улучшения;</li><li>писать тексты;</li><li>помогать с дизайном;</li><li>проверять документы;</li><li>участвовать в юридической подготовке;</li><li>помогать с медиа;</li><li>развивать направления;</li><li>собирать обратную связь;</li><li>помогать в будущей инфраструктуре USEN.</li></ul><p>Pandora должна видеть не только деньги человека, но и его навыки, таланты и компетенции.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">20</span><span>Что такое карточка навыков, талантов и компетенций?</span></summary>
+          <div class="answer"><p>Это будущая часть профиля участника. Она нужна, чтобы понимать, чем человек может быть полезен системе и что система может предложить ему.</p><p>Pandora интересует не только анкета “имя и телефон”, а реальная карта возможностей: опыт, профессия, навыки, интересы, ресурсы, готовность помогать, направления участия.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">21</span><span>Что будет с реальными фото, документами и красивыми материалами?</span></summary>
+          <div class="answer"><p>Сейчас сайт показывает смысловую структуру и прототип. Реальные фотографии, юридические документы, подтверждения, пакеты участника, расширенные материалы и визуальные доказательства будут добавляться по мере создания кооператива, оформления документов и запуска конкретных направлений.</p><p>Не надо имитировать готовую инфраструктуру там, где она ещё создаётся. Pandora должна говорить честно: что уже есть, что в прототипе, что планируется.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">22</span><span>Как можно помочь уже сейчас?</span></summary>
+          <div class="answer"><p>Можно:</p><ul><li>изучить сайт и FAQ;</li><li>перейти в кабинет;</li><li>протестировать прототип;</li><li>сообщить об ошибке;</li><li>предложить улучшение;</li><li>помочь с текстами;</li><li>помочь с дизайном;</li><li>помочь с кодом;</li><li>помочь с документами;</li><li>помочь с юридической логикой;</li><li>помочь с медиа;</li><li>помочь с будущей инфраструктурой USEN.</li></ul><p>Главное — не оставаться только наблюдателем. Pandora строится через участие.</p></div>
+        </details>
+      </div>
     </section>
 
     <section class="panel" data-lang-panel="en">
       <div class="hero">
         <div>
-          <h1>Questions</h1>
+          <h1 class="site-page-title">Questions</h1>
         </div>
       </div>
-      <div class="faq-list" id="faqEn"></div>
+      <div class="faq-list" id="faqEn">
+        <details open>
+          <summary><span class="num">01</span><span>What is Pandora?</span></summary>
+          <div class="answer"><p>Pandora is a project of a cooperative social-economic ecosystem. Its goal is to create infrastructure where a person is not only a customer, but gradually becomes a participant: uses services, helps development, joins work processes, takes part in projects and receives confirmed rights inside the system.</p><p>The core idea is simple: do not invest life, money and work only into systems you do not control. Participants should build and use shared infrastructure together.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">02</span><span>What is USEN Pandora?</span></summary>
+          <div class="answer"><p>USEN Pandora is the wider network layer of the project. If Pandora starts with a cooperative, a site and a cabinet, USEN is planned as a social-economic network for people, projects, documents, tasks, services, reputation, cooperation and shared ownership of infrastructure.</p><p>USEN is not a regular social network for posts and likes. It is meant to be a network of participation.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">03</span><span>How is Pandora different from a usual company?</span></summary>
+          <div class="answer"><p>A usual company is often built around an owner, a product and a customer. The customer pays and remains outside the system.</p><p>Pandora follows another logic: a person can be a user, a contributor, a member and a co-owner of infrastructure. Rights, duties, contribution and access must be connected through clear rules.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">04</span><span>What does “not a customer, but a participant” mean?</span></summary>
+          <div class="answer"><p>A customer usually comes for a ready-made service and does not influence the system. A participant can use, improve, test, suggest, perform tasks, join projects and gradually receive a confirmed status.</p><p>Pandora should move people from passive consumption toward participation in building a shared system.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">05</span><span>What is a cooperative in Pandora logic?</span></summary>
+          <div class="answer"><p>A cooperative is a form of association where participants jointly create, use and develop common infrastructure. For Pandora it is a legal and organizational basis: membership, contributions, rules, documents, participation, rights, duties and shared governance.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">06</span><span>What are the three roles in Pandora?</span></summary>
+          <div class="answer"><p>Pandora sees a person in several roles:</p><ul><li>consumer: uses services and products;</li><li>contributor: helps create, test and develop infrastructure;</li><li>co-owner / member: participates in rights, documents, decisions and long-term development.</li></ul></div>
+        </details>
+        <details>
+          <summary><span class="num">07</span><span>What is Pandora ID?</span></summary>
+          <div class="answer"><p>Pandora ID is a future identifier of a participant in Pandora infrastructure. It should connect profile, application, documents, the recommendation and reward system, participation confirmation and further access to system opportunities.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">08</span><span>What does Pandora ID give?</span></summary>
+          <div class="answer"><p>Pandora ID should become an entry point into deeper participation: development, testing, projects, documents, services and the future USEN infrastructure.</p><p>It does not promise instant legal co-ownership before all documents and cooperative mechanisms are created.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">09</span><span>How does a person move from visitor to participant?</span></summary>
+          <div class="answer"><p>The basic path is: study the site and FAQ, enter the cabinet, fill in the profile, submit an application, pass review and confirmation, receive Pandora ID and get access to further participation.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">10</span><span>Does submitting an application mean automatic membership?</span></summary>
+          <div class="answer"><p>No. An application is the first step. It does not mean automatic acceptance as a member, does not create financial promises and does not replace legal documents.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">11</span><span>What is the recommendation and reward system?</span></summary>
+          <div class="answer"><p>The recommendation and reward system is a planned Pandora mechanism for invitations, trust, participant connection and recording useful contribution. It is not a pyramid scheme and not a promise of easy money.</p><p>In the future it may be connected with reputation, access, bonuses, internal rules and rewards. The internal working name of this layer is “Signal”.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">12</span><span>What is the Pandora cabinet?</span></summary>
+          <div class="answer"><p>The Pandora cabinet is a prototype of a participant personal space. It combines profile, the recommendation and reward system, documents, application, Pandora ID and the AI assistant.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">13</span><span>Why is the AI assistant not open to all guests?</span></summary>
+          <div class="answer"><p>AI uses external computing resources. Pandora should not turn AI into a free toy for random visitors. For guests, FAQ and open materials are enough.</p><p>The AI assistant belongs inside the cabinet as a tool for a person who has already taken a step toward participation.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">14</span><span>What is “AI activation”?</span></summary>
+          <div class="answer"><p>AI activation is a future mechanism for enabling the assistant through a conscious action: accepting rules, connecting a personal AI key or making a technical contribution to Pandora development.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">15</span><span>Will there be income in Pandora?</span></summary>
+          <div class="answer"><p>Pandora does not promise instant or guaranteed income. The project should not sell an illusion of quick money.</p><p>Benefit and income may appear from real projects, services, lower costs, better quality, trust, reputation and future economic mechanisms, not from advertising promises.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">16</span><span>What is Pandora economic logic?</span></summary>
+          <div class="answer"><p>Pandora economic logic is not about distributing profit first. The system must first create value: unite people, launch projects, reduce costs, improve access to goods and services, build trust and collect reputation.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">17</span><span>What is “co-ownership” in Pandora?</span></summary>
+          <div class="answer"><p>Co-ownership must not be a decorative word. It has to be confirmed by rules, statuses, decisions, registers, membership mechanisms and cooperative documents.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">18</span><span>What is a “participant document package”?</span></summary>
+          <div class="answer"><p>In the future it may include an application, acceptance confirmation, participant or member status, infrastructure rules, rights and duties, contribution rules, participation regulations, Pandora ID documents, USEN access rules and recommendation-system documents.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">19</span><span>What is “participation in development”?</span></summary>
+          <div class="answer"><p>Participation in development is not only programming. A person can test the site, find bugs, suggest improvements, write texts, help with design, documents, legal logic, media and future USEN infrastructure.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">20</span><span>What is a skills, talents and competencies card?</span></summary>
+          <div class="answer"><p>It is a future part of the participant profile. It helps understand how a person can be useful to the system and what the system can offer in return.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">21</span><span>What about real photos, documents and polished materials?</span></summary>
+          <div class="answer"><p>The current site shows the concept and prototype. Real photos, legal documents, confirmations, participant packages and extended materials will be added as the cooperative, documents and real directions are created.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">22</span><span>How can I help now?</span></summary>
+          <div class="answer"><p>You can study the site and FAQ, enter the cabinet, test the prototype, report a bug, suggest an improvement, help with texts, design, code, documents, legal logic, media or the future USEN infrastructure.</p><p>The main point is not to remain only an observer. Pandora is built through participation.</p></div>
+        </details>
+      </div>
     </section>
 
     <section class="panel" data-lang-panel="es">
       <div class="hero">
         <div>
-          <h1>Preguntas</h1>
+          <h1 class="site-page-title">Preguntas</h1>
         </div>
       </div>
-      <div class="faq-list" id="faqEs"></div>
+      <div class="faq-list" id="faqEs">
+        <details open>
+          <summary><span class="num">01</span><span>¿Qué es Pandora?</span></summary>
+          <div class="answer"><p>Pandora es un proyecto de ecosistema cooperativo socioeconómico. Su objetivo es crear una infraestructura donde una persona deje de ser solo cliente y se convierta gradualmente en participante: usa servicios, ayuda al desarrollo, entra en procesos de trabajo, participa en proyectos y recibe derechos confirmados dentro del sistema.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">02</span><span>¿Qué es USEN Pandora?</span></summary>
+          <div class="answer"><p>USEN Pandora es la capa de red más amplia del proyecto. Si Pandora empieza con una cooperativa, un sitio y un gabinete, USEN se planifica como una red socioeconómica para personas, proyectos, documentos, tareas, servicios, reputación, cooperación y propiedad compartida de infraestructura.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">03</span><span>¿En qué se diferencia Pandora de una empresa común?</span></summary>
+          <div class="answer"><p>Una empresa común suele construirse alrededor de un propietario, un producto y un cliente. Pandora sigue otra lógica: la persona puede ser usuaria, colaboradora, socia y copropietaria de la infraestructura.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">04</span><span>¿Qué significa “no cliente, sino participante”?</span></summary>
+          <div class="answer"><p>Un cliente llega por un servicio preparado. Un participante puede usar, mejorar, probar, proponer, realizar tareas, entrar en proyectos y recibir con el tiempo un estado confirmado.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">05</span><span>¿Qué es una cooperativa en la lógica de Pandora?</span></summary>
+          <div class="answer"><p>Una cooperativa es una forma de asociación donde los participantes crean, usan y desarrollan infraestructura común. Para Pandora es una base legal y organizativa: membresía, aportes, reglas, documentos, participación, derechos, deberes y gestión compartida.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">06</span><span>¿Cuáles son los tres roles en Pandora?</span></summary>
+          <div class="answer"><p>Pandora ve a la persona en varios roles:</p><ul><li>consumidor: usa servicios y productos;</li><li>colaborador: ayuda a crear, probar y desarrollar infraestructura;</li><li>copropietario / socio: participa en derechos, documentos, decisiones y desarrollo a largo plazo.</li></ul></div>
+        </details>
+        <details>
+          <summary><span class="num">07</span><span>¿Qué es Pandora ID?</span></summary>
+          <div class="answer"><p>Pandora ID es un futuro identificador del participante en la infraestructura Pandora. Debe conectar perfil, solicitud, documentos, sistema de recomendaciones y recompensas, confirmación de participación y acceso posterior.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">08</span><span>¿Qué aporta Pandora ID?</span></summary>
+          <div class="answer"><p>Pandora ID debe convertirse en punto de entrada a una participación más profunda: desarrollo, pruebas, proyectos, documentos, servicios y la futura infraestructura USEN.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">09</span><span>¿Cómo pasa una persona de visitante a participante?</span></summary>
+          <div class="answer"><p>El camino básico es: estudiar el sitio y FAQ, entrar al gabinete, completar el perfil, enviar una solicitud, pasar revisión y confirmación, recibir Pandora ID y acceder a la participación posterior.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">10</span><span>¿Enviar una solicitud significa ingreso automático?</span></summary>
+          <div class="answer"><p>No. La solicitud es el primer paso. No significa aceptación automática como socio, no crea promesas financieras y no sustituye documentos legales.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">11</span><span>¿Qué es el sistema de recomendaciones y recompensas?</span></summary>
+          <div class="answer"><p>Es un mecanismo planificado de Pandora para invitaciones, confianza, conexión entre participantes y registro de contribución útil. No es una pirámide ni una promesa de dinero fácil.</p><p>En el futuro puede conectarse con reputación, accesos, bonos, reglas internas y recompensas. El nombre interno de trabajo de esta capa es “Signal”.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">12</span><span>¿Qué es el gabinete Pandora?</span></summary>
+          <div class="answer"><p>El gabinete Pandora es un prototipo del espacio personal del participante. Une perfil, sistema de recomendaciones y recompensas, documentos, solicitud, Pandora ID y asistente AI.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">13</span><span>¿Por qué el asistente AI no está abierto a todos los visitantes?</span></summary>
+          <div class="answer"><p>AI usa recursos externos de cómputo. Pandora no debe convertir AI en un juguete gratuito para visitantes casuales. Para invitados bastan FAQ y materiales abiertos.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">14</span><span>¿Qué es la “activación de AI”?</span></summary>
+          <div class="answer"><p>Es un futuro mecanismo para activar el asistente mediante una acción consciente: aceptar reglas, conectar una clave AI personal o hacer una contribución técnica al desarrollo de Pandora.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">15</span><span>¿Habrá ingresos en Pandora?</span></summary>
+          <div class="answer"><p>Pandora no promete ingresos instantáneos ni garantizados. El proyecto no debe vender una ilusión de dinero rápido.</p><p>El beneficio puede aparecer por proyectos reales, servicios, reducción de costes, mejor calidad, confianza, reputación y futuros mecanismos económicos.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">16</span><span>¿Cuál es la lógica económica de Pandora?</span></summary>
+          <div class="answer"><p>La lógica económica de Pandora no empieza con repartir ganancias. Primero el sistema debe crear valor: unir personas, lanzar proyectos, reducir costes, mejorar acceso a bienes y servicios, formar confianza y reputación.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">17</span><span>¿Qué es la “copropiedad” en Pandora?</span></summary>
+          <div class="answer"><p>La copropiedad no debe ser una palabra decorativa. Debe confirmarse mediante reglas, estados, decisiones, registros, membresía, mecanismos cooperativos y documentos.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">18</span><span>¿Qué es el “paquete de documentos del participante”?</span></summary>
+          <div class="answer"><p>En el futuro puede incluir solicitud, confirmación de aceptación, estado de participante o socio, reglas de uso de infraestructura, derechos y deberes, reglas de aportes, reglamentos, documentos Pandora ID, acceso a USEN y documentos del sistema de recomendaciones.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">19</span><span>¿Qué es “participar en el desarrollo”?</span></summary>
+          <div class="answer"><p>No es solo programar. Una persona puede probar el sitio, encontrar errores, proponer mejoras, escribir textos, ayudar con diseño, documentos, lógica legal, medios y la futura infraestructura USEN.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">20</span><span>¿Qué es la tarjeta de habilidades, talentos y competencias?</span></summary>
+          <div class="answer"><p>Es una futura parte del perfil del participante. Ayuda a entender cómo una persona puede ser útil al sistema y qué puede ofrecerle el sistema.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">21</span><span>¿Qué pasará con fotos reales, documentos y materiales finales?</span></summary>
+          <div class="answer"><p>El sitio actual muestra la estructura conceptual y el prototipo. Fotos reales, documentos legales, confirmaciones, paquetes del participante y materiales ampliados se añadirán a medida que se creen la cooperativa y sus documentos.</p></div>
+        </details>
+        <details>
+          <summary><span class="num">22</span><span>¿Cómo puedo ayudar ahora?</span></summary>
+          <div class="answer"><p>Puedes estudiar el sitio y FAQ, entrar al gabinete, probar el prototipo, reportar un error, sugerir una mejora, ayudar con textos, diseño, código, documentos, lógica legal, medios o la futura infraestructura USEN.</p><p>Lo principal es no quedarse solo como observador. Pandora se construye mediante participación.</p></div>
+        </details>
+      </div>
     </section>
   </main>
+  <footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-left">
+      <span>&copy; 2026 Pandora, coop.</span>
+      <span class="site-footer-dot">&middot;</span>
+      <a href="privacy.html"><span data-lang="uk" class="active">&#1050;&#1086;&#1085;&#1092;&#1110;&#1076;&#1077;&#1085;&#1094;&#1110;&#1081;&#1085;&#1110;&#1089;&#1090;&#1100;</span><span data-lang="ru">&#1050;&#1086;&#1085;&#1092;&#1080;&#1076;&#1077;&#1085;&#1094;&#1080;&#1072;&#1083;&#1100;&#1085;&#1086;&#1089;&#1090;&#1100;</span><span data-lang="en">Privacy</span><span data-lang="es">Privacidad</span></a>
+      <span class="site-footer-dot">&middot;</span>
+      <a href="terms.html"><span data-lang="uk" class="active">&#1059;&#1084;&#1086;&#1074;&#1080;</span><span data-lang="ru">&#1059;&#1089;&#1083;&#1086;&#1074;&#1080;&#1103;</span><span data-lang="en">Terms</span><span data-lang="es">T&eacute;rminos</span></a>
+      <span class="site-footer-dot">&middot;</span>
+      <a href="requisites.html"><span data-lang="uk" class="active">&#1056;&#1077;&#1082;&#1074;&#1110;&#1079;&#1080;&#1090;&#1080;</span><span data-lang="ru">&#1056;&#1077;&#1082;&#1074;&#1080;&#1079;&#1080;&#1090;&#1099;</span><span data-lang="en">Company details</span><span data-lang="es">Datos registrales</span></a>
+      <span class="site-footer-dot">&middot;</span>
+      <a href="faq.html"><span data-lang="uk" class="active">&#1055;&#1080;&#1090;&#1072;&#1085;&#1085;&#1103;</span><span data-lang="ru">&#1042;&#1086;&#1087;&#1088;&#1086;&#1089;&#1099;</span><span data-lang="en">FAQ</span><span data-lang="es">Preguntas</span></a>
+    </div>
+    <div class="site-footer-right">
+      <div class="site-footer-socials">
+        <a class="site-icon-link" aria-label="Telegram" href="https://t.me/usenpandora" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 3.5L2.5 10.5l6 3 4-5 5 7 4-12z"/></svg></a>
+        <a class="site-icon-link" aria-label="Facebook" href="https://www.facebook.com/usenpandora/" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+      </div>
+      <button class="site-footer-lang" type="button" onclick="window.openLanguageModal ? openLanguageModal() : null" aria-label="Language"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg><span data-lang="uk" class="active">&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;</span><span data-lang="ru">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</span><span data-lang="en">English</span><span data-lang="es">Espa&ntilde;ol</span></button>
+    </div>
+  </div>
+</footer>
 
   <script>
-    const faqData = {
-      uk: [
-        ['Що таке Pandora?', '<p>Pandora - це проєкт кооперативної соціально-економічної екосистеми. Його завдання - створити інфраструктуру, де людина перестає бути лише клієнтом і поступово стає учасником: може користуватися сервісами, допомагати розвитку, входити в робочі процеси, брати участь у проєктах і отримувати підтверджені права всередині системи.</p><p>Pandora будується навколо простої ідеї: не вкладати життя, гроші і працю тільки в чужі системи, які людина не контролює. Натомість учасники мають створювати і розвивати спільну інфраструктуру, якою можуть користуватися самі.</p>'],
-        ['Що таке USEN Pandora?', '<p>USEN Pandora - це ширший мережевий контур проєкту. Якщо Pandora на першому етапі може бути пов\'язана з конкретним кооперативом, сайтом і кабінетом, то USEN - це майбутня соціально-економічна мережа: середовище для людей, проєктів, документів, задач, сервісів, репутації, кооперації і спільного володіння інфраструктурою.</p><p>USEN не задумується як звичайна соцмережа заради постів і лайків. Це має бути мережа участі: профіль, ролі, документи, доступи, проєкти, задачі, внесок, репутація і зв\'язок з реальними кооперативними процесами.</p>'],
-        ['Чим Pandora відрізняється від звичайної компанії?', '<p>Звичайна компанія частіше будується навколо власника, продукту і клієнта. Клієнт платить, користується і залишається зовні системи.</p><p>Pandora будується навколо іншої логіки: людина може бути не тільки споживачем, а й учасником роботи, співрозробником, пайовиком і співвласником інфраструктури. Це не скасовує правил, документів, відповідальності і дисципліни. Навпаки, Pandora має зв\'язати права, обов\'язки, внесок і доступи в зрозумілу систему.</p>'],
-        ['Що означає “не клієнт, а учасник”?', '<p>Клієнт зазвичай приходить за готовою послугою і не впливає на устрій системи. Учасник може не тільки користуватися, а й допомагати покращувати, тестувати, пропонувати, виконувати задачі, входити в проєкти і з часом отримувати підтверджений статус.</p><p>Pandora не повинна виховувати пасивне споживання. Якщо людина хоче більше можливостей, вона має переходити від позиції “дайте мені сервіс” до позиції “я беру участь у створенні спільної системи”.</p>'],
-        ['Що таке кооператив у логіці Pandora?', '<p>Кооператив - це форма об\'єднання людей, де учасники спільно створюють, використовують і розвивають загальну інфраструктуру. Для Pandora кооператив важливий не як красиве слово, а як юридична й організаційна основа: членство, пайові внески, правила, документи, участь, права, обов\'язки і механізми спільного управління.</p><p>Pandora розглядає кооператив як один із практичних інструментів переходу від звичайної ринкової моделі до більш стійкої системи спільного володіння і користування інфраструктурою.</p>'],
-        ['Що таке три ролі Pandora?', '<p>У Pandora людина розглядається одразу в кількох ролях:</p><ul><li>споживач: користується сервісами і продуктами системи;</li><li>співробітник / учасник роботи: допомагає створювати, тестувати і розвивати інфраструктуру;</li><li>співвласник / пайовик: бере участь у правах, документах, рішеннях і довгостроковому розвитку.</li></ul><p>Сенс Pandora в тому, щоб ці ролі не були розірвані. Людина не повинна бути тільки покупцем чужої системи. Вона може поступово входити в систему як учасник.</p>'],
-        ['Що таке Pandora ID?', '<p>Pandora ID - майбутній ідентифікатор учасника інфраструктури Pandora. Це не просто номер, бейдж або декоративна картка. На першому етапі Pandora ID має пов\'язувати профіль, заявку, документи, систему рекомендацій і винагород, підтвердження участі і подальший доступ до можливостей системи.</p><p>Pandora ID - це проміжна мета першого етапу: людина проходить шлях від знайомства з проєктом до оформленої участі. Після юридичного оформлення кооперативу і документів Pandora ID має бути пов\'язаний з підтверджуючим пакетом учасника, його правами, обов\'язками, доступами і формою участі в інфраструктурі.</p>'],
-        ['Що дає Pandora ID?', '<p>Pandora ID має стати точкою входу в глибшу участь. Після отримання Pandora ID людина отримує не просто акаунт на сайті, а основу для доступу до подальших можливостей: участі в розробці, тестуванні, проєктах, документах, сервісах і майбутній інфраструктурі USEN.</p><p>Після оформлення кооперативу і необхідних документів участь має підтверджуватися відповідним пакетом документів: заявкою, рішенням про прийняття, статусом учасника, правилами користування інфраструктурою, положеннями про права й обов\'язки, а також іншими документами, затвердженими всередині кооперативу.</p><p>Pandora ID не обіцяє миттєве юридичне співволодіння до створення і оформлення всіх документів. Він є частиною планованої інфраструктури підтвердженої участі.</p>'],
-        ['Як людина проходить шлях від гостя до учасника?', '<p>Базовий шлях такий:</p><ol><li>Гість вивчає сайт і FAQ.</li><li>Переходить у кабінет.</li><li>Заповнює профіль.</li><li>Подає заявку.</li><li>Проходить перевірку і підтвердження.</li><li>Отримує Pandora ID.</li><li>Отримує доступ до подальшої участі: тестування, задач, документів, сервісів, проєктів і майбутнього середовища USEN.</li></ol><p>Цей шлях потрібен, щоб Pandora не була просто сайтом для випадкових перехожих. Система має відрізняти гостя, кандидата, учасника, пайовика і довіреного учасника.</p>'],
-        ['Подання заявки означає автоматичний вступ?', '<p>Ні. Подання заявки - це перший крок. Вона не означає автоматичне прийняття в пайовики, не створює фінансових обіцянок і не замінює юридичні документи.</p><p>Pandora має будуватися через зрозумілі правила: хто може вступити, які дані потрібні, які є права та обов\'язки, як приймаються рішення, як людина може вийти, як система захищається від зловживань.</p>'],
-        ['Що таке система рекомендацій і винагород?', '<p>Система рекомендацій і винагород - це майбутній механізм Pandora для запрошень, довіри, зв\'язку учасників і фіксації корисного внеску. Вона потрібна не для пірамідальної схеми і не для обіцянок легких грошей, а для того, щоб бачити, хто кого привів, хто допоміг розвитку проєкту, хто брав участь у тестуванні, документах, сервісах, проєктах і розвитку мережі.</p><p>У майбутньому така система може бути пов\'язана з репутацією, доступами, бонусами, внутрішніми правилами і винагородами. Внутрішня робоча назва цього шару - «Сигнал».</p>'],
-        ['Що таке кабінет Pandora?', '<p>Кабінет Pandora - це прототип особистого простору учасника. У ньому мають поєднуватися профіль, система рекомендацій і винагород, документи, заявка, Pandora ID і AI-помічник.</p><p>Зараз кабінет є прототипом. Його завдання - показати шлях людини: від інтересу до проєкту до оформлення участі і подальшого доступу до інфраструктури.</p>'],
-        ['Чому AI-помічник не відкритий усім гостям?', '<p>AI використовує зовнішні обчислювальні ресурси. Pandora не повинна перетворювати AI на безкоштовну іграшку для випадкових перехожих. Для гостей достатньо FAQ і відкритих матеріалів.</p><p>AI-помічник має бути частиною кабінету, тобто інструментом людини, яка вже зробила крок до участі. У майбутньому AI може допомагати з профілем, документами, заявкою, Pandora ID, тестуванням сайту, пропозиціями, помилками і участю в проєктах.</p>'],
-        ['Що таке “активація AI”?', '<p>Активація AI - це майбутній механізм увімкнення AI-помічника через усвідомлену дію. Людина може пройти інструкцію, прийняти правила, підключити особистий AI-ключ або внести технічний внесок у розвиток Pandora.</p><p>Головний принцип: є функціонал - хочеш користуватися - активуй участь. Pandora будує не споживацьку халяву, а систему розумного використання ресурсів.</p>'],
-        ['Чи буде в Pandora дохід?', '<p>Pandora не обіцяє миттєвий або гарантований дохід. Проєкт не повинен продавати людям ілюзію швидких грошей.</p><p>Але це не означає, що користь і дохід відсутні. Pandora будується як соціально-економічна система, де дохід має з\'являтися не з обіцянок, а з реальних проєктів, сервісів, зниження витрат, підвищення якості товарів і послуг, довіри між учасниками і репутації всередині мережі.</p><p>На першому етапі пріоритет Pandora - створити власні соціально-економічні програми і проєкти, навчитися знижувати вартість доступу до товарів і послуг, підвищувати якість, збирати учасників, формувати довіру і зрозумілі правила.</p><p>Окремий інвестиційний контур планується пізніше - після запуску НІП, майбутньої колективної інвестиційної платформи проєкту. До цього не можна обіцяти дохід як готовий результат. Можна говорити тільки про проєктовану економічну логіку і майбутні можливості після запуску реальних механізмів.</p>'],
-        ['У чому економічна логіка Pandora?', '<p>Економічна логіка Pandora не зводиться до роздачі прибутку. Спочатку система має створювати користь: об\'єднувати людей, запускати проєкти, знижувати витрати, покращувати доступ до товарів і послуг, формувати довіру між учасниками і збирати репутацію.</p><p>Якщо звичайна ринкова модель часто заробляє на розриві між власником, працівником і клієнтом, то Pandora прагне поєднати ці ролі. Учасник може бути споживачем, співробітником і співвласником інфраструктури.</p><p>Дохід має бути наслідком працюючої системи, а не рекламною обіцянкою. Тому Pandora спочатку будує інфраструктуру, документи, проєкти, довіру і правила, а інвестиційний контур через НІП має з\'явитися пізніше.</p>'],
-        ['Що таке “співволодіння” в Pandora?', '<p>Співволодіння в Pandora не повинно бути красивим словом без документів. Воно має підтверджуватися правилами, статусами, рішеннями, реєстрами, членством, пайовими механізмами і документами кооперативу.</p><p>До юридичного оформлення не можна обіцяти людині готове співволодіння. Коректна формула: Pandora проєктує систему, де участь, внесок і права мають бути пов\'язані з підтверджуючим пакетом документів після оформлення кооперативу і внутрішніх правил.</p>'],
-        ['Що таке “пакет документів учасника”?', '<p>У майбутньому пакет документів може включати:</p><ul><li>заявку;</li><li>підтвердження прийняття;</li><li>статус учасника / пайовика;</li><li>правила користування інфраструктурою;</li><li>положення про права та обов\'язки;</li><li>положення про внески;</li><li>регламенти участі;</li><li>документи, пов\'язані з Pandora ID;</li><li>правила доступу до USEN;</li><li>документи системи рекомендацій і винагород;</li><li>внутрішні положення кооперативу.</li></ul><p>Зараз це напрям у розробці. Реальні документи будуть додаватися в міру оформлення кооперативу.</p>'],
-        ['Що таке “участь у розробці”?', '<p>Участь у розробці - це не тільки програмування. Людина може допомагати по-різному:</p><ul><li>тестувати сайт;</li><li>знаходити помилки;</li><li>пропонувати покращення;</li><li>писати тексти;</li><li>допомагати з дизайном;</li><li>перевіряти документи;</li><li>брати участь у юридичній підготовці;</li><li>допомагати з медіа;</li><li>розвивати напрями;</li><li>збирати зворотний зв\'язок;</li><li>допомагати у майбутній інфраструктурі USEN.</li></ul><p>Pandora має бачити не тільки гроші людини, а й її навички, таланти і компетенції.</p>'],
-        ['Що таке картка навичок, талантів і компетенцій?', '<p>Це майбутня частина профілю учасника. Вона потрібна, щоб розуміти, чим людина може бути корисною системі і що система може запропонувати їй.</p><p>Pandora цікавить не тільки анкета “ім\'я і телефон”, а реальна карта можливостей: досвід, професія, навички, інтереси, ресурси, готовність допомагати, напрями участі.</p>'],
-        ['Що буде з реальними фото, документами і красивими матеріалами?', '<p>Зараз сайт показує смислову структуру і прототип. Реальні фотографії, юридичні документи, підтвердження, пакети учасника, розширені матеріали і візуальні докази будуть додаватися в міру створення кооперативу, оформлення документів і запуску конкретних напрямів.</p><p>Не треба імітувати готову інфраструктуру там, де вона ще створюється. Pandora має говорити чесно: що вже є, що в прототипі, що планується.</p>'],
-        ['Як можна допомогти вже зараз?', '<p>Можна:</p><ul><li>вивчити сайт і FAQ;</li><li>перейти в кабінет;</li><li>протестувати прототип;</li><li>повідомити про помилку;</li><li>запропонувати покращення;</li><li>допомогти з текстами;</li><li>допомогти з дизайном;</li><li>допомогти з кодом;</li><li>допомогти з документами;</li><li>допомогти з юридичною логікою;</li><li>допомогти з медіа;</li><li>допомогти з майбутньою інфраструктурою USEN.</li></ul><p>Головне - не залишатися тільки спостерігачем. Pandora будується через участь.</p>']
-      ],
-      ru: [
-        ['Что такое Pandora?', '<p>Pandora — это проект кооперативной социально-экономической экосистемы. Его задача — создать инфраструктуру, где человек перестаёт быть только клиентом и постепенно становится участником: может пользоваться сервисами, помогать развитию, входить в рабочие процессы, участвовать в проектах и получать подтверждённые права внутри системы.</p><p>Pandora строится вокруг простой идеи: не вкладывать жизнь, деньги и труд только в чужие системы, которые человек не контролирует. Вместо этого участники должны создавать и развивать общую инфраструктуру, которой могут пользоваться сами.</p>'],
-        ['Что такое USEN Pandora?', '<p>USEN Pandora — это более широкий сетевой контур проекта. Если Pandora на первом этапе может быть связана с конкретным кооперативом, сайтом и кабинетом, то USEN — это будущая социально-экономическая сеть: среда для людей, проектов, документов, задач, сервисов, репутации, кооперации и совместного владения инфраструктурой.</p><p>USEN не задумывается как обычная соцсеть ради постов и лайков. Это должна быть сеть участия: профиль, роли, документы, доступы, проекты, задачи, вклад, репутация и связь с реальными кооперативными процессами.</p>'],
-        ['Чем Pandora отличается от обычной компании?', '<p>Обычная компания чаще строится вокруг владельца, продукта и клиента. Клиент платит, пользуется и остаётся снаружи системы.</p><p>Pandora строится вокруг другой логики: человек может быть не только потребителем, но и участником работы, соразработчиком, пайщиком и совладельцем инфраструктуры. Это не отменяет правил, документов, ответственности и дисциплины. Наоборот, Pandora должна связать права, обязанности, вклад и доступы в понятную систему.</p>'],
-        ['Что значит “не клиент, а участник”?', '<p>Клиент обычно приходит за готовой услугой и не влияет на устройство системы. Участник может не только пользоваться, но и помогать улучшать, тестировать, предлагать, выполнять задачи, входить в проекты и со временем получать подтверждённый статус.</p><p>Pandora не должна воспитывать пассивное потребление. Если человек хочет больше возможностей, он должен переходить от позиции “дайте мне сервис” к позиции “я участвую в создании общей системы”.</p>'],
-        ['Что такое кооператив в логике Pandora?', '<p>Кооператив — это форма объединения людей, где участники совместно создают, используют и развивают общую инфраструктуру. Для Pandora кооператив важен не как красивое слово, а как юридическая и организационная основа: членство, паевые взносы, правила, документы, участие, права, обязанности и механизмы совместного управления.</p><p>Pandora рассматривает кооператив как один из практических инструментов перехода от обычной рыночной модели к более устойчивой системе совместного владения и пользования инфраструктурой.</p>'],
-        ['Что такое три роли Pandora?', '<p>В Pandora человек рассматривается сразу в нескольких ролях:</p><ul><li>потребитель: пользуется сервисами и продуктами системы;</li><li>сотрудник / участник работы: помогает создавать, тестировать и развивать инфраструктуру;</li><li>совладелец / пайщик: участвует в правах, документах, решениях и долгосрочном развитии.</li></ul><p>Смысл Pandora в том, чтобы эти роли не были разорваны. Человек не должен быть только покупателем чужой системы. Он может постепенно входить в систему как участник.</p>'],
-        ['Что такое Pandora ID?', '<p>Pandora ID — будущий идентификатор участника инфраструктуры Pandora. Это не просто номер, бейдж или декоративная карта. На первом этапе Pandora ID должен связывать профиль, заявку, документы, систему рекомендаций и вознаграждений, подтверждение участия и дальнейший доступ к возможностям системы.</p><p>Pandora ID — это промежуточная цель первого этапа: человек проходит путь от знакомства с проектом к оформленному участию. После юридического оформления кооператива и документов Pandora ID должен быть связан с подтверждающим пакетом участника, его правами, обязанностями, доступами и формой участия в инфраструктуре.</p>'],
-        ['Что даёт Pandora ID?', '<p>Pandora ID должен стать точкой входа в более глубокое участие. После получения Pandora ID человек получает не просто аккаунт на сайте, а основу для доступа к дальнейшим возможностям: участию в разработке, тестировании, проектах, документах, сервисах и будущей инфраструктуре USEN.</p><p>После оформления кооператива и необходимых документов участие должно подтверждаться соответствующим пакетом документов: заявкой, решением о принятии, статусом участника, правилами пользования инфраструктурой, положениями о правах и обязанностях, а также другими документами, утверждёнными внутри кооператива.</p><p>Pandora ID не должен обещать мгновенное юридическое совладение до создания и оформления всех документов. Он является частью планируемой инфраструктуры подтверждённого участия.</p>'],
-        ['Как человек проходит путь от гостя к участнику?', '<p>Базовый путь такой:</p><ol><li>Гость изучает сайт и FAQ.</li><li>Переходит в кабинет.</li><li>Заполняет профиль.</li><li>Подаёт заявку.</li><li>Проходит проверку и подтверждение.</li><li>Получает Pandora ID.</li><li>Получает доступ к дальнейшему участию: тестированию, задачам, документам, сервисам, проектам и будущей среде USEN.</li></ol><p>Этот путь нужен, чтобы Pandora не была просто сайтом для случайных прохожих. Система должна отличать гостя, кандидата, участника, пайщика и доверенного участника.</p>'],
-        ['Подача заявки означает автоматическое вступление?', '<p>Нет. Подача заявки — это первый шаг. Она не означает автоматическое принятие в пайщики, не создаёт финансовых обещаний и не заменяет юридические документы.</p><p>Pandora должна строиться через понятные правила: кто может вступить, какие данные нужны, какие есть права и обязанности, как принимаются решения, как человек может выйти, как защищается система от злоупотреблений.</p>'],
-        ['Что такое система рекомендаций и вознаграждений?', '<p>Система рекомендаций и вознаграждений — это будущий механизм Pandora для приглашений, доверия, связи участников и фиксации полезного вклада. Она нужна не для пирамидальной схемы и не для обещаний лёгких денег, а для того, чтобы видеть, кто кого привёл, кто помог развитию проекта, кто участвовал в тестировании, документах, сервисах, проектах и развитии сети.</p><p>В будущем такая система может быть связана с репутацией, доступами, бонусами, внутренними правилами и вознаграждениями. Внутреннее рабочее название этого слоя — «Сигнал».</p>'],
-        ['Что такое кабинет Pandora?', '<p>Кабинет Pandora — это прототип личного пространства участника. В нём должны соединяться профиль, система рекомендаций и вознаграждений, документы, заявка, Pandora ID и AI-помощник.</p><p>Сейчас кабинет является прототипом. Его задача — показать путь человека: от интереса к проекту до оформления участия и дальнейшего доступа к инфраструктуре.</p>'],
-        ['Почему AI-помощник не открыт всем гостям?', '<p>AI использует внешние вычислительные ресурсы. Pandora не должна превращать AI в бесплатную игрушку для случайных прохожих. Для гостей достаточно FAQ и открытых материалов.</p><p>AI-помощник должен быть частью кабинета, то есть инструментом человека, который уже сделал шаг к участию. В будущем AI может помогать с профилем, документами, заявкой, Pandora ID, тестированием сайта, предложениями, ошибками и участием в проектах.</p>'],
-        ['Что такое “активация AI”?', '<p>Активация AI — это будущий механизм включения AI-помощника через осознанное действие. Человек может пройти инструкцию, принять правила, подключить личный AI-ключ или внести технический вклад в развитие Pandora.</p><p>Главный принцип: есть функционал — хочешь пользоваться — активируй участие. Pandora строит не потребительскую халяву, а систему разумного использования ресурсов.</p>'],
-        ['Будет ли в Pandora доход?', '<p>Pandora не обещает мгновенный или гарантированный доход. Проект не должен продавать людям иллюзию быстрых денег.</p><p>Но это не значит, что выгода и доход отсутствуют. Pandora строится как социально-экономическая система, где доход должен появляться не из обещаний, а из реальных проектов, сервисов, снижения издержек, повышения качества товаров и услуг, доверия между участниками и репутации внутри сети.</p><p>На первом этапе приоритет Pandora — создать собственные социально-экономические программы и проекты, научиться снижать стоимость доступа к товарам и услугам, повышать качество, собирать участников, формировать доверие и понятные правила.</p><p>Отдельный инвестиционный контур планируется позже — после запуска НИП, будущей коллективной инвестиционной платформы проекта. До этого нельзя обещать доход как готовый результат. Можно говорить только о проектируемой экономической логике и будущих возможностях после запуска реальных механизмов.</p>'],
-        ['В чём экономическая логика Pandora?', '<p>Экономическая логика Pandora не сводится к раздаче прибыли. Сначала система должна создавать пользу: объединять людей, запускать проекты, снижать издержки, улучшать доступ к товарам и услугам, формировать доверие между участниками и собирать репутацию.</p><p>Если обычная рыночная модель часто зарабатывает на разрыве между владельцем, работником и клиентом, то Pandora стремится соединить эти роли. Участник может быть потребителем, сотрудником и совладельцем инфраструктуры.</p><p>Доход должен быть следствием работающей системы, а не рекламным обещанием. Поэтому Pandora сначала строит инфраструктуру, документы, проекты, доверие и правила, а инвестиционный контур через НИП должен появиться позже.</p>'],
-        ['Что такое “совладение” в Pandora?', '<p>Совладение в Pandora не должно быть красивым словом без документов. Оно должно подтверждаться правилами, статусами, решениями, реестрами, членством, паевыми механизмами и документами кооператива.</p><p>До юридического оформления нельзя обещать человеку готовое совладение. Корректная формулировка: Pandora проектирует систему, где участие, вклад и права должны быть связаны с подтверждающим пакетом документов после оформления кооператива и внутренних правил.</p>'],
-        ['Что такое “пакет документов участника”?', '<p>В будущем пакет документов может включать:</p><ul><li>заявку;</li><li>подтверждение принятия;</li><li>статус участника / пайщика;</li><li>правила пользования инфраструктурой;</li><li>положения о правах и обязанностях;</li><li>положения о взносах;</li><li>регламенты участия;</li><li>документы, связанные с Pandora ID;</li><li>правила доступа к USEN;</li><li>документы системы рекомендаций и вознаграждений;</li><li>внутренние положения кооператива.</li></ul><p>Сейчас это направление в разработке. Реальные документы будут добавляться по мере оформления кооператива.</p>'],
-        ['Что такое “участие в разработке”?', '<p>Участие в разработке — это не только программирование. Человек может помогать по-разному:</p><ul><li>тестировать сайт;</li><li>находить ошибки;</li><li>предлагать улучшения;</li><li>писать тексты;</li><li>помогать с дизайном;</li><li>проверять документы;</li><li>участвовать в юридической подготовке;</li><li>помогать с медиа;</li><li>развивать направления;</li><li>собирать обратную связь;</li><li>помогать в будущей инфраструктуре USEN.</li></ul><p>Pandora должна видеть не только деньги человека, но и его навыки, таланты и компетенции.</p>'],
-        ['Что такое карточка навыков, талантов и компетенций?', '<p>Это будущая часть профиля участника. Она нужна, чтобы понимать, чем человек может быть полезен системе и что система может предложить ему.</p><p>Pandora интересует не только анкета “имя и телефон”, а реальная карта возможностей: опыт, профессия, навыки, интересы, ресурсы, готовность помогать, направления участия.</p>'],
-        ['Что будет с реальными фото, документами и красивыми материалами?', '<p>Сейчас сайт показывает смысловую структуру и прототип. Реальные фотографии, юридические документы, подтверждения, пакеты участника, расширенные материалы и визуальные доказательства будут добавляться по мере создания кооператива, оформления документов и запуска конкретных направлений.</p><p>Не надо имитировать готовую инфраструктуру там, где она ещё создаётся. Pandora должна говорить честно: что уже есть, что в прототипе, что планируется.</p>'],
-        ['Как можно помочь уже сейчас?', '<p>Можно:</p><ul><li>изучить сайт и FAQ;</li><li>перейти в кабинет;</li><li>протестировать прототип;</li><li>сообщить об ошибке;</li><li>предложить улучшение;</li><li>помочь с текстами;</li><li>помочь с дизайном;</li><li>помочь с кодом;</li><li>помочь с документами;</li><li>помочь с юридической логикой;</li><li>помочь с медиа;</li><li>помочь с будущей инфраструктурой USEN.</li></ul><p>Главное — не оставаться только наблюдателем. Pandora строится через участие.</p>']
-      ],
-      en: [
-        ['What is Pandora?', '<p>Pandora is a project of a cooperative social-economic ecosystem. Its goal is to create infrastructure where a person is not only a customer, but gradually becomes a participant: uses services, helps development, joins work processes, takes part in projects and receives confirmed rights inside the system.</p><p>The core idea is simple: do not invest life, money and work only into systems you do not control. Participants should build and use shared infrastructure together.</p>'],
-        ['What is USEN Pandora?', '<p>USEN Pandora is the wider network layer of the project. If Pandora starts with a cooperative, a site and a cabinet, USEN is planned as a social-economic network for people, projects, documents, tasks, services, reputation, cooperation and shared ownership of infrastructure.</p><p>USEN is not a regular social network for posts and likes. It is meant to be a network of participation.</p>'],
-        ['How is Pandora different from a usual company?', '<p>A usual company is often built around an owner, a product and a customer. The customer pays and remains outside the system.</p><p>Pandora follows another logic: a person can be a user, a contributor, a member and a co-owner of infrastructure. Rights, duties, contribution and access must be connected through clear rules.</p>'],
-        ['What does “not a customer, but a participant” mean?', '<p>A customer usually comes for a ready-made service and does not influence the system. A participant can use, improve, test, suggest, perform tasks, join projects and gradually receive a confirmed status.</p><p>Pandora should move people from passive consumption toward participation in building a shared system.</p>'],
-        ['What is a cooperative in Pandora logic?', '<p>A cooperative is a form of association where participants jointly create, use and develop common infrastructure. For Pandora it is a legal and organizational basis: membership, contributions, rules, documents, participation, rights, duties and shared governance.</p>'],
-        ['What are the three roles in Pandora?', '<p>Pandora sees a person in several roles:</p><ul><li>consumer: uses services and products;</li><li>contributor: helps create, test and develop infrastructure;</li><li>co-owner / member: participates in rights, documents, decisions and long-term development.</li></ul>'],
-        ['What is Pandora ID?', '<p>Pandora ID is a future identifier of a participant in Pandora infrastructure. It should connect profile, application, documents, the recommendation and reward system, participation confirmation and further access to system opportunities.</p>'],
-        ['What does Pandora ID give?', '<p>Pandora ID should become an entry point into deeper participation: development, testing, projects, documents, services and the future USEN infrastructure.</p><p>It does not promise instant legal co-ownership before all documents and cooperative mechanisms are created.</p>'],
-        ['How does a person move from visitor to participant?', '<p>The basic path is: study the site and FAQ, enter the cabinet, fill in the profile, submit an application, pass review and confirmation, receive Pandora ID and get access to further participation.</p>'],
-        ['Does submitting an application mean automatic membership?', '<p>No. An application is the first step. It does not mean automatic acceptance as a member, does not create financial promises and does not replace legal documents.</p>'],
-        ['What is the recommendation and reward system?', '<p>The recommendation and reward system is a planned Pandora mechanism for invitations, trust, participant connection and recording useful contribution. It is not a pyramid scheme and not a promise of easy money.</p><p>In the future it may be connected with reputation, access, bonuses, internal rules and rewards. The internal working name of this layer is “Signal”.</p>'],
-        ['What is the Pandora cabinet?', '<p>The Pandora cabinet is a prototype of a participant personal space. It combines profile, the recommendation and reward system, documents, application, Pandora ID and the AI assistant.</p>'],
-        ['Why is the AI assistant not open to all guests?', '<p>AI uses external computing resources. Pandora should not turn AI into a free toy for random visitors. For guests, FAQ and open materials are enough.</p><p>The AI assistant belongs inside the cabinet as a tool for a person who has already taken a step toward participation.</p>'],
-        ['What is “AI activation”?', '<p>AI activation is a future mechanism for enabling the assistant through a conscious action: accepting rules, connecting a personal AI key or making a technical contribution to Pandora development.</p>'],
-        ['Will there be income in Pandora?', '<p>Pandora does not promise instant or guaranteed income. The project should not sell an illusion of quick money.</p><p>Benefit and income may appear from real projects, services, lower costs, better quality, trust, reputation and future economic mechanisms, not from advertising promises.</p>'],
-        ['What is Pandora economic logic?', '<p>Pandora economic logic is not about distributing profit first. The system must first create value: unite people, launch projects, reduce costs, improve access to goods and services, build trust and collect reputation.</p>'],
-        ['What is “co-ownership” in Pandora?', '<p>Co-ownership must not be a decorative word. It has to be confirmed by rules, statuses, decisions, registers, membership mechanisms and cooperative documents.</p>'],
-        ['What is a “participant document package”?', '<p>In the future it may include an application, acceptance confirmation, participant or member status, infrastructure rules, rights and duties, contribution rules, participation regulations, Pandora ID documents, USEN access rules and recommendation-system documents.</p>'],
-        ['What is “participation in development”?', '<p>Participation in development is not only programming. A person can test the site, find bugs, suggest improvements, write texts, help with design, documents, legal logic, media and future USEN infrastructure.</p>'],
-        ['What is a skills, talents and competencies card?', '<p>It is a future part of the participant profile. It helps understand how a person can be useful to the system and what the system can offer in return.</p>'],
-        ['What about real photos, documents and polished materials?', '<p>The current site shows the concept and prototype. Real photos, legal documents, confirmations, participant packages and extended materials will be added as the cooperative, documents and real directions are created.</p>'],
-        ['How can I help now?', '<p>You can study the site and FAQ, enter the cabinet, test the prototype, report a bug, suggest an improvement, help with texts, design, code, documents, legal logic, media or the future USEN infrastructure.</p><p>The main point is not to remain only an observer. Pandora is built through participation.</p>']
-      ],
-      es: [
-        ['¿Qué es Pandora?', '<p>Pandora es un proyecto de ecosistema cooperativo socioeconómico. Su objetivo es crear una infraestructura donde una persona deje de ser solo cliente y se convierta gradualmente en participante: usa servicios, ayuda al desarrollo, entra en procesos de trabajo, participa en proyectos y recibe derechos confirmados dentro del sistema.</p>'],
-        ['¿Qué es USEN Pandora?', '<p>USEN Pandora es la capa de red más amplia del proyecto. Si Pandora empieza con una cooperativa, un sitio y un gabinete, USEN se planifica como una red socioeconómica para personas, proyectos, documentos, tareas, servicios, reputación, cooperación y propiedad compartida de infraestructura.</p>'],
-        ['¿En qué se diferencia Pandora de una empresa común?', '<p>Una empresa común suele construirse alrededor de un propietario, un producto y un cliente. Pandora sigue otra lógica: la persona puede ser usuaria, colaboradora, socia y copropietaria de la infraestructura.</p>'],
-        ['¿Qué significa “no cliente, sino participante”?', '<p>Un cliente llega por un servicio preparado. Un participante puede usar, mejorar, probar, proponer, realizar tareas, entrar en proyectos y recibir con el tiempo un estado confirmado.</p>'],
-        ['¿Qué es una cooperativa en la lógica de Pandora?', '<p>Una cooperativa es una forma de asociación donde los participantes crean, usan y desarrollan infraestructura común. Para Pandora es una base legal y organizativa: membresía, aportes, reglas, documentos, participación, derechos, deberes y gestión compartida.</p>'],
-        ['¿Cuáles son los tres roles en Pandora?', '<p>Pandora ve a la persona en varios roles:</p><ul><li>consumidor: usa servicios y productos;</li><li>colaborador: ayuda a crear, probar y desarrollar infraestructura;</li><li>copropietario / socio: participa en derechos, documentos, decisiones y desarrollo a largo plazo.</li></ul>'],
-        ['¿Qué es Pandora ID?', '<p>Pandora ID es un futuro identificador del participante en la infraestructura Pandora. Debe conectar perfil, solicitud, documentos, sistema de recomendaciones y recompensas, confirmación de participación y acceso posterior.</p>'],
-        ['¿Qué aporta Pandora ID?', '<p>Pandora ID debe convertirse en punto de entrada a una participación más profunda: desarrollo, pruebas, proyectos, documentos, servicios y la futura infraestructura USEN.</p>'],
-        ['¿Cómo pasa una persona de visitante a participante?', '<p>El camino básico es: estudiar el sitio y FAQ, entrar al gabinete, completar el perfil, enviar una solicitud, pasar revisión y confirmación, recibir Pandora ID y acceder a la participación posterior.</p>'],
-        ['¿Enviar una solicitud significa ingreso automático?', '<p>No. La solicitud es el primer paso. No significa aceptación automática como socio, no crea promesas financieras y no sustituye documentos legales.</p>'],
-        ['¿Qué es el sistema de recomendaciones y recompensas?', '<p>Es un mecanismo planificado de Pandora para invitaciones, confianza, conexión entre participantes y registro de contribución útil. No es una pirámide ni una promesa de dinero fácil.</p><p>En el futuro puede conectarse con reputación, accesos, bonos, reglas internas y recompensas. El nombre interno de trabajo de esta capa es “Signal”.</p>'],
-        ['¿Qué es el gabinete Pandora?', '<p>El gabinete Pandora es un prototipo del espacio personal del participante. Une perfil, sistema de recomendaciones y recompensas, documentos, solicitud, Pandora ID y asistente AI.</p>'],
-        ['¿Por qué el asistente AI no está abierto a todos los visitantes?', '<p>AI usa recursos externos de cómputo. Pandora no debe convertir AI en un juguete gratuito para visitantes casuales. Para invitados bastan FAQ y materiales abiertos.</p>'],
-        ['¿Qué es la “activación de AI”?', '<p>Es un futuro mecanismo para activar el asistente mediante una acción consciente: aceptar reglas, conectar una clave AI personal o hacer una contribución técnica al desarrollo de Pandora.</p>'],
-        ['¿Habrá ingresos en Pandora?', '<p>Pandora no promete ingresos instantáneos ni garantizados. El proyecto no debe vender una ilusión de dinero rápido.</p><p>El beneficio puede aparecer por proyectos reales, servicios, reducción de costes, mejor calidad, confianza, reputación y futuros mecanismos económicos.</p>'],
-        ['¿Cuál es la lógica económica de Pandora?', '<p>La lógica económica de Pandora no empieza con repartir ganancias. Primero el sistema debe crear valor: unir personas, lanzar proyectos, reducir costes, mejorar acceso a bienes y servicios, formar confianza y reputación.</p>'],
-        ['¿Qué es la “copropiedad” en Pandora?', '<p>La copropiedad no debe ser una palabra decorativa. Debe confirmarse mediante reglas, estados, decisiones, registros, membresía, mecanismos cooperativos y documentos.</p>'],
-        ['¿Qué es el “paquete de documentos del participante”?', '<p>En el futuro puede incluir solicitud, confirmación de aceptación, estado de participante o socio, reglas de uso de infraestructura, derechos y deberes, reglas de aportes, reglamentos, documentos Pandora ID, acceso a USEN y documentos del sistema de recomendaciones.</p>'],
-        ['¿Qué es “participar en el desarrollo”?', '<p>No es solo programar. Una persona puede probar el sitio, encontrar errores, proponer mejoras, escribir textos, ayudar con diseño, documentos, lógica legal, medios y la futura infraestructura USEN.</p>'],
-        ['¿Qué es la tarjeta de habilidades, talentos y competencias?', '<p>Es una futura parte del perfil del participante. Ayuda a entender cómo una persona puede ser útil al sistema y qué puede ofrecerle el sistema.</p>'],
-        ['¿Qué pasará con fotos reales, documentos y materiales finales?', '<p>El sitio actual muestra la estructura conceptual y el prototipo. Fotos reales, documentos legales, confirmaciones, paquetes del participante y materiales ampliados se añadirán a medida que se creen la cooperativa y sus documentos.</p>'],
-        ['¿Cómo puedo ayudar ahora?', '<p>Puedes estudiar el sitio y FAQ, entrar al gabinete, probar el prototipo, reportar un error, sugerir una mejora, ayudar con textos, diseño, código, documentos, lógica legal, medios o la futura infraestructura USEN.</p><p>Lo principal es no quedarse solo como observador. Pandora se construye mediante participación.</p>']
-      ]
-    };
+function toggleSiteUserMenu(){
+  const menu = document.getElementById('siteUserDropdown');
+  if (menu) menu.classList.toggle('open');
+}
+document.addEventListener('click', function(event){
+  const wrap = event.target.closest('.site-user-menu');
+  const menu = document.getElementById('siteUserDropdown');
+  if (menu && !wrap) menu.classList.remove('open');
+});
 
-    function renderFaq(lang) {
-      const targetIds = { uk: 'faqUk', ru: 'faqRu', en: 'faqEn', es: 'faqEs' };
-      const target = document.getElementById(targetIds[lang] || targetIds.uk);
-      if (!target || target.dataset.rendered) return;
-      target.innerHTML = faqData[lang].map(function(item, index) {
-        const n = String(index + 1).padStart(2, '0');
-        return '<details' + (index === 0 ? ' open' : '') + '><summary><span class="num">' + n + '</span><span>' + item[0] + '</span></summary><div class="answer">' + item[1] + '</div></details>';
-      }).join('');
-      target.dataset.rendered = 'true';
-    }
-
-    function setFaqLang(lang) {
-      const active = faqData[lang] ? lang : 'uk';
-      renderFaq(active);
+function setFaqLang(lang) {
+      const active = ['uk', 'ru', 'en', 'es'].includes(lang) ? lang : 'uk';
       document.documentElement.lang = active;
+      document.documentElement.setAttribute('data-pandora-lang', active);
       document.querySelectorAll('[data-lang-panel]').forEach(function(panel) {
         panel.classList.toggle('active', panel.getAttribute('data-lang-panel') === active);
       });
-      const siteLabels = { uk: 'На головну', ru: 'На главную', en: 'Home', es: 'Inicio' };
-      document.querySelector('[data-i18n="site"]').textContent = siteLabels[active] || siteLabels.uk;
+      document.querySelectorAll('[data-lang]').forEach(function(el) {
+        el.classList.toggle('active', el.getAttribute('data-lang') === active);
+      });
+      try { localStorage.setItem('pandora_lang', active); } catch (e) {}
+      if (window.applySiteLanguage) window.applySiteLanguage(active);
     }
+
+    window.setFaqLang = setFaqLang;
 
     let saved = 'uk';
     try {
       saved = localStorage.getItem('pandora_lang') || localStorage.getItem('pandora-lang') || 'uk';
     } catch (e) {}
-    setFaqLang(faqData[saved] ? saved : 'uk');
+    setFaqLang(['uk', 'ru', 'en', 'es'].includes(saved) ? saved : 'uk');
   </script>
   <script src="assets/js/pandora-language-data.js"></script>
   <script src="assets/js/pandora-i18n.js"></script>
