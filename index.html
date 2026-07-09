@@ -290,6 +290,7 @@ textarea { resize:vertical; min-height:80px; }
 footer { padding:clamp(20px,4vw,32px) clamp(24px,6vw,80px); border-top:1px solid var(--border); }
 .footer-bar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; max-width:1180px; margin:0 auto; font-size:12px; }
 .footer-bar-left { display:flex; align-items:center; flex-wrap:wrap; gap:2px; opacity:0.5; }
+.footer-copy, .footer-links { display:flex; align-items:center; flex-wrap:wrap; gap:2px; }
 .footer-bar-left a { color:var(--light); text-decoration:none; }
 .footer-bar-left a:hover { opacity:0.7; }
 .footer-rekvizity { cursor:pointer; }
@@ -1912,10 +1913,13 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <footer>
 <div class="footer-bar">
 <div class="footer-bar-left">
+<div class="footer-copy">
 <span class="active" data-lang="uk">© 2026 Pandora, coop.</span>
 <span data-lang="ru">© 2026 Pandora, coop.</span>
 <span data-lang="en">© 2026 Pandora, coop.</span>
 <span data-lang="es">© 2026 Pandora, coop.</span>
+</div>
+<div class="footer-links">
 <span class="footer-dot">·</span>
 <a data-event="open_privacy" href="privacy.html"><span class="active" data-lang="uk">Конфіденційність</span><span data-lang="ru">Конфиденциальность</span><span data-lang="en">Privacy</span><span data-lang="es">Privacidad</span></a>
 <span class="footer-dot">·</span>
@@ -1924,6 +1928,7 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <a class="footer-rekvizity" data-event="open_requisites" href="requisites.html"><span class="active" data-lang="uk">Реквізити</span><span data-lang="ru">Реквизиты</span><span data-lang="en">Company details</span><span data-lang="es">Datos registrales</span></a>
 <span class="footer-dot">·</span>
 <a data-event="open_faq" href="faq.html"><span class="active" data-lang="uk">Питання</span><span data-lang="ru">Вопросы</span><span data-lang="en">FAQ</span><span data-lang="es">Preguntas</span></a>
+</div>
 </div>
 <div class="footer-bar-right">
 <div class="footer-socials">
@@ -4104,6 +4109,321 @@ Changes:
 @media (max-width: 900px) {
   #hero .hero-venn { max-width: 94vw !important; }
   #hero .hero-venn svg { width: min(476px, 88vw) !important; }
+}
+</style>
+
+<style id="pandora-index-mobile-hotfix-v0-1">
+@media (max-width: 900px) {
+  :root {
+    --mobile-header-h: 116px;
+  }
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+
+  html {
+    scroll-padding-top: var(--mobile-header-h);
+  }
+
+  body {
+    padding-top: var(--mobile-header-h);
+  }
+
+  nav {
+    min-height: var(--mobile-header-h);
+    padding: 14px 20px 10px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand actions"
+      "links links";
+    row-gap: 12px;
+    align-items: center;
+  }
+
+  .nav-logo {
+    grid-area: brand;
+    min-width: 0;
+  }
+
+  .nav-logo-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 18px;
+    letter-spacing: 0.03em;
+  }
+
+  .nav-right {
+    grid-area: actions;
+    justify-self: end;
+  }
+
+  .nav-links {
+    grid-area: links;
+    display: flex !important;
+    width: 100%;
+    justify-content: center;
+    gap: clamp(12px, 4vw, 22px);
+    padding: 10px 0 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-links a {
+    flex: 0 0 auto;
+    font-size: 12px;
+    line-height: 1;
+    opacity: 0.78;
+    white-space: nowrap;
+  }
+
+  #hero,
+  #about.about-landing,
+  .about-project-landing,
+  .project-intro-landing,
+  .project-landing-section,
+  .examples-landing,
+  .signal-landing,
+  .final-call-landing,
+  #docs,
+  #join,
+  #contact.contact-landing {
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding-top: clamp(34px, 8vw, 54px) !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-bottom: clamp(54px, 12vw, 76px) !important;
+    scroll-margin-top: var(--mobile-header-h);
+  }
+
+  #hero {
+    padding-top: calc(var(--mobile-header-h) + clamp(28px, 8vw, 48px)) !important;
+  }
+
+  #about .about-reframe-title,
+  #signal.signal-landing .section-title,
+  #hero h1.hero-title {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    font-size: clamp(31px, 9vw, 44px) !important;
+    line-height: 1.16 !important;
+  }
+
+  #about .about-reframe-title br,
+  #signal.signal-landing .section-title br {
+    display: none;
+  }
+
+  #about .about-reframe-grid,
+  #about .accent-copy-block,
+  #about .principles,
+  #about .principle-item {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .about-project-landing {
+    display: block !important;
+  }
+
+  .about-project-landing .apl-stage,
+  .about-project-landing .apl-panels,
+  .about-project-landing .apl-panel,
+  .about-project-landing .apl-inner,
+  .about-project-landing .project-intro-frame,
+  .about-project-landing .project-intro-content,
+  #aplPanelLeft .pandora-name-section,
+  #aplPanelLeft .pandora-name-body,
+  #aplPanelLeft .pandora-name-copy,
+  #aplPanelRight .project-logo-text,
+  #aplPanelRight .rgb-logo-doc {
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .about-project-landing .apl-stage {
+    display: block !important;
+    padding: 0 !important;
+  }
+
+  .about-project-landing .apl-panels {
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .about-project-landing .apl-panel.apl-active {
+    display: block !important;
+  }
+
+  .about-project-landing .apl-arrow {
+    top: 50vh !important;
+  }
+
+  #aplPanelLeft .pandora-room-title,
+  .project-brand {
+    font-size: clamp(36px, 12vw, 54px) !important;
+    line-height: 1.05 !important;
+  }
+
+  #aplPanelLeft .pandora-name-copy p,
+  #aplPanelRight .rgb-logo-doc p,
+  #aplPanelRight .rgb-narrative-principle p {
+    font-size: clamp(16px, 4.5vw, 20px) !important;
+    line-height: 1.58 !important;
+  }
+
+  #aplPanelRight .project-intro-content.rgb-logo-layout {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+    align-items: start !important;
+  }
+
+  #aplPanelRight .project-logo-visual.rgb-logo-hero {
+    min-height: 0 !important;
+    justify-content: center !important;
+    align-items: start !important;
+    margin-top: -10px !important;
+  }
+
+  #aplPanelRight .project-logo-visual.rgb-logo-hero img {
+    width: min(54vw, 220px) !important;
+    max-width: 220px !important;
+    margin: 0 auto !important;
+  }
+
+  #contact.contact-landing {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  #contact .contact-frame,
+  #contact .contact-grid,
+  #contact .contact-form {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  #contact .contact-form {
+    padding: 22px !important;
+    overflow: hidden !important;
+  }
+
+  #contact .contact-form label,
+  #contact .contact-form input,
+  #contact .contact-form select,
+  #contact .contact-form textarea,
+  #contact .contact-phone-row {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #contact .contact-phone-row {
+    grid-template-columns: minmax(86px, 0.32fr) minmax(0, 1fr) !important;
+  }
+
+  #contact .pandora-hcaptcha {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  footer {
+    padding: 14px 20px 18px !important;
+  }
+
+  .footer-bar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 10px 14px;
+    width: 100%;
+    max-width: none;
+  }
+
+  .footer-bar-left {
+    display: contents !important;
+  }
+
+  .footer-copy {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  .footer-bar-right {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .footer-links {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex !important;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0 6px;
+    min-width: 0;
+  }
+
+  .footer-links a {
+    color: rgba(245,242,237,0.62);
+    white-space: nowrap;
+  }
+
+  .footer-links .footer-dot {
+    margin: 0;
+    opacity: 0.25;
+  }
+}
+
+@media (max-width: 430px) {
+  .nav-logo-venn,
+  .nav-logo-venn svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .nav-logo-title {
+    font-size: 17px;
+  }
+
+  .nav-icon-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  #contact .contact-form {
+    padding: 18px !important;
+  }
+
+  .footer-bar {
+    font-size: 12px;
+  }
 }
 </style>
 
