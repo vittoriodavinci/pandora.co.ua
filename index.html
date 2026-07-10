@@ -2260,6 +2260,32 @@ function initMobileReadMore() {
       activeButton.textContent = p.classList.contains('mobile-expanded') ? labels[1] : labels[0];
     }
   });
+
+  const heroStory = document.querySelector('#hero .hero-story');
+  if (heroStory) {
+    const heroParagraphs = heroStory.querySelectorAll('p');
+    let heroButton = heroStory.querySelector(':scope > .mobile-read-more.hero-read-more');
+    if (!isMobile) {
+      heroStory.classList.remove('mobile-expanded');
+      heroParagraphs.forEach(p => p.classList.remove('hero-mobile-extra'));
+      if (heroButton) heroButton.remove();
+    } else {
+      heroParagraphs.forEach((p, index) => p.classList.toggle('hero-mobile-extra', index > 1));
+      if (!heroButton && heroParagraphs[1]) {
+        heroButton = document.createElement('button');
+        heroButton.type = 'button';
+        heroButton.className = 'mobile-read-more hero-read-more';
+        heroButton.addEventListener('click', () => {
+          heroStory.classList.toggle('mobile-expanded');
+          heroButton.textContent = heroStory.classList.contains('mobile-expanded') ? labels[1] : labels[0];
+        });
+        heroParagraphs[1].insertAdjacentElement('afterend', heroButton);
+      }
+      if (heroButton) {
+        heroButton.textContent = heroStory.classList.contains('mobile-expanded') ? labels[1] : labels[0];
+      }
+    }
+  }
 }
 
 // Close dropdowns on outside click
@@ -5093,9 +5119,9 @@ Changes:
   }
 
   #hero {
-    min-height: calc(var(--mobile-section-h) + 120px) !important;
-    height: calc(var(--mobile-section-h) + 120px) !important;
-    padding: 8px 18px 12px !important;
+    min-height: calc(100svh - var(--mobile-header-h) + 170px) !important;
+    height: calc(100svh - var(--mobile-header-h) + 170px) !important;
+    padding: 8px 18px 0 !important;
     overflow: hidden !important;
     margin-bottom: 0 !important;
     scroll-margin-top: var(--mobile-header-h) !important;
@@ -5105,53 +5131,108 @@ Changes:
     height: 100% !important;
     min-height: 0 !important;
     display: grid !important;
-    grid-template-rows: auto minmax(0, 1fr) auto !important;
-    gap: 8px !important;
+    grid-template-columns: minmax(0, 1fr) minmax(88px, 0.42fr) !important;
+    grid-template-rows: minmax(174px, 38svh) auto auto !important;
+    gap: 8px 14px !important;
     align-items: start !important;
   }
 
   #hero h1.hero-title {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    align-self: center !important;
+    justify-self: center !important;
     margin: 0 !important;
-    text-align: center !important;
-    font-size: clamp(28px, 8vw, 36px) !important;
-    line-height: 1.02 !important;
+    width: min-content !important;
+    max-width: 100% !important;
+    text-align: left !important;
+    white-space: normal !important;
+    font-size: clamp(28px, 8.3vw, 38px) !important;
+    line-height: .94 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #hero h1.hero-title span.active {
+    display: block !important;
+  }
+
+  #hero h1.hero-title em {
+    display: block !important;
   }
 
   #hero .hero-left {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
     min-height: 0 !important;
-    height: 100% !important;
+    height: auto !important;
     display: block !important;
   }
 
   #hero .hero-story {
-    height: 100% !important;
+    height: auto !important;
     max-height: none !important;
-    overflow-y: auto !important;
+    overflow: visible !important;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     border-left: 0 !important;
-    padding: 12px 14px !important;
-    text-align: justify !important;
+    padding: 0 !important;
+    background: transparent !important;
+    text-align: left !important;
   }
 
   #hero .hero-story p {
-    margin: 0 0 9px !important;
-    font-size: 15px !important;
-    line-height: 1.45 !important;
+    margin: 0 0 8px !important;
+    font-size: 14.5px !important;
+    line-height: 1.36 !important;
   }
 
   #hero .hero-venn {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    display: flex !important;
+    align-self: center !important;
+    justify-self: center !important;
+    gap: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  #hero .hero-venn svg {
+    width: min(58vw, 220px) !important;
+    height: auto !important;
+    max-height: 36svh !important;
+  }
+
+  #hero .venn-caption {
     display: none !important;
   }
 
   #hero .hero-credo {
+    grid-column: 1 / -1 !important;
+    grid-row: 3 !important;
     width: 100% !important;
     margin: 0 !important;
-    padding: 8px 0 0 !important;
-    font-size: 15px !important;
-    line-height: 1.25 !important;
+    padding: 7px 0 0 !important;
+    border-top: 1px solid rgba(200,168,75,.28) !important;
+    font-size: 14.5px !important;
+    line-height: 1.3 !important;
     white-space: normal !important;
     text-align: center !important;
+    color: var(--accent) !important;
+    opacity: 1 !important;
+  }
+
+  #hero .hero-story .hero-mobile-extra {
+    display: none !important;
+  }
+
+  #hero .hero-story.mobile-expanded .hero-mobile-extra {
+    display: block !important;
+  }
+
+  #hero .hero-read-more {
+    display: inline !important;
+    margin: 0 0 8px !important;
   }
 
   #about.about-landing {
