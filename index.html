@@ -1762,13 +1762,17 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 </div>
 </details>
 </div>
-<div class="usen-about-cta">
-<h3><span class="active" data-lang="uk">Чому вам варто стати пайовиком прямо зараз?</span><span data-lang="ru">Почему вам стоит стать пайщиком прямо сейчас?</span><span data-lang="en">Why should you become a member right now?</span><span data-lang="es">¿Por qué deberías convertirte en socio ahora?</span></h3>
-<div class="usen-about-cta-text">
+<details class="usen-question-item usen-question-gold usen-about-cta">
+<summary>
+<span class="usen-question-dot"></span>
+<span class="usen-question-title"><span class="active" data-lang="uk">Чому вам варто стати пайовиком прямо зараз?</span><span data-lang="ru">Почему вам стоит стать пайщиком прямо сейчас?</span><span data-lang="en">Why should you become a member right now?</span><span data-lang="es">¿Por qué deberías convertirte en socio ahora?</span></span>
+<span class="usen-answer-hint"><span class="active" data-lang="uk">Відповідь</span><span data-lang="ru">Ответ</span><span data-lang="en">Answer</span><span data-lang="es">Respuesta</span></span>
+</summary>
+<div class="usen-answer usen-about-cta-text">
 <p><span class="active" data-lang="uk">Pandora — це не секта і не лотерея. Це інженерна збірка наявних інструментів кооперації, де технології (ШІ, розподілені системи, блокчейн-рішення) прибирають бюрократію, залишаючи тільки суть: люди об’єднуються, щоб жити краще, довше і спокійніше.</span><span data-lang="ru">Pandora — это не секта и не лотерея. Это инженерная сборка существующих инструментов кооперации, где технологии (ИИ, распределенные системы, блокчейн решения) убирают бюрократию, оставляя только суть: люди объединяются, чтобы жить лучше, дольше и спокойнее.</span><span data-lang="en">Pandora is not a sect and not a lottery. It is an engineering assembly of existing cooperation tools, where technologies (AI, distributed systems, blockchain solutions) remove bureaucracy and leave the essence: people unite to live better, longer, and more calmly.</span><span data-lang="es">Pandora no es una secta ni una lotería. Es un ensamblaje de ingeniería de herramientas cooperativas existentes, donde las tecnologías (IA, sistemas distribuidos, soluciones blockchain) eliminan burocracia y dejan lo esencial: las personas se unen para vivir mejor, más tiempo y con más tranquilidad.</span></p>
 <p><span class="active" data-lang="uk">Тут ваш внесок — це інвестиція у вашу особисту безпеку, у зрозуміле майбутнє ваших дітей і в середовище, де бути «чесним і корисним» — найкоротший шлях до успіху.</span><span data-lang="ru">Здесь ваш вклад — это инвестиция в вашу личную безопасность, в понятное будущее ваших детей и в среду, где быть «честным и полезным» — самый короткий путь к успеху.</span><span data-lang="en">Here your contribution is an investment in your personal safety, in a clear future for your children, and in an environment where being “honest and useful” is the shortest path to success.</span><span data-lang="es">Aquí tu aporte es una inversión en tu seguridad personal, en un futuro claro para tus hijos y en un entorno donde ser “honesto y útil” es el camino más corto hacia el éxito.</span></p>
 </div>
-</div></div>
+</details></div>
 </div>
 </div>
 </div>
@@ -2081,8 +2085,6 @@ function openAuthModal(mode, event) {
   document.getElementById('authRegisterCaptchaStep')?.classList.remove('open');
   setAuthStatus('login', '');
   setAuthStatus('register', '');
-  const activeInput = (isRegister ? register : login).querySelector('input');
-  setTimeout(() => activeInput?.focus(), 40);
   if (history.replaceState) history.replaceState(null, '', isRegister ? '#register' : '#login');
 }
 
@@ -3630,6 +3632,7 @@ Changes:
   .usen-question-red .usen-question-dot { background: var(--red) !important; }
   .usen-question-green .usen-question-dot { background: var(--green) !important; }
   .usen-question-blue .usen-question-dot { background: var(--blue) !important; }
+  .usen-question-gold .usen-question-dot { background: var(--accent) !important; }
 
   .usen-question-title {
     color: rgba(245,242,237,0.9) !important;
@@ -4328,6 +4331,11 @@ Changes:
     line-height: 1.42 !important;
   }
 
+  #about .principles,
+  #about .about-role-list {
+    display: none !important;
+  }
+
   .about-project-landing {
     display: block !important;
     min-height: var(--mobile-section-h) !important;
@@ -4669,12 +4677,11 @@ Changes:
   .about-project-landing .apl-arrow {
     position: absolute !important;
     top: 4px !important;
-    min-width: 66px !important;
-    min-height: 28px !important;
-    padding: 5px 8px !important;
-    clip-path: none !important;
+    min-width: 42px !important;
+    min-height: 86px !important;
+    padding: 10px !important;
     transform: none !important;
-    box-shadow: none !important;
+    box-shadow: 0 14px 34px rgba(200,168,75,0.16) !important;
   }
 
   .about-project-landing .apl-arrow:hover:not(:disabled) {
@@ -4683,21 +4690,23 @@ Changes:
 
   .about-project-landing .apl-arrow-left {
     left: 0 !important;
-    padding-left: 8px !important;
+    clip-path: polygon(18% 0,100% 0,100% 100%,18% 100%,0 50%) !important;
+    padding-left: 16px !important;
   }
 
   .about-project-landing .apl-arrow-right {
     right: 0 !important;
-    padding-right: 8px !important;
+    clip-path: polygon(0 0,82% 0,100% 50%,82% 100%,0 100%) !important;
+    padding-right: 16px !important;
   }
 
   .about-project-landing .apl-arrow-label {
-    writing-mode: horizontal-tb !important;
+    writing-mode: vertical-rl !important;
     text-orientation: mixed !important;
-    transform: none !important;
+    transform: rotate(180deg) !important;
     font-size: 10px !important;
-    letter-spacing: 0.11em !important;
-    line-height: 1 !important;
+    letter-spacing: 0.14em !important;
+    line-height: 1.1 !important;
   }
 
   .apl-panel-center .usen-about-intro-compact {
@@ -4783,12 +4792,12 @@ Changes:
 
   .usen-about-cta {
     margin-top: 8px !important;
+    text-align: left !important;
   }
 
-  .usen-about-cta h3 {
-    font-size: clamp(22px, 6.6vw, 30px) !important;
-    line-height: 1.05 !important;
-    margin-bottom: 6px !important;
+  .usen-about-cta[open] {
+    position: relative !important;
+    z-index: 6 !important;
   }
 
   .usen-about-cta-text p {
@@ -4872,6 +4881,25 @@ Changes:
   #signal .signal-status,
   #signal .signal-lead-bottom {
     display: none !important;
+  }
+
+  .apl-panel-center .usen-about-copy {
+    position: relative !important;
+  }
+
+  .apl-panel-center .usen-about-cta[open] .usen-about-cta-text {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: calc(100% + 6px) !important;
+    z-index: 8 !important;
+    max-height: 43svh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 14px 16px !important;
+    border: 1px solid rgba(200,168,75,0.32) !important;
+    background: rgba(13,13,13,0.96) !important;
+    box-shadow: 0 -18px 38px rgba(0,0,0,0.42) !important;
   }
 
   #contact.contact-landing {

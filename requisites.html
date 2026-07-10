@@ -49,6 +49,18 @@ html{height:100%;background:var(--bg);scroll-behavior:smooth}body{height:100vh;o
 @media(max-width:980px){html,body{overflow:hidden!important}.site-header{height:86px;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand actions" "links links";align-items:center;padding:8px 16px 5px;row-gap:3px}.site-brand{grid-area:brand;min-width:0;gap:12px}.site-brand strong{font-size:16px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.site-mark{width:32px;height:32px}.site-mark span{width:21px;height:21px}.site-nav{grid-area:links;display:flex;justify-content:space-between;gap:6px;width:100%;padding-top:5px;border-top:1px solid rgba(255,255,255,.06);overflow-x:auto;scrollbar-width:none;font-size:13px;line-height:1;letter-spacing:.13em}.site-nav::-webkit-scrollbar{display:none}.site-actions{grid-area:actions;justify-self:end;gap:8px}.site-icon-link,.site-lang,.site-user-btn{width:31px;height:31px}.site-main{top:86px;bottom:74px;padding:24px 0 32px}.site-main>*{width:min(1100px,calc(100% - 36px))}.site-main h1{font-size:clamp(32px,10vw,44px);overflow-wrap:anywhere}.site-footer{height:74px;padding:14px 20px 18px}.site-footer-inner{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:center;gap:10px 14px}.site-footer-left{display:contents}.site-footer-left>span:first-child{grid-column:1;grid-row:1}.site-footer-left a{white-space:nowrap}.site-footer-dot{margin:0;opacity:.25}.site-footer-left .site-footer-dot{display:inline}.site-footer-right{grid-column:2;grid-row:1;justify-self:end}.site-footer-left a,.site-footer-left .site-footer-dot{grid-row:2}.site-footer-left a:nth-of-type(1){grid-column:1}.site-footer-socials{gap:12px}.site-footer-lang span:not(.active){display:none}}
 
 </style>
+<style id="site-footer-mobile-lock">
+@media(max-width:980px){
+  .site-footer{height:74px!important;padding:14px 20px 18px!important}
+  .site-footer-inner{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;grid-template-rows:auto auto!important;align-items:center!important;gap:10px 14px!important;width:100%!important}
+  .site-footer-left{display:contents!important}
+  .site-footer-copy{grid-column:1!important;grid-row:1!important;white-space:nowrap!important}
+  .site-footer-links{grid-column:1/-1!important;grid-row:2!important;display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:0 6px!important;min-width:0!important}
+  .site-footer-links .site-footer-dot{margin:0!important;opacity:.25!important}
+  .site-footer-links a{white-space:nowrap!important;color:rgba(245,242,237,.62)!important}
+  .site-footer-right{grid-column:2!important;grid-row:1!important;justify-self:end!important;display:flex!important;align-items:center!important;gap:14px!important}
+}
+</style>
 </head>
 <body data-page="requisites">
 <header class="site-header">
@@ -140,7 +152,8 @@ html{height:100%;background:var(--bg);scroll-behavior:smooth}body{height:100vh;o
 <footer class="site-footer">
   <div class="site-footer-inner">
     <div class="site-footer-left">
-      <span>&copy; 2026 Pandora, coop.</span>
+      <span class="site-footer-copy">&copy; 2026 Pandora, coop.</span>
+      <span class="site-footer-links">
       <span class="site-footer-dot">&middot;</span>
       <a href="privacy.html"><span data-lang="uk" class="active">&#1050;&#1086;&#1085;&#1092;&#1110;&#1076;&#1077;&#1085;&#1094;&#1110;&#1081;&#1085;&#1110;&#1089;&#1090;&#1100;</span><span data-lang="ru">&#1050;&#1086;&#1085;&#1092;&#1080;&#1076;&#1077;&#1085;&#1094;&#1080;&#1072;&#1083;&#1100;&#1085;&#1086;&#1089;&#1090;&#1100;</span><span data-lang="en">Privacy</span><span data-lang="es">Privacidad</span></a>
       <span class="site-footer-dot">&middot;</span>
@@ -149,6 +162,7 @@ html{height:100%;background:var(--bg);scroll-behavior:smooth}body{height:100vh;o
       <a href="requisites.html"><span data-lang="uk" class="active">&#1056;&#1077;&#1082;&#1074;&#1110;&#1079;&#1080;&#1090;&#1080;</span><span data-lang="ru">&#1056;&#1077;&#1082;&#1074;&#1080;&#1079;&#1080;&#1090;&#1099;</span><span data-lang="en">Company details</span><span data-lang="es">Datos registrales</span></a>
       <span class="site-footer-dot">&middot;</span>
       <a href="faq.html"><span data-lang="uk" class="active">&#1055;&#1080;&#1090;&#1072;&#1085;&#1085;&#1103;</span><span data-lang="ru">&#1042;&#1086;&#1087;&#1088;&#1086;&#1089;&#1099;</span><span data-lang="en">FAQ</span><span data-lang="es">Preguntas</span></a>
+      </span>
     </div>
     <div class="site-footer-right">
       <div class="site-footer-socials">
