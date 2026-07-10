@@ -5119,9 +5119,9 @@ Changes:
   }
 
   #hero {
-    min-height: var(--mobile-section-h) !important;
-    height: var(--mobile-section-h) !important;
-    padding: 8px 18px 0 !important;
+    min-height: calc(var(--mobile-section-h) + 170px) !important;
+    height: calc(var(--mobile-section-h) + 170px) !important;
+    padding: 18px 18px 0 !important;
     overflow: hidden !important;
     margin-bottom: 0 !important;
     scroll-margin-top: var(--mobile-header-h) !important;
@@ -5132,9 +5132,10 @@ Changes:
     min-height: 0 !important;
     display: grid !important;
     grid-template-columns: 1fr !important;
-    grid-template-rows: minmax(156px, 30svh) auto minmax(0, 1fr) auto !important;
-    gap: 7px !important;
+    grid-template-rows: minmax(158px, 28svh) auto auto auto !important;
+    gap: 6px !important;
     align-items: start !important;
+    align-content: start !important;
   }
 
   #hero h1.hero-title {
@@ -5164,15 +5165,15 @@ Changes:
     grid-column: 1 / -1 !important;
     grid-row: 3 !important;
     min-height: 0 !important;
-    height: 100% !important;
+    height: auto !important;
     display: block !important;
-    overflow: hidden !important;
+    overflow: visible !important;
   }
 
   #hero .hero-story {
-    height: 100% !important;
+    height: auto !important;
     max-height: none !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     border-left: 0 !important;
@@ -5183,8 +5184,8 @@ Changes:
 
   #hero .hero-story p {
     margin: 0 0 7px !important;
-    font-size: 13.5px !important;
-    line-height: 1.32 !important;
+    font-size: 13.2px !important;
+    line-height: 1.3 !important;
   }
 
   #hero .hero-venn {
@@ -5200,12 +5201,13 @@ Changes:
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
+    padding-top: 8px !important;
   }
 
   #hero .hero-venn svg {
-    width: min(50vw, 190px) !important;
+    width: min(44vw, 170px) !important;
     height: auto !important;
-    max-height: 29svh !important;
+    max-height: 26svh !important;
     flex: 0 0 auto !important;
   }
 
