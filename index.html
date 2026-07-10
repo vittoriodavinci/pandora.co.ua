@@ -1518,10 +1518,10 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <div class="hero-bg"></div>
 <div class="hero-inner">
 <h1 class="hero-title">
-<span class="active" data-lang="uk">Економіка для <em>людей</em></span>
-<span data-lang="ru">Экономика для <em>людей</em></span>
-<span data-lang="en">Economy for <em>people</em></span>
-<span data-lang="es">Economía para <em>personas</em></span>
+<span class="active" data-lang="uk">Економіка для <em>людей!</em></span>
+<span data-lang="ru">Экономика для <em>людей!</em></span>
+<span data-lang="en">Economy for <em>people!</em></span>
+<span data-lang="es">Economía para <em>personas!</em></span>
 </h1>
 <div class="hero-left">
 <div class="hero-story">
@@ -1570,7 +1570,7 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
         <text id="venn-label-bottom" x="200" y="310" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="9.8" fill="#74adff" font-weight="600" letter-spacing="0.08" opacity="0.92" stroke="#07090d" stroke-width="0.28" paint-order="stroke">СПОЖИВАЧ</text>
         <text id="venn-label-center" x="200" y="178" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="31" fill="#f0cf78" font-weight="600" letter-spacing="0" opacity="0.98" stroke="#171007" stroke-width="0.35" paint-order="stroke" filter="url(#vennGoldGlow)">Пандора</text>
       </svg>
-<div class="venn-caption"><span class="active" data-lang="uk">Три ролі · Один пайщик</span><span data-lang="ru">Три роли · Один пайщик</span><span data-lang="en">Three roles · One member</span><span data-lang="es">Tres roles · Un socio</span></div>
+<div class="venn-caption"><span class="active" data-lang="uk">Три ролі — один пайщик</span><span data-lang="ru">Три роли — один пайщик</span><span data-lang="en">Three roles — one member</span><span data-lang="es">Tres roles — un socio</span></div>
 </div>
 <div class="hero-credo"><span class="active" data-lang="uk">«Не інвестуй час і гроші в систему, яку не контролюєш» — кредо засновника</span><span data-lang="ru">«Не инвестируй время и деньги в систему, которую не контролируешь» — кредо основателя</span><span data-lang="en">“Don’t invest time and money in a system you don’t control” — founder’s credo</span><span data-lang="es">“No inviertas tiempo ni dinero en un sistema que no controlas” — credo del fundador</span></div>
 </div>
@@ -5119,8 +5119,8 @@ Changes:
   }
 
   #hero {
-    min-height: calc(100svh - var(--mobile-header-h) + 170px) !important;
-    height: calc(100svh - var(--mobile-header-h) + 170px) !important;
+    min-height: var(--mobile-section-h) !important;
+    height: var(--mobile-section-h) !important;
     padding: 8px 18px 0 !important;
     overflow: hidden !important;
     margin-bottom: 0 !important;
@@ -5131,47 +5131,48 @@ Changes:
     height: 100% !important;
     min-height: 0 !important;
     display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(88px, 0.42fr) !important;
-    grid-template-rows: minmax(174px, 38svh) auto auto !important;
-    gap: 8px 14px !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: minmax(156px, 30svh) auto minmax(0, 1fr) auto !important;
+    gap: 7px !important;
     align-items: start !important;
   }
 
   #hero h1.hero-title {
-    grid-column: 2 !important;
-    grid-row: 1 !important;
-    align-self: center !important;
-    justify-self: center !important;
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    align-self: start !important;
+    justify-self: stretch !important;
     margin: 0 !important;
-    width: min-content !important;
+    width: 100% !important;
     max-width: 100% !important;
-    text-align: left !important;
+    text-align: center !important;
     white-space: normal !important;
-    font-size: clamp(28px, 8.3vw, 38px) !important;
-    line-height: .94 !important;
+    font-size: clamp(27px, 7.4vw, 34px) !important;
+    line-height: 1 !important;
     letter-spacing: 0 !important;
   }
 
   #hero h1.hero-title span.active {
-    display: block !important;
+    display: inline !important;
   }
 
   #hero h1.hero-title em {
-    display: block !important;
+    display: inline !important;
   }
 
   #hero .hero-left {
     grid-column: 1 / -1 !important;
-    grid-row: 2 !important;
+    grid-row: 3 !important;
     min-height: 0 !important;
-    height: auto !important;
+    height: 100% !important;
     display: block !important;
+    overflow: hidden !important;
   }
 
   #hero .hero-story {
-    height: auto !important;
+    height: 100% !important;
     max-height: none !important;
-    overflow: visible !important;
+    overflow: hidden !important;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     border-left: 0 !important;
@@ -5181,9 +5182,9 @@ Changes:
   }
 
   #hero .hero-story p {
-    margin: 0 0 8px !important;
-    font-size: 14.5px !important;
-    line-height: 1.36 !important;
+    margin: 0 0 7px !important;
+    font-size: 13.5px !important;
+    line-height: 1.32 !important;
   }
 
   #hero .hero-venn {
@@ -5191,31 +5192,44 @@ Changes:
     grid-row: 1 !important;
     display: flex !important;
     align-self: center !important;
-    justify-self: center !important;
-    gap: 0 !important;
+    justify-self: stretch !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
     width: 100% !important;
     max-width: 100% !important;
+    min-width: 0 !important;
   }
 
   #hero .hero-venn svg {
-    width: min(58vw, 220px) !important;
+    width: min(50vw, 190px) !important;
     height: auto !important;
-    max-height: 36svh !important;
+    max-height: 29svh !important;
+    flex: 0 0 auto !important;
   }
 
   #hero .venn-caption {
-    display: none !important;
+    display: block !important;
+    flex: 0 1 118px !important;
+    color: var(--accent) !important;
+    font-family: "Barlow Condensed", sans-serif !important;
+    font-size: 15px !important;
+    line-height: 1.12 !important;
+    letter-spacing: .13em !important;
+    text-transform: uppercase !important;
+    text-align: right !important;
   }
 
   #hero .hero-credo {
     grid-column: 1 / -1 !important;
-    grid-row: 3 !important;
+    grid-row: 4 !important;
     width: 100% !important;
     margin: 0 !important;
-    padding: 7px 0 0 !important;
+    padding: 6px 0 7px !important;
     border-top: 1px solid rgba(200,168,75,.28) !important;
-    font-size: 14.5px !important;
-    line-height: 1.3 !important;
+    font-size: 13.5px !important;
+    line-height: 1.26 !important;
     white-space: normal !important;
     text-align: center !important;
     color: var(--accent) !important;
@@ -5314,13 +5328,13 @@ Changes:
   }
 
   .apl-panel-center .usen-title-word {
-    font-size: clamp(62px, 18vw, 77px) !important;
+    font-size: clamp(56px, 16.2vw, 69px) !important;
     line-height: 1 !important;
   }
 
   .apl-panel-center .usen-title-lockup .usen-square-mark {
-    width: 77px !important;
-    font-size: 12px !important;
+    width: 69px !important;
+    font-size: 10.8px !important;
     line-height: .88 !important;
     transform: none !important;
   }
@@ -5357,7 +5371,7 @@ Changes:
   }
 
   #aplPanelLeft .pandora-room-title {
-    font-size: clamp(62px, 18vw, 77px) !important;
+    font-size: clamp(56px, 16.2vw, 69px) !important;
     line-height: 1 !important;
   }
 
