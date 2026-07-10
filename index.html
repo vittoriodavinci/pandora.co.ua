@@ -1579,7 +1579,7 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <div class="about-grid about-reframe-grid">
 <div class="about-reframe-copy">
 <div class="section-label"><span class="active" data-lang="uk">Про кооператив</span><span data-lang="ru">О кооперативе</span><span data-lang="en">About</span><span data-lang="es">Nosotros</span></div>
-<h2 class="section-title about-reframe-title"><span class="active" data-lang="uk">Пандора — кооператив нового покоління<br/>із застосуванням сучасних цифрових технологій.</span><span data-lang="ru">Пандора — кооператив нового поколения<br/>с применением современных цифровых технологий.</span><span data-lang="en">Pandora is a next-generation cooperative<br/>using modern digital technologies.</span><span data-lang="es">Pandora es una cooperativa de nueva generación<br/>con tecnologías digitales modernas.</span></h2>
+<h2 class="section-title about-reframe-title"><span class="active" data-lang="uk">Пандора — кооператив нового покоління<br/> із застосуванням сучасних цифрових технологій.</span><span data-lang="ru">Пандора — кооператив нового поколения<br/> с применением современных цифровых технологий.</span><span data-lang="en">Pandora is a next-generation cooperative<br/> using modern digital technologies.</span><span data-lang="es">Pandora es una cooperativa de nueva generación<br/> con tecnologías digitales modernas.</span></h2>
 <div class="accent-copy-block">
 <h3><span class="active" data-lang="uk">Чому саме кооператив?</span><span data-lang="ru">Почему именно кооператив?</span><span data-lang="en">Why a cooperative?</span><span data-lang="es">¿Por qué una cooperativa?</span></h3>
 <p><span class="active" data-lang="uk">Тому що кооператив — одна з небагатьох законних форм, де головною метою є не прибуток, а задоволення потреб учасників і підвищення якості їхнього життя.</span><span data-lang="ru">Потому что кооператив — одна из немногих законных форм, где главной целью является не прибыль, а удовлетворение потребностей участников и повышение качества их жизни.</span><span data-lang="en">Because a cooperative is one of the few lawful forms where the main goal is not profit, but meeting participants’ needs and improving their quality of life.</span><span data-lang="es">Porque una cooperativa es una de las pocas formas legales donde el objetivo principal no es el beneficio, sino satisfacer las necesidades de los participantes y mejorar su calidad de vida.</span></p>
@@ -1762,7 +1762,14 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 </div>
 </details>
 </div>
-<details class="usen-question-item usen-question-gold usen-about-cta">
+<div class="usen-about-cta usen-about-cta-desktop">
+<h3><span class="active" data-lang="uk">Чому вам варто стати пайовиком прямо зараз?</span><span data-lang="ru">Почему вам стоит стать пайщиком прямо сейчас?</span><span data-lang="en">Why should you become a member right now?</span><span data-lang="es">¿Por qué deberías convertirte en socio ahora?</span></h3>
+<div class="usen-about-cta-text">
+<p><span class="active" data-lang="uk">Pandora — це не секта і не лотерея. Це інженерна збірка наявних інструментів кооперації, де технології (ШІ, розподілені системи, блокчейн-рішення) прибирають бюрократію, залишаючи тільки суть: люди об’єднуються, щоб жити краще, довше і спокійніше.</span><span data-lang="ru">Pandora — это не секта и не лотерея. Это инженерная сборка существующих инструментов кооперации, где технологии (ИИ, распределенные системы, блокчейн решения) убирают бюрократию, оставляя только суть: люди объединяются, чтобы жить лучше, дольше и спокойнее.</span><span data-lang="en">Pandora is not a sect and not a lottery. It is an engineering assembly of existing cooperation tools, where technologies (AI, distributed systems, blockchain solutions) remove bureaucracy and leave the essence: people unite to live better, longer, and more calmly.</span><span data-lang="es">Pandora no es una secta ni una lotería. Es un ensamblaje de ingeniería de herramientas cooperativas existentes, donde las tecnologías (IA, sistemas distribuidos, soluciones blockchain) eliminan burocracia y dejan lo esencial: las personas se unen para vivir mejor, más tiempo y con más tranquilidad.</span></p>
+<p><span class="active" data-lang="uk">Тут ваш внесок — це інвестиція у вашу особисту безпеку, у зрозуміле майбутнє ваших дітей і в середовище, де бути «чесним і корисним» — найкоротший шлях до успіху.</span><span data-lang="ru">Здесь ваш вклад — это инвестиция в вашу личную безопасность, в понятное будущее ваших детей и в среду, где быть «честным и полезным» — самый короткий путь к успеху.</span><span data-lang="en">Here your contribution is an investment in your personal safety, in a clear future for your children, and in an environment where being “honest and useful” is the shortest path to success.</span><span data-lang="es">Aquí tu aporte es una inversión en tu seguridad personal, en un futuro claro para tus hijos y en un entorno donde ser “honesto y útil” es el camino más corto hacia el éxito.</span></p>
+</div>
+</div>
+<details class="usen-question-item usen-question-gold usen-about-cta usen-about-cta-mobile">
 <summary>
 <span class="usen-question-dot"></span>
 <span class="usen-question-title"><span class="active" data-lang="uk">Чому вам варто стати пайовиком прямо зараз?</span><span data-lang="ru">Почему вам стоит стать пайщиком прямо сейчас?</span><span data-lang="en">Why should you become a member right now?</span><span data-lang="es">¿Por qué deberías convertirte en socio ahora?</span></span>
@@ -2028,6 +2035,7 @@ function setLang(lang) {
   updateVenn(lang);
   updateLangBtn(lang);
   updateFooterLang(lang);
+  if (typeof initMobileReadMore === 'function') initMobileReadMore();
   localStorage.setItem('pandora_lang', lang);
   localStorage.setItem('pandora-lang', lang);
   // Update chat UI if available
@@ -2160,6 +2168,51 @@ function showAuthProviderPending(provider) {
   setAuthStatus(mode, getAuthStatusMessage('provider').replace('{provider}', provider));
 }
 
+function getMobileReadMoreLabels() {
+  const lang = document.documentElement.lang || 'uk';
+  const labels = {
+    uk: ['Читати далі', 'Згорнути'],
+    ru: ['Читать далее', 'Свернуть'],
+    en: ['Read more', 'Collapse'],
+    es: ['Leer más', 'Contraer']
+  };
+  return labels[lang] || labels.uk;
+}
+
+function initMobileReadMore() {
+  const isMobile = window.matchMedia('(max-width: 900px)').matches;
+  const targets = document.querySelectorAll(
+    '#aplPanelLeft .pandora-name-copy p,' +
+    '#aplPanelRight .rgb-logo-doc p:not(.rgb-lead),' +
+    '#aplPanelRight .rgb-narrative-principle p'
+  );
+  const labels = getMobileReadMoreLabels();
+  targets.forEach(p => {
+    const next = p.nextElementSibling;
+    if (!isMobile) {
+      p.classList.remove('mobile-collapsible', 'mobile-expanded');
+      if (next && next.classList.contains('mobile-read-more')) next.remove();
+      return;
+    }
+    p.classList.add('mobile-collapsible');
+    if (!next || !next.classList.contains('mobile-read-more')) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'mobile-read-more';
+      btn.addEventListener('click', () => {
+        p.classList.toggle('mobile-expanded');
+        const expanded = p.classList.contains('mobile-expanded');
+        btn.textContent = expanded ? labels[1] : labels[0];
+      });
+      p.insertAdjacentElement('afterend', btn);
+    }
+    const button = p.nextElementSibling;
+    if (button && button.classList.contains('mobile-read-more')) {
+      button.textContent = p.classList.contains('mobile-expanded') ? labels[1] : labels[0];
+    }
+  });
+}
+
 // Close dropdowns on outside click
 document.addEventListener('click', e => {
   const sw = document.getElementById('langSwitcher');
@@ -2193,6 +2246,7 @@ function updatePandoraNavActive() {
 window.addEventListener('scroll', updatePandoraNavActive);
 window.addEventListener('hashchange', updatePandoraNavActive);
 window.addEventListener('load', () => setTimeout(updatePandoraNavActive, 80));
+window.addEventListener('resize', initMobileReadMore);
 document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => {
     document.querySelectorAll('.nav-links a').forEach(link => {
@@ -2204,6 +2258,7 @@ document.querySelectorAll('.nav-links a').forEach(a => {
   });
 });
 updatePandoraNavActive();
+initMobileReadMore();
 </script>
 <!-- Pandora clean visual layer -->
 <style id="pandora-clean-visual-layer-v0-5">
@@ -3651,7 +3706,7 @@ Changes:
     text-transform: uppercase !important;
   }
 
-  .usen-question-item[open] .usen-answer-hint::after {
+.usen-question-item[open] .usen-answer-hint::after {
     content: " открыт";
     letter-spacing: 0.04em;
     text-transform: none;
@@ -3671,6 +3726,10 @@ Changes:
   }
 
   .usen-answer p:last-child { margin-bottom: 0 !important; }
+
+  .usen-about-cta-mobile {
+    display: none !important;
+  }
 
   .usen-about-cta {
     width: min(820px, 100%) !important;
@@ -4795,6 +4854,14 @@ Changes:
     text-align: left !important;
   }
 
+  .usen-about-cta-desktop {
+    display: none !important;
+  }
+
+  .usen-about-cta-mobile {
+    display: block !important;
+  }
+
   .usen-about-cta[open] {
     position: relative !important;
     z-index: 6 !important;
@@ -4968,6 +5035,215 @@ Changes:
     border: 0 !important;
     outline: 0 !important;
     box-shadow: none !important;
+  }
+
+  #hero {
+    min-height: var(--mobile-section-h) !important;
+    height: var(--mobile-section-h) !important;
+    padding: 8px 18px 12px !important;
+    overflow: hidden !important;
+  }
+
+  #hero .hero-inner {
+    height: 100% !important;
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) auto !important;
+    gap: 8px !important;
+    align-items: start !important;
+  }
+
+  #hero h1.hero-title {
+    margin: 0 !important;
+    text-align: center !important;
+    font-size: clamp(28px, 8vw, 36px) !important;
+    line-height: 1.02 !important;
+  }
+
+  #hero .hero-left {
+    min-height: 0 !important;
+    height: 100% !important;
+    display: block !important;
+  }
+
+  #hero .hero-story {
+    height: 100% !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    border-left: 0 !important;
+    padding: 12px 14px !important;
+    text-align: justify !important;
+  }
+
+  #hero .hero-story p {
+    margin: 0 0 9px !important;
+    font-size: 15px !important;
+    line-height: 1.45 !important;
+  }
+
+  #hero .hero-venn {
+    display: none !important;
+  }
+
+  #hero .hero-credo {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 8px 0 0 !important;
+    font-size: 15px !important;
+    line-height: 1.25 !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  #about.about-landing {
+    display: block !important;
+    height: var(--mobile-section-h) !important;
+    min-height: var(--mobile-section-h) !important;
+    padding: 8px 18px 12px !important;
+    overflow: hidden !important;
+  }
+
+  #about .about-reframe-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    gap: 8px !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    align-content: start !important;
+  }
+
+  #about .about-reframe-copy {
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+
+  #about .about-reframe-title {
+    margin: 0 0 8px !important;
+    text-align: center !important;
+    font-size: clamp(25px, 7vw, 32px) !important;
+    line-height: 1.08 !important;
+  }
+
+  #about .accent-copy-block {
+    height: 100% !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    border-left: 0 !important;
+    padding: 12px 14px !important;
+    text-align: justify !important;
+  }
+
+  #about .accent-copy-block h3 {
+    margin: 0 0 8px !important;
+    text-align: left !important;
+  }
+
+  #about .accent-copy-block p {
+    margin: 0 0 10px !important;
+    font-size: 15px !important;
+    line-height: 1.48 !important;
+  }
+
+  .apl-panel-center .apl-center-inner {
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .apl-panel-center .apl-center-title {
+    height: 78px !important;
+    min-height: 78px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 54px !important;
+    overflow: visible !important;
+  }
+
+  .apl-panel-center .usen-title-lockup {
+    height: 78px !important;
+    display: grid !important;
+    grid-template-columns: auto auto !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  .apl-panel-center .usen-title-word {
+    font-size: clamp(52px, 15vw, 64px) !important;
+    line-height: 1 !important;
+  }
+
+  .apl-panel-center .usen-title-lockup .usen-square-mark {
+    width: 64px !important;
+    font-size: 10px !important;
+    line-height: .88 !important;
+    transform: none !important;
+  }
+
+  .about-project-landing .apl-arrow {
+    top: 0 !important;
+    height: 78px !important;
+    min-height: 78px !important;
+    min-width: 38px !important;
+    padding: 8px !important;
+  }
+
+  .about-project-landing .apl-arrow-left {
+    padding-left: 13px !important;
+  }
+
+  .about-project-landing .apl-arrow-right {
+    padding-right: 13px !important;
+  }
+
+  .about-project-landing .apl-arrow-label {
+    font-size: 9px !important;
+    letter-spacing: .12em !important;
+  }
+
+  .apl-panel-center .usen-about-copy {
+    margin-top: 4px !important;
+  }
+
+  #aplPanelRight .project-logo-visual.rgb-logo-hero img {
+    width: min(27vw, 110px) !important;
+    max-width: 110px !important;
+  }
+
+  #aplPanelLeft .pandora-name-copy p.mobile-collapsible,
+  #aplPanelRight .rgb-logo-doc p.mobile-collapsible {
+    max-height: 3.25em;
+    overflow: hidden;
+  }
+
+  #aplPanelRight .rgb-narrative-principle p.mobile-collapsible {
+    max-height: 2.65em;
+  }
+
+  #aplPanelLeft .pandora-name-copy p.mobile-expanded,
+  #aplPanelRight .rgb-logo-doc p.mobile-expanded {
+    max-height: none !important;
+  }
+
+  .mobile-read-more {
+    display: inline-flex;
+    margin: -3px 0 10px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--accent);
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    cursor: pointer;
   }
 }
 </style>
