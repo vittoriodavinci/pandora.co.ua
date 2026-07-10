@@ -2181,21 +2181,57 @@ function getMobileReadMoreLabels() {
 
 function initMobileReadMore() {
   const isMobile = window.matchMedia('(max-width: 900px)').matches;
-  const targets = document.querySelectorAll(
-    '#aplPanelLeft .pandora-name-copy p,' +
+  const labels = getMobileReadMoreLabels();
+  const restore = (p) => {
+    const button = p.querySelector(':scope > .mobile-read-more');
+    if (p.dataset.mobileReadOriginal) {
+      p.innerHTML = p.dataset.mobileReadOriginal;
+      delete p.dataset.mobileReadOriginal;
+    }
+    p.classList.remove('mobile-collapsible', 'mobile-expanded', 'mobile-read-bound');
+    if (button) button.remove();
+  };
+  const addButton = (p) => {
+    if (p.querySelector(':scope > .mobile-read-more')) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'mobile-read-more';
+    btn.addEventListener('click', () => {
+      p.classList.toggle('mobile-expanded');
+      btn.textContent = p.classList.contains('mobile-expanded') ? labels[1] : labels[0];
+    });
+    p.appendChild(document.createTextNode(' '));
+    p.appendChild(btn);
+  };
+
+  document.querySelectorAll('#aplPanelLeft .pandora-name-copy p').forEach((p, index) => {
+    if (!isMobile) {
+      restore(p);
+      return;
+    }
+    restore(p);
+    if (index === 0) return;
+    const activeSpan = p.querySelector('span[data-lang].active');
+    if (!activeSpan) return;
+    p.dataset.mobileReadOriginal = p.innerHTML;
+    const source = activeSpan.innerHTML.trim();
+    const cut = source.indexOf('</strong>');
+    if (cut >= 0) {
+      activeSpan.innerHTML = source.slice(0, cut + '</strong>'.length) + '<span class="mobile-read-extra">' + source.slice(cut + '</strong>'.length) + '</span>';
+    }
+    p.classList.add('mobile-collapsible', 'mobile-read-bound');
+    addButton(p);
+    const activeButton = p.querySelector(':scope > .mobile-read-more');
+    if (activeButton) activeButton.textContent = p.classList.contains('mobile-expanded') ? labels[1] : labels[0];
+  });
+
+  const logoTargets = document.querySelectorAll(
     '#aplPanelRight .rgb-logo-doc .rgb-lead,' +
     '#aplPanelRight .rgb-narrative-principle p'
   );
-  const labels = getMobileReadMoreLabels();
-  targets.forEach(p => {
-    const button = p.querySelector(':scope > .mobile-read-more');
+  logoTargets.forEach(p => {
     if (!isMobile) {
-      if (p.dataset.mobileReadOriginal) {
-        p.innerHTML = p.dataset.mobileReadOriginal;
-        delete p.dataset.mobileReadOriginal;
-      }
-      p.classList.remove('mobile-collapsible', 'mobile-expanded', 'mobile-read-bound');
-      if (button) button.remove();
+      restore(p);
       return;
     }
     if (!p.classList.contains('mobile-read-bound')) {
@@ -2218,18 +2254,7 @@ function initMobileReadMore() {
       p.classList.add('mobile-read-bound');
     }
     p.classList.add('mobile-collapsible');
-    if (!p.querySelector(':scope > .mobile-read-more')) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'mobile-read-more';
-      btn.addEventListener('click', () => {
-        p.classList.toggle('mobile-expanded');
-        const expanded = p.classList.contains('mobile-expanded');
-        btn.textContent = expanded ? labels[1] : labels[0];
-      });
-      p.appendChild(document.createTextNode(' '));
-      p.appendChild(btn);
-    }
+    addButton(p);
     const activeButton = p.querySelector(':scope > .mobile-read-more');
     if (activeButton) {
       activeButton.textContent = p.classList.contains('mobile-expanded') ? labels[1] : labels[0];
@@ -5068,11 +5093,12 @@ Changes:
   }
 
   #hero {
-    min-height: var(--mobile-section-h) !important;
-    height: var(--mobile-section-h) !important;
+    min-height: calc(var(--mobile-section-h) + 120px) !important;
+    height: calc(var(--mobile-section-h) + 120px) !important;
     padding: 8px 18px 12px !important;
     overflow: hidden !important;
     margin-bottom: 0 !important;
+    scroll-margin-top: var(--mobile-header-h) !important;
   }
 
   #hero .hero-inner {
@@ -5207,13 +5233,13 @@ Changes:
   }
 
   .apl-panel-center .usen-title-word {
-    font-size: clamp(52px, 15vw, 64px) !important;
+    font-size: clamp(62px, 18vw, 77px) !important;
     line-height: 1 !important;
   }
 
   .apl-panel-center .usen-title-lockup .usen-square-mark {
-    width: 64px !important;
-    font-size: 10px !important;
+    width: 77px !important;
+    font-size: 12px !important;
     line-height: .88 !important;
     transform: none !important;
   }
@@ -5247,6 +5273,11 @@ Changes:
   #aplPanelRight .project-logo-visual.rgb-logo-hero img {
     width: 86px !important;
     max-width: 86px !important;
+  }
+
+  #aplPanelLeft .pandora-room-title {
+    font-size: clamp(62px, 18vw, 77px) !important;
+    line-height: 1 !important;
   }
 
   #aplPanelLeft .pandora-name-copy p.mobile-collapsible,
@@ -5289,6 +5320,11 @@ Changes:
     letter-spacing: .14em;
     text-transform: uppercase;
     cursor: pointer;
+  }
+
+  #aplPanelLeft .mobile-read-more {
+    display: block;
+    margin: 4px 0 12px 32px;
   }
 }
 </style>
