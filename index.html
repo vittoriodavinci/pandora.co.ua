@@ -5562,5 +5562,55 @@ Changes:
 </script>
 <script src="https://js.hcaptcha.com/1/api.js?onload=pandoraHCaptchaReady&render=explicit&recaptchacompat=off" async defer></script>
 
+<style id="pandora-mobile-hero-final-fix-v1">
+/*
+  ROOT CAUSE FIX (mobile only, <=900px):
+  The mobile nav is `position:fixed` and overlays the top of the viewport,
+  but nothing after this point in the cascade was reserving that space in
+  the sections below it — several earlier patches ("pandora-venn-logo-*",
+  "pandora-index-mobile-hotfix-v0-1" repeated blocks) kept re-declaring
+  #hero with `padding-top` values far smaller than --mobile-header-h, and
+  the LAST one in source order always wins, so the nav ends up covering
+  the top of the hero logo. Those same blocks also forced a fixed pixel
+  `height` + `overflow:hidden` on every section, which silently clips any
+  content that doesn't fit that exact height (this is the text that
+  appeared to "fall out" at the bottom / bleed from the next section).
+  This block is intentionally the very last rule in the document so it
+  reliably wins the cascade without having to hunt down and edit every
+  older patch.
+*/
+@media (max-width: 900px) {
+  #hero,
+  #about.about-landing,
+  .about-project-landing,
+  .project-intro-landing,
+  .project-landing-section,
+  .examples-landing,
+  .signal-landing,
+  .final-call-landing,
+  #docs,
+  #join,
+  #contact.contact-landing {
+    padding-top: calc(var(--mobile-header-h, 92px) + 14px) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  #hero {
+    height: 100svh !important;
+    min-height: 100svh !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    padding-bottom: 18px !important;
+  }
+
+  #hero .hero-inner {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+}
+</style>
+
 </body>
 </html>
