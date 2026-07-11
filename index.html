@@ -5562,27 +5562,44 @@ Changes:
 </script>
 <script src="https://js.hcaptcha.com/1/api.js?onload=pandoraHCaptchaReady&render=explicit&recaptchacompat=off" async defer></script>
 
-<style id="pandora-mobile-hero-final-fix-v1">
+<style id="pandora-mobile-hero-final-fix-v2">
 /*
-  ROOT CAUSE FIX (mobile only, <=900px):
-  The mobile nav is `position:fixed` and overlays the top of the viewport,
-  but nothing after this point in the cascade was reserving that space in
-  the sections below it — several earlier patches ("pandora-venn-logo-*",
-  "pandora-index-mobile-hotfix-v0-1" repeated blocks) kept re-declaring
-  #hero with `padding-top` values far smaller than --mobile-header-h, and
-  the LAST one in source order always wins, so the nav ends up covering
-  the top of the hero logo. Those same blocks also forced a fixed pixel
-  `height` + `overflow:hidden` on every section, which silently clips any
-  content that doesn't fit that exact height (this is the text that
-  appeared to "fall out" at the bottom / bleed from the next section).
-  This block is intentionally the very last rule in the document so it
-  reliably wins the cascade without having to hunt down and edit every
-  older patch.
+  ROOT CAUSE FIX (mobile only, <=900px). v2 changelog vs v1:
+  - Removed `.about-project-landing` from the shared selector list below.
+    That carousel positions its "Название/Логотип" side-arrows with
+    `position:absolute` relative to its own box, and changing this
+    section's padding/overflow in v1 shifted that box and made the arrows
+    visibly jump. The carousel already had its own (separately messy, but
+    functional) mobile rules further up the file — we no longer touch it
+    here. Lesson: a shared "fix all sections the same way" rule is only
+    safe for genuinely uniform sections; anything with internal absolute
+    positioning needs its own dedicated rule instead.
+  - Added a fix for #about: the card "Почему именно кооператив?"
+    (.accent-copy-block) was previously forced to `height:100%` inside a
+    `minmax(0,1fr)` grid row, with its OWN `overflow-y:auto` nested inside
+    the section's `overflow-y:auto`. Two nested scrollboxes with no visual
+    scroll affordance is why the text looked "cut off" — it was
+    technically scrollable, just not obviously so. Fixed by letting the
+    card and its grid row size to their actual content (`height:auto`)
+    instead of being squeezed into a fraction of the viewport. The section
+    itself can still grow taller than one screen and the page scrolls
+    normally — no hidden nested scroll area.
+
+  Background on why this fix lives in one block at the very end of the
+  file: the mobile nav is `position:fixed` and overlays the top of the
+  viewport, but nothing reserved that space for the sections below it —
+  earlier patches kept re-declaring #hero/#about with `padding-top` values
+  far smaller than --mobile-header-h, and the LAST declaration in source
+  order always wins, so the nav ended up covering the top of the hero
+  logo. Those same patches also forced fixed pixel `height` +
+  `overflow:hidden` on sections, silently clipping content that didn't
+  fit. This block is intentionally the very last rule in the document so
+  it reliably wins the cascade without having to hunt down and edit every
+  older patch — see PANDORA_ADAPTIVE_GUIDE.md for the real long-term fix.
 */
 @media (max-width: 900px) {
   #hero,
   #about.about-landing,
-  .about-project-landing,
   .project-intro-landing,
   .project-landing-section,
   .examples-landing,
@@ -5608,6 +5625,31 @@ Changes:
   #hero .hero-inner {
     height: auto !important;
     min-height: 0 !important;
+  }
+
+  /* #about: stop forcing the card into a fixed fraction of the screen
+     with its own internal scrollbar. Let it size to its content; the
+     section (already overflow-y:auto + no forced height below) simply
+     grows and the page scrolls, like the rest of the site. */
+  #about.about-landing {
+    height: auto !important;
+    min-height: var(--mobile-section-h, 100svh) !important;
+  }
+
+  #about .about-reframe-grid,
+  #about .about-reframe-copy {
+    height: auto !important;
+    grid-template-rows: auto auto !important;
+  }
+
+  #about .accent-copy-block {
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+  }
+
+  #about .principles {
+    height: auto !important;
   }
 }
 </style>
