@@ -3277,6 +3277,7 @@ document.addEventListener('click', function(e) {
   }
 
   window.addEventListener('wheel', function (event) {
+    if (!event.target || !event.target.closest || !event.target.closest('.about-project-landing .apl-stage')) return;
     if (!shouldLockProjectSidePanel()) return;
     if (Math.abs(event.deltaY) < 6 || Math.abs(event.deltaY) < Math.abs(event.deltaX)) return;
     stopAndReturn(event);
@@ -3298,6 +3299,14 @@ document.addEventListener('click', function(e) {
   var touchStartY = null;
   window.addEventListener('touchstart', function (event) {
     if (!event.touches || !event.touches.length) return;
+    // Only arm the lock if the gesture actually starts on the project
+    // carousel itself — otherwise a swipe anywhere else on the page
+    // (header, other sections, FAQ cards, etc.) must never be touched.
+    if (!event.target.closest('.about-project-landing .apl-stage')) {
+      touchStartX = null;
+      touchStartY = null;
+      return;
+    }
     touchStartX = event.touches[0].clientX;
     touchStartY = event.touches[0].clientY;
   }, { passive: true, capture: true });
