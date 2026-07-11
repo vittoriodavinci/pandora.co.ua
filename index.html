@@ -5036,7 +5036,7 @@ Changes:
     position: relative !important;
   }
 
-  .apl-panel-center .usen-question-item[open] .usen-answer {
+  .apl-panel-center .usen-question-item[open]:not(.usen-question-red) .usen-answer {
     position: absolute !important;
     left: 0 !important;
     right: 0 !important;
@@ -5049,6 +5049,21 @@ Changes:
     border: 1px solid rgba(200,168,75,0.32) !important;
     background: rgba(13,13,13,0.96) !important;
     box-shadow: 0 -18px 38px rgba(0,0,0,0.42) !important;
+  }
+
+  /* Первый вопрос ("красный") — старое поведение: раскрывается вниз, в
+     обычном потоке страницы, без всплытия над кнопкой (чтобы не
+     обрезался хедером сверху). Визуально сохраняем ту же рамку с
+     жёлтой обводкой, что и у "плавающих" ответов. */
+  .apl-panel-center .usen-question-red[open] .usen-answer {
+    position: static !important;
+    max-height: none !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    margin-top: 10px !important;
+    border: 1px solid rgba(200,168,75,0.32) !important;
+    background: rgba(13,13,13,0.96) !important;
+    padding: 14px 16px !important;
   }
 
   #contact.contact-landing {
@@ -5843,6 +5858,35 @@ Changes:
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(init);
     }
+  }
+})();
+</script>
+
+<script>
+/*
+  Аккордеон для блока вопросов "О нас" (usen-question-item): при
+  открытии одного вопроса все остальные должны закрываться сами, чтобы
+  на странице не было открыто сразу несколько ответов одновременно
+  (особенно важно для "плавающих" карточек — иначе они накладываются
+  друг на друга).
+*/
+(function () {
+  function init() {
+    var items = document.querySelectorAll('#aplCenterCopy .usen-question-item');
+    items.forEach(function (item) {
+      item.addEventListener('toggle', function () {
+        if (!item.open) return;
+        items.forEach(function (other) {
+          if (other !== item && other.open) other.open = false;
+        });
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 })();
 </script>
