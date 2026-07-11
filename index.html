@@ -1852,7 +1852,7 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 </div>
 </section>
 <section class="signal-landing" id="signal">
-<h2 class="section-title"><span class="active" data-lang="uk">Будеш і далі фінансувати чужі системи<br/>чи побудуємо разом свою?</span><span data-lang="ru">Будешь и дальше финансировать чужие системы<br/>или построим вместе свою?</span><span data-lang="en">Will you keep funding systems you do not control<br/>or shall we build our own together?</span><span data-lang="es">¿Seguirás financiando sistemas ajenos<br/>o construiremos juntos el nuestro?</span></h2>
+<h2 class="section-title"><span class="active" data-lang="uk">Будеш і далі фінансувати чужі системи<br/> чи побудуємо разом свою?</span><span data-lang="ru">Будешь и дальше финансировать чужие системы<br/> или построим вместе свою?</span><span data-lang="en">Will you keep funding systems you do not control<br/> or shall we build our own together?</span><span data-lang="es">¿Seguirás financiando sistemas ajenos<br/> o construiremos juntos el nuestro?</span></h2>
 <div class="signal-body">
 <div class="accent-copy-block">
 <p><span class="active" data-lang="uk">Ми розробили просту й прозору систему рекомендацій і винагород — “Сигнал”.</span><span data-lang="ru">Мы разработали простую и прозрачную систему рекомендаций и вознаграждений — “Сигнал”.</span><span data-lang="en">We have created a simple and transparent recommendation and reward system: “Signal”.</span><span data-lang="es">Hemos creado un sistema simple y transparente de recomendaciones y recompensas: “Signal”.</span></p>
@@ -5742,6 +5742,23 @@ Changes:
   #contact .contact-form {
     height: auto !important;
     overflow: visible !important;
+  }
+
+  /* #signal: `#signal .signal-note { height:100% }` + `.signal-note ul
+     { flex:1; justify-content:space-between }` (both unscoped, always
+     active) exist to match the two-column desktop layout's height. On
+     mobile the columns stack into one, so that pairing stretched the
+     list and spread its 5 items apart with huge gaps — and pushed the
+     "Рассказать другу / Присоединиться" buttons (which come right after
+     this block in the DOM) far down the page, making them seem to have
+     disappeared. Neutralized for mobile only. */
+  #signal .signal-note {
+    height: auto !important;
+  }
+
+  #signal .signal-note ul {
+    flex: none !important;
+    justify-content: flex-start !important;
   }
 }
 </style>
