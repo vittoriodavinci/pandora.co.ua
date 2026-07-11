@@ -5638,10 +5638,29 @@ Changes:
   }
 
   /* Pin content to the top instead of vertically centering it, so short
-     or long content never creates dead space above/below the logo. */
-  #hero,
-  #contact.contact-landing {
+     or long content never creates dead space above/below the logo.
+     IMPORTANT: #hero is a ROW flex container (align-items controls its
+     vertical axis), but .project-intro-landing / .project-landing-section
+     / .examples-landing / .final-call-landing / #contact.contact-landing /
+     #join are all COLUMN flex containers with `justify-content:center`
+     set in their shared base rule (line ~418) - for a column flex,
+     justify-content is what controls the VERTICAL axis, not align-items.
+     An earlier version of this fix used align-items for #contact too,
+     which only affects horizontal centering and did nothing for the
+     actual vertical gap - that's why it looked "unfixed". Both axes are
+     covered correctly below now. */
+  #hero {
     align-items: flex-start !important;
+  }
+
+  .project-intro-landing,
+  .project-landing-section,
+  .examples-landing,
+  .final-call-landing,
+  #contact.contact-landing,
+  #join {
+    justify-content: flex-start !important;
+    align-items: stretch !important;
   }
 
   #hero {
@@ -5671,6 +5690,7 @@ Changes:
   #about.about-landing {
     height: auto !important;
     min-height: var(--mobile-section-h, 100svh) !important;
+    padding-bottom: 28px !important;
   }
 
   #about .about-reframe-grid,
