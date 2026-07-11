@@ -5562,9 +5562,63 @@ Changes:
 </script>
 <script src="https://js.hcaptcha.com/1/api.js?onload=pandoraHCaptchaReady&render=explicit&recaptchacompat=off" async defer></script>
 
-<style id="pandora-mobile-hero-final-fix-v3">
+<script>
 /*
-  ROOT CAUSE FIX (mobile only, <=900px). Consolidated v3.
+  Measures the ACTUAL rendered height of <nav> (instead of guessing a
+  fixed pixel number) and exposes it as --real-header-h on <html>. All
+  the mobile section padding-top rules below use this variable (falling
+  back to --mobile-header-h if JS hasn't run yet). This removes guessing
+  entirely: whatever the nav's true height is on the visitor's exact
+  phone/browser, the gap under it will always match exactly, no gap and
+  no overlap.
+*/
+(function () {
+  function syncHeaderHeight() {
+    var nav = document.querySelector('nav');
+    if (!nav) return;
+    var h = Math.ceil(nav.getBoundingClientRect().height);
+    if (h > 0) {
+      document.documentElement.style.setProperty('--real-header-h', h + 'px');
+    }
+  }
+  syncHeaderHeight();
+  window.addEventListener('resize', syncHeaderHeight);
+  window.addEventListener('orientationchange', syncHeaderHeight);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncHeaderHeight);
+  }
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(syncHeaderHeight);
+  }
+  setTimeout(syncHeaderHeight, 300);
+})();
+</script>
+
+<style id="pandora-mobile-hero-final-fix-v4">
+/*
+  ROOT CAUSE FIX (mobile only, <=900px). Consolidated v4.
+
+  v4 changelog — THE BIG ONE:
+  Every version up to v3 gave every section `overflow-y: auto` as a
+  "safety net" so overflowing content would scroll instead of being
+  silently clipped. That was the wrong mechanism: it turned EVERY
+  section (#hero, #about, .examples-landing, #contact, etc.) into its
+  own independent scrollable box nested inside the page. On mobile,
+  a touch-scroll gesture scrolls the nearest scrollable ancestor first —
+  so instead of one continuous page scroll moving smoothly from section
+  to section (as a landing page should), the user's scroll got "captured"
+  inside whichever section box they started touching, only reaching the
+  next section once that inner box hit its own scroll limit. That is
+  exactly the "экраны не скроллятся, скролл частичный" symptom: the site
+  stopped behaving like a single continuous landing page and started
+  behaving like a stack of separately-scrolling boxes.
+  Fix: sections no longer scroll internally. They use `min-height`
+  (never a hard `height`) so they simply grow to fit their content, and
+  the PAGE (html/body) provides the one and only scrollbar, like a
+  normal landing page. This is also why `#hero` previously had a hard
+  `height:100svh` — with content that can no longer be clipped/scrolled
+  away, a hard height would make the hero visually overlap the next
+  section instead of pushing it down, so it is now `min-height` only.
 
   Why this single block exists at the very end of the file: the mobile
   nav is `position:fixed` and overlays the top of the viewport, but
@@ -5572,53 +5626,26 @@ Changes:
   patches kept re-declaring #hero/#about/#contact with `padding-top`
   values far smaller than --mobile-header-h, and the LAST declaration in
   source order always wins, so the nav ended up covering the top of the
-  hero logo. Those same patches also forced fixed pixel `height` +
-  `overflow:hidden` on sections, silently clipping content that didn't
-  fit. This block reliably wins the cascade without having to hunt down
-  and edit every older patch. See PANDORA_ADAPTIVE_GUIDE.md for the real
-  long-term fix (consolidating/deleting the old patches instead).
+  hero logo. This block reliably wins the cascade without having to hunt
+  down and edit every older patch. See PANDORA_ADAPTIVE_GUIDE.md for the
+  real long-term fix (consolidating/deleting the old patches instead).
 
-  v3 changelog:
-  - `.about-project-landing` (the "О проекте" carousel) is intentionally
-    EXCLUDED from the shared list below. Its "Название/Логотип" side
-    arrows are `position:absolute` relative to that section's own box;
-    an earlier version of this fix touched its padding/overflow and made
-    the arrows visibly jump. It keeps its own separate (already working)
-    mobile rules further up the file.
-  - #about: the card "Почему именно кооператив?" (.accent-copy-block)
-    was forced to `height:100%` inside a `minmax(0,1fr)` grid row, with
-    its OWN `overflow-y:auto` nested inside the section's own
-    `overflow-y:auto`. Two nested scrollboxes with no visual scroll
-    affordance is why the text looked "cut off" — it was technically
-    scrollable, just not obviously so. Fixed by letting the card and its
-    grid row size to their actual content instead of being squeezed into
-    a fraction of the viewport.
-  - Hero text was still hidden behind "Читать далее" because that toggle
-    is driven by JS (`initMobileReadMore`), which wraps paragraphs 3+ in
-    `.hero-mobile-extra` and hides them via `display:none` unless
-    `.hero-story` has `.mobile-expanded`. Per explicit request, the text
-    must always be shown in full on mobile — forced `.hero-mobile-extra`
-    visible and hid the toggle button, without touching the JS itself
-    (lower risk: the JS keeps toggling classes harmlessly, CSS just
-    always shows the result).
-  - The reason the logo "dropped" and left empty space above/below when
-    the text was short (collapsed): `#hero` is `display:flex;
-    align-items:center` (set in the base, non-mobile rule, never
-    overridden for mobile) — so its content is vertically CENTERED
-    inside the fixed 100svh box. Any time content is shorter than the
-    box, everything floats toward the middle, creating equal gaps top
-    and bottom. Fixed by pinning `align-items:flex-start` on mobile, so
-    content always starts right after the nav-clearance padding,
-    regardless of its length.
-  - `#contact.contact-landing` was never actually fixed by earlier
-    versions: it kept its own separate pre-existing rule with
-    `height: calc(100svh - header - footer)` and `padding-top: 0`.
-    Adding nav-clearance padding on top of that fixed height (without
-    also freeing the height) just shrank the usable area further —
-    hence the empty gap at the top and the clipped hCaptcha/footer at
-    the bottom. It also had its own nested `overflow-y:auto` scrollbox
-    on `.contact-form` (same "invisible scroll trap" pattern as the
-    About card). Both corrected below.
+  Everything below this paragraph is carried over unchanged from v3:
+  - `.about-project-landing` (the "О проекте" carousel) stays EXCLUDED
+    from the shared list — its side arrows are `position:absolute`
+    relative to that section's own box and are sensitive to it.
+  - Hero text is always shown in full (no "Читать далее" toggle).
+  - `.project-intro-landing` / `.project-landing-section` /
+    `.examples-landing` / `.final-call-landing` / `#contact.contact-landing`
+    / `#join` are COLUMN flex containers whose base rule sets
+    `justify-content:center` — for a column flex that property (not
+    align-items) controls the vertical axis, which is why content in
+    those sections was vertically centered/floating instead of starting
+    under the nav.
+  - `.accent-copy-block`, `#about .principles`, and `.contact-form` each
+    had their own nested `overflow-y:auto` "scroll trap" (content
+    technically scrollable but with zero visual affordance, so it just
+    looked cut off). All three are now `overflow: visible`.
 */
 @media (max-width: 900px) {
   #hero,
@@ -5631,24 +5658,16 @@ Changes:
   #docs,
   #join,
   #contact.contact-landing {
-    padding-top: calc(var(--mobile-header-h, 92px) + 14px) !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch !important;
+    padding-top: calc(var(--real-header-h, var(--mobile-header-h, 92px)) + 6px) !important;
+    height: auto !important;
+    overflow: visible !important;
   }
 
   /* Pin content to the top instead of vertically centering it, so short
      or long content never creates dead space above/below the logo.
-     IMPORTANT: #hero is a ROW flex container (align-items controls its
-     vertical axis), but .project-intro-landing / .project-landing-section
-     / .examples-landing / .final-call-landing / #contact.contact-landing /
-     #join are all COLUMN flex containers with `justify-content:center`
-     set in their shared base rule (line ~418) - for a column flex,
-     justify-content is what controls the VERTICAL axis, not align-items.
-     An earlier version of this fix used align-items for #contact too,
-     which only affects horizontal centering and did nothing for the
-     actual vertical gap - that's why it looked "unfixed". Both axes are
-     covered correctly below now. */
+     #hero is a ROW flex container (align-items controls its vertical
+     axis); the rest are COLUMN flex containers (justify-content controls
+     their vertical axis) — see comment above. */
   #hero {
     align-items: flex-start !important;
   }
@@ -5664,7 +5683,6 @@ Changes:
   }
 
   #hero {
-    height: 100svh !important;
     min-height: 100svh !important;
     padding-left: 18px !important;
     padding-right: 18px !important;
@@ -5684,11 +5702,9 @@ Changes:
     display: none !important;
   }
 
-  /* #about: stop forcing the card into a fixed fraction of the screen
-     with its own internal scrollbar. Let it size to its content; the
-     section grows and the page scrolls, like the rest of the site. */
+  /* #about: let the card and grid size to their actual content instead
+     of being squeezed into a fixed fraction of the viewport. */
   #about.about-landing {
-    height: auto !important;
     min-height: var(--mobile-section-h, 100svh) !important;
     padding-bottom: 28px !important;
   }
@@ -5715,7 +5731,6 @@ Changes:
      assumed zero top padding; remove the nested scrollbox so the form
      and the hCaptcha widget are never clipped. */
   #contact.contact-landing {
-    height: auto !important;
     min-height: var(--mobile-section-h, 100svh) !important;
   }
 
