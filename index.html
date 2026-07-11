@@ -5562,40 +5562,63 @@ Changes:
 </script>
 <script src="https://js.hcaptcha.com/1/api.js?onload=pandoraHCaptchaReady&render=explicit&recaptchacompat=off" async defer></script>
 
-<style id="pandora-mobile-hero-final-fix-v2">
+<style id="pandora-mobile-hero-final-fix-v3">
 /*
-  ROOT CAUSE FIX (mobile only, <=900px). v2 changelog vs v1:
-  - Removed `.about-project-landing` from the shared selector list below.
-    That carousel positions its "Название/Логотип" side-arrows with
-    `position:absolute` relative to its own box, and changing this
-    section's padding/overflow in v1 shifted that box and made the arrows
-    visibly jump. The carousel already had its own (separately messy, but
-    functional) mobile rules further up the file — we no longer touch it
-    here. Lesson: a shared "fix all sections the same way" rule is only
-    safe for genuinely uniform sections; anything with internal absolute
-    positioning needs its own dedicated rule instead.
-  - Added a fix for #about: the card "Почему именно кооператив?"
-    (.accent-copy-block) was previously forced to `height:100%` inside a
-    `minmax(0,1fr)` grid row, with its OWN `overflow-y:auto` nested inside
-    the section's `overflow-y:auto`. Two nested scrollboxes with no visual
-    scroll affordance is why the text looked "cut off" — it was
-    technically scrollable, just not obviously so. Fixed by letting the
-    card and its grid row size to their actual content (`height:auto`)
-    instead of being squeezed into a fraction of the viewport. The section
-    itself can still grow taller than one screen and the page scrolls
-    normally — no hidden nested scroll area.
+  ROOT CAUSE FIX (mobile only, <=900px). Consolidated v3.
 
-  Background on why this fix lives in one block at the very end of the
-  file: the mobile nav is `position:fixed` and overlays the top of the
-  viewport, but nothing reserved that space for the sections below it —
-  earlier patches kept re-declaring #hero/#about with `padding-top` values
-  far smaller than --mobile-header-h, and the LAST declaration in source
-  order always wins, so the nav ended up covering the top of the hero
-  logo. Those same patches also forced fixed pixel `height` +
+  Why this single block exists at the very end of the file: the mobile
+  nav is `position:fixed` and overlays the top of the viewport, but
+  nothing reserved that space for the sections below it — earlier
+  patches kept re-declaring #hero/#about/#contact with `padding-top`
+  values far smaller than --mobile-header-h, and the LAST declaration in
+  source order always wins, so the nav ended up covering the top of the
+  hero logo. Those same patches also forced fixed pixel `height` +
   `overflow:hidden` on sections, silently clipping content that didn't
-  fit. This block is intentionally the very last rule in the document so
-  it reliably wins the cascade without having to hunt down and edit every
-  older patch — see PANDORA_ADAPTIVE_GUIDE.md for the real long-term fix.
+  fit. This block reliably wins the cascade without having to hunt down
+  and edit every older patch. See PANDORA_ADAPTIVE_GUIDE.md for the real
+  long-term fix (consolidating/deleting the old patches instead).
+
+  v3 changelog:
+  - `.about-project-landing` (the "О проекте" carousel) is intentionally
+    EXCLUDED from the shared list below. Its "Название/Логотип" side
+    arrows are `position:absolute` relative to that section's own box;
+    an earlier version of this fix touched its padding/overflow and made
+    the arrows visibly jump. It keeps its own separate (already working)
+    mobile rules further up the file.
+  - #about: the card "Почему именно кооператив?" (.accent-copy-block)
+    was forced to `height:100%` inside a `minmax(0,1fr)` grid row, with
+    its OWN `overflow-y:auto` nested inside the section's own
+    `overflow-y:auto`. Two nested scrollboxes with no visual scroll
+    affordance is why the text looked "cut off" — it was technically
+    scrollable, just not obviously so. Fixed by letting the card and its
+    grid row size to their actual content instead of being squeezed into
+    a fraction of the viewport.
+  - Hero text was still hidden behind "Читать далее" because that toggle
+    is driven by JS (`initMobileReadMore`), which wraps paragraphs 3+ in
+    `.hero-mobile-extra` and hides them via `display:none` unless
+    `.hero-story` has `.mobile-expanded`. Per explicit request, the text
+    must always be shown in full on mobile — forced `.hero-mobile-extra`
+    visible and hid the toggle button, without touching the JS itself
+    (lower risk: the JS keeps toggling classes harmlessly, CSS just
+    always shows the result).
+  - The reason the logo "dropped" and left empty space above/below when
+    the text was short (collapsed): `#hero` is `display:flex;
+    align-items:center` (set in the base, non-mobile rule, never
+    overridden for mobile) — so its content is vertically CENTERED
+    inside the fixed 100svh box. Any time content is shorter than the
+    box, everything floats toward the middle, creating equal gaps top
+    and bottom. Fixed by pinning `align-items:flex-start` on mobile, so
+    content always starts right after the nav-clearance padding,
+    regardless of its length.
+  - `#contact.contact-landing` was never actually fixed by earlier
+    versions: it kept its own separate pre-existing rule with
+    `height: calc(100svh - header - footer)` and `padding-top: 0`.
+    Adding nav-clearance padding on top of that fixed height (without
+    also freeing the height) just shrank the usable area further —
+    hence the empty gap at the top and the clipped hCaptcha/footer at
+    the bottom. It also had its own nested `overflow-y:auto` scrollbox
+    on `.contact-form` (same "invisible scroll trap" pattern as the
+    About card). Both corrected below.
 */
 @media (max-width: 900px) {
   #hero,
@@ -5614,6 +5637,13 @@ Changes:
     -webkit-overflow-scrolling: touch !important;
   }
 
+  /* Pin content to the top instead of vertically centering it, so short
+     or long content never creates dead space above/below the logo. */
+  #hero,
+  #contact.contact-landing {
+    align-items: flex-start !important;
+  }
+
   #hero {
     height: 100svh !important;
     min-height: 100svh !important;
@@ -5627,10 +5657,17 @@ Changes:
     min-height: 0 !important;
   }
 
+  /* Always show the full hero text — no collapse/expand toggle. */
+  #hero .hero-story .hero-mobile-extra {
+    display: block !important;
+  }
+  #hero .hero-read-more {
+    display: none !important;
+  }
+
   /* #about: stop forcing the card into a fixed fraction of the screen
      with its own internal scrollbar. Let it size to its content; the
-     section (already overflow-y:auto + no forced height below) simply
-     grows and the page scrolls, like the rest of the site. */
+     section grows and the page scrolls, like the rest of the site. */
   #about.about-landing {
     height: auto !important;
     min-height: var(--mobile-section-h, 100svh) !important;
@@ -5650,6 +5687,26 @@ Changes:
 
   #about .principles {
     height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+  }
+
+  /* #contact: content-driven height instead of a fixed calc() that
+     assumed zero top padding; remove the nested scrollbox so the form
+     and the hCaptcha widget are never clipped. */
+  #contact.contact-landing {
+    height: auto !important;
+    min-height: var(--mobile-section-h, 100svh) !important;
+  }
+
+  #contact .contact-frame,
+  #contact .contact-grid {
+    height: auto !important;
+  }
+
+  #contact .contact-form {
+    height: auto !important;
+    overflow: visible !important;
   }
 }
 </style>
