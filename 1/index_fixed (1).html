@@ -1211,54 +1211,7 @@ footer { position: static; }
   ]
 }
 </script>
-<style id="pandora-modernization-cleanup-v0-6">
-html { scroll-snap-type: none; }
-section, #hero, .project-intro-landing, .project-landing-section, .final-call-landing, .signal-landing, .contact-landing { scroll-snap-align: none; }
-.project-intro-landing, .project-landing-section, .signal-landing, .contact-landing { min-height: auto; }
-.project-intro-landing, .project-landing-section { padding-bottom: clamp(64px, 8vh, 84px); }
-.project-landing-section .chapter-next, .project-intro-landing .fixed-next, .about-landing .inline-next, #about.about-landing .inline-next, section.about-landing .inline-next { position: static; left: auto; right: auto; bottom: auto; transform: none; margin: clamp(28px, 4vh, 42px) auto 0; align-self: center; justify-self: center; }
-.project-landing-section .ms-body, #chapter-05 .ms-body.wide-body { padding-bottom: 0; }
-.inline-next, .chapter-next, .fixed-next { display: inline-flex; align-items: center; gap: 16px; width: max-content; max-width: 100%; color: rgba(245,242,237,0.58); text-decoration: none; }
-.final-call-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
-.final-call-actions .btn-primary, .final-call-actions .btn-outline, .signal-actions .btn-primary, .signal-actions .btn-outline { min-height: 44px; padding: 13px 26px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(200,168,75,.42); background: var(--accent); color: var(--dark); line-height: 1.2; cursor: pointer; }
-.final-call-actions .btn-outline { background: rgba(200,168,75,.08); color: var(--accent); }
-.signal-landing { padding: 86px 60px 72px; display: flex; flex-direction: column; }
-/* Signal — matches About two-column rhythm */
-.signal-body { display:grid; grid-template-columns:minmax(0,1.08fr) minmax(360px,0.92fr); gap:72px; align-items:start; width:min(1180px,100%); margin:0 auto; }
-.signal-body .accent-copy-block { align-self:start; }
-.signal-note { display:flex; flex-direction:column; gap:8px; }
-.signal-note h3 { font-family:"Cormorant Garamond",serif; font-size:clamp(22px,2.2vw,34px); line-height:1.08; margin:0 0 8px; }
-.signal-note ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
-.signal-note li { display:flex; align-items:center; gap:12px; border:1px solid var(--border); background:rgba(255,255,255,0.018); padding:16px 18px; min-height:54px; font-size:clamp(14px,1.15vw,18px); line-height:1.35; color:rgba(245,242,237,0.72); }
-.signal-note li:first-child { padding-top:16px; }
-.signal-note li:last-child { padding-bottom:16px; }
-.signal-note .p-dot { width:7px; height:7px; }
-.final-actions { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:clamp(28px,4vh,44px); align-items:flex-start; }
-.share-btn-wrap { position:relative; }
-.share-menu { display:none; position:absolute; top:calc(100% + 8px); right:0; background:#141414; border:1px solid var(--border); backdrop-filter:blur(16px); min-width:220px; z-index:200; border-radius:8px; overflow:hidden; }
-.share-menu.open { display:block; }
-.share-menu button { display:flex; align-items:center; gap:12px; width:100%; padding:12px 16px; border:none; background:none; color:var(--light); font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer; text-align:left; transition:background 0.15s; }
-.share-menu button:hover { background:rgba(200,168,75,0.1); color:var(--accent); }
-.share-menu hr { border:none; border-top:1px solid var(--border); margin:4px 0; }
-.share-menu button svg { flex-shrink:0; opacity:0.6; }
-.share-menu button:hover svg { opacity:1; }
-.final-actions .btn-primary, .final-actions .btn-outline { min-height:44px; padding:13px 26px; display:inline-flex; align-items:center; justify-content:center; border:1px solid rgba(200,168,75,.42); background:var(--accent); color:var(--dark); line-height:1.2; cursor:pointer; text-decoration:none; }
-.final-actions .btn-outline { background:rgba(200,168,75,.08); color:var(--accent); }
-.signal-lead-bottom { text-align:center; margin:clamp(28px,4vh,44px) auto 0; color:var(--accent); font-family:"Cormorant Garamond",serif; font-size:clamp(22px,2.2vw,30px); font-weight:300; }
-@media(max-width:900px){ .signal-body { grid-template-columns:1fr; } .final-actions { flex-direction:column; align-items:stretch; } .final-actions .btn-primary, .final-actions .btn-outline { width:100%; } }
-.signal-frame { width: min(1120px, 100%); }
-.signal-landing .section-title, .signal-lead { text-align: center; }
-.signal-lead { margin: -18px auto 30px; color: var(--accent); font-family: "Cormorant Garamond", serif; font-size: clamp(24px, 2.4vw, 34px); font-weight: 300; }
-.signal-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(320px, .85fr); gap: clamp(28px, 4vw, 52px); align-items: stretch; }
-.signal-actions { margin-top: 28px; }
-.signal-status, .contact-status { min-height: 18px; margin-top: 12px; color: rgba(245,242,237,.62); font-size: 12px; text-align: center; }
-.contact-status[data-state="success"] { color:#8fd694; }
-.contact-status[data-state="error"], .contact-status[data-state="rate"] { color:#f0b0a8; }
-.contact-form { gap: 12px; }
-.pc-launcher { bottom: 54px; }
-#join, #docs { display: none; }
-@media (max-width: 900px) { .signal-grid { grid-template-columns: 1fr; } .signal-actions, .final-call-actions { flex-direction: column; align-items: stretch; } .signal-actions .btn-primary, .signal-actions .btn-outline, .final-call-actions .btn-primary, .final-call-actions .btn-outline { width: 100%; } .project-landing-section .chapter-next, .project-intro-landing .fixed-next, .about-landing .inline-next { margin-top: 24px; } }
-</style>
+
 <style id="pandora-usen-rgb-logo-v0-3">
 /* USEN logo slide: simple narrative text, no vertical columns/cards. */
 #aplPanelRight .project-intro-landing.apl-inner {
@@ -1852,7 +1805,7 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 </div>
 </section>
 <section class="signal-landing" id="signal">
-<h2 class="section-title"><span class="active" data-lang="uk">Будеш і далі фінансувати чужі системи<br/> чи побудуємо разом свою?</span><span data-lang="ru">Будешь и дальше финансировать чужие системы<br/> или построим вместе свою?</span><span data-lang="en">Will you keep funding systems you do not control<br/> or shall we build our own together?</span><span data-lang="es">¿Seguirás financiando sistemas ajenos<br/> o construiremos juntos el nuestro?</span></h2>
+<h2 class="section-title"><span class="active" data-lang="uk">Будеш і далі фінансувати чужі системи<br/>чи побудуємо разом свою?</span><span data-lang="ru">Будешь и дальше финансировать чужие системы<br/>или построим вместе свою?</span><span data-lang="en">Will you keep funding systems you do not control<br/>or shall we build our own together?</span><span data-lang="es">¿Seguirás financiando sistemas ajenos<br/>o construiremos juntos el nuestro?</span></h2>
 <div class="signal-body">
 <div class="accent-copy-block">
 <p><span class="active" data-lang="uk">Ми розробили просту й прозору систему рекомендацій і винагород — “Сигнал”.</span><span data-lang="ru">Мы разработали простую и прозрачную систему рекомендаций и вознаграждений — “Сигнал”.</span><span data-lang="en">We have created a simple and transparent recommendation and reward system: “Signal”.</span><span data-lang="es">Hemos creado un sistema simple y transparente de recomendaciones y recompensas: “Signal”.</span></p>
@@ -2337,6 +2290,76 @@ initMobileReadMore();
 </script>
 <!-- Pandora clean visual layer -->
 <style id="pandora-clean-visual-layer-v0-5">
+  /* Share Menu Styles */
+  .share-btn-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .share-menu {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(13, 13, 13, 0.98);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(200, 168, 75, 0.3);
+    padding: 10px;
+    border-radius: 12px;
+    z-index: 1000;
+    gap: 8px;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.6);
+  }
+  .share-menu.open {
+    display: flex;
+  }
+  .share-menu button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .share-menu button:hover {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+  .share-menu button svg {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .share-menu {
+      position: static;
+      transform: none;
+      margin-top: 12px;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+      background: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+    .share-menu button {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+  }
+
   :root {
     --clean-footer-h: 38px;
     --clean-section-bottom: clamp(72px, 8vh, 104px);
@@ -3100,14 +3123,23 @@ function toggleShareMenu(event) {
 
 function shareTo(network) {
   const url = 'https://pandora.co.ua';
-  const text = 'Стань совладельцем универсальной социально-экономической сети - USEN Pandora! Подробности тут: ' + url;
+  const lang = document.documentElement.lang || 'uk';
+  const texts = {
+    uk: 'Стань співвласником універсальної соціально-економічної мережі - USEN Pandora! Подробиці тут: ',
+    ru: 'Стань совладельцем универсальной социально-экономической сети - USEN Pandora! Подробности тут: ',
+    en: 'Become a co-owner of the universal socio-economic network - USEN Pandora! Details here: ',
+    es: '¡Conviértete en copropietario de la red socioeconómica universal - USEN Pandora! Detalles aquí: '
+  };
+  const baseText = texts[lang] || texts['uk'];
+  const fullText = baseText + url;
+  
   let link;
   switch (network) {
-    case 'telegram': link = 'https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent('Стань совладельцем универсальной социально-экономической сети - USEN Pandora! Подробности тут:'); break;
-    case 'facebook': link = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '&quote=' + encodeURIComponent(text) + '&hashtag=' + encodeURIComponent('#USENPandora'); break;
-    case 'twitter': link = 'https://x.com/intent/post?text=' + encodeURIComponent(text); break;
-    case 'whatsapp': link = 'https://wa.me/?text=' + encodeURIComponent(text); break;
-    case 'viber': link = 'viber://forward?text=' + encodeURIComponent(text); break;
+    case 'telegram': link = 'https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(baseText); break;
+    case 'facebook': link = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '&quote=' + encodeURIComponent(fullText) + '&hashtag=' + encodeURIComponent('#USENPandora'); break;
+    case 'twitter': link = 'https://x.com/intent/post?text=' + encodeURIComponent(fullText); break;
+    case 'whatsapp': link = 'https://wa.me/?text=' + encodeURIComponent(fullText); break;
+    case 'viber': link = 'viber://forward?text=' + encodeURIComponent(fullText); break;
   }
   if (link) window.open(link, '_blank', 'noopener');
   document.getElementById('shareMenu').classList.remove('open');
@@ -3239,81 +3271,7 @@ document.addEventListener('click', function(e) {
   render();
 })();
 </script>
-<script id="pandora-project-side-panel-scroll-lock-v0-1">
-(function () {
-  var section = document.getElementById('project-intro');
-  if (!section) return;
 
-  function isEditableTarget(target) {
-    if (!target || target === document.body) return false;
-    return Boolean(target.closest('input, textarea, select, [contenteditable="true"]'));
-  }
-
-  function isProjectIntroVisible() {
-    var rect = section.getBoundingClientRect();
-    return rect.top < window.innerHeight * 0.82 && rect.bottom > window.innerHeight * 0.18;
-  }
-
-  function isSidePanelActive() {
-    return Boolean(window.pandoraProjectCarousel && window.pandoraProjectCarousel.isSidePanelActive && window.pandoraProjectCarousel.isSidePanelActive());
-  }
-
-  function returnToProjectCenter() {
-    if (window.pandoraProjectCarousel && window.pandoraProjectCarousel.goToCenter) {
-      window.pandoraProjectCarousel.goToCenter();
-    }
-    section.classList.remove('project-next-hidden');
-  }
-
-  function shouldLockProjectSidePanel() {
-    return isProjectIntroVisible() && isSidePanelActive();
-  }
-
-  function stopAndReturn(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
-    returnToProjectCenter();
-  }
-
-  window.addEventListener('wheel', function (event) {
-    if (!shouldLockProjectSidePanel()) return;
-    if (Math.abs(event.deltaY) < 6 || Math.abs(event.deltaY) < Math.abs(event.deltaX)) return;
-    stopAndReturn(event);
-  }, { passive: false, capture: true });
-
-  document.addEventListener('keydown', function (event) {
-    if (event.defaultPrevented || event.ctrlKey || event.altKey || event.metaKey) return;
-    if (isEditableTarget(event.target)) return;
-    var lockedKeys = [
-      'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
-      'PageUp', 'PageDown', 'Home', 'End', ' ', 'Spacebar'
-    ];
-    if (lockedKeys.indexOf(event.key) === -1) return;
-    if (!shouldLockProjectSidePanel()) return;
-    stopAndReturn(event);
-  }, { passive: false, capture: true });
-
-  var touchStartX = null;
-  var touchStartY = null;
-  window.addEventListener('touchstart', function (event) {
-    if (!event.touches || !event.touches.length) return;
-    touchStartX = event.touches[0].clientX;
-    touchStartY = event.touches[0].clientY;
-  }, { passive: true, capture: true });
-
-  window.addEventListener('touchmove', function (event) {
-    if (touchStartY === null || !event.touches || !event.touches.length) return;
-    if (!shouldLockProjectSidePanel()) return;
-    var dx = event.touches[0].clientX - touchStartX;
-    var dy = event.touches[0].clientY - touchStartY;
-    if (Math.abs(dy) < 10 || Math.abs(dy) < Math.abs(dx)) return;
-    stopAndReturn(event);
-    touchStartX = null;
-    touchStartY = null;
-  }, { passive: false, capture: true });
-})();
-</script>
 <script id="pandora-project-intro-next-visibility-fix-v1">
 (function () {
   var section = document.getElementById('project-intro');
@@ -3379,57 +3337,7 @@ document.addEventListener('click', function(e) {
   window.setTimeout(syncNextVisibility, 120);
 })();
 </script>
-<script id="pandora-keyboard-zone-navigation-v0-2">
-(function () {
-  const zoneIds = [
-    'hero', 'about', 'project-intro', 'examples', 'signal', 'contact'
-  ];
-  let scrollLocked = false;
-  function isEditableTarget(target) {
-    if (!target || target === document.body) return false;
-    const editable = target.closest('input, textarea, select, button, [contenteditable="true"]');
-    return Boolean(editable);
-  }
-  function getNavOffset() {
-    const nav = document.querySelector('nav');
-    const cssOffset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-offset')) || 86;
-    return nav ? Math.max(cssOffset, nav.getBoundingClientRect().height + 10) : cssOffset;
-  }
-  function getZones() {
-    return zoneIds.map(id => document.getElementById(id)).filter(Boolean);
-  }
-  function currentZoneIndex(zones, offset) {
-    const probe = window.scrollY + offset + Math.max(24, window.innerHeight * 0.18);
-    let current = 0;
-    zones.forEach((zone, index) => {
-      const top = zone.getBoundingClientRect().top + window.scrollY;
-      if (top <= probe) current = index;
-    });
-    return current;
-  }
-  function goToZone(direction) {
-    if (scrollLocked) return;
-    const zones = getZones();
-    if (!zones.length) return;
-    const offset = getNavOffset();
-    const current = currentZoneIndex(zones, offset);
-    const targetIndex = Math.max(0, Math.min(zones.length - 1, current + direction));
-    if (targetIndex === current) return;
-    const target = zones[targetIndex];
-    const targetTop = target.getBoundingClientRect().top + window.scrollY - offset;
-    scrollLocked = true;
-    window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
-    window.setTimeout(() => { scrollLocked = false; }, 650);
-  }
-  document.addEventListener('keydown', function (event) {
-    if (event.defaultPrevented || event.ctrlKey || event.altKey || event.metaKey) return;
-    if (event.key !== 'PageDown' && event.key !== 'PageUp') return;
-    if (isEditableTarget(event.target)) return;
-    event.preventDefault();
-    goToZone(event.key === 'PageDown' ? 1 : -1);
-  }, { passive: false });
-})();
-</script>
+
 <!--
 Pandora index.refactored.html — v0.1
 Changes:
@@ -3443,73 +3351,7 @@ Changes:
 - final CSS stabilization layer added to reduce scroll-snap/100vh clipping, improve text readability, next-link placement, examples contrast and mobile behaviour;
 - original one-file HTML/CSS/JS format preserved.
 -->
-<style id="pandora-about-position-only-v0-2">
-/* About section position-only fix: move existing elements into one visual group without changing text, fonts, card padding, or paragraph styling. */
-@media (min-width: 901px) {
-  #about.about-landing {
-    min-height: 100svh !important;
-    height: auto !important;
-    display: flex !important;
-    align-items: flex-start !important;
-    justify-content: center !important;
-    padding-top: clamp(104px, 12vh, 132px) !important;
-  }
 
-  #about .about-reframe-grid {
-    height: auto !important;
-    min-height: 0 !important;
-    align-content: start !important;
-    align-items: start !important;
-    row-gap: clamp(26px, 3vh, 38px) !important;
-  }
-
-  #about .about-reframe-copy {
-    display: contents !important;
-  }
-
-  #about .section-label {
-    display: none !important;
-  }
-
-  #about .about-reframe-title {
-    grid-column: 1 / -1 !important;
-    grid-row: 1 !important;
-    justify-self: center !important;
-    align-self: start !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  #about .accent-copy-block {
-    grid-column: 1 !important;
-    grid-row: 2 !important;
-    align-self: start !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  #about .principles {
-    grid-column: 2 !important;
-    grid-row: 2 !important;
-    align-self: start !important;
-    justify-content: flex-start !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-}
-
-@media (max-width: 900px) {
-  #about.about-landing {
-    height: auto !important;
-    min-height: auto !important;
-  }
-
-  #about .about-reframe-grid {
-    height: auto !important;
-    min-height: 0 !important;
-  }
-}
-</style>
 <style id="pandora-center-sections-position-fix-v0-1">
 /* Position-only correction: center About, Participation, and the central Project slide without changing copy. */
 @media (min-width: 901px) {
@@ -4942,7 +4784,6 @@ Changes:
     display: block !important;
   }
 
-  .usen-question-item[open],
   .usen-about-cta[open] {
     position: relative !important;
     z-index: 6 !important;
@@ -4961,6 +4802,7 @@ Changes:
     gap: 10px !important;
     padding-top: 8px !important;
     padding-bottom: 12px !important;
+    overflow: visible !important; /* Allow menu to show */
   }
 
   #signal.signal-landing .section-title {
@@ -4970,7 +4812,7 @@ Changes:
     margin: 0 auto 8px !important;
     padding: 0 !important;
     text-align: center !important;
-    font-size: clamp(25px, 7vw, 32px) !important;
+    font-size: clamp(31px, 8.8vw, 38px) !important;
     line-height: 1.08 !important;
     letter-spacing: 0 !important;
   }
@@ -5036,7 +4878,7 @@ Changes:
     position: relative !important;
   }
 
-  .apl-panel-center .usen-question-item[open] .usen-answer {
+  .apl-panel-center .usen-about-cta[open] .usen-about-cta-text {
     position: absolute !important;
     left: 0 !important;
     right: 0 !important;
@@ -5595,257 +5437,66 @@ Changes:
 })();
 </script>
 
-<style id="pandora-mobile-hero-final-fix-v4">
-/*
-  ROOT CAUSE FIX (mobile only, <=900px). Consolidated v4.
 
-  v4 changelog — THE BIG ONE:
-  Every version up to v3 gave every section `overflow-y: auto` as a
-  "safety net" so overflowing content would scroll instead of being
-  silently clipped. That was the wrong mechanism: it turned EVERY
-  section (#hero, #about, .examples-landing, #contact, etc.) into its
-  own independent scrollable box nested inside the page. On mobile,
-  a touch-scroll gesture scrolls the nearest scrollable ancestor first —
-  so instead of one continuous page scroll moving smoothly from section
-  to section (as a landing page should), the user's scroll got "captured"
-  inside whichever section box they started touching, only reaching the
-  next section once that inner box hit its own scroll limit. That is
-  exactly the "экраны не скроллятся, скролл частичный" symptom: the site
-  stopped behaving like a single continuous landing page and started
-  behaving like a stack of separately-scrolling boxes.
-  Fix: sections no longer scroll internally. They use `min-height`
-  (never a hard `height`) so they simply grow to fit their content, and
-  the PAGE (html/body) provides the one and only scrollbar, like a
-  normal landing page. This is also why `#hero` previously had a hard
-  `height:100svh` — with content that can no longer be clipped/scrolled
-  away, a hard height would make the hero visually overlap the next
-  section instead of pushing it down, so it is now `min-height` only.
 
-  Why this single block exists at the very end of the file: the mobile
-  nav is `position:fixed` and overlays the top of the viewport, but
-  nothing reserved that space for the sections below it — earlier
-  patches kept re-declaring #hero/#about/#contact with `padding-top`
-  values far smaller than --mobile-header-h, and the LAST declaration in
-  source order always wins, so the nav ended up covering the top of the
-  hero logo. This block reliably wins the cascade without having to hunt
-  down and edit every older patch. See PANDORA_ADAPTIVE_GUIDE.md for the
-  real long-term fix (consolidating/deleting the old patches instead).
 
-  Everything below this paragraph is carried over unchanged from v3:
-  - `.about-project-landing` (the "О проекте" carousel) stays EXCLUDED
-    from the shared list — its side arrows are `position:absolute`
-    relative to that section's own box and are sensitive to it.
-  - Hero text is always shown in full (no "Читать далее" toggle).
-  - `.project-intro-landing` / `.project-landing-section` /
-    `.examples-landing` / `.final-call-landing` / `#contact.contact-landing`
-    / `#join` are COLUMN flex containers whose base rule sets
-    `justify-content:center` — for a column flex that property (not
-    align-items) controls the vertical axis, which is why content in
-    those sections was vertically centered/floating instead of starting
-    under the nav.
-  - `.accent-copy-block`, `#about .principles`, and `.contact-form` each
-    had their own nested `overflow-y:auto` "scroll trap" (content
-    technically scrollable but with zero visual affordance, so it just
-    looked cut off). All three are now `overflow: visible`.
-*/
+<style id="manus-final-mobile-scroll-fix">
 @media (max-width: 900px) {
-  #hero,
-  #about.about-landing,
-  .project-intro-landing,
-  .project-landing-section,
-  .examples-landing,
-  .signal-landing,
-  .final-call-landing,
-  #docs,
-  #join,
-  #contact.contact-landing {
-    padding-top: calc(var(--real-header-h, var(--mobile-header-h, 92px)) + 6px) !important;
+  /* Отключаем блокировку скролла на уровне страницы */
+  html, body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
     height: auto !important;
-    overflow: visible !important;
+    scroll-snap-type: none !important;
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* Pin content to the top instead of vertically centering it, so short
-     or long content never creates dead space above/below the logo.
-     #hero is a ROW flex container (align-items controls its vertical
-     axis); the rest are COLUMN flex containers (justify-content controls
-     their vertical axis) — see comment above. */
-  #hero {
-    align-items: flex-start !important;
-  }
-
-  .project-intro-landing,
-  .project-landing-section,
-  .examples-landing,
-  .final-call-landing,
-  #contact.contact-landing,
-  #join {
-    justify-content: flex-start !important;
-    align-items: stretch !important;
-  }
-
-  #hero {
+  /* Исправляем секции: они должны расти под контент, а не быть фиксированной высоты */
+  section, 
+  #hero, 
+  #about, 
+  .project-intro-landing, 
+  .project-landing-section, 
+  .examples-landing, 
+  .signal-landing, 
+  .final-call-landing, 
+  #contact {
+    height: auto !important;
     min-height: 100svh !important;
-    padding-left: 18px !important;
-    padding-right: 18px !important;
-    padding-bottom: 18px !important;
+    padding-top: calc(var(--real-header-h, 92px) + 20px) !important;
+    padding-bottom: 40px !important;
+    display: block !important; /* Убираем flex/grid центрирование, которое ломает скролл длинного контента */
+    overflow: visible !important;
+    scroll-snap-align: none !important;
   }
 
-  #hero .hero-inner {
+  /* Убираем внутренние "ловушки" скролла */
+  .accent-copy-block, 
+  .principles, 
+  .contact-form, 
+  .hero-story,
+  .ms-body,
+  .ms-list {
     height: auto !important;
-    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-left: none !important;
   }
-
-  /* Always show the full hero text — no collapse/expand toggle. */
+  
+  /* Исправляем отображение текста в герое */
+  #hero .hero-inner {
+    display: block !important;
+  }
   #hero .hero-story .hero-mobile-extra {
     display: block !important;
   }
   #hero .hero-read-more {
     display: none !important;
   }
-
-  /* #about: let the card and grid size to their actual content instead
-     of being squeezed into a fixed fraction of the viewport. */
-  #about.about-landing {
-    min-height: var(--mobile-section-h, 100svh) !important;
-    padding-bottom: 28px !important;
-  }
-
-  #about .about-reframe-grid,
-  #about .about-reframe-copy {
-    height: auto !important;
-    grid-template-rows: auto auto !important;
-  }
-
-  #about .accent-copy-block {
-    height: auto !important;
-    max-height: none !important;
-    overflow-y: visible !important;
-  }
-
-  #about .principles {
-    height: auto !important;
-    max-height: none !important;
-    overflow-y: visible !important;
-  }
-
-  /* #contact: content-driven height instead of a fixed calc() that
-     assumed zero top padding; remove the nested scrollbox so the form
-     and the hCaptcha widget are never clipped. */
-  #contact.contact-landing {
-    min-height: var(--mobile-section-h, 100svh) !important;
-  }
-
-  #contact .contact-frame,
-  #contact .contact-grid {
-    height: auto !important;
-  }
-
-  #contact .contact-form {
-    height: auto !important;
-    overflow: visible !important;
-  }
-
-  /* #signal: `#signal .signal-note { height:100% }` + `.signal-note ul
-     { flex:1; justify-content:space-between }` (both unscoped, always
-     active) exist to match the two-column desktop layout's height. On
-     mobile the columns stack into one, so that pairing stretched the
-     list and spread its 5 items apart with huge gaps — and pushed the
-     "Рассказать другу / Присоединиться" buttons (which come right after
-     this block in the DOM) far down the page, making them seem to have
-     disappeared. Neutralized for mobile only. */
-  #signal .signal-note {
-    height: auto !important;
-  }
-
-  #signal .signal-note ul {
-    flex: none !important;
-    justify-content: flex-start !important;
-  }
-
-  /* All 4 FAQ answers now share the same "floating overlay" behavior:
-     each answer opens as a bordered, scrollable card that floats ABOVE
-     its own question (position:absolute; bottom:100%), instead of
-     pushing the page content down. Previously only the 4th ("Почему вам
-     стоит стать пайщиком прямо сейчас?") had this; the rule above
-     (`.apl-panel-center .usen-question-item[open] .usen-answer`) now
-     applies it uniformly to all 4 questions. */
 }
 </style>
-
-<script>
-/*
-  "Читать далее" that only appears when text genuinely doesn't fit, and
-  expands so the reader keeps their place instead of the page just
-  growing downward underneath them.
-
-  How it decides whether to collapse: it measures the block's real
-  rendered height (scrollHeight) against a generous mobile reading
-  budget. If the full text already fits, nothing happens - no button, no
-  collapsing, exactly like the rest of the site.
-
-  How "expands upward": clicking the button reveals the full text (grows
-  the box downward, as any block of text must), but immediately after,
-  the script scrolls the page so the TOP of that text block lands just
-  under the fixed nav - i.e. the reader is repositioned to the start of
-  what they just revealed, instead of being left wherever the button
-  used to be (which would often show them the tail end of the new text
-  and force them to scroll back up manually to actually read it).
-*/
-(function () {
-  function setupReadMore(el) {
-    if (!el || el.dataset.pandoraReadMoreInit) return;
-    el.dataset.pandoraReadMoreInit = '1';
-
-    var fullHeight = el.scrollHeight;
-    var budget = Math.round(window.innerHeight * 0.62);
-    if (fullHeight <= budget) return; // fits already, leave it alone
-
-    el.style.maxHeight = budget + 'px';
-    el.style.overflow = 'hidden';
-    el.style.position = 'relative';
-
-    var fade = document.createElement('div');
-    fade.setAttribute('aria-hidden', 'true');
-    fade.style.cssText = 'position:absolute;left:0;right:0;bottom:0;height:56px;' +
-      'background:linear-gradient(rgba(13,13,13,0),rgba(13,13,13,0.96));pointer-events:none;';
-    el.appendChild(fade);
-
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.textContent = 'Читать далее';
-    btn.style.cssText = 'display:block;margin:14px auto 0;padding:10px 22px;' +
-      'background:transparent;border:1px solid rgba(200,168,75,.42);color:var(--accent,#c8a84b);' +
-      'font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;';
-    el.insertAdjacentElement('afterend', btn);
-
-    btn.addEventListener('click', function () {
-      el.style.maxHeight = 'none';
-      el.style.overflow = 'visible';
-      fade.remove();
-      btn.remove();
-      var navEl = document.querySelector('nav');
-      var offset = (navEl ? navEl.getBoundingClientRect().height : 92) + 14;
-      var top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top: top, behavior: 'smooth' });
-    });
-  }
-
-  function init() {
-    document.querySelectorAll('#about .accent-copy-block').forEach(setupReadMore);
-  }
-
-  if (window.matchMedia('(max-width: 900px)').matches) {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
-    } else {
-      init();
-    }
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(init);
-    }
-  }
-})();
-</script>
 
 </body>
 </html>

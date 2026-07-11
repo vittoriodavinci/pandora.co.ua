@@ -4942,7 +4942,6 @@ Changes:
     display: block !important;
   }
 
-  .usen-question-item[open],
   .usen-about-cta[open] {
     position: relative !important;
     z-index: 6 !important;
@@ -5036,7 +5035,7 @@ Changes:
     position: relative !important;
   }
 
-  .apl-panel-center .usen-question-item[open] .usen-answer {
+  .apl-panel-center .usen-about-cta[open] .usen-about-cta-text {
     position: absolute !important;
     left: 0 !important;
     right: 0 !important;
@@ -5762,13 +5761,20 @@ Changes:
     justify-content: flex-start !important;
   }
 
-  /* All 4 FAQ answers now share the same "floating overlay" behavior:
-     each answer opens as a bordered, scrollable card that floats ABOVE
-     its own question (position:absolute; bottom:100%), instead of
-     pushing the page content down. Previously only the 4th ("Почему вам
-     стоит стать пайщиком прямо сейчас?") had this; the rule above
-     (`.apl-panel-center .usen-question-item[open] .usen-answer`) now
-     applies it uniformly to all 4 questions. */
+  /* The "Почему вам стоит стать пайщиком прямо сейчас?" answer had its
+     own pre-existing rule making it float as a bordered, scrollable
+     overlay ABOVE its own question (position:absolute; bottom:100%),
+     unlike the other 3 FAQ answers which expand normally in place. That
+     is the "floating box with a yellow scrollbar" behavior. Disabling it
+     here so this answer behaves exactly like the other three: expands
+     inline, in normal document flow, no overlay, no internal scrollbox. */
+  .apl-panel-center .usen-about-cta[open] .usen-about-cta-text {
+    position: static !important;
+    max-height: none !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    margin-top: 10px !important;
+  }
 }
 </style>
 
