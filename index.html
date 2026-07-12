@@ -5902,27 +5902,33 @@ Changes:
 
 <style id="pandora-mobile-hard-reset">
 @media (max-width: 900px) {
-  /* 1. ВОЗВРАЩАЕМ НОРМАЛЬНЫЙ СКРОЛЛ ЛЕНДИНГА */
+  /* 1. Возвращаем нормальный скролл лендинга */
   html, body {
     overflow-y: auto !important;
     height: auto !important;
   }
 
-  /* Убиваем жесткие высоты экранов и скрытие контента */
-  section, #hero, #about.about-landing, .project-intro-landing, 
+  /* 2. Убираем пустыри (min-height: auto) и позиционируем контент по верху.
+     ВАЖНО: Я убрал тег section из селектора, чтобы не ломать скрытые модалки! */
+  #hero, #about.about-landing, .project-intro-landing, 
   .project-landing-section, .examples-landing, .signal-landing, 
   .final-call-landing, #docs, #join, #contact.contact-landing {
     height: auto !important;
-    min-height: 100svh !important;
+    min-height: auto !important; /* УБРАЛ 100svh, ИЗ-ЗА КОТОРОГО БЫЛИ ПУСТЫРИ */
     overflow: visible !important; 
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-start !important; /* Текст идет сверху вниз, никаких пустырей */
+    justify-content: flex-start !important; 
     padding-top: calc(var(--mobile-header-h, 86px) + 20px) !important;
     padding-bottom: 60px !important;
   }
 
-  /* Отключаем перехват скролла внутренними текстовыми блоками */
+  /* Скрытые модалки железно остаются скрытыми */
+  .auth-modal[hidden] {
+    display: none !important;
+  }
+
+  /* Отключаем перехват скролла внутренними блоками */
   #about .accent-copy-block, #about .principles, 
   .usen-about-copy, #contact .contact-form, #signal .signal-body,
   #hero .hero-story {
@@ -5932,13 +5938,15 @@ Changes:
     overscroll-behavior: auto !important;
   }
 
-  /* 2. ЧИНИМ БЛОК "УЧАСТИЕ" (SIGNAL) */
-  /* Прячем блок "Обратите внимание" по твоей просьбе */
-  #signal .signal-note {
-    display: none !important; 
+  /* 3. МЕНЮ "РАССКАЗАТЬ ДРУГУ" ТЕПЕРЬ ОТКРЫВАЕТСЯ ВВЕРХ */
+  .share-menu {
+    top: auto !important;
+    bottom: calc(100% + 8px) !important;
   }
+
+  /* 4. БЛОК "УЧАСТИЕ" (SIGNAL) */
+  #signal .signal-note { display: none !important; }
   
-  /* Жестко возвращаем видимость кнопок */
   #signal .final-actions {
     display: flex !important;
     flex-direction: column !important;
@@ -5954,7 +5962,7 @@ Changes:
     width: 100% !important;
   }
 
-  /* 3. ФИКСИМ КОНТАКТЫ */
+  /* 5. КОНТАКТЫ */
   #contact .contact-grid, #contact .contact-frame {
     height: auto !important;
     transform: none !important;
