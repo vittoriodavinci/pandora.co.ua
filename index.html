@@ -5902,19 +5902,18 @@ Changes:
 
 <style id="pandora-mobile-hard-reset">
 @media (max-width: 900px) {
-  /* 1. Возвращаем нормальный скролл лендинга */
+  /* 1. Нормальный скролл */
   html, body {
     overflow-y: auto !important;
     height: auto !important;
   }
 
-  /* 2. Убираем пустыри (min-height: auto) и позиционируем контент по верху.
-     ВАЖНО: Я убрал тег section из селектора, чтобы не ломать скрытые модалки! */
+  /* 2. Обнуление высот всех экранов */
   #hero, #about.about-landing, .project-intro-landing, 
   .project-landing-section, .examples-landing, .signal-landing, 
   .final-call-landing, #docs, #join, #contact.contact-landing {
     height: auto !important;
-    min-height: auto !important; /* УБРАЛ 100svh, ИЗ-ЗА КОТОРОГО БЫЛИ ПУСТЫРИ */
+    min-height: auto !important; 
     overflow: visible !important; 
     display: flex !important;
     flex-direction: column !important;
@@ -5923,30 +5922,49 @@ Changes:
     padding-bottom: 60px !important;
   }
 
-  /* Скрытые модалки железно остаются скрытыми */
+  /* Защита модалок */
   .auth-modal[hidden] {
     display: none !important;
   }
 
-  /* Отключаем перехват скролла внутренними блоками */
+  /* 3. УБИВАЕМ СКРИПТ "ЧИТАТЬ ДАЛЕЕ" (ФИКС "О НАС") */
+  /* Прячем саму кнопку и градиентную заглушку */
+  .mobile-read-more, button[style*="Читать далее"] {
+    display: none !important;
+  }
+  div[style*="linear-gradient"] {
+    display: none !important; 
+  }
+  /* Принудительно показываем весь скрытый скриптом текст */
+  .mobile-read-extra {
+    display: inline !important; 
+  }
+  
+  /* Снимаем ограничения высоты с текстовых блоков */
   #about .accent-copy-block, #about .principles, 
-  .usen-about-copy, #contact .contact-form, #signal .signal-body,
-  #hero .hero-story {
+  .usen-about-copy, #hero .hero-story {
     max-height: none !important;
     height: auto !important;
     overflow: visible !important;
-    overscroll-behavior: auto !important;
   }
 
-  /* 3. МЕНЮ "РАССКАЗАТЬ ДРУГУ" ТЕПЕРЬ ОТКРЫВАЕТСЯ ВВЕРХ */
+  /* 4. ФИКС ОБРЕЗКИ ФОРМЫ "СВЯЗАТЬСЯ" */
+  #contact .contact-form, #contact .contact-grid, #contact .contact-frame {
+    height: auto !important; /* Убивает старый height: 100% */
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  /* 5. МЕНЮ "РАССКАЗАТЬ ДРУГУ" ОТКРЫВАЕТСЯ ВВЕРХ */
   .share-menu {
     top: auto !important;
     bottom: calc(100% + 8px) !important;
   }
 
-  /* 4. БЛОК "УЧАСТИЕ" (SIGNAL) */
+  /* 6. БЛОК "УЧАСТИЕ" */
   #signal .signal-note { display: none !important; }
-  
   #signal .final-actions {
     display: flex !important;
     flex-direction: column !important;
@@ -5954,19 +5972,11 @@ Changes:
     opacity: 1 !important;
     visibility: visible !important;
   }
-  
   #signal .final-actions a, 
   #signal .final-actions button,
   #signal .final-actions .share-btn-wrap {
     display: flex !important;
     width: 100% !important;
-  }
-
-  /* 5. КОНТАКТЫ */
-  #contact .contact-grid, #contact .contact-frame {
-    height: auto !important;
-    transform: none !important;
-    margin: 0 !important;
   }
 }
 </style>
