@@ -1,70 +1,6 @@
 <!DOCTYPE html>
 
 <html lang="uk">
-
-<style id="pandora-mobile-hard-reset">
-@media (max-width: 900px) {
-  /* 1. ВОЗВРАЩАЕМ НОРМАЛЬНЫЙ СКРОЛЛ ЛЕНДИНГА */
-  html, body {
-    overflow-y: auto !important;
-    height: auto !important;
-  }
-
-  /* Убиваем жесткие высоты экранов и скрытие контента */
-  section, #hero, #about.about-landing, .project-intro-landing, 
-  .project-landing-section, .examples-landing, .signal-landing, 
-  .final-call-landing, #docs, #join, #contact.contact-landing {
-    height: auto !important;
-    min-height: 100svh !important;
-    overflow: visible !important; 
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important; /* Текст идет сверху вниз, никаких пустырей */
-    padding-top: calc(var(--mobile-header-h, 86px) + 20px) !important;
-    padding-bottom: 60px !important;
-  }
-
-  /* Отключаем перехват скролла внутренними текстовыми блоками */
-  #about .accent-copy-block, #about .principles, 
-  .usen-about-copy, #contact .contact-form, #signal .signal-body,
-  #hero .hero-story {
-    max-height: none !important;
-    height: auto !important;
-    overflow: visible !important;
-    overscroll-behavior: auto !important;
-  }
-
-  /* 2. ЧИНИМ БЛОК "УЧАСТИЕ" (SIGNAL) */
-  /* Прячем блок "Обратите внимание" по твоей просьбе */
-  #signal .signal-note {
-    display: none !important; 
-  }
-  
-  /* Жестко возвращаем видимость кнопок */
-  #signal .final-actions {
-    display: flex !important;
-    flex-direction: column !important;
-    margin-top: 20px !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-  
-  #signal .final-actions a, 
-  #signal .final-actions button,
-  #signal .final-actions .share-btn-wrap {
-    display: flex !important;
-    width: 100% !important;
-  }
-
-  /* 3. ФИКСИМ КОНТАКТЫ */
-  #contact .contact-grid, #contact .contact-frame {
-    height: auto !important;
-    transform: none !important;
-    margin: 0 !important;
-  }
-}
-</style>
-
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -5963,6 +5899,69 @@ Changes:
   }
 })();
 </script>
+
+<style id="pandora-mobile-hard-reset">
+@media (max-width: 900px) {
+  /* 1. ВОЗВРАЩАЕМ НОРМАЛЬНЫЙ СКРОЛЛ ЛЕНДИНГА */
+  html, body {
+    overflow-y: auto !important;
+    height: auto !important;
+  }
+
+  /* Убиваем жесткие высоты экранов и скрытие контента */
+  section, #hero, #about.about-landing, .project-intro-landing, 
+  .project-landing-section, .examples-landing, .signal-landing, 
+  .final-call-landing, #docs, #join, #contact.contact-landing {
+    height: auto !important;
+    min-height: 100svh !important;
+    overflow: visible !important; 
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important; /* Текст идет сверху вниз, никаких пустырей */
+    padding-top: calc(var(--mobile-header-h, 86px) + 20px) !important;
+    padding-bottom: 60px !important;
+  }
+
+  /* Отключаем перехват скролла внутренними текстовыми блоками */
+  #about .accent-copy-block, #about .principles, 
+  .usen-about-copy, #contact .contact-form, #signal .signal-body,
+  #hero .hero-story {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    overscroll-behavior: auto !important;
+  }
+
+  /* 2. ЧИНИМ БЛОК "УЧАСТИЕ" (SIGNAL) */
+  /* Прячем блок "Обратите внимание" по твоей просьбе */
+  #signal .signal-note {
+    display: none !important; 
+  }
+  
+  /* Жестко возвращаем видимость кнопок */
+  #signal .final-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    margin-top: 20px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  #signal .final-actions a, 
+  #signal .final-actions button,
+  #signal .final-actions .share-btn-wrap {
+    display: flex !important;
+    width: 100% !important;
+  }
+
+  /* 3. ФИКСИМ КОНТАКТЫ */
+  #contact .contact-grid, #contact .contact-frame {
+    height: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+  }
+}
+</style>
 
 </body>
 </html>
