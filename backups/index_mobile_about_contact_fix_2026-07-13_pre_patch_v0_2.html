@@ -4346,6 +4346,7 @@ Changes:
   }
 
   #hero,
+  #about.about-landing,
   .about-project-landing,
   .project-intro-landing,
   .project-landing-section,
@@ -4353,7 +4354,8 @@ Changes:
   .signal-landing,
   .final-call-landing,
   #docs,
-  #join {
+  #join,
+  #contact.contact-landing {
     min-height: var(--mobile-section-h) !important;
     height: var(--mobile-section-h) !important;
     overflow: hidden !important;
@@ -4377,20 +4379,6 @@ Changes:
   #signal.signal-landing,
   #contact.contact-landing {
     display: block !important;
-  }
-
-  #about.about-landing {
-    height: auto !important;
-    min-height: auto !important;
-    padding: calc(var(--mobile-header-h, 92px) + 20px) 18px 60px !important;
-    overflow: visible !important;
-  }
-
-  #contact.contact-landing {
-    height: auto !important;
-    min-height: auto !important;
-    padding: calc(var(--mobile-header-h, 92px) + 20px) 18px 60px !important;
-    overflow: visible !important;
   }
 
   #about .about-reframe-title,
@@ -4423,7 +4411,7 @@ Changes:
   #about .about-reframe-grid {
     display: grid !important;
     grid-template-columns: 1fr !important;
-    grid-template-rows: auto auto !important;
+    grid-template-rows: auto minmax(0, 1fr) minmax(0, .82fr) !important;
     row-gap: 10px !important;
     align-content: start !important;
     width: 100% !important;
@@ -4444,12 +4432,10 @@ Changes:
 
   #about .accent-copy-block {
     padding: 15px 16px !important;
-    max-height: none !important;
-    height: auto !important;
-    overflow: visible !important;
+    max-height: 38svh !important;
+    overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: auto;
-    text-align: left !important;
+    overscroll-behavior: contain;
   }
 
   #about .accent-copy-block h3 {
@@ -4462,12 +4448,6 @@ Changes:
     font-size: 15px !important;
     line-height: 1.48 !important;
     margin-bottom: 9px !important;
-    text-align: left !important;
-  }
-
-  #about .mobile-read-more,
-  #about .inline-next {
-    display: none !important;
   }
 
   #about .principles {
@@ -4655,10 +4635,9 @@ Changes:
   }
 
   #contact.contact-landing {
-    height: auto !important;
-    min-height: auto !important;
-    padding: calc(var(--mobile-header-h, 92px) + 20px) 18px 60px !important;
-    overflow: visible !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -4672,9 +4651,8 @@ Changes:
   }
 
   #contact .contact-form {
-    height: auto !important;
     padding: 22px !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
   #contact .contact-form label,
