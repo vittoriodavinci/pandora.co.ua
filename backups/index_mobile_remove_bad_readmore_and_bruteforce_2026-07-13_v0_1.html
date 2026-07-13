@@ -5821,9 +5821,80 @@ Changes:
 }
 </style>
 
+<script>
+/*
+  "Читать далее" that only appears when text genuinely doesn't fit, and
+  expands so the reader keeps their place instead of the page just
+  growing downward underneath them.
 
-<!-- Removed 2026-07-13: About-only mobile read-more script caused clipping/button. -->
+  How it decides whether to collapse: it measures the block's real
+  rendered height (scrollHeight) against a generous mobile reading
+  budget. If the full text already fits, nothing happens - no button, no
+  collapsing, exactly like the rest of the site.
 
+  How "expands upward": clicking the button reveals the full text (grows
+  the box downward, as any block of text must), but immediately after,
+  the script scrolls the page so the TOP of that text block lands just
+  under the fixed nav - i.e. the reader is repositioned to the start of
+  what they just revealed, instead of being left wherever the button
+  used to be (which would often show them the tail end of the new text
+  and force them to scroll back up manually to actually read it).
+*/
+(function () {
+  function setupReadMore(el) {
+    if (!el || el.dataset.pandoraReadMoreInit) return;
+    el.dataset.pandoraReadMoreInit = '1';
+
+    var fullHeight = el.scrollHeight;
+    var budget = Math.round(window.innerHeight * 0.62);
+    if (fullHeight <= budget) return; // fits already, leave it alone
+
+    el.style.maxHeight = budget + 'px';
+    el.style.overflow = 'hidden';
+    el.style.position = 'relative';
+
+    var fade = document.createElement('div');
+    fade.setAttribute('aria-hidden', 'true');
+    fade.style.cssText = 'position:absolute;left:0;right:0;bottom:0;height:56px;' +
+      'background:linear-gradient(rgba(13,13,13,0),rgba(13,13,13,0.96));pointer-events:none;';
+    el.appendChild(fade);
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = 'Читать далее';
+    btn.style.cssText = 'display:block;margin:14px auto 0;padding:10px 22px;' +
+      'background:transparent;border:1px solid rgba(200,168,75,.42);color:var(--accent,#c8a84b);' +
+      'font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;';
+    el.insertAdjacentElement('afterend', btn);
+
+    btn.addEventListener('click', function () {
+      el.style.maxHeight = 'none';
+      el.style.overflow = 'visible';
+      fade.remove();
+      btn.remove();
+      var navEl = document.querySelector('nav');
+      var offset = (navEl ? navEl.getBoundingClientRect().height : 92) + 14;
+      var top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  }
+
+  function init() {
+    document.querySelectorAll('#about .accent-copy-block').forEach(setupReadMore);
+  }
+
+  if (window.matchMedia('(max-width: 900px)').matches) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(init);
+    }
+  }
+})();
+</script>
 
 <script>
 /*
@@ -5853,6 +5924,10 @@ Changes:
   }
 })();
 </script>
+
+
+}
+</style>
 
 </body>
 </html>
