@@ -5099,24 +5099,24 @@ Changes:
 
   #contact.contact-landing {
     --mobile-footer-h: 74px;
-    min-height: auto !important;
-    height: auto !important;
-    padding: calc(var(--mobile-header-h, 92px) + 20px) 18px 60px !important;
-    overflow: visible !important;
+    min-height: calc(100svh - var(--mobile-header-h) - var(--mobile-footer-h)) !important;
+    height: calc(100svh - var(--mobile-header-h) - var(--mobile-footer-h)) !important;
+    padding: 0 18px 8px !important;
+    overflow: hidden !important;
   }
 
   #contact .contact-frame,
   #contact .contact-grid {
-    height: auto !important;
-    min-height: auto !important;
-    overflow: visible !important;
+    height: 100% !important;
+    min-height: 0 !important;
   }
 
   #contact .contact-form {
-    height: auto !important;
+    height: 100% !important;
     padding: 14px 18px !important;
     gap: 8px !important;
-    overflow: visible !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -5752,9 +5752,8 @@ Changes:
   /* #about: let the card and grid size to their actual content instead
      of being squeezed into a fixed fraction of the viewport. */
   #about.about-landing {
-    min-height: auto !important;
-    height: auto !important;
-    padding-bottom: 60px !important;
+    min-height: var(--mobile-section-h, 100svh) !important;
+    padding-bottom: 28px !important;
   }
 
   #about .about-reframe-grid,
@@ -5779,9 +5778,7 @@ Changes:
      assumed zero top padding; remove the nested scrollbox so the form
      and the hCaptcha widget are never clipped. */
   #contact.contact-landing {
-    min-height: auto !important;
-    height: auto !important;
-    padding-bottom: 60px !important;
+    min-height: var(--mobile-section-h, 100svh) !important;
   }
 
   #contact .contact-frame,
