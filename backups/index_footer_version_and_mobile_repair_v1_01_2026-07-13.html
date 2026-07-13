@@ -1922,10 +1922,6 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <span data-lang="ru">© 2026 Pandora, coop.</span>
 <span data-lang="en">© 2026 Pandora, coop.</span>
 <span data-lang="es">© 2026 Pandora, coop.</span>
-<!-- ВЕРСИЯ / VERSION MARKER v1.01
-     Временно показывает, какая версия index.html реально попала на сайт.
-     Чтобы отключить вручную: удалить этот комментарий и следующий span.footer-version-marker. -->
-<span class="footer-version-marker" data-file-version="index.html v1.01">(v1.01)</span>
 </div>
 <div class="footer-links">
 <span class="footer-dot">·</span>
@@ -5833,97 +5829,6 @@ Changes:
      стоит стать пайщиком прямо сейчас?") had this; the rule above
      (`.apl-panel-center .usen-question-item[open] .usen-answer`) now
      applies it uniformly to all 4 questions. */
-
-  /* ВЕРСИЯ v1.01 — MOBILE REPAIR MARKER / removable block
-     Что это: временный проверочный блок, повторяющий смысл рабочей заплатки
-     pandora-mobile-hard-reset, но без отдельного нового style-тега.
-     Зачем: убрать причины, которые заплатка лечила: nested scroll, clipped
-     About/Contact, read-more/fade в #about, hidden extra text, обрезку формы.
-     Как отключить вручную: удалить весь блок от строки
-     "ВЕРСИЯ v1.01 — MOBILE REPAIR MARKER" до строки
-     "END ВЕРСИЯ v1.01". Футерную метку удалить отдельно по слову ВЕРСИЯ. */
-
-  /* Нормальный page-scroll: секции не должны становиться внутренними
-     scroll-контейнерами. */
-  html,
-  body {
-    overflow-y: auto !important;
-    height: auto !important;
-  }
-
-  #about.about-landing,
-  #contact.contact-landing {
-    height: auto !important;
-    min-height: auto !important;
-    overflow: visible !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    align-items: stretch !important;
-    align-content: flex-start !important;
-    padding-top: 8px !important;
-    padding-bottom: 72px !important;
-    scroll-snap-align: start !important;
-  }
-
-  /* #about: убить read-more/fade и показать весь текст без обрезки. */
-  #about .mobile-read-more,
-  #about .hero-read-more,
-  #about .inline-next,
-  #about button,
-  #about div[aria-hidden="true"][style*="linear-gradient"] {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-  }
-
-  #about .mobile-read-extra {
-    display: inline !important;
-  }
-
-  #about .about-reframe-grid,
-  #about .about-reframe-copy,
-  #about .accent-copy-block,
-  #about .accent-copy-block *,
-  #about .principles,
-  .usen-about-copy {
-    max-height: none !important;
-    height: auto !important;
-    min-height: auto !important;
-    overflow: visible !important;
-    transform: none !important;
-  }
-
-  #about .accent-copy-block,
-  #about .accent-copy-block * {
-    text-align: left !important;
-  }
-
-  /* #contact: форма и контейнеры не должны иметь height:100%, fixed calc
-     или собственный scroll; иначе низ формы/капча режутся. */
-  #contact .contact-frame,
-  #contact .contact-grid,
-  #contact .contact-form {
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    transform: none !important;
-  }
-
-  #contact .contact-grid {
-    align-items: start !important;
-    align-content: start !important;
-  }
-
-  /* Меню share не должно улетать вниз за экран на mobile. */
-  .share-menu {
-    top: auto !important;
-    bottom: calc(100% + 8px) !important;
-  }
-
-  /* END ВЕРСИЯ v1.01 */
-
 }
 </style>
 
