@@ -1922,10 +1922,10 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <span data-lang="ru">© 2026 Pandora, coop.</span>
 <span data-lang="en">© 2026 Pandora, coop.</span>
 <span data-lang="es">© 2026 Pandora, coop.</span>
-<!-- ВЕРСИЯ / VERSION MARKER v1.02
+<!-- ВЕРСИЯ / VERSION MARKER v1.01
      Временно показывает, какая версия index.html реально попала на сайт.
      Чтобы отключить вручную: удалить этот комментарий и следующий span.footer-version-marker. -->
-<span class="footer-version-marker" data-file-version="index.html v1.02">(v1.02)</span>
+<span class="footer-version-marker" data-file-version="index.html v1.01">(v1.01)</span>
 </div>
 <div class="footer-links">
 <span class="footer-dot">·</span>
@@ -5834,14 +5834,14 @@ Changes:
      (`.apl-panel-center .usen-question-item[open] .usen-answer`) now
      applies it uniformly to all 4 questions. */
 
-  /* ВЕРСИЯ v1.02 — MOBILE REPAIR MARKER / removable block
+  /* ВЕРСИЯ v1.01 — MOBILE REPAIR MARKER / removable block
      Что это: временный проверочный блок, повторяющий смысл рабочей заплатки
      pandora-mobile-hard-reset, но без отдельного нового style-тега.
      Зачем: убрать причины, которые заплатка лечила: nested scroll, clipped
      About/Contact, read-more/fade в #about, hidden extra text, обрезку формы.
      Как отключить вручную: удалить весь блок от строки
-     "ВЕРСИЯ v1.02 — MOBILE REPAIR MARKER" до строки
-     "END ВЕРСИЯ v1.02". Футерную метку удалить отдельно по слову ВЕРСИЯ. */
+     "ВЕРСИЯ v1.01 — MOBILE REPAIR MARKER" до строки
+     "END ВЕРСИЯ v1.01". Футерную метку удалить отдельно по слову ВЕРСИЯ. */
 
   /* Нормальный page-scroll: секции не должны становиться внутренними
      scroll-контейнерами. */
@@ -5916,87 +5916,13 @@ Changes:
     align-content: start !important;
   }
 
-  /* #signal / Участие v1.02: мобильная версия по пользовательской заплатке.
-     Убираем блок "Обратите внимание", возвращаем CTA и держим share-меню
-     над кнопкой, чтобы оно не обрезалось нижним краем экрана. */
-  #signal.signal-landing {
-    height: auto !important;
-    min-height: auto !important;
-    overflow: visible !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    align-items: stretch !important;
-    padding-top: 8px !important;
-    padding-bottom: 72px !important;
-  }
-
-  #signal .signal-note,
-  #signal .signal-lead-bottom,
-  #signal .signal-status {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-  }
-
-  #signal .signal-body,
-  #signal .accent-copy-block {
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    transform: none !important;
-  }
-
-  #signal .final-actions {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    justify-content: flex-start !important;
-    gap: 10px !important;
-    width: 100% !important;
-    margin: 20px 0 0 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    overflow: visible !important;
-    position: relative !important;
-    z-index: 20 !important;
-  }
-
-  #signal .final-actions a,
-  #signal .final-actions button,
-  #signal .final-actions .share-btn-wrap {
-    display: flex !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
-  #signal .share-btn-wrap {
-    position: relative !important;
-    overflow: visible !important;
-    z-index: 30 !important;
-  }
-
-  #signal .share-menu {
-    top: auto !important;
-    bottom: calc(100% + 8px) !important;
-    left: 0 !important;
-    right: auto !important;
-    width: min(100%, 260px) !important;
-    max-height: 54svh !important;
-    overflow-y: auto !important;
-    z-index: 999 !important;
-  }
-
   /* Меню share не должно улетать вниз за экран на mobile. */
   .share-menu {
     top: auto !important;
     bottom: calc(100% + 8px) !important;
   }
 
-  /* END ВЕРСИЯ v1.02 */
+  /* END ВЕРСИЯ v1.01 */
 
 }
 </style>
