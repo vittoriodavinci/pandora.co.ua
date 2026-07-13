@@ -6003,50 +6003,6 @@ Changes:
     display: flex !important;
     width: 100% !important;
   }
-
-  /* BRUTE FORCE PATCH 2026-07-13: user requested to kill About read-more
-     and push About/Contact directly under the top nav menu. */
-  #about.about-landing,
-  #contact.contact-landing {
-    height: auto !important;
-    min-height: auto !important;
-    padding-top: calc(var(--mobile-header-h, 86px) + 2px) !important;
-    padding-bottom: 72px !important;
-    overflow: visible !important;
-    justify-content: flex-start !important;
-    align-items: stretch !important;
-    scroll-margin-top: var(--mobile-header-h, 86px) !important;
-  }
-
-  #about .about-reframe-grid,
-  #about .about-reframe-copy,
-  #about .accent-copy-block,
-  #about .principles,
-  #contact .contact-frame,
-  #contact .contact-grid,
-  #contact .contact-form {
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    transform: none !important;
-  }
-
-  #about .mobile-read-more,
-  #about .hero-read-more,
-  #about .inline-next,
-  #about button,
-  #about div[aria-hidden="true"][style*="linear-gradient"] {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-  }
-
-  #about .accent-copy-block,
-  #about .accent-copy-block * {
-    text-align: left !important;
-  }
-
 }
 </style>
 
