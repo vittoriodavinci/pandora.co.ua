@@ -6015,10 +6015,7 @@ Changes:
     overflow: visible !important;
     justify-content: flex-start !important;
     align-items: stretch !important;
-    /* Do not reserve header space here: it shows previous section fragments.
-       Raise these two broken screens aggressively as requested. */
-    scroll-margin-top: -25svh !important;
-    scroll-snap-align: start !important;
+    scroll-margin-top: var(--mobile-header-h, 86px) !important;
   }
 
   #about .about-reframe-grid,
