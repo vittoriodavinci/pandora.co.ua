@@ -1922,10 +1922,10 @@ section, #hero, .project-intro-landing, .project-landing-section, .final-call-la
 <span data-lang="ru">© 2026 Pandora, coop.</span>
 <span data-lang="en">© 2026 Pandora, coop.</span>
 <span data-lang="es">© 2026 Pandora, coop.</span>
-<!-- ВЕРСИЯ / VERSION MARKER v1.03
+<!-- ВЕРСИЯ / VERSION MARKER v1.05
      Временно показывает, какая версия index.html реально попала на сайт.
      Чтобы отключить вручную: удалить этот комментарий и следующий span.footer-version-marker. -->
-<span class="footer-version-marker" data-file-version="index.html v1.03">(v1.03)</span>
+<span class="footer-version-marker" data-file-version="index.html v1.05">(v1.05)</span>
 </div>
 <div class="footer-links">
 <span class="footer-dot">·</span>
@@ -5996,166 +5996,59 @@ Changes:
     bottom: calc(100% + 8px) !important;
   }
 
-  /* ВЕРСИЯ v1.03 — MOBILE SWIPE + CONTACT COMPACT / removable block
-     Что это: точечная интеграция механизмов из pandora-mobile-hard-reset.
-     Свайп/scroll: сохраняем нормальный page-scroll и snap-start без
-     внутренних scroll-контейнеров и без разрушительного scroll-margin-top:-25svh.
-     Связаться: уплотняем форму/футер, чтобы при переходе из меню больше
-     помещалось на одном mobile-экране.
-     Как отключить вручную: удалить весь блок от строки
-     "ВЕРСИЯ v1.03 — MOBILE SWIPE + CONTACT COMPACT" до строки
-     "END ВЕРСИЯ v1.03". */
 
-  html,
-  body {
-    overflow-y: auto !important;
-    height: auto !important;
-    scroll-behavior: smooth !important;
-    scroll-snap-type: y proximity !important;
-    overscroll-behavior-y: contain !important;
-  }
 
-  #hero,
-  #about.about-landing,
-  .project-intro-landing,
-  .project-landing-section,
-  .about-project-landing,
-  .examples-landing,
-  .signal-landing,
-  .final-call-landing,
-  #docs,
-  #join,
-  #contact.contact-landing {
-    scroll-snap-align: start !important;
-    scroll-snap-stop: normal !important;
-  }
-
-  /* Интеграция безопасной части hard-reset: убираем внутренние ловушки
-     высоты/overflow, чтобы мобильный свайп шёл по странице, а не застревал
-     в отдельных секциях. */
-  #hero,
-  #about.about-landing,
-  .project-intro-landing,
-  .project-landing-section,
-  .examples-landing,
-  .signal-landing,
-  .final-call-landing,
-  #docs,
-  #join,
-  #contact.contact-landing {
-    height: auto !important;
-    min-height: auto !important;
-    overflow: visible !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-  }
-
-  /* Проектный carousel не должен терять горизонтальный свайп/кнопки. */
-  .about-project-landing {
-    height: auto !important;
-    min-height: auto !important;
-    overflow: hidden !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-  }
-
-  .about-project-landing .apl-stage,
-  .about-project-landing .apl-panels,
-  .about-project-landing .apl-panel,
-  .about-project-landing .apl-panel.apl-active {
-    min-height: 0 !important;
-    max-height: none !important;
-  }
-
-  /* Связаться: компактный mobile layout под задачу "форма + футер". */
-  #contact.contact-landing {
-    padding-top: 6px !important;
-    padding-bottom: 10px !important;
-    align-items: stretch !important;
-  }
-
-  #contact .contact-frame,
-  #contact .contact-grid,
+  /* ВЕРСИЯ v1.04 — CONTACT FORM INTERNAL COMPACTION / removable block
+     Футер измерен: 74px на 390x844, 393x873 и 412x915.
+     Уменьшение формы ровно на 74px выполняется только внутри рамки:
+     4 обычных поля: -16px; textarea: -18px; 7 gaps: -28px;
+     padding рамки: -8px; кнопка: -4px. Секция, футер, hCaptcha,
+     соседние экраны и scroll/snap этим блоком не изменяются.
+     Для отключения удалить до строки END ВЕРСИЯ v1.04. */
   #contact .contact-form {
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    transform: none !important;
-  }
-
-  #contact .contact-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 8px !important;
-    align-items: start !important;
-    align-content: start !important;
-  }
-
-  #contact .contact-form {
-    gap: 7px !important;
-    padding: 12px !important;
-  }
-
-  #contact .contact-form label {
     gap: 4px !important;
-    font-size: 10px !important;
-    letter-spacing: .06em !important;
+    padding: 10px !important;
   }
 
   #contact .contact-form input,
-  #contact .contact-form select,
-  #contact .contact-form textarea {
-    padding: 8px 10px !important;
-    font-size: 13px !important;
-    line-height: 1.22 !important;
-  }
-
-  #contact .contact-phone-row {
-    grid-template-columns: 72px 1fr !important;
-    gap: 6px !important;
+  #contact .contact-form select {
+    height: 34px !important;
+    min-height: 34px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
   }
 
   #contact .contact-form textarea {
-    min-height: 66px !important;
-    max-height: 72px !important;
-  }
-
-  #contact .contact-status {
-    min-height: 0 !important;
-    margin-top: 4px !important;
-    font-size: 11px !important;
+    height: 64px !important;
+    min-height: 64px !important;
+    max-height: 64px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
   }
 
   #contact .contact-submit {
-    min-height: 42px !important;
-    padding: 10px 14px !important;
-  }
-
-  #contact .pandora-hcaptcha {
-    transform: scale(.88) !important;
-    transform-origin: left top !important;
-    margin-top: 0 !important;
-    margin-bottom: -10px !important;
-  }
-
-  footer {
+    height: 32px !important;
+    min-height: 32px !important;
     padding-top: 8px !important;
     padding-bottom: 8px !important;
   }
+  /* END ВЕРСИЯ v1.04 */
 
-  footer .footer-bar {
-    gap: 6px !important;
+  /* ВЕРСИЯ v1.05 — MOBILE END-OF-DOCUMENT SCROLL RESERVE / removable block
+     #contact (579px) + footer (74px) = 653px. На более высоком mobile
+     viewport браузеру не хватает конечной длины страницы, поэтому сверху
+     остаётся часть предыдущего #signal. Псевдоэлемент добавляет только
+     недостающий запас прокрутки после футера: существующие секции, футер,
+     форма, hCaptcha и scroll/snap не изменяются.
+     Для отключения удалить до строки END ВЕРСИЯ v1.05. */
+  body::after {
+    content: "" !important;
+    display: block !important;
+    width: 1px !important;
+    height: max(0px, calc(100svh - 653px)) !important;
+    pointer-events: none !important;
   }
-
-  footer .footer-links {
-    gap: 6px !important;
-    flex-wrap: wrap !important;
-  }
-
-  /* END ВЕРСИЯ v1.03 */
+  /* END ВЕРСИЯ v1.05 */
 
   /* END ВЕРСИЯ v1.02 */
 

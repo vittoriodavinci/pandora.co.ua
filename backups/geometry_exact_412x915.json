@@ -1,0 +1,225 @@
+{
+  "viewport": {
+    "w": 412,
+    "h": 915
+  },
+  "scrollY": 0,
+  "contact": {
+    "top": 2998.03,
+    "bottom": 3577.03,
+    "height": 579,
+    "width": 412,
+    "paddingTop": "8px",
+    "paddingBottom": "72px",
+    "gap": "normal",
+    "display": "flex",
+    "overflow": "visible"
+  },
+  "frame": {
+    "top": 3006.03,
+    "bottom": 3505.03,
+    "height": 499,
+    "width": 376,
+    "paddingTop": "0px",
+    "paddingBottom": "0px",
+    "gap": "normal",
+    "display": "block",
+    "overflow": "visible"
+  },
+  "grid": {
+    "top": 3006.03,
+    "bottom": 3505.03,
+    "height": 499,
+    "width": 376,
+    "paddingTop": "0px",
+    "paddingBottom": "0px",
+    "gap": "22px",
+    "display": "block",
+    "overflow": "visible"
+  },
+  "form": {
+    "top": 3006.03,
+    "bottom": 3505.03,
+    "height": 499,
+    "width": 376,
+    "paddingTop": "10px",
+    "paddingBottom": "10px",
+    "gap": "4px",
+    "display": "grid",
+    "overflow": "visible"
+  },
+  "fields": [
+    {
+      "text": "ВАШЕ ІМ’Я",
+      "box": {
+        "top": 3017.03,
+        "bottom": 3068.03,
+        "height": 51,
+        "width": 354,
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "gap": "4px",
+        "display": "grid",
+        "overflow": "visible"
+      },
+      "control": {
+        "top": 3034.03,
+        "bottom": 3068.03,
+        "height": 34,
+        "width": 354,
+        "paddingTop": "6px",
+        "paddingBottom": "6px",
+        "gap": "normal",
+        "display": "block",
+        "overflow": "clip"
+      }
+    },
+    {
+      "text": "EMAIL",
+      "box": {
+        "top": 3076.03,
+        "bottom": 3127.03,
+        "height": 51,
+        "width": 354,
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "gap": "4px",
+        "display": "grid",
+        "overflow": "visible"
+      },
+      "control": {
+        "top": 3093.03,
+        "bottom": 3127.03,
+        "height": 34,
+        "width": 354,
+        "paddingTop": "6px",
+        "paddingBottom": "6px",
+        "gap": "normal",
+        "display": "block",
+        "overflow": "clip"
+      }
+    },
+    {
+      "text": "КРАЇНА",
+      "box": {
+        "top": 3135.03,
+        "bottom": 3186.03,
+        "height": 51,
+        "width": 354,
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "gap": "4px",
+        "display": "grid",
+        "overflow": "visible"
+      },
+      "control": {
+        "top": 3152.03,
+        "bottom": 3186.03,
+        "height": 34,
+        "width": 354,
+        "paddingTop": "6px",
+        "paddingBottom": "6px",
+        "gap": "normal",
+        "display": "block",
+        "overflow": "visible"
+      }
+    },
+    {
+      "text": "ТЕЛЕФОН",
+      "box": {
+        "top": 3194.03,
+        "bottom": 3245.03,
+        "height": 51,
+        "width": 354,
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "gap": "4px",
+        "display": "grid",
+        "overflow": "visible"
+      },
+      "control": {
+        "top": 3211.03,
+        "bottom": 3245.03,
+        "height": 34,
+        "width": 86,
+        "paddingTop": "6px",
+        "paddingBottom": "6px",
+        "gap": "normal",
+        "display": "block",
+        "overflow": "clip"
+      }
+    },
+    {
+      "text": "ПОВІДОМЛЕННЯ",
+      "box": {
+        "top": 3253.03,
+        "bottom": 3334.03,
+        "height": 81,
+        "width": 354,
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "gap": "4px",
+        "display": "grid",
+        "overflow": "visible"
+      },
+      "control": {
+        "top": 3270.03,
+        "bottom": 3334.03,
+        "height": 64,
+        "width": 354,
+        "paddingTop": "6px",
+        "paddingBottom": "6px",
+        "gap": "normal",
+        "display": "block",
+        "overflow": "auto"
+      }
+    }
+  ],
+  "captcha": {
+    "top": 3350.03,
+    "bottom": 3414.03,
+    "height": 64,
+    "width": 250,
+    "paddingTop": "0px",
+    "paddingBottom": "0px",
+    "gap": "normal",
+    "display": "block",
+    "overflow": "hidden"
+  },
+  "submit": {
+    "top": 3462.03,
+    "bottom": 3494.03,
+    "height": 32,
+    "width": 237.34,
+    "paddingTop": "8px",
+    "paddingBottom": "8px",
+    "gap": "normal",
+    "display": "block",
+    "overflow": "visible"
+  },
+  "footer": {
+    "top": 3577.03,
+    "bottom": 3651.03,
+    "height": 74,
+    "width": 412,
+    "paddingTop": "14px",
+    "paddingBottom": "18px",
+    "gap": "normal",
+    "display": "block",
+    "overflow": "visible"
+  },
+  "signalJoin": {
+    "top": 2828.03,
+    "bottom": 2872.03,
+    "height": 44,
+    "width": 376,
+    "paddingTop": "13px",
+    "paddingBottom": "13px",
+    "gap": "normal",
+    "display": "flex",
+    "overflow": "visible"
+  },
+  "body": {
+    "scrollHeight": 3651
+  }
+}
