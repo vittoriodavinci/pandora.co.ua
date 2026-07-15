@@ -40,6 +40,8 @@
   .pandora-country-header{display:none}
   .pandora-language-list{grid-column:2 / -1;justify-content:flex-start}
   .pandora-display-lang{padding:14px 16px 18px}
+  .pandora-language-list,.pandora-display-lang-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;width:100%}
+  .pandora-country-lang,.pandora-display-lang-btn{min-width:0;padding:7px 3px;font-size:9.5px;letter-spacing:.02em;white-space:nowrap;text-align:center}
 }
 
 .pandora-country-header>div,

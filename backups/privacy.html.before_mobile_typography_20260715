@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Політика конфіденційності — Pandora / U.S.E.N.</title>
+<meta name="description" content="Политика конфиденциальности Pandora / U.S.E.N.: какие данные собираются, как используются формы, Web3Forms, hCaptcha, язык сайта и будущий кабинет участника.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://pandora.co.ua/privacy.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pandora.co.ua/privacy.html">
+<meta property="og:title" content="Политика конфиденциальности Pandora / U.S.E.N.">
+<meta property="og:description" content="Как Pandora / U.S.E.N. обрабатывает данные форм, язык сайта, защиту от спама и будущие данные кабинета.">
+<meta property="og:image" content="https://pandora.co.ua/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Политика конфиденциальности Pandora / U.S.E.N.">
+<meta name="twitter:description" content="Как Pandora / U.S.E.N. обрабатывает данные форм, язык сайта, защиту от спама и будущие данные кабинета.">
+<meta name="twitter:image" content="https://pandora.co.ua/assets/og-image.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/pandora-language-modal.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=DM+Sans:wght@300;400;500&amp;family=Barlow+Condensed:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<script>try{document.documentElement.setAttribute('data-pandora-lang',localStorage.getItem('pandora_lang')||localStorage.getItem('pandora-lang')||'uk')}catch(e){document.documentElement.setAttribute('data-pandora-lang','uk')}</script>
+<style>
+:root{--bg:#080808;--text:#f5f2ed;--muted:rgba(245,242,237,.68);--line:rgba(255,255,255,.11);--gold:#c8a84b}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 16% 12%,rgba(212,43,43,.12),transparent 28%),radial-gradient(circle at 84% 10%,rgba(26,58,122,.16),transparent 34%),var(--bg);color:var(--text);font-family:"DM Sans",Arial,sans-serif;line-height:1.65}
+
+main{width:min(880px,calc(100% - 40px));margin:0 auto;padding:clamp(48px,8vw,88px) 0}
+h1{margin:0 0 30px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(38px,5.2vw,68px);line-height:1;font-weight:400;letter-spacing:.01em}.lead{color:var(--gold);margin:0 0 34px;font-size:14px;letter-spacing:.06em}.card{border-left:2px solid var(--gold);background:rgba(200,168,75,.035);padding:24px 28px;margin:18px 0}h2{font-size:17px;letter-spacing:.12em;text-transform:uppercase;margin:34px 0 10px;color:var(--gold)}p,li{color:var(--muted);font-size:15px}ul{padding-left:22px}
+html[data-pandora-lang="uk"] [data-lang].active:not([data-lang="uk"]),html[data-pandora-lang="ru"] [data-lang].active:not([data-lang="ru"]),html[data-pandora-lang="en"] [data-lang].active:not([data-lang="en"]),html[data-pandora-lang="es"] [data-lang].active:not([data-lang="es"]){display:none}
+html[data-pandora-lang="uk"] [data-lang="uk"],html[data-pandora-lang="ru"] [data-lang="ru"],html[data-pandora-lang="en"] [data-lang="en"],html[data-pandora-lang="es"] [data-lang="es"]{display:block}
+html[data-pandora-lang="uk"] span[data-lang="uk"],html[data-pandora-lang="ru"] span[data-lang="ru"],html[data-pandora-lang="en"] span[data-lang="en"],html[data-pandora-lang="es"] span[data-lang="es"]{display:inline}
+[data-lang]{display:none}[data-lang].active{display:block}span[data-lang].active{display:inline}
+@media(max-width:620px){main{width:min(100% - 28px,880px);padding-top:38px}.card{padding:18px}}
+
+
+html{height:100%;background:var(--bg);scroll-behavior:smooth}body{height:100vh;overflow:hidden}.site-header{position:fixed;top:0;left:0;right:0;z-index:100;height:73px;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;background:rgba(13,13,13,.9);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(16px)}
+.site-brand{display:flex;align-items:center;gap:14px;color:var(--text);text-decoration:none;min-width:max-content}.site-brand strong{font-size:14px;font-weight:500;letter-spacing:.05em}.site-mark{position:relative;width:38px;height:38px;flex:0 0 auto}.site-mark span{position:absolute;width:24px;height:24px;border-radius:50%;opacity:.75}.site-mark-r{background:#d42b2b;left:0;top:3px}.site-mark-g{background:#1a7a3c;right:0;top:3px}.site-mark-b{background:#1a3a7a;left:7px;bottom:0}
+.site-nav{display:flex;align-items:center;gap:18px;color:var(--text);font-family:"Barlow Condensed","DM Sans",Arial,sans-serif;font-size:13px;font-weight:400;line-height:16px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}.site-nav a,.site-footer a,.site-user-link,.site-user-auth-link{color:inherit;text-decoration:none;opacity:.45;transition:opacity .2s,color .15s}.site-nav a:hover,.site-footer a:hover,.site-user-auth-link:hover,.site-user-link:hover{opacity:1;color:var(--gold)}
+.site-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px}.site-icon-link,.site-lang,.site-user-btn{width:40px;height:40px;display:grid;place-items:center;border:0;background:transparent;color:var(--text);opacity:.7;cursor:pointer;padding:0;border-radius:50%;transition:all .2s}.site-lang:hover,.site-user-btn:hover{opacity:1;background:rgba(255,255,255,.08)}.site-user-btn{color:var(--gold);opacity:.85}.site-user-menu{position:relative}.site-user-dropdown{display:none;position:absolute;top:calc(100% + 6px);right:0;min-width:240px;border:1px solid rgba(255,255,255,.07);border-radius:8px;background:rgba(13,13,13,.97);backdrop-filter:blur(16px);overflow:hidden}.site-user-dropdown.open{display:block}.site-user-auth-row{display:flex;align-items:center;gap:6px;padding:14px 18px;color:var(--text);font:13px "DM Sans",Arial,sans-serif;border-bottom:1px solid rgba(255,255,255,.07)}.site-user-separator{opacity:.55}.site-user-link{display:block;padding:14px 18px;font:13px "DM Sans",Arial,sans-serif}
+.site-main{position:fixed;top:73px;bottom:44px;left:0;right:0;width:100%;margin:0;overflow:auto;padding:clamp(42px,7vh,72px) 0 78px}.site-main>*{width:min(1100px,calc(100% - 40px));margin-left:auto;margin-right:auto}.site-page-title{margin:0 0 30px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(38px,5.2vw,68px);line-height:1;font-weight:400;letter-spacing:.01em}
+.site-footer{position:fixed;left:0;right:0;bottom:0;z-index:100;height:44px;border-top:0;background:rgba(13,13,13,.92);padding:0 80px;display:flex;align-items:center}.site-footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:12px;width:100%;max-width:1180px;margin:0 auto;color:rgba(245,242,237,.5);font-size:12px;line-height:16px}.site-footer-left,.site-footer-right{display:flex;align-items:center;gap:2px;flex-wrap:nowrap}.site-footer-dot{opacity:.3;margin:0 4px}.site-footer-socials{display:flex;align-items:center;gap:10px}.site-footer .site-icon-link{display:flex;width:auto;height:auto;border-radius:0;color:var(--text);opacity:.45}.site-footer .site-icon-link:hover{opacity:.85;background:transparent}.site-footer-lang{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:rgba(245,242,237,.55);font:12px/16px "DM Sans",Arial,sans-serif;cursor:pointer;padding:0;white-space:nowrap}.site-footer-lang:hover{color:rgba(245,242,237,.85)}
+@media(max-width:1280px){.site-header{padding:16px 36px}.site-footer{padding:0 36px}}
+@media(max-width:1024px){.site-header{padding:14px 24px}.site-footer{padding:0 24px}}
+@media(max-width:980px){html,body{overflow:hidden!important}.site-header{height:86px;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand actions" "links links";align-items:center;padding:8px 16px 5px;row-gap:3px}.site-brand{grid-area:brand;min-width:0;gap:12px}.site-brand strong{font-size:16px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.site-mark{width:32px;height:32px}.site-mark span{width:21px;height:21px}.site-nav{grid-area:links;display:flex;justify-content:space-between;gap:6px;width:100%;padding-top:5px;border-top:1px solid rgba(255,255,255,.06);overflow-x:auto;scrollbar-width:none;font-size:13px;line-height:1;letter-spacing:.13em}.site-nav::-webkit-scrollbar{display:none}.site-actions{grid-area:actions;justify-self:end;gap:8px}.site-icon-link,.site-lang,.site-user-btn{width:31px;height:31px}.site-main{top:86px;bottom:74px;padding:24px 0 32px}.site-main>*{width:min(1100px,calc(100% - 36px))}.site-main h1{font-size:clamp(32px,10vw,44px);overflow-wrap:anywhere}.site-footer{height:74px;padding:14px 20px 18px}.site-footer-inner{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:center;gap:10px 14px}.site-footer-left{display:contents}.site-footer-left>span:first-child{grid-column:1;grid-row:1}.site-footer-left a{white-space:nowrap}.site-footer-dot{margin:0;opacity:.25}.site-footer-left .site-footer-dot{display:inline}.site-footer-right{grid-column:2;grid-row:1;justify-self:end}.site-footer-left a,.site-footer-left .site-footer-dot{grid-row:2}.site-footer-left a:nth-of-type(1){grid-column:1}.site-footer-socials{gap:12px}.site-footer-lang span:not(.active){display:none}}
+
+</style>
+<style id="site-footer-mobile-lock">
+@media(max-width:980px){
+  .site-footer{height:74px!important;padding:14px 20px 18px!important}
+  .site-footer-inner{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;grid-template-rows:auto auto!important;align-items:center!important;gap:10px 14px!important;width:100%!important}
+  .site-footer-left{display:contents!important}
+  .site-footer-copy{grid-column:1!important;grid-row:1!important;white-space:nowrap!important}
+  .site-footer-links{grid-column:1/-1!important;grid-row:2!important;display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:0 6px!important;min-width:0!important}
+  .site-footer-links .site-footer-dot{margin:0!important;opacity:.25!important}
+  .site-footer-links a{white-space:nowrap!important;color:rgba(245,242,237,.62)!important}
+  .site-footer-right{grid-column:2!important;grid-row:1!important;justify-self:end!important;display:flex!important;align-items:center!important;gap:14px!important}
+}
+</style>
+</head>
+<body data-page="privacy">
+<header class="site-header">
+  <a class="site-brand" href="index.html#hero" aria-label="&#1050;&#1086;&#1086;&#1087;&#1077;&#1088;&#1072;&#1090;&#1080;&#1074; &#1055;&#1072;&#1085;&#1076;&#1086;&#1088;&#1072;">
+    <span class="site-mark" aria-hidden="true"><span class="site-mark-r"></span><span class="site-mark-g"></span><span class="site-mark-b"></span></span>
+    <strong><span data-lang="uk" class="active">&#1050;&#1086;&#1086;&#1087;&#1077;&#1088;&#1072;&#1090;&#1080;&#1074; &#1055;&#1072;&#1085;&#1076;&#1086;&#1088;&#1072;</span><span data-lang="ru">&#1050;&#1086;&#1086;&#1087;&#1077;&#1088;&#1072;&#1090;&#1080;&#1074; &#1055;&#1072;&#1085;&#1076;&#1086;&#1088;&#1072;</span><span data-lang="en">Pandora Cooperative</span><span data-lang="es">Cooperativa Pandora</span></strong>
+  </a>
+  <nav class="site-nav" aria-label="Site navigation">
+    <a href="index.html#about"><span data-lang="uk" class="active">&#1055;&#1088;&#1086; &#1085;&#1072;&#1089;</span><span data-lang="ru">&#1054; &#1085;&#1072;&#1089;</span><span data-lang="en">About</span><span data-lang="es">Nosotros</span></a>
+    <a href="index.html#project-intro"><span data-lang="uk" class="active">&#1055;&#1088;&#1086; &#1087;&#1088;&#1086;&#1108;&#1082;&#1090;</span><span data-lang="ru">&#1054; &#1087;&#1088;&#1086;&#1077;&#1082;&#1090;&#1077;</span><span data-lang="en">About the project</span><span data-lang="es">Sobre el proyecto</span></a>
+    <a href="index.html#signal"><span data-lang="uk" class="active">&#1059;&#1095;&#1072;&#1089;&#1090;&#1100;</span><span data-lang="ru">&#1059;&#1095;&#1072;&#1089;&#1090;&#1080;&#1077;</span><span data-lang="en">Participation</span><span data-lang="es">Participaci&oacute;n</span></a>
+    <a href="index.html#contact"><span data-lang="uk" class="active">&#1047;&#1074;’&#1103;&#1079;&#1072;&#1090;&#1080;&#1089;&#1103;</span><span data-lang="ru">&#1057;&#1074;&#1103;&#1079;&#1072;&#1090;&#1100;&#1089;&#1103;</span><span data-lang="en">Contact us</span><span data-lang="es">Contactar</span></a>
+  </nav>
+  <div class="site-actions">
+    <button class="site-lang" type="button" onclick="window.openLanguageModal ? openLanguageModal() : null" aria-label="Language">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+    </button>
+    <div class="site-user-menu">
+      <button class="site-user-btn" type="button" onclick="toggleSiteUserMenu()" aria-label="Account menu">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+      <div class="site-user-dropdown" id="siteUserDropdown">
+        <div class="site-user-auth-row"><a class="site-user-auth-link" href="index.html#login"><span data-lang="uk" class="active">&#1059;&#1074;&#1110;&#1081;&#1090;&#1080;</span><span data-lang="ru">&#1042;&#1086;&#1081;&#1090;&#1080;</span><span data-lang="en">Log in</span><span data-lang="es">Iniciar sesi&oacute;n</span></a><span class="site-user-separator">/</span><a class="site-user-auth-link" href="index.html#register"><span data-lang="uk" class="active">&#1047;&#1072;&#1088;&#1077;&#1108;&#1089;&#1090;&#1088;&#1091;&#1074;&#1072;&#1090;&#1080;&#1089;&#1103;</span><span data-lang="ru">&#1047;&#1072;&#1088;&#1077;&#1075;&#1080;&#1089;&#1090;&#1088;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;&#1089;&#1103;</span><span data-lang="en">Sign up</span><span data-lang="es">Registrarse</span></a></div>
+        <a class="site-user-link" href="faq.html"><span data-lang="uk" class="active">&#1055;&#1080;&#1090;&#1072;&#1085;&#1085;&#1103;</span><span data-lang="ru">&#1042;&#1086;&#1087;&#1088;&#1086;&#1089;&#1099;</span><span data-lang="en">FAQ</span><span data-lang="es">Preguntas</span></a>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="site-main">
+
+<article data-lang="uk">
+  <h1>Політика конфіденційності</h1>
+  <p class="lead">Чернетка для тестового запуску. Документ буде уточнюватися.</p>
+  <section class="card"><p>Цей документ описує, які дані можуть оброблятися під час тестового використання сайту Pandora / U.S.E.N. Формулювання є робочими і не замінюють фінальний юридичний документ.</p></section>
+  <h2>Які дані можуть збиратися</h2>
+  <p>Сайт може отримувати дані, які користувач сам вводить у форми: ім’я, email, телефон, країну, месенджери, текст звернення, коментарі та дані заявки. Також можуть оброблятися технічні дані браузера, необхідні для роботи сайту, безпеки та запобігання спаму.</p>
+  <h2>Цілі обробки</h2>
+  <ul><li>зворотний зв’язок з користувачем;</li><li>обробка заявки або звернення;</li><li>комунікація з учасником проєкту;</li><li>покращення сайту та користувацького досвіду;</li><li>безпека та запобігання спаму.</li></ul>
+  <h2>Передача даних</h2>
+  <p>Дані не продаються третім особам. Для надсилання форм можуть використовуватися зовнішні сервіси обробки заявок і повідомлень. Такі сервіси отримують лише дані, необхідні для доставки звернення.</p>
+  <h2>Права користувача</h2>
+  <p>Користувач може запросити уточнення, виправлення або видалення своїх даних, якщо це технічно можливо в межах поточного етапу проєкту. Для звернення використовуйте email: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <h2>Строк зберігання</h2>
+  <p>Дані зберігаються стільки, скільки необхідно для обробки звернення, тестування сайту, підготовки документів проєкту та виконання розумних організаційних завдань.</p>
+  <h2>Cookies і локальне сховище</h2>
+  <p>Сайт може використовувати localStorage для збереження вибраної мови інтерфейсу та користувацьких налаштувань. Це допомагає відновити вибрану мову при повторному відкритті сайту.</p>
+  <h2>Контакт</h2>
+  <p>З питань конфіденційності: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <p>Дата оновлення: 01.07.2026</p>
+</article>
+<article data-lang="ru">
+  <h1>Политика конфиденциальности</h1>
+  <p class="lead">Черновик для тестового запуска. Документ будет уточняться.</p>
+  <section class="card"><p>Этот документ описывает, какие данные могут обрабатываться при тестовом использовании сайта Pandora / U.S.E.N. Формулировки являются рабочими и не заменяют финальный юридический документ.</p></section>
+  <h2>Какие данные могут собираться</h2>
+  <p>Сайт может получать данные, которые пользователь сам вводит в формы: имя, email, телефон, страну, мессенджеры, текст обращения, комментарии и данные заявки. Также могут обрабатываться технические данные браузера, необходимые для работы сайта, безопасности и предотвращения спама.</p>
+  <h2>Цели обработки</h2>
+  <ul><li>обратная связь с пользователем;</li><li>обработка заявки или обращения;</li><li>коммуникация с участником проекта;</li><li>улучшение сайта и пользовательского опыта;</li><li>безопасность и предотвращение спама.</li></ul>
+  <h2>Передача данных</h2>
+  <p>Данные не продаются третьим лицам. Для отправки форм могут использоваться внешние сервисы обработки заявок и сообщений. Такие сервисы получают только данные, необходимые для доставки обращения.</p>
+  <h2>Права пользователя</h2>
+  <p>Пользователь может запросить уточнение, исправление или удаление своих данных, если это технически возможно в рамках текущего этапа проекта. Для обращения используйте email: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <h2>Срок хранения</h2>
+  <p>Данные хранятся столько, сколько необходимо для обработки обращения, тестирования сайта, подготовки документов проекта и выполнения разумных организационных задач.</p>
+  <h2>Cookies и локальное хранилище</h2>
+  <p>Сайт может использовать localStorage для сохранения выбранного языка интерфейса и пользовательских настроек. Это помогает восстановить выбранный язык при повторном открытии сайта.</p>
+  <h2>Контакт</h2>
+  <p>По вопросам конфиденциальности: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <p>Дата обновления: 01.07.2026</p>
+</article>
+<article data-lang="en">
+  <h1>Privacy Policy</h1>
+  <p class="lead">Draft for the test launch. The document will be clarified.</p>
+  <section class="card"><p>This document describes what data may be processed during test use of the Pandora / U.S.E.N. website. The wording is provisional and does not replace the final legal document.</p></section>
+  <h2>What data may be collected</h2>
+  <p>The website may receive data that the user enters into forms: name, email, phone number, country, messengers, message text, comments and application data. Technical browser data required for website operation, security and spam prevention may also be processed.</p>
+  <h2>Purposes of processing</h2>
+  <ul><li>feedback and communication with the user;</li><li>processing an application or request;</li><li>communication with a project participant;</li><li>improving the website and user experience;</li><li>security and spam prevention.</li></ul>
+  <h2>Data transfer</h2>
+  <p>Data is not sold to third parties. External services may be used to process forms and messages. Such services receive only the data required to deliver the request.</p>
+  <h2>User rights</h2>
+  <p>The user may request clarification, correction or deletion of their data if this is technically possible at the current stage of the project. Use this email for requests: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <h2>Storage period</h2>
+  <p>Data is stored for as long as necessary to process the request, test the website, prepare project documents and perform reasonable organisational tasks.</p>
+  <h2>Cookies and local storage</h2>
+  <p>The website may use localStorage to save the selected interface language and user settings. This helps restore the selected language when the website is opened again.</p>
+  <h2>Contact</h2>
+  <p>For privacy questions: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <p>Updated: 01.07.2026</p>
+</article>
+<article data-lang="es">
+  <h1>Política de privacidad</h1>
+  <p class="lead">Borrador para el lanzamiento de prueba. El documento será precisado.</p>
+  <section class="card"><p>Este documento describe qué datos pueden procesarse durante el uso de prueba del sitio Pandora / U.S.E.N. Las formulaciones son provisionales y no sustituyen el documento legal final.</p></section>
+  <h2>Qué datos pueden recopilarse</h2>
+  <p>El sitio puede recibir los datos que el usuario introduce en los formularios: nombre, email, teléfono, país, mensajeros, texto del mensaje, comentarios y datos de la solicitud. También pueden procesarse datos técnicos del navegador necesarios para el funcionamiento del sitio, la seguridad y la prevención del spam.</p>
+  <h2>Finalidades del tratamiento</h2>
+  <ul><li>comunicación con el usuario;</li><li>procesamiento de una solicitud o mensaje;</li><li>comunicación con un participante del proyecto;</li><li>mejora del sitio y de la experiencia del usuario;</li><li>seguridad y prevención del spam.</li></ul>
+  <h2>Transferencia de datos</h2>
+  <p>Los datos no se venden a terceros. Para enviar formularios pueden utilizarse servicios externos de procesamiento de solicitudes y mensajes. Estos servicios reciben solo los datos necesarios para entregar el mensaje.</p>
+  <h2>Derechos del usuario</h2>
+  <p>El usuario puede solicitar la aclaración, corrección o eliminación de sus datos si esto es técnicamente posible en la etapa actual del proyecto. Para consultas, use el email: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <h2>Periodo de almacenamiento</h2>
+  <p>Los datos se conservan durante el tiempo necesario para procesar la solicitud, probar el sitio, preparar documentos del proyecto y realizar tareas organizativas razonables.</p>
+  <h2>Cookies y almacenamiento local</h2>
+  <p>El sitio puede usar localStorage para guardar el idioma seleccionado de la interfaz y la configuración del usuario. Esto ayuda a restaurar el idioma elegido al volver a abrir el sitio.</p>
+  <h2>Contacto</h2>
+  <p>Para cuestiones de privacidad: <a href="mailto:usenpandora@gmail.com">usenpandora@gmail.com</a>.</p>
+  <p>Fecha de actualización: 01.07.2026</p>
+</article>
+
+</main>
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-left">
+      <span class="site-footer-copy">&copy; 2026 Pandora, coop.</span>
+      <span class="site-footer-links">
+      <span class="site-footer-dot">&middot;</span>
+      <a href="privacy.html"><span data-lang="uk" class="active">&#1050;&#1086;&#1085;&#1092;&#1110;&#1076;&#1077;&#1085;&#1094;&#1110;&#1081;&#1085;&#1110;&#1089;&#1090;&#1100;</span><span data-lang="ru">&#1050;&#1086;&#1085;&#1092;&#1080;&#1076;&#1077;&#1085;&#1094;&#1080;&#1072;&#1083;&#1100;&#1085;&#1086;&#1089;&#1090;&#1100;</span><span data-lang="en">Privacy</span><span data-lang="es">Privacidad</span></a>
+      <span class="site-footer-dot">&middot;</span>
+      <a href="terms.html"><span data-lang="uk" class="active">&#1059;&#1084;&#1086;&#1074;&#1080;</span><span data-lang="ru">&#1059;&#1089;&#1083;&#1086;&#1074;&#1080;&#1103;</span><span data-lang="en">Terms</span><span data-lang="es">T&eacute;rminos</span></a>
+      <span class="site-footer-dot">&middot;</span>
+      <a href="requisites.html"><span data-lang="uk" class="active">&#1056;&#1077;&#1082;&#1074;&#1110;&#1079;&#1080;&#1090;&#1080;</span><span data-lang="ru">&#1056;&#1077;&#1082;&#1074;&#1080;&#1079;&#1080;&#1090;&#1099;</span><span data-lang="en">Company details</span><span data-lang="es">Datos registrales</span></a>
+      <span class="site-footer-dot">&middot;</span>
+      <a href="faq.html"><span data-lang="uk" class="active">&#1055;&#1080;&#1090;&#1072;&#1085;&#1085;&#1103;</span><span data-lang="ru">&#1042;&#1086;&#1087;&#1088;&#1086;&#1089;&#1099;</span><span data-lang="en">FAQ</span><span data-lang="es">Preguntas</span></a>
+      </span>
+    </div>
+    <div class="site-footer-right">
+      <div class="site-footer-socials">
+        <a class="site-icon-link" aria-label="Telegram" href="https://t.me/usenpandora" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 3.5L2.5 10.5l6 3 4-5 5 7 4-12z"/></svg></a>
+        <a class="site-icon-link" aria-label="Facebook" href="https://www.facebook.com/usenpandora/" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+      </div>
+      <button class="site-footer-lang" type="button" onclick="window.openLanguageModal ? openLanguageModal() : null" aria-label="Language"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg><span data-lang="uk" class="active">&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;</span><span data-lang="ru">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</span><span data-lang="en">English</span><span data-lang="es">Espa&ntilde;ol</span></button>
+    </div>
+  </div>
+</footer>
+<script>
+function toggleSiteUserMenu(){
+  const menu = document.getElementById('siteUserDropdown');
+  if (menu) menu.classList.toggle('open');
+}
+document.addEventListener('click', function(event){
+  const wrap = event.target.closest('.site-user-menu');
+  const menu = document.getElementById('siteUserDropdown');
+  if (menu && !wrap) menu.classList.remove('open');
+});
+
+(function () {
+  const LANGS = { uk: true, ru: true, en: true, es: true };
+  const TITLES = {
+    privacy: {
+      uk: 'Політика конфіденційності — Pandora / U.S.E.N.',
+      ru: 'Политика конфиденциальности — Pandora / U.S.E.N.',
+      en: 'Privacy Policy — Pandora / U.S.E.N.',
+      es: 'Política de privacidad — Pandora / U.S.E.N.'
+    },
+    terms: {
+      uk: 'Умови використання — Pandora / U.S.E.N.',
+      ru: 'Условия использования — Pandora / U.S.E.N.',
+      en: 'Terms of Use — Pandora / U.S.E.N.',
+      es: 'Términos de uso — Pandora / U.S.E.N.'
+    }
+  };
+
+  function readSavedLang() {
+    try {
+      return localStorage.getItem('pandora_lang') || localStorage.getItem('pandora-lang') || 'uk';
+    } catch (e) {
+      return 'uk';
+    }
+  }
+
+  function setPageLang(lang) {
+    lang = LANGS[lang] ? lang : 'uk';
+    document.documentElement.lang = lang;
+    document.documentElement.setAttribute('data-pandora-lang', lang);
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.classList.toggle('active', el.getAttribute('data-lang') === lang);
+    });
+
+    const page = document.body.getAttribute('data-page');
+    if (TITLES[page] && TITLES[page][lang]) document.title = TITLES[page][lang];
+
+    try {
+      localStorage.setItem('pandora_lang', lang);
+      localStorage.setItem('pandora-lang', lang);
+    } catch (e) {}
+  }
+
+  setPageLang(readSavedLang());
+})();
+</script>
+<script src="assets/js/pandora-language-data.js"></script>
+<script src="assets/js/pandora-i18n.js"></script>
+</body>
+</html>

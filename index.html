@@ -3321,10 +3321,12 @@ document.addEventListener('click', function(e) {
     var dx = event.touches[0].clientX - touchStartX;
     var dy = event.touches[0].clientY - touchStartY;
     if (Math.abs(dy) < 10 || Math.abs(dy) < Math.abs(dx)) return;
-    stopAndReturn(event);
+    /* Keep vertical page swipes native. The passive touchend handler still
+       returns a side panel to the centre without cancelling page movement. */
+    returnToProjectCenter();
     touchStartX = null;
     touchStartY = null;
-  }, { passive: false, capture: true });
+  }, { passive: true, capture: true });
 })();
 </script>
 <script id="pandora-project-intro-next-visibility-fix-v1">
@@ -5896,8 +5898,25 @@ Changes:
 
   #about .accent-copy-block,
   #about .accent-copy-block * {
-    text-align: left !important;
+    text-align: justify !important;
+    text-align-last: left !important;
+    hyphens: auto;
   }
+
+  /* ВЕРСИЯ v1.06 — MOBILE READING ALIGNMENT / removable block */
+  #hero .hero-story p,
+  #about .principle-item p,
+  .project-landing-section .ms-body > p,
+  .project-landing-section .pandora-name-copy p,
+  .usen-about-copy p,
+  .examples-landing .reference-card p,
+  .examples-landing .inspiration-card p,
+  #signal .accent-copy-block p {
+    text-align: justify !important;
+    text-align-last: left !important;
+    hyphens: auto;
+  }
+  /* END ВЕРСИЯ v1.06 */
 
   /* #contact: форма и контейнеры не должны иметь height:100%, fixed calc
      или собственный scroll; иначе низ формы/капча режутся. */

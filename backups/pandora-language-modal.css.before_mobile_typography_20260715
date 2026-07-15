@@ -1,0 +1,68 @@
+.pandora-language-modal-open{overflow:hidden}
+.pandora-language-backdrop{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.72);backdrop-filter:blur(12px)}
+.pandora-language-backdrop.open{display:flex}
+.pandora-language-dialog{width:min(920px,100%);max-height:min(760px,calc(100vh - 44px));display:flex;flex-direction:column;border:1px solid rgba(200,168,75,.28);background:linear-gradient(135deg,rgba(18,18,18,.98),rgba(8,8,8,.98));box-shadow:0 28px 90px rgba(0,0,0,.58);color:#f5f2ed}
+.pandora-language-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:22px 24px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.pandora-language-kicker{margin:0 0 6px;color:#c8a84b;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.pandora-language-title{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:300;line-height:1.05}
+.pandora-language-close{width:38px;height:38px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:rgba(245,242,237,.74);font-size:24px;line-height:1;cursor:pointer}
+.pandora-language-close:hover{border-color:rgba(200,168,75,.45);color:#c8a84b;background:rgba(200,168,75,.08)}
+.pandora-country-list{overflow:auto;padding:14px 16px;display:grid;gap:8px}
+.pandora-country-row{display:grid;grid-template-columns:56px minmax(135px,.7fr) 70px minmax(260px,1.45fr);gap:10px;align-items:center;padding:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);cursor:default}
+.pandora-country-row:hover{border-color:rgba(200,168,75,.18);background:rgba(255,255,255,.045)}
+.pandora-country-header{position:sticky;top:0;z-index:1;border-color:rgba(200,168,75,.24);background:rgba(13,13,13,.98);color:rgba(245,242,237,.58);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.pandora-country-header:hover{border-color:rgba(200,168,75,.24);background:rgba(13,13,13,.98)}
+.pandora-country-header small{display:block;margin-top:5px;color:rgba(200,168,75,.78);font-size:10px;font-weight:600;letter-spacing:0;text-transform:none;line-height:1.35}
+.pandora-country-iso{color:#c8a84b;font-size:12px;font-weight:800;letter-spacing:.16em}
+.pandora-country-flag{font-size:20px;line-height:1;text-align:center}
+.pandora-country-name{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;line-height:1.35}
+.pandora-country-code{color:#c8a84b;font-size:12px;letter-spacing:.08em;white-space:nowrap}
+.pandora-language-list{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.pandora-country-lang{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:rgba(245,242,237,.78);padding:7px 9px;font-size:11px;line-height:1;cursor:pointer}
+.pandora-country-lang:hover,.pandora-country-lang.active{border-color:rgba(200,168,75,.54);background:rgba(200,168,75,.13);color:#c8a84b}
+.pandora-country-lang.draft,.pandora-country-lang.planned{border-style:dashed}
+.pandora-lang-status{margin-left:5px;color:rgba(245,242,237,.48);font-size:9px;text-transform:uppercase}
+.pandora-display-lang{border-top:1px solid rgba(255,255,255,.08);padding:16px 24px 22px;background:rgba(255,255,255,.025)}
+.pandora-display-lang-title{margin:0 0 10px;color:rgba(245,242,237,.62);font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+.pandora-display-lang-options{display:flex;flex-wrap:wrap;gap:8px}
+.pandora-display-lang-btn{border:1px solid rgba(200,168,75,.28);background:rgba(200,168,75,.06);color:rgba(245,242,237,.76);padding:9px 12px;font-size:11px;letter-spacing:.08em;cursor:pointer}
+.pandora-display-lang-btn:hover,.pandora-display-lang-btn.active{background:#c8a84b;color:#0d0d0d;border-color:#c8a84b}
+.pandora-lang-trigger{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid rgba(200,168,75,.28);background:rgba(200,168,75,.06);color:inherit;min-height:36px;padding:7px 11px;cursor:pointer;font:inherit}
+.pandora-lang-trigger:hover,.pandora-lang-trigger.open{border-color:rgba(200,168,75,.58);color:#c8a84b;background:rgba(200,168,75,.10)}
+.pandora-lang-trigger-icon{font-size:15px}
+.pandora-lang-trigger-code{font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+@media(max-width:720px){
+  .pandora-language-backdrop{padding:10px;align-items:stretch}
+  .pandora-language-dialog{max-height:calc(100vh - 20px)}
+  .pandora-language-head{padding:18px 16px 13px}
+  .pandora-country-list{padding:10px}
+  .pandora-country-row{grid-template-columns:56px 1fr auto;gap:10px;padding:11px}
+  .pandora-country-header{display:none}
+  .pandora-language-list{grid-column:2 / -1;justify-content:flex-start}
+  .pandora-display-lang{padding:14px 16px 18px}
+}
+
+.pandora-country-header>div,
+.pandora-country-code,
+.pandora-country-iso,
+.pandora-language-header-inline {
+  white-space: nowrap;
+}
+
+.pandora-language-header-inline {
+  font-size: 10px;
+  letter-spacing: .08em;
+}
+.pandora-language-header-inline {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 6px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.pandora-language-header-inline span {
+  color: #c8a84b;
+  font-weight: 700;
+}

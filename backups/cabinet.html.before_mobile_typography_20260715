@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кабинет Пандора</title>
+<meta name="description" content="Прототип кабинета кооператива Пандора: профиль, участие, документы, заявка и проектный образ Pandora ID.">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/pandora-language-modal.css">
+<style>
+:root{
+  --bg:#080808; --text:#f5f2ed; --muted:rgba(245,242,237,.66); --dim:rgba(245,242,237,.40);
+  --line:rgba(255,255,255,.11); --soft:rgba(255,255,255,.035); --gold:#c8a84b;
+  --red:#d42b2b; --green:#1a7a3c; --blue:#1a3a7a; --darkgold:#2a2110;
+  --cabinet-nav-y:18px; --cabinet-nav-x:60px; --cabinet-nav-h:calc(38px + var(--cabinet-nav-y) * 2 + 1px);
+  --cabinet-dock-h:78px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100%;overflow-x:hidden;overflow-y:auto;background:var(--bg);color:var(--text);font-family:"DM Sans",Arial,sans-serif}
+body{background:radial-gradient(circle at 14% 16%,rgba(212,43,43,.13),transparent 30%),radial-gradient(circle at 86% 14%,rgba(26,58,122,.18),transparent 35%),radial-gradient(circle at 50% 88%,rgba(26,122,60,.10),transparent 36%),#080808}
+a{color:inherit}.app{min-height:100svh;height:auto;display:grid;grid-template-rows:var(--cabinet-nav-h) minmax(0,1fr) var(--cabinet-dock-h);position:relative;isolation:isolate}.topbar{display:flex;align-items:center;justify-content:space-between;padding:var(--cabinet-nav-y) var(--cabinet-nav-x);border-bottom:1px solid var(--line);background:rgba(13,13,13,.9);backdrop-filter:blur(16px);z-index:3}.nav-logo{display:flex;align-items:center;gap:14px;text-decoration:none}.nav-logo-venn{position:relative;width:38px;height:38px;flex-shrink:0}.nav-logo-venn svg{width:38px;height:38px}.nav-logo-text{display:flex;flex-direction:column}.nav-logo-title{font-size:14px;font-weight:500;color:var(--text);letter-spacing:.05em;display:block}.nav-logo:hover .nav-logo-title{color:var(--gold)}.top-note{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.id-watermark{position:absolute;z-index:-1;right:7vw;top:12vh;width:min(720px,62vw);height:420px;border:1px solid rgba(200,168,75,.10);border-radius:34px;transform:rotate(-7deg);background:linear-gradient(135deg,rgba(255,255,255,.035),rgba(200,168,75,.018));opacity:.62;box-shadow:0 28px 100px rgba(0,0,0,.30)}.id-watermark:before{content:"PANDORA ID";position:absolute;left:42px;top:34px;font-family:"Cormorant Garamond",Georgia,serif;font-size:72px;letter-spacing:.12em;color:rgba(200,168,75,.065)}.workspace{min-height:0;position:relative;padding:26px 34px 22px;display:grid;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}.view{display:none;height:100%;min-height:0;grid-template-columns:minmax(320px,.78fr) minmax(460px,1.22fr);gap:34px;align-items:center}.view.active{display:grid}.view.single{grid-template-columns:1fr}.kicker{display:inline-flex;gap:9px;align-items:center;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}.kicker:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold)}h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;letter-spacing:-.025em}h1{font-size:clamp(44px,5vw,74px);line-height:.96;margin-bottom:18px}h2{font-size:clamp(34px,4vw,58px);line-height:1;margin-bottom:14px}.lead{font-size:15px;line-height:1.72;color:var(--muted);max-width:640px}.gold{color:var(--gold)}.path{display:grid;gap:9px;margin-top:22px;max-width:520px}.path-step{display:grid;grid-template-columns:32px 1fr;gap:11px;align-items:center;font-size:13px;color:var(--muted)}.path-num{height:32px;border:1px solid rgba(200,168,75,.28);display:grid;place-items:center;color:var(--gold);font-family:"Cormorant Garamond",Georgia,serif;font-size:19px}.id-card{width:min(560px,100%);justify-self:center;min-height:330px;border:1px solid rgba(200,168,75,.36);border-radius:28px;padding:28px;background:linear-gradient(135deg,rgba(24,23,20,.98),rgba(10,10,10,.96));box-shadow:0 24px 90px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.08);position:relative;overflow:hidden}.id-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 12%,rgba(212,43,43,.14),transparent 26%),radial-gradient(circle at 86% 18%,rgba(26,122,60,.11),transparent 24%),radial-gradient(circle at 76% 86%,rgba(26,58,122,.16),transparent 30%),linear-gradient(110deg,transparent 0 36%,rgba(255,255,255,.045) 48%,transparent 60%);pointer-events:none}.id-card>*{position:relative}.id-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:24px}.id-title{font-size:28px;letter-spacing:.18em;color:var(--gold);font-weight:700}.id-status{font-size:10px;letter-spacing:.18em;text-transform:uppercase;border:1px solid rgba(200,168,75,.32);color:var(--gold);padding:7px 10px}.id-body{display:grid;grid-template-columns:1fr 126px;gap:24px}.id-field{padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08)}.id-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}.id-value{font-size:15px}.id-qr{height:126px;border:1px solid rgba(255,255,255,.13);display:grid;place-items:center;text-align:center;color:rgba(245,242,237,.48);font-size:11px;letter-spacing:.16em;background:repeating-linear-gradient(45deg,rgba(255,255,255,.035) 0 8px,transparent 8px 16px)}.rgb-mini{display:flex;gap:6px;margin-top:20px}.rgb-mini span{width:13px;height:13px;border-radius:50%}.panel{border:1px solid rgba(200,168,75,.20);background:rgba(12,12,12,.72);backdrop-filter:blur(10px);padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.28)}.panel h3{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}.panel p,.panel li{font-size:13px;line-height:1.58;color:var(--muted)}.panel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.stack{display:grid;gap:14px}.doc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.doc-list{display:grid;gap:10px}.doc-item{border:1px solid var(--line);background:var(--soft);padding:13px;text-decoration:none;display:block;min-height:74px}.doc-item strong{display:block;font-size:13px;margin-bottom:5px}.doc-item span{font-size:10px;color:var(--dim)}.mini-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;height:38px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.045);color:var(--text);padding:9px 10px;font-family:inherit}.field textarea{height:82px;resize:none}.field.full{grid-column:1/-1}.form-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}.tab-btn,.action-btn{border:1px solid rgba(200,168,75,.24);background:rgba(200,168,75,.08);color:var(--gold);padding:10px 12px;letter-spacing:.12em;text-transform:uppercase;font-size:10px;cursor:pointer}.tab-btn.active,.action-btn.primary{background:var(--gold);color:#0b0b0b}.phone-row{display:grid;grid-template-columns:72px 1fr;gap:8px}.signal-tools{display:grid;grid-template-columns:1fr 1fr;gap:14px}.mock-preview{min-height:176px;border:1px dashed rgba(200,168,75,.34);display:grid;place-items:center;text-align:center;color:var(--dim);background:rgba(200,168,75,.04)}.council-map{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.ai-layout{display:grid;grid-template-columns:minmax(340px,.88fr) minmax(520px,1.12fr);gap:22px;align-items:stretch}
+.ai-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ai-card{border:1px solid rgba(200,168,75,.20);background:rgba(255,255,255,.035);padding:16px;min-height:126px;position:relative;overflow:hidden}
+.ai-card:before{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:rgba(200,168,75,.45)}
+.ai-card h4{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.ai-card p{font-size:12px;line-height:1.55;color:var(--muted)}
+.ai-status{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.ai-status:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(200,168,75,.10)}
+.ai-gateway{display:grid;gap:10px}
+.ai-route{display:grid;grid-template-columns:1fr 28px 1fr;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.ai-route strong{font-size:13px;color:var(--text)}
+.ai-route span{font-size:12px;line-height:1.45;color:var(--muted)}
+.ai-arrow{color:var(--gold);text-align:center;font-size:16px}
+.ai-provider-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.ai-provider{border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.035);padding:12px;display:grid;gap:7px}
+.ai-provider label{display:flex;gap:9px;align-items:flex-start;font-size:12px;color:var(--text)}
+.ai-provider small{display:block;color:var(--dim);font-size:10px;line-height:1.45;margin-left:23px}
+.ai-input-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:14px}
+.ai-input-row input{height:38px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.045);color:var(--text);padding:9px 10px;font-family:inherit}
+.ai-note{font-size:11px;line-height:1.55;color:var(--dim);margin-top:10px}
+.ai-pill-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.ai-pill{border:1px solid rgba(200,168,75,.22);color:var(--gold);background:rgba(200,168,75,.07);padding:6px 9px;font-size:10px;letter-spacing:.10em;text-transform:uppercase}
+@media(max-width:1280px){.ai-layout{display:grid;grid-template-columns:1fr;gap:14px}.ai-card-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:720px){.ai-card-grid,.ai-provider-grid,.ai-input-row{grid-template-columns:1fr}.ai-route{grid-template-columns:1fr}.ai-arrow{text-align:left}}
+
+.dock{height:78px;border-top:1px solid rgba(200,168,75,.23);background:rgba(8,8,8,.90);backdrop-filter:blur(18px);display:grid;place-items:center;z-index:4}.dock-inner{width:min(920px,calc(100% - 24px));display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:6px;border:1px solid rgba(200,168,75,.22);background:rgba(255,255,255,.025)}.dock-btn{border:0;background:transparent;color:var(--muted);padding:12px 8px;border-radius:8px;font-size:10px;letter-spacing:.10em;text-transform:uppercase;cursor:pointer}.dock-btn.active,.dock-btn:hover{background:rgba(200,168,75,.14);color:var(--gold)}.status-line{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:12px 0}.sr-note{position:absolute;left:-9999px}.lang-hidden [data-lang]{display:none}.lang-hidden [data-lang].active{display:inline}
+@media(max-width:1280px){:root{--cabinet-nav-y:16px;--cabinet-nav-x:36px}.top-note{display:none}.workspace{padding:18px}.view.active{display:block}.view{overflow:visible}.id-card{min-height:260px;padding:20px}.id-body{grid-template-columns:1fr 100px;gap:14px}.id-qr{height:100px}.panel-grid,.doc-grid,.signal-tools,.council-map{grid-template-columns:1fr 1fr}.dock-inner{grid-template-columns:repeat(4,1fr)}h1{font-size:42px}.lead{font-size:14px}.path{display:none}.panel{padding:18px}.mini-form{grid-template-columns:1fr 1fr}}
+@media(max-width:1024px){:root{--cabinet-nav-y:14px;--cabinet-nav-x:24px}}
+@media(max-width:900px){:root{--cabinet-nav-y:14px;--cabinet-nav-x:20px}}
+@media(max-width:720px){:root{--cabinet-nav-y:12px;--cabinet-nav-x:16px;--cabinet-dock-h:132px}.workspace{padding:12px}.id-watermark{width:90vw;height:280px;right:4vw;top:18vh}.id-card{display:none}.panel-grid,.doc-grid,.signal-tools,.council-map,.mini-form{grid-template-columns:1fr}.dock-inner{grid-template-columns:repeat(2,1fr)}.panel p,.panel li{font-size:12px}.doc-item{min-height:auto}}
+
+.top-actions{display:flex;align-items:center;gap:18px}.top-legal{display:flex;align-items:center;gap:10px}.top-legal a{color:var(--dim);text-decoration:none;font-size:10px;letter-spacing:.12em;text-transform:uppercase}.top-legal a:hover{color:var(--gold)}.nav-lang{position:relative}.nav-icon-btn{width:38px;height:38px;border:0;background:transparent;color:rgba(245,242,237,.58);display:grid;place-items:center;cursor:pointer;transition:color .15s,background .15s}.nav-icon-btn:hover,.nav-icon-btn.open{color:var(--gold);background:rgba(200,168,75,.08)}.nav-lang-dropdown{display:none;position:absolute;right:0;top:calc(100% + 10px);z-index:20;width:210px;padding:8px;border:1px solid rgba(200,168,75,.24);background:rgba(10,10,10,.96);backdrop-filter:blur(16px);box-shadow:0 18px 48px rgba(0,0,0,.42)}.nav-lang-dropdown.open{display:grid;gap:4px}.lang-option{border:0;background:transparent;color:var(--muted);padding:10px 11px;text-align:left;font-size:11px;letter-spacing:.08em;cursor:pointer;display:grid;grid-template-columns:22px 1fr 28px;gap:9px;align-items:center}.lang-option:hover,.lang-option.active{background:rgba(200,168,75,.12);color:var(--gold)}.lang-option .lc{justify-self:end;color:rgba(245,242,237,.38);font-size:10px}.lang-option.active .lc{color:var(--gold)}[data-lang]{display:none}[data-lang].active{display:inline}@media(max-width:620px){.top-actions{gap:8px}.top-note,.top-legal{display:none}.nav-lang-dropdown{right:0}.nav-icon-btn{width:36px;height:36px}.nav-logo-title{font-size:11px}}
+.dock-inner{grid-template-columns:repeat(6,1fr)}#pandora-chat-btn{position:fixed;bottom:calc((var(--cabinet-dock-h) - 58px) / 2);right:28px;z-index:9999;width:58px;height:58px;border-radius:50%;padding:3px;background:#fff;border:2px solid #C0392B;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:transform 0.2s,opacity 0.2s}#pandora-chat-btn:hover{transform:scale(1.08);opacity:.92}#pandora-chat-btn svg{width:46px;height:46px}#pandora-chat-btn[hidden]{display:none}#pandora-chat-window{position:fixed;right:28px;bottom:calc(var(--cabinet-dock-h) + 14px);z-index:9998;width:340px;max-height:min(500px,calc(100vh - var(--cabinet-nav-h) - var(--cabinet-dock-h) - 34px));background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:4px;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.15);transform:scale(.95) translateY(10px);opacity:0;pointer-events:none;transition:all .2s ease;overflow:hidden}#pandora-chat-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}.pc-header{background:#0D0D0D;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;border-radius:4px 4px 0 0}.pc-header-left{display:flex;align-items:center;gap:10px}.pc-dot{width:8px;height:8px;border-radius:50%;background:var(--gold)}.pc-title{font-size:13px;font-weight:500;color:#F5F2ED;letter-spacing:.05em}.pc-title-row{display:flex;align-items:center;gap:7px}.pc-header-beta{color:#C8A84B;border:1px solid rgba(200,168,75,.45);padding:1px 5px;border-radius:8px;font-size:7px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.pc-sub{font-size:10px;color:rgba(245,242,237,.4);letter-spacing:.08em;text-transform:uppercase}.pc-close{background:none;border:none;color:rgba(245,242,237,.45);cursor:pointer;font-size:18px;line-height:1;padding:0}.pc-close:hover{color:#F5F2ED}.pc-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:190px}.pc-msg{max-width:88%;font-size:13px;line-height:1.55;padding:9px 12px}.pc-msg.bot{background:#f4f2ee;color:#0D0D0D;align-self:flex-start;border-radius:4px 4px 4px 0}.pc-msg.user{background:#1A3A7A;color:#fff;align-self:flex-end;border-radius:4px 4px 0 4px}.pc-input-row{padding:10px 12px;border-top:1px solid rgba(0,0,0,.07);display:flex;gap:8px;align-items:flex-end}.pc-input{flex:1;border:1px solid rgba(0,0,0,.1);background:#fafafa;padding:9px 11px;font-size:13px;font-family:"DM Sans",Arial,sans-serif;color:#0D0D0D;outline:none;resize:none;border-radius:3px;max-height:90px;line-height:1.45}.pc-input:focus{border-color:#1A3A7A;background:#fff}.pc-send{width:36px;height:36px;background:#1A3A7A;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:3px;flex-shrink:0}.pc-send svg{width:16px;height:16px;fill:#fff}@media(max-width:600px){#pandora-chat-btn{right:16px;bottom:calc((var(--cabinet-dock-h) - 54px) / 2);width:54px;height:54px}#pandora-chat-btn svg{width:42px;height:42px}#pandora-chat-window{right:12px;bottom:calc(var(--cabinet-dock-h) + 10px);width:calc(100vw - 24px);max-height:calc(100vh - var(--cabinet-nav-h) - var(--cabinet-dock-h) - 28px)}}
+
+  /* unified Pandora AI anchor: keep the launcher and window stable across pages */
+  #pandora-chat-btn {
+    right: max(12px, calc(28px - (100vw - 100%))) !important;
+    bottom: calc((var(--cabinet-dock-h, 78px) - 58px) / 2) !important;
+  }
+  #pandora-chat-window {
+    right: max(12px, calc(28px - (100vw - 100%))) !important;
+    bottom: calc(var(--cabinet-dock-h, 78px) + 14px) !important;
+  }
+  @media (max-width: 600px) {
+    #pandora-chat-btn {
+      right: max(8px, calc(16px - (100vw - 100%))) !important;
+      bottom: calc((var(--cabinet-dock-h, 132px) - 54px) / 2) !important;
+    }
+    #pandora-chat-window {
+      right: max(8px, calc(12px - (100vw - 100%))) !important;
+      bottom: calc(var(--cabinet-dock-h, 132px) + 10px) !important;
+    }
+  }
+#pandora-chat-window{height:min(500px,calc(100vh - var(--cabinet-nav-h) - var(--cabinet-dock-h) - 34px))}.pc-dot{animation:pulse 2s infinite}.pc-close,.pc-expand{background:none;border:none;color:rgba(245,242,237,.4);cursor:pointer;line-height:1;padding:0;transition:color .15s}.pc-close{font-size:18px}.pc-expand{display:flex;align-items:center;justify-content:center;width:22px;height:22px}.pc-close:hover,.pc-expand:hover{color:#F5F2ED}.pc-modes{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:6px;border-bottom:1px solid #E4E7EC;background:#F7F8FA}.pc-mode{padding:9px 10px;border:1px solid transparent;border-radius:6px;background:transparent;color:#535A66;cursor:pointer;font:600 12px/1.3 "DM Sans",Arial,sans-serif;letter-spacing:0;text-transform:none;transition:all .15s}.pc-mode.active{color:#17356F;border-color:#D7DDE8;background:#fff;box-shadow:0 1px 3px rgba(16,24,40,.06)}.pc-mode-feedback.active{color:#654D0C;border-color:#E5D8AE;background:#FFFDF6}.pc-messages{scroll-behavior:smooth;min-height:0}.pc-messages::-webkit-scrollbar{width:3px}.pc-messages::-webkit-scrollbar-thumb{background:rgba(0,0,0,.1);border-radius:2px}.pc-suggestions{padding:0 14px 8px;display:flex;flex-wrap:wrap;gap:6px}.pc-suggestion{font-size:11px;padding:5px 10px;border:1px solid rgba(26,58,122,.2);color:#1A3A7A;background:rgba(26,58,122,.04);cursor:pointer;border-radius:2px;transition:all .15s;letter-spacing:.03em;font-family:"DM Sans",Arial,sans-serif}.pc-suggestion:hover{background:rgba(26,58,122,.1)}.pc-send:hover{opacity:.85}.pc-send:disabled{opacity:.4;cursor:default}.pc-msg.typing{color:#697386;font-style:italic}.pc-qa-panel{display:none;flex:1;flex-direction:column;justify-content:flex-start;gap:12px;padding:14px;color:#20242A;overflow-y:auto;background:#F7F8FA}.pc-qa-heading{padding:13px 14px;background:#fff;border:1px solid #E1E5EB;border-radius:8px;box-shadow:0 1px 3px rgba(16,24,40,.04)}.pc-qa-heading h3{margin:0 0 5px;font:650 16px/1.35 "DM Sans",Arial,sans-serif;color:#18202B}.pc-qa-heading p{margin:0;font:400 13px/1.5 "DM Sans",Arial,sans-serif;color:#4F5865}.pc-qa-choices{display:grid;gap:8px}.pc-qa-action{width:100%;padding:12px 13px;border:1px solid #DCE1E8;border-radius:8px;background:#fff;color:#17356F;cursor:pointer;text-align:left;font-family:"DM Sans",Arial,sans-serif;transition:transform .15s,border-color .15s,box-shadow .15s;display:flex;flex-direction:column;gap:3px}.pc-qa-action:hover{transform:translateY(-1px);border-color:#AEBBD0;box-shadow:0 4px 12px rgba(16,24,40,.07)}.pc-qa-action-title{font-size:15px;line-height:1.35;font-weight:650;color:#17356F}.pc-qa-action-description{font-size:13px;line-height:1.45;color:#56606D}.pc-qa-action-fixation{border-color:#DED9CC;background:#FFFDF8}.pc-qa-form{display:none;flex-direction:column;gap:13px;padding:14px;border:1px solid #E1E5EB;border-radius:9px;background:#fff;color:#20242A;font:14px/1.45 "DM Sans",Arial,sans-serif;box-shadow:0 1px 3px rgba(16,24,40,.04)}.pc-qa-form h4{margin:0;font:650 16px/1.35 "DM Sans",Arial,sans-serif;color:#182C50}.pc-qa-back{align-self:flex-start;padding:2px 0;border:0;background:none;color:#31558D;cursor:pointer;font:600 13px/1.35 "DM Sans",Arial,sans-serif}.pc-qa-back:hover{color:#17356F;text-decoration:underline}.pc-qa-field{display:flex;flex-direction:column;gap:6px;text-align:left}.pc-qa-field span{font-size:13px;line-height:1.4;font-weight:600;color:#29313B;text-transform:none;letter-spacing:0}.pc-qa-field textarea,.pc-qa-field input{width:100%;box-sizing:border-box;border:1px solid #C9D0DA;background:#fff;color:#20242A;border-radius:7px;outline:none;padding:9px 10px;resize:vertical;font:14px/1.45 "DM Sans",Arial,sans-serif}.pc-qa-field textarea{min-height:70px}.pc-upload-status{padding:9px 10px;border:1px solid #E8DDAF;border-radius:7px;background:#FFFDF5;color:#514617;font-size:12px;line-height:1.45}#pandora-chat-window.fullscreen{top:var(--cabinet-nav-h);right:0;bottom:var(--cabinet-dock-h);width:min(560px,100vw);max-height:none;height:auto;border-radius:0;border:none}#pandora-chat-window.fullscreen .pc-messages{flex:1}
+.view > div:first-child > .kicker,.view.single > .stack > div:first-child > .kicker{display:none}
+
+select option {
+  background: #14120f;
+  color: #f3ead2;
+}
+
+select option:checked {
+  background: #d6b34a;
+  color: #111;
+}
+
+/* pandora-phone-country-ux */
+select option {
+  background: #14120f;
+  color: #f3ead2;
+}
+
+select option:checked {
+  background: #d6b34a;
+  color: #111;
+}
+
+.phone-row {
+  display: grid;
+  grid-template-columns: 4.8rem 1fr auto;
+  gap: .45rem;
+  align-items: center;
+}
+
+.phone-remove {
+  border: 1px solid rgba(214,179,74,.45);
+  background: rgba(214,179,74,.08);
+  color: #d6b34a;
+  padding: .55rem .75rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: .68rem;
+  letter-spacing: .08em;
+}
+
+.phone-remove:hover {
+  background: rgba(214,179,74,.18);
+}
+
+@media(max-width:720px){
+  :root{
+    --cabinet-nav-y:8px;
+    --cabinet-nav-x:16px;
+    --cabinet-nav-h:62px;
+    --cabinet-dock-h:58px;
+  }
+  html,body{height:100%;overflow:hidden!important}
+  .app{height:100svh;min-height:100svh;grid-template-rows:var(--cabinet-nav-h) minmax(0,1fr) var(--cabinet-dock-h)}
+  .topbar{height:var(--cabinet-nav-h);padding:8px 14px!important;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center}
+  .nav-logo{min-width:0;gap:12px}
+  .nav-logo-venn,.nav-logo-venn svg{width:32px;height:32px}
+  .nav-logo-title{font-size:16px!important;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.03em}
+  .top-note,.top-legal{display:none!important}
+  .top-actions{gap:6px;padding-right:46px}
+  .nav-icon-btn{width:32px!important;height:32px!important}
+  .nav-lang-dropdown{right:46px;top:calc(100% + 8px);max-width:calc(100vw - 32px)}
+  .workspace{height:100%;min-height:0;padding:12px 14px;overflow-y:auto;overflow-x:hidden}
+  .view,.view.active{height:auto;min-height:100%;display:block}
+  .view:not(.active){display:none}
+  h1{font-size:34px;line-height:1;margin-bottom:10px}
+  h2{font-size:30px;line-height:1.02;margin-bottom:10px}
+  .kicker{font-size:9px;margin-bottom:9px}
+  .lead{font-size:13px;line-height:1.5}
+  .panel{padding:14px}
+  .panel h3{font-size:10px}
+  .panel p,.panel li{font-size:12px;line-height:1.45}
+  .panel-grid,.doc-grid,.signal-tools,.council-map,.mini-form,.ai-card-grid,.ai-provider-grid,.ai-input-row{grid-template-columns:1fr!important;gap:10px}
+  .doc-grid,.stack{gap:10px}
+  .field input,.field select{height:36px}
+  .field textarea{height:70px}
+  .form-tabs{gap:6px}
+  .tab-btn,.action-btn{padding:9px 10px;font-size:9px;letter-spacing:.08em}
+  .phone-row{grid-template-columns:68px 1fr}
+  .dock{height:var(--cabinet-dock-h);padding:0 6px}
+  .dock-inner{width:100%;height:44px;display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:2px;padding:4px}
+  .dock-btn{min-width:0;padding:7px 2px;font-size:8.2px;line-height:1.05;letter-spacing:.035em;white-space:normal;overflow-wrap:anywhere;border-radius:5px}
+  #pandora-chat-btn{top:14px!important;right:14px!important;bottom:auto!important;width:34px!important;height:34px!important;padding:2px!important;border-width:1px!important;z-index:10001!important;box-shadow:0 4px 14px rgba(0,0,0,.28)!important}
+  #pandora-chat-btn svg{width:28px!important;height:28px!important}
+  #pandora-chat-window{top:var(--cabinet-nav-h)!important;right:0!important;bottom:var(--cabinet-dock-h)!important;width:100vw!important;height:auto!important;max-height:none!important;border-radius:0!important}
+  #pandora-chat-window.fullscreen{top:var(--cabinet-nav-h)!important;bottom:var(--cabinet-dock-h)!important;width:100vw!important}
+  .pc-header{padding:10px 12px}
+  .pc-modes{padding:5px}
+  .pc-mode{padding:8px 6px;font-size:11px}
+  .pc-messages{padding:10px;min-height:0}
+  .pc-msg{font-size:12px;line-height:1.45}
+  .pc-suggestions{padding:0 10px 8px}
+  .pc-suggestion{font-size:10px}
+  .pc-input-row{padding:8px 10px}
+}
+</style>
+</head>
+<body class="lang-hidden">
+<div class="app">
+  <header class="topbar">
+    <a href="index.html" class="nav-logo" aria-label="Кооператив Пандора - на главную">
+      <div class="nav-logo-venn" aria-hidden="true">
+        <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="12" fill="#D42B2B" opacity="0.75"/>
+          <circle cx="24" cy="14" r="12" fill="#1A7A3C" opacity="0.75"/>
+          <circle cx="19" cy="23" r="12" fill="#1A3A7A" opacity="0.75"/>
+        </svg>
+      </div>
+      <div class="nav-logo-text">
+        <span class="nav-logo-title">
+          <span data-lang="uk" class="active">Кооператив Пандора</span>
+          <span data-lang="ru">Кооператив Пандора</span>
+          <span data-lang="en">Pandora Cooperative</span>
+          <span data-lang="es">Cooperativa Pandora</span>
+        </span>
+      </div>
+    </a>
+    <div class="top-actions">
+      <div class="top-legal" aria-label="Юридические страницы"><a href="privacy.html" data-event="open_privacy"><span data-lang="ru">Конфиденциальность</span><span data-lang="uk" class="active">Конфіденційність</span><span data-lang="en">Privacy</span><span data-lang="es">Privacidad</span></a><a href="terms.html" data-event="open_terms"><span data-lang="ru">Условия</span><span data-lang="uk" class="active">Умови</span><span data-lang="en">Terms</span><span data-lang="es">Términos</span></a><a href="requisites.html" data-event="open_requisites"><span data-lang="ru">Реквизиты</span><span data-lang="uk" class="active">Реквізити</span><span data-lang="en">Company details</span><span data-lang="es">Datos</span></a><a href="faq.html" data-event="open_faq"><span data-lang="ru">Вопросы</span><span data-lang="uk" class="active">Питання</span><span data-lang="en">FAQ</span><span data-lang="es">Preguntas</span></a></div>
+      <div class="nav-lang" id="langSwitcher">
+        <button class="nav-icon-btn" id="langBtn" type="button" onclick="toggleLangMenu()" aria-label="Выбор языка" aria-haspopup="true" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </button>
+        <div class="nav-lang-dropdown" id="langDropdown" role="menu" aria-label="Выбор языка">
+          <button class="lang-option active" type="button" data-lang-opt="uk" onclick="selectLang('uk')"><span class="lf">🇺🇦</span><span class="ln">Українська</span><span class="lc">UA</span></button>
+          <button class="lang-option" type="button" data-lang-opt="ru" onclick="selectLang('ru')"><span class="lf">🇷🇺</span><span class="ln">Русский</span><span class="lc">RU</span></button>
+          <button class="lang-option" type="button" data-lang-opt="en" onclick="selectLang('en')"><span class="lf">🇬🇧</span><span class="ln">English</span><span class="lc">EN</span></button>
+          <button class="lang-option" type="button" data-lang-opt="es" onclick="selectLang('es')"><span class="lf">🇪🇸</span><span class="ln">Español</span><span class="lc">ES</span></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="workspace" id="workspace">
+    <div class="id-watermark" aria-hidden="true"></div>
+
+    <section class="view" data-view="pandora-id" aria-label="Pandora ID">
+      <div>
+        <div class="kicker" data-i18n="id.kicker">Pandora ID · этап подтверждения</div>
+        <h2 data-i18n="id.title">Pandora ID</h2>
+        <p class="lead" data-i18n="id.lead">Pandora ID — следующий этап после профиля, заявки и подтверждения участия. Кабинет помогает пройти путь к получению Pandora ID и дальнейшему участию в кооперативной инфраструктуре.</p>
+        <div class="path">
+          <div class="path-step"><div class="path-num">1</div><div data-i18n="menu.profile">Профиль</div></div>
+          <div class="path-step"><div class="path-num">2</div><div data-i18n="menu.aiPandora">AI Pandora</div></div>
+<div class="path-step"><div class="path-num">3</div><div data-i18n="menu.signal">Участие</div></div>
+          <div class="path-step"><div class="path-num">4</div><div data-i18n="menu.documents">Документы</div></div>
+          <div class="path-step"><div class="path-num">5</div><div data-i18n="menu.application">Заявка</div></div>
+          <div class="path-step"><div class="path-num">6</div><div>PANDORA ID</div></div>
+        </div>
+      </div>
+      <article class="id-card" aria-label="Pandora ID prototype card">
+        <div class="id-head"><div class="id-title">PANDORA ID</div><div class="id-status" data-i18n="id.status">ПРОТОТИП</div></div>
+        <div class="id-body">
+          <div>
+            <div class="id-field"><div class="id-label" data-i18n="id.name">Имя / псевдоним</div><div class="id-value">DEMO MEMBER</div></div>
+<div class="id-field"><div class="id-label" data-i18n="id.signalCode">Код рекомендации</div><div class="id-value">PANDORA-DEMO-001</div></div>
+            <div class="id-field"><div class="id-label" data-i18n="id.level">Уровень</div><div class="id-value" data-i18n="id.levelValue">пользователь сайта</div></div>
+            <div class="id-field"><div class="id-label">Pandora ID</div><div class="id-value" data-i18n="id.pending">ожидает подтверждения</div></div>
+          </div>
+          <div><div class="id-qr"><span data-i18n="mock">МАКЕТ</span><br>QR</div><div class="rgb-mini"><span style="background:var(--red)"></span><span style="background:var(--green)"></span><span style="background:var(--blue)"></span></div></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="view active" data-view="profile" aria-label="Профиль">
+      <div><div class="kicker" data-i18n="profile.kicker">Профиль сайта</div><h2 data-i18n="menu.profile">Профиль</h2><p class="lead" data-i18n="profile.lead">Профиль хранит базовую информацию участника сайта: имя или псевдоним, страну, город, контакты, мессенджеры и будущую карточку навыков, талантов и компетенций.</p></div>
+      <div class="panel-grid">
+        <div class="panel"><h3 data-i18n="panel.inside">Что будет внутри</h3><p data-i18n="profile.inside">Контакты, город, страна, мессенджеры, навыки, компетенции, приватность.</p></div>
+        <div class="panel"><h3 data-i18n="panel.now">Что доступно сейчас</h3><p data-i18n="profile.now">Статический прототип без авторизации и базы данных.</p></div>
+        <div class="panel"><h3 data-i18n="panel.help">Как помочь</h3><p data-i18n="profile.help">Предложить минимальный набор полей для первого этапа Pandora ID.</p></div>
+      </div>
+    </section>
+
+    <section class="view single" data-view="ai-pandora" aria-label="AI Pandora">
+      <div class="stack">
+        <div>
+          <div class="kicker" data-i18n="ai.kicker">AI Pandora · доступ и модели</div>
+          <h2 data-i18n="menu.aiPandora">AI Pandora</h2>
+          <p class="lead" data-i18n="ai.lead">Раздел управляет доступом к Pandora AI Gateway: базовый AI-доступ Пандоры, личные API-ключи пайщика, локальные модели и будущие кооперативные лимиты.</p>
+        </div>
+
+        <div class="ai-layout">
+          <div class="stack">
+            <div class="ai-card-grid">
+              <div class="ai-card">
+                <h4 data-i18n="ai.baseTitle">Базовый доступ Pandora</h4>
+                <p data-i18n="ai.baseText">Для обычных вопросов по кооперативу, документам, заявке, Pandora ID и участию.</p>
+                <div class="ai-status" data-i18n="ai.statusEnabled">включено · макет</div>
+              </div>
+              <div class="ai-card">
+                <h4 data-i18n="ai.keysTitle">Мои AI-ключи</h4>
+                <p data-i18n="ai.keysText">Пайщик может добровольно подключить FreeModel, Gemini, OpenRouter, DeepSeek, Groq или другой API.</p>
+                <div class="ai-status" data-i18n="ai.statusOptional">по желанию</div>
+              </div>
+              <div class="ai-card">
+                <h4 data-i18n="ai.localTitle">Локальная модель</h4>
+                <p data-i18n="ai.localText">Для приватных задач можно подключить Ollama, LM Studio или домашний AI-сервер.</p>
+                <div class="ai-status" data-i18n="ai.statusFuture">будущий режим</div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h3 data-i18n="ai.connectTitle">Подключение источников AI</h3>
+              <div class="ai-provider-grid">
+                <div class="ai-provider"><label><input type="checkbox" checked> <span data-i18n="ai.providerPandora">Базовый доступ Pandora</span></label><small data-i18n="ai.providerPandoraHint">Работает без действий со стороны пайщика.</small></div>
+                <div class="ai-provider"><label><input type="checkbox"> <span>FreeModel</span></label><small data-i18n="ai.providerFreeModelHint">Не обязательный, но может быть личным дополнительным каналом.</small></div>
+                <div class="ai-provider"><label><input type="checkbox"> <span>Google / Gemini API</span></label><small data-i18n="ai.providerGeminiHint">Для тех, у кого уже есть Google-инструменты или API-доступ.</small></div>
+                <div class="ai-provider"><label><input type="checkbox"> <span>OpenRouter / DeepSeek / Groq</span></label><small data-i18n="ai.providerRouterHint">Для дешёвых или специализированных моделей.</small></div>
+                <div class="ai-provider"><label><input type="checkbox"> <span>Ollama / LM Studio</span></label><small data-i18n="ai.providerLocalHint">Локальный AI на своём железе или сервере.</small></div>
+                <div class="ai-provider"><label><input type="checkbox"> <span data-i18n="ai.providerCoop">Кооперативные лимиты</span></label><small data-i18n="ai.providerCoopHint">Будущие оплаченные лимиты Пандоры для важных задач.</small></div>
+              </div>
+              <div class="ai-input-row">
+                <input type="password" data-i18n-placeholder="ai.keyPlaceholder" placeholder="API key / локальный endpoint">
+                <button class="action-btn primary" type="button" data-i18n="ai.saveMock">Сохранить макет</button>
+              </div>
+              <p class="ai-note" data-i18n="ai.securityNote">Ключи не должны храниться в открытом виде. В рабочей версии нужен vault — защищённое хранилище секретов, раздельные лимиты и журнал доступа.</p>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3 data-i18n="ai.gatewayTitle">Pandora AI Gateway</h3>
+            <p data-i18n="ai.gatewayText">AI-шлюз выбирает канал под задачу: не заставляет пайщика регистрироваться во внешних сервисах, но позволяет подключить свои ресурсы, если ему так удобнее.</p>
+            <div class="ai-gateway">
+              <div class="ai-route"><div><strong data-i18n="ai.routeSimple">Простые вопросы</strong><span data-i18n="ai.routeSimpleText">Навигация по кабинету, заявке, документам.</span></div><div class="ai-arrow">→</div><div><strong data-i18n="ai.routeSimpleTarget">Базовый доступ Pandora</strong><span data-i18n="ai.routeSimpleTargetText">Дешёвый и ограниченный режим.</span></div></div>
+              <div class="ai-route"><div><strong data-i18n="ai.routeDocs">Вопросы по ядру</strong><span data-i18n="ai.routeDocsText">Устав, Memory Core, библиотека, проектные документы.</span></div><div class="ai-arrow">→</div><div><strong>RAG + AI</strong><span data-i18n="ai.routeDocsTargetText">Поиск по базе знаний перед ответом.</span></div></div>
+              <div class="ai-route"><div><strong data-i18n="ai.routePrivate">Приватные заметки</strong><span data-i18n="ai.routePrivateText">Личные черновики, чувствительные материалы.</span></div><div class="ai-arrow">→</div><div><strong data-i18n="ai.routePrivateTarget">Локальная модель</strong><span data-i18n="ai.routePrivateTargetText">Без лишней отправки наружу.</span></div></div>
+              <div class="ai-route"><div><strong data-i18n="ai.routeHeavy">Сложные задачи</strong><span data-i18n="ai.routeHeavyText">Код, аналитика, юридические черновики, большие документы.</span></div><div class="ai-arrow">→</div><div><strong data-i18n="ai.routeHeavyTarget">Личный ключ или платный канал</strong><span data-i18n="ai.routeHeavyTargetText">Пайщик выбирает сам или использует лимиты кооператива.</span></div></div>
+            </div>
+            <div class="ai-pill-row">
+              <span class="ai-pill">BYOK</span>
+              <span class="ai-pill">RAG</span>
+              <span class="ai-pill">Fallback</span>
+              <span class="ai-pill">Local AI</span>
+              <span class="ai-pill">Cost control</span>
+            </div>
+            <p class="ai-note" data-i18n="ai.footerNote">Идея: Pandora даёт инфраструктуру, память и правила доступа. Пайщик сам решает, пользоваться базовым доступом, своими ключами, локальной моделью или будущими кооперативными лимитами.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view single" data-view="application" aria-label="Заявка">
+      <div class="stack">
+        <div><div class="kicker" data-i18n="application.kicker">Заявка в кооператив</div><h2 data-i18n="menu.application">Заявка</h2><p class="lead" data-i18n="application.lead">Заявка в кооператив — отдельный шаг после регистрации на сайте. Подача заявки не означает автоматическое принятие в пайщики.</p></div>
+        <div class="panel">
+          <div class="form-tabs"><button class="tab-btn active" id="btnIndividual" onclick="switchEntity('individual')" data-i18n="application.individual">Физическое лицо</button><button class="tab-btn" id="btnLegal" onclick="switchEntity('legal')" data-i18n="application.legal">Юридическое лицо</button></div>
+          <form class="mini-form" id="formIndividual" onsubmit="handleJoin(event)">
+            <div class="field"><label data-i18n="application.lastname">Фамилия</label><input name="lastname"></div><div class="field"><label data-i18n="application.firstname">Имя</label><input name="firstname"></div>
+            <div class="field"><label>Email</label><input type="email" name="email" autocomplete="email" required placeholder="your@email.com"></div><div class="field"><label data-i18n="application.city">Город</label><input name="city" data-i18n-placeholder="application.cityPlaceholder" placeholder="Харьков"></div>
+            <div class="field"><label data-i18n="application.country">Страна</label><select id="countrySelect" name="country" onchange="onCountryChange(this)"><option data-code="+?" data-i18n="application.choose">Выбрать</option>
+<option data-code="+380">Україна / Ukraine (+380)</option>
+<option data-code="+48">Польща / Poland (+48)</option>
+<option data-code="+49">Німеччина / Germany (+49)</option>
+<option data-code="+34">Іспанія / Spain (+34)</option>
+<option data-code="+359">Болгарія / Bulgaria (+359)</option>
+<option data-code="+420">Чехія / Czechia (+420)</option>
+<option data-code="+421">Словаччина / Slovakia (+421)</option>
+<option data-code="+40">Румунія / Romania (+40)</option>
+<option data-code="+373">Молдова / Moldova (+373)</option>
+<option data-code="+370">Литва / Lithuania (+370)</option>
+<option data-code="+371">Латвія / Latvia (+371)</option>
+<option data-code="+372">Естонія / Estonia (+372)</option>
+<option data-code="+39">Італія / Italy (+39)</option>
+<option data-code="+33">Франція / France (+33)</option>
+<option data-code="+351">Португалія / Portugal (+351)</option>
+<option data-code="+31">Нідерланди / Netherlands (+31)</option>
+<option data-code="+44">Велика Британія / United Kingdom (+44)</option>
+<option data-code="+90">Туреччина / Turkey (+90)</option>
+<option data-code="+995">Грузія / Georgia (+995)</option>
+<option data-code="+1">США / USA (+1)</option>
+<option data-code="+1">Канада / Canada (+1)</option></select></div>
+            <div class="field"><label data-i18n="application.phone">Телефон</label><div class="phone-row"><input class="phone-code" value="+?" readonly><input name="phone[]" type="tel" inputmode="tel" autocomplete="tel" required data-i18n-placeholder="application.phonePlaceholder" placeholder="номер"></div></div>
+            <div class="field full"><label data-i18n="application.comment">Комментарий</label><textarea required minlength="10" maxlength="2000" data-i18n-placeholder="application.commentPlaceholder" placeholder="Коротко: кто вы и как хотите участвовать"></textarea></div>
+            <div class="field full"><button class="action-btn primary" type="submit" data-i18n="application.save">Сохранить как макет</button> <button class="action-btn" type="button" onclick="addPhone(this)" data-i18n="application.addPhone">Добавить телефон</button></div>
+          </form>
+          <form class="mini-form" id="formLegal" style="display:none" onsubmit="handleJoin(event)">
+            <div class="field"><label data-i18n="application.org">Организация</label><input></div><div class="field"><label data-i18n="application.form">Форма</label><input placeholder="ТОВ / LLC / Кооператив"></div>
+            <div class="field"><label>Email</label><input type="email" name="email" autocomplete="email" required></div><div class="field"><label data-i18n="application.representative">Представитель</label><input></div>
+            <div class="field full"><label data-i18n="application.comment">Комментарий</label><textarea required minlength="10" maxlength="2000" data-i18n-placeholder="application.orgCommentPlaceholder" placeholder="Как организация может быть связана с Pandora"></textarea></div>
+            <div class="field full"><button class="action-btn primary" type="submit" data-i18n="application.save">Сохранить как макет</button></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+<section class="view" data-view="signal" aria-label="Участие">
+<div><div class="kicker" data-i18n="signal.kicker">Участие · рекомендации</div><h2 data-i18n="menu.signal">Участие</h2><p class="lead" data-i18n="signal.lead">Система рекомендаций и вознаграждений помогает фиксировать приглашения, связь участников и реальный вклад. Внутреннее рабочее название этого слоя — «Сигнал». Без обещаний дохода и финансовых гарантий.</p></div>
+      <div class="signal-tools">
+<div class="panel"><h3 data-i18n="signal.ref">Рекомендательная ссылка</h3><p>https://pandora.co.ua/?ref=PANDORA-DEMO-001</p><div class="status-line" data-i18n="signal.linkStatus">создание ссылок · макет</div></div>
+        <div class="panel"><h3 data-i18n="signal.print">Печатные материалы</h3><div class="mock-preview"><span data-i18n="signal.printPreview">QR / листовка / карточка</span><br><span data-i18n="signal.printMock">макет для печати</span></div></div>
+<div class="panel"><h3 data-i18n="signal.code">Код рекомендации</h3><p>PANDORA-DEMO-001</p></div>
+<div class="panel"><h3 data-i18n="signal.important">Важно</h3><p data-i18n="signal.importantText">Это связь и приглашение, не доход, не бонусная схема и не финансовая гарантия.</p></div>
+      </div>
+    </section>
+
+    <section class="view single" data-view="documents" aria-label="Документы">
+      <div class="stack">
+        <div><div class="kicker" data-i18n="menu.documents">Документы</div><h2 data-i18n="menu.documents">Документы</h2><p class="lead" data-i18n="documents.lead">Здесь собраны законы о кооперации, будущий устав Pandora, положения о паевых взносах, регламенты, кодекс этики и библиотека проекта.</p></div>
+        <div class="doc-grid">
+          <div class="panel doc-list"><h3 data-i18n="documents.law">Законодательство</h3><a class="doc-item" href="https://zakon.rada.gov.ua/laws/show/1087-14" target="_blank" rel="noopener"><strong data-i18n="documents.law1">Закон Украины «О кооперации»</strong><span>Верховна Рада України · 2003</span></a><a class="doc-item" href="https://zakon.rada.gov.ua/laws/show/469-14" target="_blank" rel="noopener"><strong data-i18n="documents.law2">Закон «О потребительской кооперации»</strong><span>Верховна Рада України · 1992</span></a></div>
+          <div class="panel doc-list"><h3 data-i18n="documents.internal">Внутренние документы</h3><div class="doc-item"><strong data-i18n="documents.charter">Устав Кооператива Пандора</strong><span data-i18n="documents.soonReg">Скоро · после регистрации</span></div><div class="doc-item"><strong data-i18n="documents.pai">Положение о паевых взносах</strong><span data-i18n="documents.soonRules">Скоро · размеры и порядок</span></div><div class="doc-item"><strong data-i18n="documents.ethics">Кодекс этики пайщика</strong><span data-i18n="documents.soonPrinciples">Скоро · принципы сообщества</span></div></div>
+          <div class="panel doc-list"><h3 data-i18n="documents.library">Библиотека</h3><a class="doc-item" href="https://www.ica.coop/en/cooperatives/cooperative-identity" target="_blank" rel="noopener"><strong data-i18n="documents.ica">Кооперативные принципы МКА</strong><span>International Cooperative Alliance</span></a><a class="doc-item" href="https://drive.google.com/file/d/184dJI5f7iMCXFlvoOIEPKwUUT-cShZrP/view?usp=sharing" target="_blank" rel="noopener"><strong>М.И. Туган-Барановский</strong><span>«Социальные основы кооперации»</span></a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="dock" aria-label="Нижнее меню кабинета Пандора">
+    <div class="dock-inner">
+      <button class="dock-btn active" data-target="profile" onclick="openCabinetView('profile')" data-i18n="menu.profile">Профиль</button>
+      <button class="dock-btn" data-target="signal" onclick="openCabinetView('signal')" data-i18n="menu.signal">Участие</button>
+      <button class="dock-btn" data-target="documents" onclick="openCabinetView('documents')" data-i18n="menu.documents">Документы</button>
+      <button class="dock-btn" data-target="application" onclick="openCabinetView('application')" data-i18n="menu.application">Заявка</button>
+      <button class="dock-btn" data-target="pandora-id" onclick="openCabinetView('pandora-id')" data-i18n="menu.pandoraId">Пандора ID</button>
+      <button class="dock-btn" data-target="ai-pandora" onclick="openCabinetView('ai-pandora')" data-i18n="menu.aiPandora">AI Pandora</button>
+    </div>
+  </nav>
+  <button id="pandora-chat-btn" onclick="togglePandoraChat()" aria-label="Pandora AI чат">
+    <svg viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="27" cy="27" r="23" fill="#fff" stroke="#C0392B" stroke-width="3"/>
+      <path d="M11 29 Q11 21 19 21 H27 Q35 21 35 29 Q35 35 29 36 L15 40 L18 35 Q11 34 11 29Z" fill="none" stroke="#1A3A7A" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M21 18 Q21 11 29 11 H36 Q43 11 43 18 Q43 24 37 25 L39 30 L27 26 Q21 24 21 18Z" fill="none" stroke="#2E9B45" stroke-width="2.5" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div id="pandora-chat-window">
+    <div class="pc-header">
+      <div class="pc-header-left">
+        <div class="pc-dot"></div>
+        <div>
+          <div class="pc-title-row"><div class="pc-title">Pandora AI</div><span class="pc-header-beta">beta</span></div>
+          <div class="pc-sub" id="pcSubtitle">Кооперативный AI-помощник</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button class="pc-expand" id="pcExpandBtn" onclick="togglePandoraFullscreen()" title="Развернуть на весь экран">
+          <svg id="pcExpandIcon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;">
+            <polyline points="1,5 1,1 5,1"/><line x1="1" y1="1" x2="5.5" y2="5.5"/>
+            <polyline points="9,1 13,1 13,5"/><line x1="13" y1="1" x2="8.5" y2="5.5"/>
+            <polyline points="1,9 1,13 5,13"/><line x1="1" y1="13" x2="5.5" y2="8.5"/>
+            <polyline points="13,9 13,13 9,13"/><line x1="13" y1="13" x2="8.5" y2="8.5"/>
+          </svg>
+        </button>
+        <button class="pc-close" onclick="togglePandoraChat()">&#x00D7;</button>
+      </div>
+    </div>
+    <div class="pc-modes" role="tablist" aria-label="Режим ассистента">
+      <button class="pc-mode active" id="pcModeAi" type="button" onclick="pcSetMode('ai')">AI-помощник</button>
+      <button class="pc-mode pc-mode-feedback" id="pcModeQa" type="button" onclick="pcSetMode('qa')">Сообщить о баге / идее</button>
+    </div>
+    <div class="pc-messages" id="pcMessages">
+      <div class="pc-msg bot" id="pcGreeting">Задайте вопрос про Pandora, пайщиков, вступление, взносы или кооперативную модель.</div>
+    </div>
+    <div class="pc-suggestions" id="pcSuggestions">
+      <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Что такое Pandora?</button>
+      <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Как вступить?</button>
+      <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Что такое пайщик?</button>
+      <button class="pc-suggestion" onclick="pcAsk(this.textContent)">Можно ли заработать?</button>
+    </div>
+    <div class="pc-input-row" id="pcInputRow">
+      <textarea class="pc-input" id="pcInput" placeholder="Задайте вопрос..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();pcSend()}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px'"></textarea>
+      <button class="pc-send" id="pcSendBtn" onclick="pcSend()">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+    <div class="pc-qa-panel" id="pcQaPanel">
+      <div class="pc-qa-heading">
+        <h3 id="pcQaTitle">Помогите улучшить Pandora</h3>
+        <p id="pcQaIntro">Тестирование — это вклад сотрудника. Предложения — это вклад совладельца.</p>
+      </div>
+      <div class="pc-qa-choices" id="pcQaChoices">
+        <button class="pc-qa-action" type="button" onclick="pcOpenFeedback('bug')">
+          <span class="pc-qa-action-title" id="pcQaBug">Нашел баг</span>
+          <span class="pc-qa-action-description" id="pcQaBugDescription">Сообщить, что работает не так</span>
+        </button>
+        <button class="pc-qa-action" type="button" onclick="pcOpenFeedback('suggestion')">
+          <span class="pc-qa-action-title" id="pcQaSuggestion">Есть предложение</span>
+          <span class="pc-qa-action-description" id="pcQaSuggestionDescription">Предложить, как сделать лучше</span>
+        </button>
+        <button class="pc-qa-action pc-qa-action-fixation" type="button" onclick="pcEnterFixationMode()">
+          <span class="pc-qa-action-title" id="pcQaFixation">Режим фиксации</span>
+          <span class="pc-qa-action-description" id="pcQaFixationDescription">Быстро зафиксировать замечание в кабинете</span>
+        </button>
+      </div>
+      <div class="pc-qa-form" id="pcQaForm" data-type=""></div>
+    </div>
+  </div>
+</div>
+<script>
+
+const CABINET_LANGS=['uk','ru','en','es'];
+let currentCabinetLang='ru';
+const CABINET_I18N={
+  ru:{
+    'menu.profile':'Профиль','menu.aiPandora':'AI Pandora','menu.signal':'Участие','menu.documents':'Документы','menu.application':'Заявка','menu.pandoraId':'PANDORA ID',
+    'profile.kicker':'Профиль сайта','profile.lead':'Профиль хранит базовую информацию участника сайта: имя или псевдоним, страну, город, контакты, мессенджеры и будущую карточку навыков, талантов и компетенций.','profile.inside':'Контакты, город, страна, мессенджеры, навыки, компетенции, приватность.','profile.now':'Статический прототип без авторизации и базы данных.','profile.help':'Предложить минимальный набор полей для первого этапа Pandora ID.',
+    'ai.kicker':'AI Pandora · доступ и модели','ai.lead':'Раздел управляет доступом к Pandora AI Gateway: базовый AI-доступ Пандоры, личные API-ключи пайщика, локальные модели и будущие кооперативные лимиты.','ai.baseTitle':'Базовый доступ Pandora','ai.baseText':'Для обычных вопросов по кооперативу, документам, заявке, Pandora ID и участию.','ai.keysTitle':'Мои AI-ключи','ai.keysText':'Пайщик может добровольно подключить FreeModel, Gemini, OpenRouter, DeepSeek, Groq или другой API.','ai.localTitle':'Локальная модель','ai.localText':'Для приватных задач можно подключить Ollama, LM Studio или домашний AI-сервер.','ai.statusEnabled':'включено · макет','ai.statusOptional':'по желанию','ai.statusFuture':'будущий режим','ai.connectTitle':'Подключение источников AI','ai.providerPandora':'Базовый доступ Pandora','ai.providerPandoraHint':'Работает без действий со стороны пайщика.','ai.providerFreeModelHint':'Не обязательный, но может быть личным дополнительным каналом.','ai.providerGeminiHint':'Для тех, у кого уже есть Google-инструменты или API-доступ.','ai.providerRouterHint':'Для дешёвых или специализированных моделей.','ai.providerLocalHint':'Локальный AI на своём железе или сервере.','ai.providerCoop':'Кооперативные лимиты','ai.providerCoopHint':'Будущие оплаченные лимиты Пандоры для важных задач.','ai.keyPlaceholder':'API key / локальный endpoint','ai.saveMock':'Сохранить макет','ai.securityNote':'Ключи не должны храниться в открытом виде. В рабочей версии нужен vault — защищённое хранилище секретов, раздельные лимиты и журнал доступа.','ai.gatewayTitle':'Pandora AI Gateway','ai.gatewayText':'AI-шлюз выбирает канал под задачу: не заставляет пайщика регистрироваться во внешних сервисах, но позволяет подключить свои ресурсы, если ему так удобнее.','ai.routeSimple':'Простые вопросы','ai.routeSimpleText':'Навигация по кабинету, заявке, документам.','ai.routeSimpleTarget':'Базовый доступ Pandora','ai.routeSimpleTargetText':'Дешёвый и ограниченный режим.','ai.routeDocs':'Вопросы по ядру','ai.routeDocsText':'Устав, Memory Core, библиотека, проектные документы.','ai.routeDocsTargetText':'Поиск по базе знаний перед ответом.','ai.routePrivate':'Приватные заметки','ai.routePrivateText':'Личные черновики, чувствительные материалы.','ai.routePrivateTarget':'Локальная модель','ai.routePrivateTargetText':'Без лишней отправки наружу.','ai.routeHeavy':'Сложные задачи','ai.routeHeavyText':'Код, аналитика, юридические черновики, большие документы.','ai.routeHeavyTarget':'Личный ключ или платный канал','ai.routeHeavyTargetText':'Пайщик выбирает сам или использует лимиты кооператива.','ai.footerNote':'Идея: Pandora даёт инфраструктуру, память и правила доступа. Пайщик сам решает, пользоваться базовым доступом, своими ключами, локальной моделью или будущими кооперативными лимитами.',
+    'panel.inside':'Что будет внутри','panel.now':'Что доступно сейчас','panel.help':'Как помочь',
+    'signal.kicker':'Участие · рекомендации','signal.lead':'Система рекомендаций и вознаграждений помогает фиксировать приглашения, связь участников и реальный вклад. Внутреннее рабочее название этого слоя — «Сигнал». Без обещаний дохода и финансовых гарантий.','signal.ref':'Рекомендательная ссылка','signal.linkStatus':'создание ссылок · макет','signal.print':'Печатные материалы','signal.printPreview':'QR / листовка / карточка','signal.printMock':'макет для печати','signal.code':'Код рекомендации','signal.important':'Важно','signal.importantText':'Это связь и приглашение, не доход, не бонусная схема и не финансовая гарантия.',
+    'documents.lead':'Здесь собраны законы о кооперации, будущий устав Pandora, положения о паевых взносах, регламенты, кодекс этики и библиотека проекта.','documents.law':'Законодательство','documents.law1':'Закон Украины «О кооперации»','documents.law2':'Закон «О потребительской кооперации»','documents.internal':'Внутренние документы','documents.charter':'Устав Кооператива Пандора','documents.soonReg':'Скоро · после регистрации','documents.pai':'Положение о паевых взносах','documents.soonRules':'Скоро · размеры и порядок','documents.ethics':'Кодекс этики пайщика','documents.soonPrinciples':'Скоро · принципы сообщества','documents.library':'Библиотека','documents.ica':'Кооперативные принципы МКА',
+    'application.kicker':'Заявка в кооператив','application.lead':'Заявка в кооператив — отдельный шаг после регистрации на сайте. Подача заявки не означает автоматическое принятие в пайщики.','application.individual':'Физическое лицо','application.legal':'Юридическое лицо','application.lastname':'Фамилия','application.firstname':'Имя','application.city':'Город','application.cityPlaceholder':'Харьков','application.country':'Страна','application.choose':'Выбрать','country.ua':'Украина (+380)','country.pl':'Польша (+48)','country.de':'Германия (+49)','application.phone':'Телефон','application.phonePlaceholder':'номер','application.comment':'Комментарий','application.commentPlaceholder':'Коротко: кто вы и как хотите участвовать','application.save':'Отправить заявку','application.addPhone':'Добавить телефон','application.org':'Организация','application.form':'Форма','application.representative':'Представитель','application.orgCommentPlaceholder':'Как организация может быть связана с Pandora',
+    'id.kicker':'Pandora ID · этап подтверждения','id.title':'Pandora ID','id.lead':'Pandora ID — следующий этап после профиля, заявки и подтверждения участия. Кабинет помогает пройти путь к получению Pandora ID и дальнейшему участию в кооперативной инфраструктуре.','id.status':'ПРОТОТИП','id.name':'Имя / псевдоним','id.signalCode':'Код рекомендации','id.level':'Уровень','id.levelValue':'пользователь сайта','id.pending':'ожидает подтверждения','mock':'МАКЕТ','application.extraPhone':'Доп. телефон','application.mockStatus':'Заявка пока не отправляется автоматически. Это макет кабинета Пандора.','chat.subtitle':'AI-помощник кабинета','chat.greeting':'Спросите про профиль, участие, документы, заявку или Pandora ID.','chat.placeholder':'Задайте вопрос...','chat.localReply':'Я уже в кабинете. Могу подсказать по разделам: профиль, участие, документы, заявка и Pandora ID.'
+  },
+  uk:{
+    'menu.profile':'Профіль','menu.aiPandora':'AI Pandora','menu.signal':'Участь','menu.documents':'Документи','menu.application':'Заявка','menu.pandoraId':'PANDORA ID',
+    'profile.kicker':'Профіль сайту','profile.lead':'Профіль зберігає базову інформацію учасника сайту: ім’я або псевдонім, країну, місто, контакти, месенджери і майбутню картку навичок, талантів та компетенцій.','profile.inside':'Контакти, місто, країна, месенджери, навички, компетенції, приватність.','profile.now':'Статичний прототип без авторизації та бази даних.','profile.help':'Запропонувати мінімальний набір полів для першого етапу Pandora ID.',
+    'ai.kicker':'AI Pandora · доступ і моделі','ai.lead':'Розділ керує доступом до Pandora AI Gateway: базовий AI-доступ Пандори, особисті API-ключі пайовика, локальні моделі та майбутні кооперативні ліміти.','ai.baseTitle':'Базовий доступ Pandora','ai.baseText':'Для звичайних питань про кооператив, документи, заявку, Pandora ID та участь.','ai.keysTitle':'Мої AI-ключі','ai.keysText':'Пайовик може добровільно підключити FreeModel, Gemini, OpenRouter, DeepSeek, Groq або інший API.','ai.localTitle':'Локальна модель','ai.localText':'Для приватних задач можна підключити Ollama, LM Studio або домашній AI-сервер.','ai.statusEnabled':'увімкнено · макет','ai.statusOptional':'за бажанням','ai.statusFuture':'майбутній режим','ai.connectTitle':'Підключення джерел AI','ai.providerPandora':'Базовий доступ Pandora','ai.providerPandoraHint':'Працює без дій з боку пайовика.','ai.providerFreeModelHint':'Не обов’язковий, але може бути особистим додатковим каналом.','ai.providerGeminiHint':'Для тих, у кого вже є Google-інструменти або API-доступ.','ai.providerRouterHint':'Для дешевих або спеціалізованих моделей.','ai.providerLocalHint':'Локальний AI на своєму залізі або сервері.','ai.providerCoop':'Кооперативні ліміти','ai.providerCoopHint':'Майбутні оплачені ліміти Пандори для важливих задач.','ai.keyPlaceholder':'API key / локальний endpoint','ai.saveMock':'Зберегти макет','ai.securityNote':'Ключі не повинні зберігатися у відкритому вигляді. У робочій версії потрібен vault — захищене сховище секретів, роздільні ліміти і журнал доступу.','ai.gatewayTitle':'Pandora AI Gateway','ai.gatewayText':'AI-шлюз обирає канал під задачу: не змушує пайовика реєструватися у зовнішніх сервісах, але дозволяє підключити власні ресурси, якщо йому так зручніше.','ai.routeSimple':'Прості питання','ai.routeSimpleText':'Навігація по кабінету, заявці, документах.','ai.routeSimpleTarget':'Базовий доступ Pandora','ai.routeSimpleTargetText':'Дешевий і обмежений режим.','ai.routeDocs':'Питання по ядру','ai.routeDocsText':'Статут, Memory Core, бібліотека, проєктні документи.','ai.routeDocsTargetText':'Пошук по базі знань перед відповіддю.','ai.routePrivate':'Приватні нотатки','ai.routePrivateText':'Особисті чернетки, чутливі матеріали.','ai.routePrivateTarget':'Локальна модель','ai.routePrivateTargetText':'Без зайвої відправки назовні.','ai.routeHeavy':'Складні задачі','ai.routeHeavyText':'Код, аналітика, юридичні чернетки, великі документи.','ai.routeHeavyTarget':'Особистий ключ або платний канал','ai.routeHeavyTargetText':'Пайовик обирає сам або використовує ліміти кооперативу.','ai.footerNote':'Ідея: Pandora дає інфраструктуру, пам’ять і правила доступу. Пайовик сам вирішує, користуватися базовим доступом, своїми ключами, локальною моделлю або майбутніми кооперативними лімітами.',
+    'panel.inside':'Що буде всередині','panel.now':'Що доступно зараз','panel.help':'Як допомогти',
+    'signal.kicker':'Участь · рекомендації','signal.lead':'Система рекомендацій і винагород допомагає фіксувати запрошення, зв’язок учасників і реальний внесок. Внутрішня робоча назва цього шару — «Сигнал». Без обіцянок доходу і фінансових гарантій.','signal.ref':'Рекомендаційне посилання','signal.linkStatus':'створення посилань · макет','signal.print':'Друковані матеріали','signal.printPreview':'QR / листівка / картка','signal.printMock':'макет для друку','signal.code':'Код рекомендації','signal.important':'Важливо','signal.importantText':'Це зв’язок і запрошення, не дохід, не бонусна схема і не фінансова гарантія.',
+    'documents.lead':'Тут зібрані закони про кооперацію, майбутній статут Pandora, положення про пайові внески, регламенти, кодекс етики і бібліотека проєкту.','documents.law':'Законодавство','documents.law1':'Закон України «Про кооперацію»','documents.law2':'Закон «Про споживчу кооперацію»','documents.internal':'Внутрішні документи','documents.charter':'Статут Кооперативу Пандора','documents.soonReg':'Скоро · після реєстрації','documents.pai':'Положення про пайові внески','documents.soonRules':'Скоро · розміри і порядок','documents.ethics':'Кодекс етики пайовика','documents.soonPrinciples':'Скоро · принципи спільноти','documents.library':'Бібліотека','documents.ica':'Кооперативні принципи МКА',
+    'application.kicker':'Заявка до кооперативу','application.lead':'Заявка до кооперативу — окремий крок після реєстрації на сайті. Подання заявки не означає автоматичне прийняття в пайовики.','application.individual':'Фізична особа','application.legal':'Юридична особа','application.lastname':'Прізвище','application.firstname':'Ім’я','application.city':'Місто','application.cityPlaceholder':'Харків','application.country':'Країна','application.choose':'Обрати','country.ua':'Україна (+380)','country.pl':'Польща (+48)','country.de':'Німеччина (+49)','application.phone':'Телефон','application.phonePlaceholder':'номер','application.comment':'Коментар','application.commentPlaceholder':'Коротко: хто ви і як хочете брати участь','application.save':'Надіслати заявку','application.addPhone':'Додати телефон','application.org':'Організація','application.form':'Форма','application.representative':'Представник','application.orgCommentPlaceholder':'Як організація може бути пов’язана з Pandora',
+    'id.kicker':'Pandora ID · етап підтвердження','id.title':'Pandora ID','id.lead':'Pandora ID — наступний етап після профілю, заявки та підтвердження участі. Кабінет допомагає пройти шлях до отримання Pandora ID і подальшої участі в кооперативній інфраструктурі.','id.status':'ПРОТОТИП','id.name':'Ім’я / псевдонім','id.signalCode':'Код рекомендації','id.level':'Рівень','id.levelValue':'користувач сайту','id.pending':'очікує підтвердження','mock':'МАКЕТ','application.extraPhone':'Дод. телефон','application.mockStatus':'Заявка поки не надсилається автоматично. Це макет кабінету Пандора.','chat.subtitle':'AI-помічник кабінету','chat.greeting':'Запитайте про профіль, участь, документи, заявку або Pandora ID.','chat.placeholder':'Поставте питання...','chat.localReply':'Я вже в кабінеті. Можу підказати щодо розділів: профіль, участь, документи, заявка і Pandora ID.'
+  },
+  en:{
+    'menu.profile':'Profile','menu.aiPandora':'AI Pandora','menu.signal':'Participation','menu.documents':'Documents','menu.application':'Application','menu.pandoraId':'PANDORA ID',
+    'profile.kicker':'Site profile','profile.lead':'The profile stores basic site participant information: name or nickname, country, city, contacts, messengers and a future skills, talents and competencies card.','profile.inside':'Contacts, city, country, messengers, skills, competencies, privacy.','profile.now':'Static prototype without authorization or database.','profile.help':'Suggest the minimum fields for the first Pandora ID stage.',
+    'ai.kicker':'AI Pandora · access and models','ai.lead':'This section manages access to Pandora AI Gateway: basic Pandora AI access, a member’s personal API keys, local models and future cooperative limits.','ai.baseTitle':'Basic Pandora access','ai.baseText':'For regular questions about the cooperative, documents, application, Pandora ID and participation.','ai.keysTitle':'My AI keys','ai.keysText':'A member may voluntarily connect FreeModel, Gemini, OpenRouter, DeepSeek, Groq or another API.','ai.localTitle':'Local model','ai.localText':'For private tasks, the member may connect Ollama, LM Studio or a home AI server.','ai.statusEnabled':'enabled · mockup','ai.statusOptional':'optional','ai.statusFuture':'future mode','ai.connectTitle':'AI source connections','ai.providerPandora':'Basic Pandora access','ai.providerPandoraHint':'Works without action from the member.','ai.providerFreeModelHint':'Not required, but can be a personal additional channel.','ai.providerGeminiHint':'For members who already have Google tools or API access.','ai.providerRouterHint':'For cheap or specialized models.','ai.providerLocalHint':'Local AI on personal hardware or server.','ai.providerCoop':'Cooperative limits','ai.providerCoopHint':'Future paid Pandora limits for important tasks.','ai.keyPlaceholder':'API key / local endpoint','ai.saveMock':'Save mockup','ai.securityNote':'Keys must not be stored openly. The working version needs a vault — protected secret storage, separate limits and an access log.','ai.gatewayTitle':'Pandora AI Gateway','ai.gatewayText':'The AI gateway selects a channel for the task: it does not force the member to register in external services, but allows personal resources to be connected when convenient.','ai.routeSimple':'Simple questions','ai.routeSimpleText':'Cabinet, application and document navigation.','ai.routeSimpleTarget':'Basic Pandora access','ai.routeSimpleTargetText':'Cheap and limited mode.','ai.routeDocs':'Core questions','ai.routeDocsText':'Charter, Memory Core, library, project documents.','ai.routeDocsTargetText':'Knowledge-base retrieval before answering.','ai.routePrivate':'Private notes','ai.routePrivateText':'Personal drafts and sensitive materials.','ai.routePrivateTarget':'Local model','ai.routePrivateTargetText':'Without unnecessary external sending.','ai.routeHeavy':'Hard tasks','ai.routeHeavyText':'Code, analytics, legal drafts, large documents.','ai.routeHeavyTarget':'Personal key or paid channel','ai.routeHeavyTargetText':'The member chooses or uses cooperative limits.','ai.footerNote':'The idea: Pandora provides infrastructure, memory and access rules. The member decides whether to use basic access, personal keys, a local model or future cooperative limits.',
+    'panel.inside':'What will be inside','panel.now':'Available now','panel.help':'How to help',
+    'signal.kicker':'Participation · recommendations','signal.lead':'The recommendation and reward system helps record invitations, participant connections and real contribution. The internal working name of this layer is “Signal”. No income promises or financial guarantees.','signal.ref':'Recommendation link','signal.linkStatus':'link creation · mockup','signal.print':'Print materials','signal.printPreview':'QR / flyer / card','signal.printMock':'print mockup','signal.code':'Recommendation code','signal.important':'Important','signal.importantText':'This is connection and invitation, not income, not a bonus scheme and not a financial guarantee.',
+    'documents.lead':'This area gathers cooperative laws, the future Pandora charter, contribution rules, regulations, ethics code and the project library.','documents.law':'Legislation','documents.law1':'Law of Ukraine “On Cooperation”','documents.law2':'Law “On Consumer Cooperation”','documents.internal':'Internal documents','documents.charter':'Pandora Cooperative Charter','documents.soonReg':'Soon · after registration','documents.pai':'Contribution rules','documents.soonRules':'Soon · amounts and procedure','documents.ethics':'Member ethics code','documents.soonPrinciples':'Soon · community principles','documents.library':'Library','documents.ica':'ICA cooperative principles',
+    'application.kicker':'Cooperative application','application.lead':'The cooperative application is a separate step after site registration. Submitting an application does not mean automatic acceptance as a member.','application.individual':'Individual','application.legal':'Legal entity','application.lastname':'Last name','application.firstname':'First name','application.city':'City','application.cityPlaceholder':'Kharkiv','application.country':'Country','application.choose':'Choose','country.ua':'Ukraine (+380)','country.pl':'Poland (+48)','country.de':'Germany (+49)','application.phone':'Phone','application.phonePlaceholder':'number','application.comment':'Comment','application.commentPlaceholder':'Briefly: who you are and how you want to participate','application.save':'Send application','application.addPhone':'Add phone','application.org':'Organization','application.form':'Form','application.representative':'Representative','application.orgCommentPlaceholder':'How the organization can be connected with Pandora',
+    'id.kicker':'Pandora ID · confirmation stage','id.title':'Pandora ID','id.lead':'Pandora ID is the next stage after profile, application and participation confirmation. The cabinet helps the user move toward receiving Pandora ID and further participation in the cooperative infrastructure.','id.status':'PROTOTYPE','id.name':'Name / nickname','id.signalCode':'Recommendation code','id.level':'Level','id.levelValue':'site user','id.pending':'awaiting confirmation','mock':'MOCK','application.extraPhone':'Extra phone','application.mockStatus':'The application is not sent automatically yet. This is a Pandora cabinet mockup.','chat.subtitle':'Cabinet AI assistant','chat.greeting':'Ask about profile, participation, documents, application or Pandora ID.','chat.placeholder':'Ask a question...','chat.localReply':'I am in the cabinet now. I can help with profile, participation, documents, application and Pandora ID.'
+  },
+  es:{
+    'menu.profile':'Perfil','menu.aiPandora':'AI Pandora','menu.signal':'Participación','menu.documents':'Documentos','menu.application':'Solicitud','menu.pandoraId':'PANDORA ID',
+    'profile.kicker':'Perfil del sitio','profile.lead':'El perfil guarda información básica del participante: nombre o seudónimo, país, ciudad, contactos, mensajeros y una futura tarjeta de habilidades, talentos y competencias.','profile.inside':'Contactos, ciudad, país, mensajeros, habilidades, competencias, privacidad.','profile.now':'Prototipo estático sin autorización ni base de datos.','profile.help':'Proponer el conjunto mínimo de campos para la primera etapa de Pandora ID.',
+    'ai.kicker':'AI Pandora · acceso y modelos','ai.lead':'Esta sección gestiona el acceso a Pandora AI Gateway: acceso AI básico de Pandora, claves API personales del socio, modelos locales y futuros límites cooperativos.','ai.baseTitle':'Acceso básico Pandora','ai.baseText':'Para preguntas comunes sobre la cooperativa, documentos, solicitud, Pandora ID y participación.','ai.keysTitle':'Mis claves AI','ai.keysText':'El socio puede conectar voluntariamente FreeModel, Gemini, OpenRouter, DeepSeek, Groq u otro API.','ai.localTitle':'Modelo local','ai.localText':'Para tareas privadas se puede conectar Ollama, LM Studio o un servidor AI propio.','ai.statusEnabled':'activado · maqueta','ai.statusOptional':'opcional','ai.statusFuture':'modo futuro','ai.connectTitle':'Conexión de fuentes AI','ai.providerPandora':'Acceso básico Pandora','ai.providerPandoraHint':'Funciona sin acciones del socio.','ai.providerFreeModelHint':'No es obligatorio, pero puede ser un canal personal adicional.','ai.providerGeminiHint':'Para quienes ya tienen herramientas de Google o acceso API.','ai.providerRouterHint':'Para modelos baratos o especializados.','ai.providerLocalHint':'AI local en hardware o servidor propio.','ai.providerCoop':'Límites cooperativos','ai.providerCoopHint':'Futuros límites pagados de Pandora para tareas importantes.','ai.keyPlaceholder':'API key / endpoint local','ai.saveMock':'Guardar maqueta','ai.securityNote':'Las claves no deben almacenarse abiertas. La versión de trabajo necesita un vault — almacén protegido de secretos, límites separados y registro de acceso.','ai.gatewayTitle':'Pandora AI Gateway','ai.gatewayText':'El AI-gateway elige el canal según la tarea: no obliga al socio a registrarse en servicios externos, pero permite conectar recursos propios si es más cómodo.','ai.routeSimple':'Preguntas simples','ai.routeSimpleText':'Navegación por gabinete, solicitud y documentos.','ai.routeSimpleTarget':'Acceso básico Pandora','ai.routeSimpleTargetText':'Modo barato y limitado.','ai.routeDocs':'Preguntas del núcleo','ai.routeDocsText':'Estatuto, Memory Core, biblioteca, documentos del proyecto.','ai.routeDocsTargetText':'Búsqueda en base de conocimiento antes de responder.','ai.routePrivate':'Notas privadas','ai.routePrivateText':'Borradores personales y materiales sensibles.','ai.routePrivateTarget':'Modelo local','ai.routePrivateTargetText':'Sin envío externo innecesario.','ai.routeHeavy':'Tareas complejas','ai.routeHeavyText':'Código, análisis, borradores legales, documentos grandes.','ai.routeHeavyTarget':'Clave personal o canal pagado','ai.routeHeavyTargetText':'El socio elige o usa límites cooperativos.','ai.footerNote':'La idea: Pandora da infraestructura, memoria y reglas de acceso. El socio decide si usa acceso básico, sus claves, modelo local o futuros límites cooperativos.',
+    'panel.inside':'Qué habrá dentro','panel.now':'Disponible ahora','panel.help':'Cómo ayudar',
+    'signal.kicker':'Participación · recomendaciones','signal.lead':'El sistema de recomendaciones y recompensas ayuda a registrar invitaciones, conexión entre participantes y contribución real. El nombre interno de trabajo de esta capa es “Signal”. Sin promesas de ingresos ni garantías financieras.','signal.ref':'Enlace de recomendación','signal.linkStatus':'creación de enlaces · maqueta','signal.print':'Materiales impresos','signal.printPreview':'QR / folleto / tarjeta','signal.printMock':'maqueta para imprimir','signal.code':'Código de recomendación','signal.important':'Importante','signal.importantText':'Esto es conexión e invitación, no ingreso, no esquema de bonos y no garantía financiera.',
+    'documents.lead':'Aquí se reúnen leyes cooperativas, el futuro estatuto de Pandora, reglas de aportes, reglamentos, código ético y biblioteca del proyecto.','documents.law':'Legislación','documents.law1':'Ley de Ucrania “Sobre la cooperación”','documents.law2':'Ley “Sobre la cooperación de consumidores”','documents.internal':'Documentos internos','documents.charter':'Estatuto de la Cooperativa Pandora','documents.soonReg':'Pronto · después del registro','documents.pai':'Reglas de aportes','documents.soonRules':'Pronto · importes y procedimiento','documents.ethics':'Código ético del socio','documents.soonPrinciples':'Pronto · principios de la comunidad','documents.library':'Biblioteca','documents.ica':'Principios cooperativos de la ACI',
+    'application.kicker':'Solicitud a la cooperativa','application.lead':'La solicitud a la cooperativa es un paso separado después del registro en el sitio. Enviar una solicitud no significa aceptación automática como socio.','application.individual':'Persona física','application.legal':'Persona jurídica','application.lastname':'Apellido','application.firstname':'Nombre','application.city':'Ciudad','application.cityPlaceholder':'Járkiv','application.country':'País','application.choose':'Elegir','country.ua':'Ucrania (+380)','country.pl':'Polonia (+48)','country.de':'Alemania (+49)','application.phone':'Teléfono','application.phonePlaceholder':'número','application.comment':'Comentario','application.commentPlaceholder':'Brevemente: quién eres y cómo quieres participar','application.save':'Enviar solicitud','application.addPhone':'Añadir teléfono','application.org':'Organización','application.form':'Forma','application.representative':'Representante','application.orgCommentPlaceholder':'Cómo puede relacionarse la organización con Pandora',
+    'id.kicker':'Pandora ID · etapa de confirmación','id.title':'Pandora ID','id.lead':'Pandora ID es la siguiente etapa después del perfil, la solicitud y la confirmación de participación. El gabinete ayuda a avanzar hacia Pandora ID y la participación posterior en la infraestructura cooperativa.','id.status':'PROTOTIPO','id.name':'Nombre / seudónimo','id.signalCode':'Código de recomendación','id.level':'Nivel','id.levelValue':'usuario del sitio','id.pending':'esperando confirmación','mock':'MAQUETA','application.extraPhone':'Teléfono extra','application.mockStatus':'La solicitud aún no se envía automáticamente. Es una maqueta del gabinete Pandora.','chat.subtitle':'Asistente AI del gabinete','chat.greeting':'Pregunta sobre perfil, participación, documentos, solicitud o Pandora ID.','chat.placeholder':'Haz una pregunta...','chat.localReply':'Ya estoy en el gabinete. Puedo ayudar con perfil, participación, documentos, solicitud y Pandora ID.'
+  }
+};
+function applyCabinetCopy(lang){
+  const dict=CABINET_I18N[lang]||CABINET_I18N.ru;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(dict[key])el.textContent=dict[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-placeholder');
+    if(dict[key])el.setAttribute('placeholder',dict[key]);
+  });
+}
+function applyCabinetLang(lang){
+  const safe=CABINET_LANGS.includes(lang)?lang:'uk';
+  currentCabinetLang=safe;
+  document.documentElement.lang=safe;
+  document.querySelectorAll('[data-lang]').forEach(el=>el.classList.toggle('active',el.getAttribute('data-lang')===safe));
+  applyCabinetCopy(safe);
+  if(typeof pcUpdateUI==='function')pcUpdateUI(safe);
+  if(typeof refreshPhoneRemoveButtons==='function'){document.querySelectorAll('form').forEach(form=>refreshPhoneRemoveButtons(form))}
+  if(typeof renderLanguageModal==='function')renderLanguageModal();
+  document.querySelectorAll('.lang-option').forEach(btn=>btn.classList.toggle('active',btn.dataset.langOpt===safe));
+  const btn=document.getElementById('langBtn');
+  if(btn){btn.setAttribute('aria-expanded','false');btn.classList.remove('open')}
+  const menu=document.getElementById('langDropdown');
+  if(menu)menu.classList.remove('open');
+  try{localStorage.setItem('pandora_lang',safe);localStorage.setItem('pandora-cabinet-lang',safe)}catch(e){}
+}
+function selectLang(lang){applyCabinetLang(lang)}
+function toggleLangMenu(){
+  const menu=document.getElementById('langDropdown');
+  const btn=document.getElementById('langBtn');
+  if(!menu||!btn)return;
+  const open=menu.classList.toggle('open');
+  btn.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+}
+document.addEventListener('click',event=>{const sw=document.getElementById('langSwitcher');if(sw&&!sw.contains(event.target)){const menu=document.getElementById('langDropdown');const btn=document.getElementById('langBtn');if(menu)menu.classList.remove('open');if(btn){btn.classList.remove('open');btn.setAttribute('aria-expanded','false')}}});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'){const menu=document.getElementById('langDropdown');const btn=document.getElementById('langBtn');if(menu)menu.classList.remove('open');if(btn){btn.classList.remove('open');btn.setAttribute('aria-expanded','false')}}});
+function openCabinetView(key){
+  document.querySelectorAll('.view').forEach(view => view.classList.toggle('active', view.dataset.view === key));
+  document.querySelectorAll('.dock-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.target === key));
+}
+function switchEntity(type){
+  const ind=document.getElementById('formIndividual'), leg=document.getElementById('formLegal');
+  const bi=document.getElementById('btnIndividual'), bl=document.getElementById('btnLegal');
+  if(ind&&leg){ind.style.display=type==='individual'?'grid':'none';leg.style.display=type==='legal'?'grid':'none'}
+  if(bi&&bl){bi.classList.toggle('active',type==='individual');bl.classList.toggle('active',type==='legal')}
+}
+function onCountryChange(select){
+  const option=select&&select.options?select.options[select.selectedIndex]:null;
+  const code=option?(option.getAttribute('data-code')||'+?'):'+?';
+  document.querySelectorAll('.phone-code').forEach(el=>{if(el.tagName==='INPUT')el.value=code;else el.textContent=code});
+}
+function addPhone(){
+  const form=document.getElementById('formIndividual');
+  if(!form)return;
+  const dict=CABINET_I18N[currentCabinetLang]||CABINET_I18N.ru;
+  const row=document.createElement('div');
+  row.className='field';
+  row.innerHTML='<label>'+dict['application.extraPhone']+'</label><div class="phone-row"><input class="phone-code" value="'+(document.querySelector('.phone-code')?.value||'+?')+'" readonly><input name="phone[]" placeholder="'+dict['application.phonePlaceholder']+'"></div>';
+  const anchor=form.querySelector('.field.full');
+  form.insertBefore(row,anchor);
+}
+function handleJoin(event){
+  const form = event.currentTarget;
+
+  let status = form.querySelector('.join-status-message');
+  if (!status) {
+    status = document.createElement('div');
+    status.className = 'field full join-status-message';
+    form.appendChild(status);
+  }
+
+  const fail = (message) => {
+    event.preventDefault();
+    status.textContent = message;
+    return false;
+  };
+
+  const isLegal = form.id === 'formLegal';
+  if (typeof validatePandoraForm === 'function') {
+    // Anti-spam/captcha belongs to future cabinet login/registration gate, not to authenticated in-cabinet application forms.
+    const valid = validatePandoraForm(form, {
+      phoneRequired: !isLegal,
+      messageRequired: true,
+      maxLinks: 2,
+      minSeconds: 0,
+      antiSpam: false
+    });
+    if (!valid) {
+      event.preventDefault();
+      status.textContent = '';
+      return false;
+    }
+  }
+
+  form.querySelectorAll('[data-web3forms-hidden="1"]').forEach((el) => el.remove());
+
+  const addHidden = (name, value) => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.value = value || '';
+    input.setAttribute('data-web3forms-hidden', '1');
+    form.appendChild(input);
+  };
+
+  form.setAttribute('action', 'https://api.web3forms.com/submit');
+  form.setAttribute('method', 'POST');
+  form.setAttribute('accept-charset', 'UTF-8');
+
+  addHidden('access_key', 'd2629b69-5660-43e0-8b0d-f2ac60a2c452');
+  addHidden('subject', isLegal ? 'Pandora cabinet application — legal entity' : 'Pandora cabinet application — individual');
+  addHidden('from_name', 'Pandora cabinet form');
+  addHidden('source', 'cabinet.html');
+  addHidden('language', currentCabinetLang || 'ru');
+  addHidden('application_type', isLegal ? 'legal_entity' : 'individual');
+
+  if (isLegal) {
+    const inputs = form.querySelectorAll('input');
+    const organization = (inputs[0] && inputs[0].value || '').trim();
+    const orgForm = (inputs[1] && inputs[1].value || '').trim();
+    const email = (inputs[2] && inputs[2].value || '').trim();
+    const representative = (inputs[3] && inputs[3].value || '').trim();
+    const comment = (form.querySelector('textarea') && form.querySelector('textarea').value || '').trim();
+
+    if (!email && !representative && !organization) {
+      return fail('Укажите организацию, представителя или email.');
+    }
+
+    addHidden('organization', organization);
+    addHidden('organization_form', orgForm);
+    addHidden('email', email);
+    addHidden('representative', representative);
+    addHidden('comment', comment);
+    addHidden('message', [
+      'Тип: юридическое лицо',
+      'Организация: ' + organization,
+      'Форма: ' + orgForm,
+      'Email: ' + email,
+      'Представитель: ' + representative,
+      'Комментарий: ' + comment
+    ].join('\n'));
+  } else {
+    const lastname = (form.querySelector('[name="lastname"]') && form.querySelector('[name="lastname"]').value || '').trim();
+    const firstname = (form.querySelector('[name="firstname"]') && form.querySelector('[name="firstname"]').value || '').trim();
+    const email = (form.querySelector('[name="email"]') && form.querySelector('[name="email"]').value || '').trim();
+    const city = (form.querySelector('[name="city"]') && form.querySelector('[name="city"]').value || '').trim();
+    const countrySelect = form.querySelector('[name="country"]');
+    const country = countrySelect && countrySelect.selectedIndex >= 0 ? countrySelect.options[countrySelect.selectedIndex].textContent.trim() : '';
+    const comment = (form.querySelector('textarea') && form.querySelector('textarea').value || '').trim();
+
+    const phones = [];
+    let phoneCodeMissing = false;
+
+    form.querySelectorAll('.phone-row').forEach((row) => {
+      const codeInput = row.querySelector('.phone-code');
+      const code = codeInput ? (codeInput.value || codeInput.textContent || '').trim() : '';
+      const numberInput = row.querySelector('input[name="phone[]"]');
+      const number = numberInput ? numberInput.value.trim() : '';
+      if (!number) return;
+      if (!code || code === '+?') phoneCodeMissing = true;
+      phones.push((code && code !== '+?' ? code + ' ' : '') + number);
+    });
+
+    if (phoneCodeMissing) {
+      return fail('Выберите страну, чтобы к телефону добавился код страны.');
+    }
+
+    if (!email && phones.length === 0) {
+      return fail('Укажите email или телефон для связи.');
+    }
+
+    addHidden('lastname', lastname);
+    addHidden('firstname', firstname);
+    addHidden('email', email);
+    addHidden('city', city);
+    addHidden('country_text', country);
+    addHidden('phones', phones.join(' | '));
+    addHidden('comment', comment);
+    addHidden('message', [
+      'Тип: физическое лицо',
+      'Фамилия: ' + lastname,
+      'Имя: ' + firstname,
+      'Email: ' + email,
+      'Город: ' + city,
+      'Страна: ' + country,
+      'Телефоны: ' + phones.join(' | '),
+      'Комментарий: ' + comment
+    ].join('\n'));
+  }
+
+  status.textContent = 'Отправляем заявку...';
+
+  const submitBtn = form.querySelector('button[type="submit"]');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправка...';
+  }
+
+  return true;
+}
+
+/* Pandora form UX patch start */
+function getSelectedCountryCode(select){
+  if (!select || select.selectedIndex < 0) return '+?';
+  const option = select.options[select.selectedIndex];
+  return option && option.dataset && option.dataset.code ? option.dataset.code : '+?';
+}
+
+function onCountryChange(select){
+  const form = select.closest('form') || document;
+  const code = getSelectedCountryCode(select);
+  form.querySelectorAll('.phone-code').forEach((input) => {
+    input.value = code;
+  });
+}
+
+function getPhoneRemoveLabel(){
+  const labels = {
+    ru: 'Убрать',
+    uk: 'Прибрати',
+    en: 'Remove',
+    es: 'Quitar'
+  };
+  return labels[currentCabinetLang] || labels.ru;
+}
+
+function refreshPhoneRemoveButtons(form){
+  const rows = Array.from(form.querySelectorAll('.phone-row'));
+  rows.forEach((row, index) => {
+    const existing = row.querySelector('.phone-remove');
+    if (index === 0) {
+      if (existing) existing.remove();
+      return;
+    }
+
+    let btn = existing;
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'phone-remove';
+      row.appendChild(btn);
+    }
+
+    btn.textContent = getPhoneRemoveLabel();
+    btn.onclick = () => {
+      row.remove();
+      refreshPhoneRemoveButtons(form);
+    };
+  });
+}
+
+function addPhone(button){
+  const form = button.closest('form');
+  if (!form) return;
+
+  const firstRow = form.querySelector('.phone-row');
+  if (!firstRow) return;
+
+  const row = firstRow.cloneNode(true);
+  row.querySelectorAll('.phone-remove').forEach((btn) => btn.remove());
+
+  const numberInput = row.querySelector('input[name="phone[]"]');
+  if (numberInput) {
+    numberInput.value = '';
+    numberInput.type = 'tel';
+    numberInput.inputMode = 'tel';
+    numberInput.autocomplete = 'tel';
+    numberInput.required = false;
+  }
+
+  const countrySelect = form.querySelector('select[name="country"]');
+  const codeInput = row.querySelector('.phone-code');
+  if (codeInput) codeInput.value = getSelectedCountryCode(countrySelect);
+
+  button.parentNode.insertBefore(row, button);
+  refreshPhoneRemoveButtons(form);
+}
+/* Pandora form UX patch end */
+const PC_CABINET_STRINGS={
+  ru:{subtitle:'Кооперативный AI-помощник',aiMode:'AI-помощник',qaMode:'Сообщить о баге / идее',greeting:'Я уже в кабинете. Могу подсказать по разделам: профиль, участие, документы, заявка и Pandora ID.',placeholder:'Задайте вопрос...',suggestions:['Что такое Pandora?','Как подать заявку?','Что такое Pandora ID?','Как работает участие?','Какие документы нужны?','Как я могу помочь проекту?'],localReply:'Я уже в кабинете. Могу подсказать по разделам: профиль, участие, документы, заявка и Pandora ID.',errorReply:'Сейчас не удалось получить ответ AI. Попробуйте еще раз чуть позже.',typing:'Думаю...',qaTitle:'Помогите улучшить Pandora',qaIntro:'Тестирование — это вклад сотрудника. Предложения — это вклад совладельца.',qaBug:'Нашел баг',qaBugDescription:'Сообщить, что работает не так',qaSuggestion:'Есть предложение',qaSuggestionDescription:'Предложить, как сделать лучше',qaFixation:'Режим фиксации',qaFixationDescription:'Быстро зафиксировать замечание в кабинете',feedbackBack:'Назад',feedbackBugTitle:'Сообщить о баге',feedbackSuggestionTitle:'Предложить идею',feedbackText:'Описание',feedbackTextPlaceholder:'Опишите, что заметили',feedbackContact:'Контакт для связи',feedbackSave:'Сохранить в макете',feedbackSaved:'Сообщение зафиксировано в макете кабинета.'},
+  uk:{subtitle:'Кооперативний AI-помічник',aiMode:'AI-помічник',qaMode:'Повідомити про баг / ідею',greeting:'Я вже в кабінеті. Можу підказати по розділах: профіль, участь, документи, заявка та Pandora ID.',placeholder:'Поставте питання...',suggestions:['Що таке Pandora?','Як подати заявку?','Що таке Pandora ID?','Як працює участь?','Які документи потрібні?','Як я можу допомогти проєкту?'],localReply:'Я вже в кабінеті. Можу підказати по розділах: профіль, участь, документи, заявка та Pandora ID.',errorReply:'Зараз не вдалося отримати відповідь AI. Спробуйте ще раз трохи пізніше.',typing:'Думаю...',qaTitle:'Допоможіть покращити Pandora',qaIntro:'Тестування — це внесок співробітника. Пропозиції — це внесок співвласника.',qaBug:'Знайшов баг',qaBugDescription:'Повідомити, що працює не так',qaSuggestion:'Є пропозиція',qaSuggestionDescription:'Запропонувати, як зробити краще',qaFixation:'Режим фіксації',qaFixationDescription:'Швидко зафіксувати зауваження в кабінеті',feedbackBack:'Назад',feedbackBugTitle:'Повідомити про баг',feedbackSuggestionTitle:'Запропонувати ідею',feedbackText:'Опис',feedbackTextPlaceholder:'Опишіть, що помітили',feedbackContact:'Контакт для зв’язку',feedbackSave:'Зберегти в макеті',feedbackSaved:'Повідомлення зафіксовано в макеті кабінету.'},
+  en:{subtitle:'Cooperative AI assistant',aiMode:'AI assistant',qaMode:'Report a bug / idea',greeting:'Ask about profile, participation, documents, application or Pandora ID.',placeholder:'Ask a question...',suggestions:['What is Pandora?','How do I apply?','What is Pandora ID?','How does participation work?','What documents are needed?','How can I help the project?'],localReply:'I am already in the cabinet. I can help with profile, participation, documents, application and Pandora ID.',qaTitle:'Help improve Pandora',qaIntro:'Testing is a contributor role. Suggestions are a co-owner role.',qaBug:'Found a bug',qaBugDescription:'Report what does not work',qaSuggestion:'I have a suggestion',qaSuggestionDescription:'Suggest how to improve it',qaFixation:'Fixation mode',qaFixationDescription:'Quickly capture a cabinet note',feedbackBack:'Back',feedbackBugTitle:'Report a bug',feedbackSuggestionTitle:'Suggest an idea',feedbackText:'Description',feedbackTextPlaceholder:'Describe what you noticed',feedbackContact:'Contact',feedbackSave:'Save in mockup',feedbackSaved:'The message is recorded in the cabinet mockup.'},
+  es:{subtitle:'Asistente AI cooperativo',aiMode:'Asistente AI',qaMode:'Informar bug / idea',greeting:'Pregunta sobre perfil, participación, documentos, solicitud o Pandora ID.',placeholder:'Haz una pregunta...',suggestions:['¿Qué es Pandora?','¿Cómo enviar la solicitud?','¿Qué es Pandora ID?','¿Cómo funciona la participación?','¿Qué documentos se necesitan?','¿Cómo puedo ayudar al proyecto?'],localReply:'Ya estoy en el gabinete. Puedo ayudar con perfil, participación, documentos, solicitud y Pandora ID.',qaTitle:'Ayuda a mejorar Pandora',qaIntro:'Probar es una contribución. Proponer es una contribución de copropietario.',qaBug:'Encontré un bug',qaBugDescription:'Informar qué no funciona',qaSuggestion:'Tengo una propuesta',qaSuggestionDescription:'Proponer cómo mejorarlo',qaFixation:'Modo de fijación',qaFixationDescription:'Registrar rápidamente una nota del gabinete',feedbackBack:'Atrás',feedbackBugTitle:'Informar un bug',feedbackSuggestionTitle:'Proponer una idea',feedbackText:'Descripción',feedbackTextPlaceholder:'Describe lo que notaste',feedbackContact:'Contacto',feedbackSave:'Guardar en maqueta',feedbackSaved:'El mensaje quedó registrado en la maqueta del gabinete.'}
+};
+let pcOpen=false;
+let pcFullscreen=false;
+let pcMode='ai';
+function pcText(){return PC_CABINET_STRINGS[currentCabinetLang]||PC_CABINET_STRINGS.ru}
+function pcUpdateUI(lang){
+  const s=PC_CABINET_STRINGS[lang]||PC_CABINET_STRINGS.uk;
+  const map={pcSubtitle:s.subtitle,pcModeAi:s.aiMode,pcModeQa:s.qaMode,pcGreeting:s.greeting,pcQaTitle:s.qaTitle,pcQaIntro:s.qaIntro,pcQaBug:s.qaBug,pcQaBugDescription:s.qaBugDescription,pcQaSuggestion:s.qaSuggestion,pcQaSuggestionDescription:s.qaSuggestionDescription,pcQaFixation:s.qaFixation,pcQaFixationDescription:s.qaFixationDescription};
+  Object.entries(map).forEach(([id,text])=>{const el=document.getElementById(id);if(el)el.textContent=text});
+  const input=document.getElementById('pcInput');
+  if(input)input.placeholder=s.placeholder;
+  const labels={ru:['Развернуть на весь экран','Свернуть','Режим ассистента'],uk:['Розгорнути на весь екран','Згорнути','Режим асистента'],en:['Expand fullscreen','Collapse','Assistant mode'],es:['Expandir a pantalla completa','Contraer','Modo asistente']};
+  const pair=labels[lang]||labels.uk;
+  const expandBtn=document.getElementById('pcExpandBtn');
+  if(expandBtn){expandBtn.title=pcFullscreen?pair[1]:pair[0];expandBtn.setAttribute('aria-label',pcFullscreen?pair[1]:pair[0]);}
+  const modes=document.querySelector('.pc-modes');
+  if(modes)modes.setAttribute('aria-label',pair[2]);
+  const sug=document.getElementById('pcSuggestions');
+  if(sug)sug.innerHTML=s.suggestions.map(t=>'<button class="pc-suggestion" onclick="pcAsk(this.textContent)">'+t+'</button>').join('');
+  const form=document.getElementById('pcQaForm');
+  if(form&&form.dataset.type)pcOpenFeedback(form.dataset.type);
+}
+function togglePandoraChat(){
+  pcOpen=!pcOpen;
+  const win=document.getElementById('pandora-chat-window');
+  const btn=document.getElementById('pandora-chat-btn');
+  if(win)win.classList.toggle('open',pcOpen);
+  if(btn)btn.hidden=pcOpen;
+  if(!pcOpen&&win){win.classList.remove('fullscreen');pcFullscreen=false;updateExpandIcon()}
+}
+function togglePandoraFullscreen(){
+  pcFullscreen=!pcFullscreen;
+  const win=document.getElementById('pandora-chat-window');
+  if(win)win.classList.toggle('fullscreen',pcFullscreen);
+  updateExpandIcon();
+}
+function updateExpandIcon(){
+  const icon=document.getElementById('pcExpandIcon');
+  const btn=document.getElementById('pcExpandBtn');
+  if(btn){const labels={ru:['Развернуть на весь экран','Свернуть'],uk:['Розгорнути на весь екран','Згорнути'],en:['Expand fullscreen','Collapse'],es:['Expandir a pantalla completa','Contraer']};const pair=labels[currentCabinetLang]||labels.uk;btn.title=pcFullscreen?pair[1]:pair[0];btn.setAttribute('aria-label',pcFullscreen?pair[1]:pair[0]);}
+  if(!icon)return;
+  icon.innerHTML=pcFullscreen?'<line x1="1" y1="5" x2="5" y2="1"/><polyline points="1,1 5,1 5,5"/><line x1="13" y1="5" x2="9" y2="1"/><polyline points="13,1 9,1 9,5"/><line x1="1" y1="9" x2="5" y2="13"/><polyline points="1,13 5,13 5,9"/><line x1="13" y1="9" x2="9" y2="13"/><polyline points="13,13 9,13 9,9"/>':'<polyline points="1,5 1,1 5,1"/><line x1="1" y1="1" x2="5.5" y2="5.5"/><polyline points="9,1 13,1 13,5"/><line x1="13" y1="1" x2="8.5" y2="5.5"/><polyline points="1,9 1,13 5,13"/><line x1="1" y1="13" x2="5.5" y2="8.5"/><polyline points="13,9 13,13 9,13"/><line x1="13" y1="13" x2="8.5" y2="8.5"/>';
+}
+function pcSetMode(mode){
+  pcMode=mode;
+  document.getElementById('pcModeAi')?.classList.toggle('active',mode==='ai');
+  document.getElementById('pcModeQa')?.classList.toggle('active',mode==='qa');
+  const chatMode=mode==='ai';
+  const messages=document.getElementById('pcMessages'), suggestions=document.getElementById('pcSuggestions'), inputRow=document.getElementById('pcInputRow'), qa=document.getElementById('pcQaPanel');
+  if(messages)messages.style.display=chatMode?'flex':'none';
+  if(suggestions)suggestions.style.display=chatMode?'flex':'none';
+  if(inputRow)inputRow.style.display=chatMode?'flex':'none';
+  if(qa)qa.style.display=chatMode?'none':'flex';
+}
+function pcAsk(text){
+  const input=document.getElementById('pcInput');
+  if(input)input.value=text;
+  pcSend();
+}
+function pcAddMsg(type,text){
+  const box=document.getElementById('pcMessages');
+  if(!box||!text)return;
+  const msg=document.createElement('div');
+  msg.className='pc-msg '+type;
+  msg.textContent=text;
+  box.appendChild(msg);
+  box.scrollTop=box.scrollHeight;
+  return msg;
+}
+let pcConversationId='';
+try{pcConversationId=sessionStorage.getItem('pandora-ai-cabinet-conversation-id')||''}catch(e){}
+async function pcSend(){
+  const input=document.getElementById('pcInput');
+  const text=(input?.value||'').trim();
+  if(!text)return;
+  const sendBtn=document.getElementById('pcSendBtn');
+  pcAddMsg('user',text);
+  if(input){input.value='';input.style.height='auto'}
+  if(sendBtn)sendBtn.disabled=true;
+  const thinking=pcAddMsg('bot',pcText().typing||'...');
+  if(thinking)thinking.classList.add('typing');
+  try{
+    const response=await fetch('/api/pandora-ai',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:text,mode:'ai',role:'member',context:'cabinet',lang:currentCabinetLang,conversationId:pcConversationId})
+    });
+    if(!response.ok)throw new Error('HTTP '+response.status);
+    const data=await response.json();
+    if(data&&data.conversationId){pcConversationId=data.conversationId;try{sessionStorage.setItem('pandora-ai-cabinet-conversation-id',pcConversationId)}catch(e){}}
+    const answer=(data&&(data.reply||data.answer||data.message))||pcText().localReply;
+    if(thinking)thinking.remove();
+    pcAddMsg('bot',answer);
+  }catch(error){
+    if(thinking)thinking.remove();
+    pcAddMsg('bot',pcText().errorReply||pcText().localReply);
+  }finally{
+    if(sendBtn)sendBtn.disabled=false;
+  }
+}
+function pcOpenFeedback(type){
+  const s=pcText();
+  const form=document.getElementById('pcQaForm');
+  const choices=document.getElementById('pcQaChoices');
+  if(!form||!choices)return;
+  form.dataset.type=type;
+  choices.style.display='none';
+  form.style.display='flex';
+  form.innerHTML='<button class="pc-qa-back" type="button" onclick="pcBackToQaChoices()">'+s.feedbackBack+'</button><h4>'+(type==='bug'?s.feedbackBugTitle:s.feedbackSuggestionTitle)+'</h4><label class="pc-qa-field"><span>'+s.feedbackText+'</span><textarea placeholder="'+s.feedbackTextPlaceholder+'"></textarea></label><label class="pc-qa-field"><span>'+s.feedbackContact+'</span><input type="text" placeholder="email / telegram"></label><button class="action-btn primary" type="button" onclick="pcSaveFeedbackMock()">'+s.feedbackSave+'</button><div class="pc-upload-status" id="pcFeedbackStatus" hidden></div>';
+}
+function pcBackToQaChoices(){
+  const form=document.getElementById('pcQaForm'), choices=document.getElementById('pcQaChoices');
+  if(form){form.style.display='none';form.dataset.type='';form.innerHTML=''}
+  if(choices)choices.style.display='grid';
+}
+function pcSaveFeedbackMock(){
+  const status=document.getElementById('pcFeedbackStatus');
+  if(status){status.hidden=false;status.textContent=pcText().feedbackSaved}
+}
+function pcEnterFixationMode(){
+  pcAddMsg('bot',pcText().feedbackSaved);
+  pcSetMode('ai');
+}
+window.addEventListener('DOMContentLoaded',()=>{let saved='uk';try{saved=localStorage.getItem('pandora_lang')||localStorage.getItem('pandora-cabinet-lang')||localStorage.getItem('pandora-lang')||'uk'}catch(e){}applyCabinetLang(saved);openCabinetView('profile')});
+</script>
+<script src="assets/js/pandora-language-data.js"></script>
+<script src="assets/js/pandora-i18n.js"></script>
+<script src="assets/js/pandora-form-guard.js"></script>
+</body>
+</html>
